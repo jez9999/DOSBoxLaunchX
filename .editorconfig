@@ -1,0 +1,227 @@
+﻿[*.cs]
+
+############
+# StyleCop #
+############
+
+# SX1309: Field names should begin with underscore
+dotnet_diagnostic.SX1309.severity = warning
+# SA0001: XML comment analysis disabled
+dotnet_diagnostic.SA0001.severity = none
+# SA1633: File should have header
+dotnet_diagnostic.SA1633.severity = none
+# SA1200: Using directives should be placed correctly
+dotnet_diagnostic.SA1200.severity = none
+# SA1210: Using directives should be ordered alphabetically by namespace
+dotnet_diagnostic.SA1210.severity = none
+# SA1500: Braces for multi-line statements should not share line
+dotnet_diagnostic.SA1500.severity = none
+# SA1600: Elements should be documented
+dotnet_diagnostic.SA1600.severity = none
+# SA1601: Partial elements should be documented
+dotnet_diagnostic.SA1601.severity = none
+# SA1124: Do not use regions
+dotnet_diagnostic.SA1124.severity = none
+# SA1309: Field names should not begin with underscore
+dotnet_diagnostic.SA1309.severity = none
+# SA1316: Tuple element names should use correct casing
+dotnet_diagnostic.SA1316.severity = none
+# SA1623: Property summary documentation should match accessors
+dotnet_diagnostic.SA1623.severity = none
+# SA1300: Element should begin with upper-case letter
+dotnet_diagnostic.SA1300.severity = none
+# SA1201: Elements should appear in the correct order
+dotnet_diagnostic.SA1201.severity = none
+# SA1101: Prefix local calls with this
+dotnet_diagnostic.SA1101.severity = none
+# SA1009: Closing parenthesis should be spaced correctly
+dotnet_diagnostic.SA1009.severity = none
+# SA1111: Closing parenthesis should be on line of last parameter
+dotnet_diagnostic.SA1111.severity = none
+# SA1116: Split parameters should start on line after declaration
+dotnet_diagnostic.SA1116.severity = none
+# SA1513: Closing brace should be followed by blank line
+dotnet_diagnostic.SA1513.severity = none
+# SA1005: Single line comments should begin with single space
+dotnet_diagnostic.SA1005.severity = none
+# SA1117: Parameters should be on same line or separate lines
+dotnet_diagnostic.SA1117.severity = none
+# SA1512: Single-line comments should not be followed by blank line
+dotnet_diagnostic.SA1512.severity = none
+# SA1118: Parameter should not span multiple lines
+dotnet_diagnostic.SA1118.severity = none
+# SA1202: Elements should be ordered by access
+dotnet_diagnostic.SA1202.severity = none
+# SA1501: Statement should not be on a single line
+dotnet_diagnostic.SA1501.severity = none
+# SA1514: Element documentation header should be preceded by blank line
+dotnet_diagnostic.SA1514.severity = none
+# SA1516: Elements should be separated by blank line
+dotnet_diagnostic.SA1516.severity = none
+# SA1402: File may only contain a single type
+dotnet_diagnostic.SA1402.severity = none
+# SA1407: Arithmetic expressions should declare precedence
+dotnet_diagnostic.SA1407.severity = none
+# SA1504: All accessors should be single-line or multi-line
+dotnet_diagnostic.SA1504.severity = none
+# SA1649: File name should match first type name
+dotnet_diagnostic.SA1649.severity = none
+# SA1122: Use string.Empty for empty strings
+dotnet_diagnostic.SA1122.severity = none
+# SA1204: Static elements should appear before instance elements
+dotnet_diagnostic.SA1204.severity = none
+# SA1515: Single-line comment should be preceded by blank line
+dotnet_diagnostic.SA1515.severity = none
+# SA1413: Use trailing comma in multi-line initializers
+dotnet_diagnostic.SA1413.severity = none
+# SA1615: Element return value should be documented
+dotnet_diagnostic.SA1615.severity = none
+# SA1611: Element parameters should be documented
+dotnet_diagnostic.SA1611.severity = none
+# SA1119: Statement should not use unnecessary parenthesis
+dotnet_diagnostic.SA1119.severity = none
+# SA1211: Using alias directives should be ordered alphabetically by alias name
+dotnet_diagnostic.SA1211.severity = none
+# SA1602: Enumeration items should be documented
+dotnet_diagnostic.SA1602.severity = none
+# SA1025: Code should not contain multiple whitespace in a row
+dotnet_diagnostic.SA1025.severity = none
+# SA1502: Element should not be on a single line
+dotnet_diagnostic.SA1502.severity = none
+# SA1401: Fields should be private
+dotnet_diagnostic.SA1401.severity = none
+# SA1310: Field names should not contain underscore
+dotnet_diagnostic.SA1310.severity = none
+# SA1127: Generic type constraints should be on their own line
+dotnet_diagnostic.SA1127.severity = none
+# SA1128: Put constructor initializers on their own line
+dotnet_diagnostic.SA1128.severity = none
+# SA1629: Documentation text should end with a period
+dotnet_diagnostic.SA1629.severity = none
+# SA1642: Constructor summary documentation should begin with standard text
+dotnet_diagnostic.SA1642.severity = none
+# SA1027: Tabs and spaces should be used correctly (we want this, but it's enforced better by IDE0055;
+#         this StyleCop rule triggers in certain circumstances that are incorrect.)
+dotnet_diagnostic.SA1027.severity = none
+
+#######################
+# Other code analysis #
+#######################
+# Available severities:
+# none, silent, suggestion, warning, error
+
+# CA1854: Prefer a 'TryGetValue' call over a Dictionary indexer access guarded by a 'ContainsKey' check to
+#         avoid double lookup.
+dotnet_diagnostic.CA1854.severity = silent
+
+# CA1806: Do not ignore method results (it's almost certain that calling LINQ methods and expecting side-effects
+#         is a mistake that could cause significant bugs, thus I say this is worthy of a warning, not just
+#         informational.)
+dotnet_diagnostic.CA1806.severity = warning
+
+# CA1822: Member does not access instance data and can be marked as static (very, very low priority.  Just about
+#         worthy of a 'silent' but nothing more.  Marking static *can* provide a small performance boost, and it
+#         *may* be occasionally worth doing, but there are times when we actually want to keep stuff non-static.)
+dotnet_diagnostic.CA1822.severity = suggestion
+
+# CA1862: Use the 'StringComparison' method overloads to perform case-insensitive string comparisons 
+dotnet_diagnostic.CA1862.severity = silent
+
+# CA2000: Dispose objects before losing scope
+dotnet_diagnostic.CA2000.severity = warning
+
+# CA2254: Template should be a static expression (no it shouldn't always, this is a dumb complaint, and it also
+#         gives false positives like if you're using a Lazy<string> for your error template; suppress.)
+dotnet_diagnostic.CA2254.severity = none
+
+# We're going to try REALLY enforcing nullable reference types by making related analysis warnings into errors...
+# this should mean we can rely on types passed into methods never being null as long as we don't mark them as
+# nullable, and so we shouldn't need to be sanity checking for null or throwing ArgumentNullException, ever.
+
+# CS8600: Converting null literal or possible null value to non-nullable type
+dotnet_diagnostic.CS8600.severity = error
+
+# CS8601: Possible null reference assignment
+dotnet_diagnostic.CS8601.severity = error
+
+# CS8602: Dereference of a possibly null reference
+dotnet_diagnostic.CS8602.severity = error
+
+# CS8603: Possible null reference return
+dotnet_diagnostic.CS8603.severity = error
+
+# CS8604: Possible null reference argument for parameter
+dotnet_diagnostic.CS8604.severity = error
+
+# CS8618: Non-nullable property must contain a non-null value when exiting constructor. Consider declaring the property as nullable.
+dotnet_diagnostic.CS8618.severity = error
+
+# CS8619: Nullability of reference types in value type doesn't match target type
+dotnet_diagnostic.CS8619.severity = error
+
+# CS8620: Nullability of reference types in value type doesn't match target type
+dotnet_diagnostic.CS8620.severity = error
+
+# CS8625: Cannot convert null literal to non-nullable reference type
+dotnet_diagnostic.CS8625.severity = error
+
+# CS8629: Nullable value type may be null
+dotnet_diagnostic.CS8629.severity = error
+
+# CS8765: Nullability of type of parameter doesn't match overridden member
+dotnet_diagnostic.CS8765.severity = error
+
+# SYSLIB1045: Use GeneratedRegexAttribute to generate the regular expression implementation at compile time
+dotnet_diagnostic.SYSLIB1045.severity = silent
+
+##############
+# Formatting #
+##############
+# Note: Visual Studio has built-in support for enforcing these rules, but it only does so for open files, and will
+# not fail the build even for rules with 'error' severity.  You need to install the
+# 'Microsoft.CodeAnalysis.CSharp.CodeStyle' NuGet package in each project you want fully-fledged code style
+# analyzer support for.
+
+# IDE0005: Using directive is unnecessary (defaults to 'silent')
+dotnet_diagnostic.IDE0005.severity = silent
+
+# IDE0055: Fix formatting
+dotnet_diagnostic.IDE0055.severity = warning
+
+# IDE0042: Variable declaration can be deconstructed (extremely low priority and sometimes downright undesirable)
+dotnet_diagnostic.IDE0042.severity = silent
+
+# IDE0051: Private member is unused ('silent'; causes the IDE to grey out the member, but no message is generated)
+dotnet_diagnostic.IDE0051.severity = silent
+
+# IDE0052: Private member can be removed as the value assigned to it is never read
+dotnet_diagnostic.IDE0052.severity = silent
+
+# IDE0290: Use primary constructor
+dotnet_diagnostic.IDE0290.severity = silent
+
+# 4-space indentation
+indent_style = tab
+indent_size = 4
+
+# K&R-style braces; see: https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-formatting-conventions?view=vs-2019#csharp_new_line_before_open_brace
+csharp_new_line_before_open_brace = none
+
+# Normal label indentation (same level as everything else)
+csharp_indent_labels = no_change
+
+# Camel-case for class-local methods
+dotnet_naming_symbols.private_methods.applicable_kinds = method
+dotnet_naming_symbols.private_methods.applicable_accessibilities = private
+dotnet_naming_style.camel_case_style.capitalization = camel_case
+dotnet_naming_rule.private_methods_must_be_camel_case.symbols = private_methods
+dotnet_naming_rule.private_methods_must_be_camel_case.style = camel_case_style
+dotnet_naming_rule.private_methods_must_be_camel_case.severity = warning
+
+# Pascal-case for class-public methods
+dotnet_naming_symbols.public_methods.applicable_kinds = method
+dotnet_naming_symbols.public_methods.applicable_accessibilities = public
+dotnet_naming_style.pascal_case_style.capitalization = pascal_case
+dotnet_naming_rule.public_methods_must_be_pascal_case.symbols = public_methods
+dotnet_naming_rule.public_methods_must_be_pascal_case.style = pascal_case_style
+dotnet_naming_rule.public_methods_must_be_pascal_case.severity = warning

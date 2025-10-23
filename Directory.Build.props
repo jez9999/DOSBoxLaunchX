@@ -1,0 +1,11 @@
+<Project>
+	<!-- Import stylecop.json into every project -->
+	<ItemGroup>
+		<AdditionalFiles Include="$([MSBuild]::GetPathOfFileAbove('stylecop.json', '$(MSBuildThisFileDirectory)'))" Link="stylecop.json" />
+	</ItemGroup>
+
+	<!-- Disable transitive project references -->
+	<PropertyGroup>
+		<DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
+	</PropertyGroup>
+</Project>
