@@ -12,6 +12,21 @@ internal static class Program {
 	// TODO: Our file extension will be .dlx
 	// TODO: If Linux support is needed, refactor this app's Form logic into an MVVM pattern for Uno.
 
+	// ====================================================
+	//Always convert config files line endings to newlines
+
+	//local / global (radioboxes) | Associate app with .dlx files, Remove app's association with .dlx files
+	// ^ Save / Load / New | ?
+	//textbox for entering location of local shortcut whose settings we're editing
+
+
+	//tabgroup settings
+
+
+
+	//output info textbox
+	// ====================================================
+
 	[STAThread]
 	private static void Main() {
 		try {

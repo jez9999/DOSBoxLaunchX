@@ -29,34 +29,200 @@
 		private void InitializeComponent() {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			txtOutput = new TextBox();
+			radShortcut = new RadioButton();
+			radGlobal = new RadioButton();
+			label1 = new Label();
+			btnAssoc = new Button();
+			btnRemoveAssoc = new Button();
+			txtShortcutFilePath = new TextBox();
+			tabsContainer = new TabControl();
+			tabCpu = new TabPage();
+			tabVideo = new TabPage();
+			tabAudio = new TabPage();
+			tabPeripherals = new TabPage();
+			tabCustom = new TabPage();
+			tabMapper = new TabPage();
+			label2 = new Label();
+			tabsContainer.SuspendLayout();
 			SuspendLayout();
 			// 
 			// txtOutput
 			// 
 			txtOutput.BackColor = SystemColors.Window;
 			txtOutput.Font = new Font("Lucida Console", 9.75F);
-			txtOutput.Location = new Point(12, 692);
+			txtOutput.Location = new Point(12, 656);
 			txtOutput.Multiline = true;
 			txtOutput.Name = "txtOutput";
 			txtOutput.ReadOnly = true;
 			txtOutput.ScrollBars = ScrollBars.Vertical;
-			txtOutput.Size = new Size(1235, 163);
+			txtOutput.Size = new Size(1235, 199);
 			txtOutput.TabIndex = 0;
 			txtOutput.TabStop = false;
+			// 
+			// radShortcut
+			// 
+			radShortcut.AutoSize = true;
+			radShortcut.Location = new Point(10, 27);
+			radShortcut.Name = "radShortcut";
+			radShortcut.Size = new Size(70, 19);
+			radShortcut.TabIndex = 1;
+			radShortcut.TabStop = true;
+			radShortcut.Text = "&Shortcut";
+			radShortcut.UseVisualStyleBackColor = true;
+			radShortcut.CheckedChanged += radShortcut_CheckedChanged;
+			// 
+			// radGlobal
+			// 
+			radGlobal.AutoSize = true;
+			radGlobal.Location = new Point(81, 27);
+			radGlobal.Name = "radGlobal";
+			radGlobal.Size = new Size(59, 19);
+			radGlobal.TabIndex = 2;
+			radGlobal.TabStop = true;
+			radGlobal.Text = "&Global";
+			radGlobal.UseVisualStyleBackColor = true;
+			radGlobal.CheckedChanged += radGlobal_CheckedChanged;
+			// 
+			// label1
+			// 
+			label1.AutoSize = true;
+			label1.Location = new Point(9, 9);
+			label1.Name = "label1";
+			label1.Size = new Size(128, 15);
+			label1.TabIndex = 3;
+			label1.Text = "Editing config settings:";
+			// 
+			// btnAssoc
+			// 
+			btnAssoc.Location = new Point(817, 15);
+			btnAssoc.Name = "btnAssoc";
+			btnAssoc.Size = new Size(183, 23);
+			btnAssoc.TabIndex = 80;
+			btnAssoc.Text = "Associate app with .dlx files";
+			btnAssoc.UseVisualStyleBackColor = true;
+			btnAssoc.Click += btnAssoc_Click;
+			// 
+			// btnRemoveAssoc
+			// 
+			btnRemoveAssoc.Location = new Point(1006, 15);
+			btnRemoveAssoc.Name = "btnRemoveAssoc";
+			btnRemoveAssoc.Size = new Size(241, 23);
+			btnRemoveAssoc.TabIndex = 81;
+			btnRemoveAssoc.Text = "Remove app's association with .dlx files";
+			btnRemoveAssoc.UseVisualStyleBackColor = true;
+			btnRemoveAssoc.Click += btnRemoveAssoc_Click;
+			// 
+			// txtShortcutFilePath
+			// 
+			txtShortcutFilePath.Location = new Point(150, 15);
+			txtShortcutFilePath.Name = "txtShortcutFilePath";
+			txtShortcutFilePath.ReadOnly = true;
+			txtShortcutFilePath.Size = new Size(649, 23);
+			txtShortcutFilePath.TabIndex = 10;
+			// 
+			// tabsContainer
+			// 
+			tabsContainer.Controls.Add(tabCpu);
+			tabsContainer.Controls.Add(tabVideo);
+			tabsContainer.Controls.Add(tabAudio);
+			tabsContainer.Controls.Add(tabPeripherals);
+			tabsContainer.Controls.Add(tabCustom);
+			tabsContainer.Controls.Add(tabMapper);
+			tabsContainer.Location = new Point(12, 52);
+			tabsContainer.Name = "tabsContainer";
+			tabsContainer.SelectedIndex = 0;
+			tabsContainer.Size = new Size(1235, 572);
+			tabsContainer.TabIndex = 100;
+			// 
+			// tabCpu
+			// 
+			tabCpu.BackColor = SystemColors.Control;
+			tabCpu.Location = new Point(4, 24);
+			tabCpu.Name = "tabCpu";
+			tabCpu.Padding = new Padding(3);
+			tabCpu.Size = new Size(1227, 544);
+			tabCpu.TabIndex = 0;
+			tabCpu.Text = "CPU";
+			// 
+			// tabVideo
+			// 
+			tabVideo.BackColor = SystemColors.Control;
+			tabVideo.Location = new Point(4, 24);
+			tabVideo.Name = "tabVideo";
+			tabVideo.Padding = new Padding(3);
+			tabVideo.Size = new Size(1227, 544);
+			tabVideo.TabIndex = 1;
+			tabVideo.Text = "Video";
+			// 
+			// tabAudio
+			// 
+			tabAudio.BackColor = SystemColors.Control;
+			tabAudio.Location = new Point(4, 24);
+			tabAudio.Name = "tabAudio";
+			tabAudio.Size = new Size(1227, 544);
+			tabAudio.TabIndex = 2;
+			tabAudio.Text = "Audio";
+			// 
+			// tabPeripherals
+			// 
+			tabPeripherals.BackColor = SystemColors.Control;
+			tabPeripherals.Location = new Point(4, 24);
+			tabPeripherals.Name = "tabPeripherals";
+			tabPeripherals.Size = new Size(1227, 544);
+			tabPeripherals.TabIndex = 3;
+			tabPeripherals.Text = "Peripherals";
+			// 
+			// tabCustom
+			// 
+			tabCustom.BackColor = SystemColors.Control;
+			tabCustom.Location = new Point(4, 24);
+			tabCustom.Name = "tabCustom";
+			tabCustom.Size = new Size(1227, 544);
+			tabCustom.TabIndex = 4;
+			tabCustom.Text = "Custom settings";
+			// 
+			// tabMapper
+			// 
+			tabMapper.BackColor = SystemColors.Control;
+			tabMapper.Location = new Point(4, 24);
+			tabMapper.Name = "tabMapper";
+			tabMapper.Size = new Size(1227, 544);
+			tabMapper.TabIndex = 5;
+			tabMapper.Text = "Keyboard mapper";
+			// 
+			// label2
+			// 
+			label2.AutoSize = true;
+			label2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+			label2.Location = new Point(12, 636);
+			label2.Name = "label2";
+			label2.Size = new Size(47, 15);
+			label2.TabIndex = 8;
+			label2.Text = "Output";
 			// 
 			// MainForm
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(1259, 867);
+			Controls.Add(label2);
+			Controls.Add(tabsContainer);
+			Controls.Add(txtShortcutFilePath);
+			Controls.Add(btnRemoveAssoc);
+			Controls.Add(btnAssoc);
+			Controls.Add(label1);
+			Controls.Add(radGlobal);
+			Controls.Add(radShortcut);
 			Controls.Add(txtOutput);
 			FormBorderStyle = FormBorderStyle.FixedSingle;
 			Icon = (Icon)resources.GetObject("$this.Icon");
 			MaximizeBox = false;
 			MinimizeBox = false;
 			Name = "MainForm";
+			StartPosition = FormStartPosition.CenterScreen;
 			Text = "DOSBoxLaunchX";
 			Load += MainForm_Load;
+			tabsContainer.ResumeLayout(false);
 			ResumeLayout(false);
 			PerformLayout();
 		}
@@ -64,5 +230,19 @@
 		#endregion
 
 		private TextBox txtOutput;
+		private RadioButton radShortcut;
+		private RadioButton radGlobal;
+		private Label label1;
+		private Button btnAssoc;
+		private Button btnRemoveAssoc;
+		private TextBox txtShortcutFilePath;
+		private TabControl tabsContainer;
+		private TabPage tabCpu;
+		private TabPage tabVideo;
+		private TabPage tabAudio;
+		private TabPage tabPeripherals;
+		private TabPage tabCustom;
+		private TabPage tabMapper;
+		private Label label2;
 	}
 }
