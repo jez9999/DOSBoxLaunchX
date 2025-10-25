@@ -1,6 +1,6 @@
 ﻿namespace DOSBoxLaunchX.Factories;
 
-internal class FormFactory(IServiceProvider sp) {
+public class FormFactory(IServiceProvider sp) {
 	private readonly IServiceProvider _sp = sp;
 
 	// There are 3 basic ways of achieving DI when you need to have some params resolved by your service
@@ -43,5 +43,9 @@ internal class FormFactory(IServiceProvider sp) {
 		// One little exception: when *every* param can be resolved via the service provider and there are
 		// a lot of params, it may be more convenient/concise to use ActivatorUtilities.CreateInstance<T>.
 		return ActivatorUtilities.CreateInstance<MainForm>(_sp);
+	}
+
+	public HelpForm CreateHelpForm() {
+		return new HelpForm();
 	}
 }

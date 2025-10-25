@@ -12,6 +12,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		stylecop.json = stylecop.json
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Docs_", "_Docs_", "{78537DB1-5004-4390-BAB0-FE7A3D833850}"
+	ProjectSection(SolutionItems) = preProject
+		_Docs_\_UI-IMAGES_.txt = _Docs_\_UI-IMAGES_.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

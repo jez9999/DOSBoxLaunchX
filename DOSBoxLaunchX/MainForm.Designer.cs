@@ -43,13 +43,17 @@
 			tabCustom = new TabPage();
 			tabMapper = new TabPage();
 			label2 = new Label();
+			btnHelp = new Button();
+			btnNew = new Button();
+			btnLoad = new Button();
+			btnSave = new Button();
 			tabsContainer.SuspendLayout();
 			SuspendLayout();
 			// 
 			// txtOutput
 			// 
 			txtOutput.BackColor = SystemColors.Window;
-			txtOutput.Font = new Font("Lucida Console", 9.75F);
+			txtOutput.Font = new Font("Courier New", 9.75F);
 			txtOutput.Location = new Point(12, 656);
 			txtOutput.Multiline = true;
 			txtOutput.Name = "txtOutput";
@@ -67,7 +71,7 @@
 			radShortcut.Size = new Size(70, 19);
 			radShortcut.TabIndex = 1;
 			radShortcut.TabStop = true;
-			radShortcut.Text = "&Shortcut";
+			radShortcut.Text = "Shortcut";
 			radShortcut.UseVisualStyleBackColor = true;
 			radShortcut.CheckedChanged += radShortcut_CheckedChanged;
 			// 
@@ -79,7 +83,7 @@
 			radGlobal.Size = new Size(59, 19);
 			radGlobal.TabIndex = 2;
 			radGlobal.TabStop = true;
-			radGlobal.Text = "&Global";
+			radGlobal.Text = "Global";
 			radGlobal.UseVisualStyleBackColor = true;
 			radGlobal.CheckedChanged += radGlobal_CheckedChanged;
 			// 
@@ -94,20 +98,20 @@
 			// 
 			// btnAssoc
 			// 
-			btnAssoc.Location = new Point(817, 15);
+			btnAssoc.Location = new Point(814, 628);
 			btnAssoc.Name = "btnAssoc";
 			btnAssoc.Size = new Size(183, 23);
-			btnAssoc.TabIndex = 80;
+			btnAssoc.TabIndex = 200;
 			btnAssoc.Text = "Associate app with .dlx files";
 			btnAssoc.UseVisualStyleBackColor = true;
 			btnAssoc.Click += btnAssoc_Click;
 			// 
 			// btnRemoveAssoc
 			// 
-			btnRemoveAssoc.Location = new Point(1006, 15);
+			btnRemoveAssoc.Location = new Point(1003, 628);
 			btnRemoveAssoc.Name = "btnRemoveAssoc";
-			btnRemoveAssoc.Size = new Size(241, 23);
-			btnRemoveAssoc.TabIndex = 81;
+			btnRemoveAssoc.Size = new Size(245, 23);
+			btnRemoveAssoc.TabIndex = 201;
 			btnRemoveAssoc.Text = "Remove app's association with .dlx files";
 			btnRemoveAssoc.UseVisualStyleBackColor = true;
 			btnRemoveAssoc.Click += btnRemoveAssoc_Click;
@@ -117,7 +121,7 @@
 			txtShortcutFilePath.Location = new Point(150, 15);
 			txtShortcutFilePath.Name = "txtShortcutFilePath";
 			txtShortcutFilePath.ReadOnly = true;
-			txtShortcutFilePath.Size = new Size(649, 23);
+			txtShortcutFilePath.Size = new Size(798, 23);
 			txtShortcutFilePath.TabIndex = 10;
 			// 
 			// tabsContainer
@@ -200,11 +204,55 @@
 			label2.TabIndex = 8;
 			label2.Text = "Output";
 			// 
+			// btnHelp
+			// 
+			btnHelp.Image = (Image)resources.GetObject("btnHelp.Image");
+			btnHelp.Location = new Point(1214, 9);
+			btnHelp.Name = "btnHelp";
+			btnHelp.Size = new Size(35, 35);
+			btnHelp.TabIndex = 90;
+			btnHelp.UseVisualStyleBackColor = true;
+			btnHelp.Click += btnHelp_Click;
+			// 
+			// btnNew
+			// 
+			btnNew.Location = new Point(1130, 15);
+			btnNew.Name = "btnNew";
+			btnNew.Size = new Size(75, 23);
+			btnNew.TabIndex = 82;
+			btnNew.Text = "New";
+			btnNew.UseVisualStyleBackColor = true;
+			btnNew.Click += btnNew_Click;
+			// 
+			// btnLoad
+			// 
+			btnLoad.Location = new Point(1041, 15);
+			btnLoad.Name = "btnLoad";
+			btnLoad.Size = new Size(83, 23);
+			btnLoad.TabIndex = 81;
+			btnLoad.Text = "Load";
+			btnLoad.UseVisualStyleBackColor = true;
+			btnLoad.Click += btnLoad_Click;
+			// 
+			// btnSave
+			// 
+			btnSave.Location = new Point(960, 15);
+			btnSave.Name = "btnSave";
+			btnSave.Size = new Size(75, 23);
+			btnSave.TabIndex = 80;
+			btnSave.Text = "Save";
+			btnSave.UseVisualStyleBackColor = true;
+			btnSave.Click += btnSave_Click;
+			// 
 			// MainForm
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(1259, 867);
+			Controls.Add(btnSave);
+			Controls.Add(btnLoad);
+			Controls.Add(btnNew);
+			Controls.Add(btnHelp);
 			Controls.Add(label2);
 			Controls.Add(tabsContainer);
 			Controls.Add(txtShortcutFilePath);
@@ -244,5 +292,9 @@
 		private TabPage tabCustom;
 		private TabPage tabMapper;
 		private Label label2;
+		private Button btnHelp;
+		private Button btnNew;
+		private Button btnLoad;
+		private Button btnSave;
 	}
 }

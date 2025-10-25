@@ -1,0 +1,3 @@
+Important note:
+When using an image for a UI button, its image graphic (icon) should simply be imported as a "Local resource"
+rather than put in resource files, which now seem to be completely broken in Visual Studio.

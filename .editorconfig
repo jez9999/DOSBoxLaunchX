@@ -122,7 +122,7 @@ dotnet_diagnostic.CA1806.severity = warning
 # CA1822: Member does not access instance data and can be marked as static (very, very low priority.  Just about
 #         worthy of a 'silent' but nothing more.  Marking static *can* provide a small performance boost, and it
 #         *may* be occasionally worth doing, but there are times when we actually want to keep stuff non-static.)
-dotnet_diagnostic.CA1822.severity = suggestion
+dotnet_diagnostic.CA1822.severity = silent
 
 # CA1862: Use the 'StringComparison' method overloads to perform case-insensitive string comparisons 
 dotnet_diagnostic.CA1862.severity = silent
