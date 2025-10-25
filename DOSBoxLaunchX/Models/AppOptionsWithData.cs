@@ -7,7 +7,11 @@ public class AppOptionsWithData {
 	public required bool IsDebugBuild;
 	public required string EnvironmentName;
 	public required string CurrentWorkingDirectory;
+	public required string ProgramName;
 	public required string AppExePath;
+	public required string[] Args;
+
+	public string? LocalAppDataDir = null;
 
 	public string ShortcutFiletypeExtension => "dlx";
 	public string ShortcutFiletypeProgId => "DOSBoxLaunchX.Shortcut";

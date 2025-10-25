@@ -1,4 +1,6 @@
-﻿namespace DOSBoxLaunchX.Factories;
+﻿using DOSBoxLaunchX.Models;
+
+namespace DOSBoxLaunchX.Factories;
 
 public class FormFactory(IServiceProvider sp) {
 	private readonly IServiceProvider _sp = sp;
@@ -47,5 +49,11 @@ public class FormFactory(IServiceProvider sp) {
 
 	public HelpForm CreateHelpForm() {
 		return new HelpForm();
+	}
+
+	public LauncherForm CreateLauncherForm() {
+		return new LauncherForm(
+			_sp.GetRequiredService<AppOptionsWithData>()
+		);
 	}
 }

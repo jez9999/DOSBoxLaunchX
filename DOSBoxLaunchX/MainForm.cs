@@ -1,3 +1,4 @@
+using System.Text;
 using DOSBoxLaunchX.Factories;
 using DOSBoxLaunchX.Helpers;
 using DOSBoxLaunchX.Models;
@@ -28,11 +29,21 @@ public partial class MainForm : Form {
 		if (_data.IsDebugBuild) {
 			Text += " - DEBUG BUILD";
 		}
+
+		StringBuilder sb = new();
+		foreach (var arg in _data.Args) {
+			sb.AppendLine($"- {arg}");
+		}
+		txtOutput.Text = $"{sb}";
+
+		_data.LocalAppDataDir = LocalAppDataHelper.EnsureLocalAppDataDir(_data.ProgramName);
+
+		// TODO: probable docs for 'executable name': When a shortcut is being used to run a DOS game/app rather than just start a DOS shell with a particular configuration, the name of the executable to run can be entered here to run it; if an autoexec section also exists, this will be added to the end of it.
 	}
 #pragma warning restore IDE1006 // Naming Styles
 
 	private void btnAssoc_Click(object sender, EventArgs ea) {
-		AppAssociator.RegisterApp(_data.ShortcutFiletypeExtension, _data.ShortcutFiletypeProgId, _data.ShortcutFiletypeDescription, _data.AppExePath);
+		AppAssociator.RegisterApp(_data.ShortcutFiletypeExtension, _data.ShortcutFiletypeProgId, $"{_data.ShortcutFiletypeDescription}{(_data.IsDebugBuild ? " - DEBUG BUILD" : "")}", _data.AppExePath);
 		AppAssociator.TriggerExplorerIconsRefresh();
 
 		MessageBoxHelper.ShowInfoMessage(
