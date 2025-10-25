@@ -1,6 +1,13 @@
 ﻿namespace DOSBoxLaunchX;
 
 public partial class HelpForm : Form {
+	#region Constructors
+
+	public HelpForm() {
+		InitializeComponent();
+	}
+
+	#endregion
 
 #pragma warning disable IDE1006 // Naming Styles
 	private void HelpForm_Load(object sender, EventArgs ea) {
@@ -16,10 +23,6 @@ public partial class HelpForm : Form {
 			""";
 	}
 #pragma warning restore IDE1006 // Naming Styles
-
-	public HelpForm() {
-		InitializeComponent();
-	}
 
 	private void btnOk_Click(object sender, EventArgs ea) {
 		Close();

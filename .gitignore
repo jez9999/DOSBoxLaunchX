@@ -35,6 +35,9 @@ appsettings.*.json
 TestsData.json
 App.config
 
+# Log that may be written on errors
+_errorlog_.txt
+
 # Ignore temporary files written by programs like Microsoft Word and Vim
 ~$*
 ~*.tmp

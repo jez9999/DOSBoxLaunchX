@@ -1,18 +1,21 @@
 using DOSBoxLaunchX.Factories;
 using DOSBoxLaunchX.Helpers;
+using DOSBoxLaunchX.Models;
 
 namespace DOSBoxLaunchX;
 
 public partial class MainForm : Form {
 	#region Private vars
 
+	private readonly AppOptionsWithData _data;
 	private readonly FormFactory _formFact;
 
 	#endregion
 
 	#region Constructors
 
-	public MainForm(FormFactory formFact) {
+	public MainForm(AppOptionsWithData data, FormFactory formFact) {
+		_data = data;
 		_formFact = formFact;
 
 		InitializeComponent();
@@ -22,16 +25,30 @@ public partial class MainForm : Form {
 
 #pragma warning disable IDE1006 // Naming Styles
 	private void MainForm_Load(object sender, EventArgs ea) {
-		txtOutput.Text = "Hello world!";
+		if (_data.IsDebugBuild) {
+			Text += " - DEBUG BUILD";
+		}
 	}
 #pragma warning restore IDE1006 // Naming Styles
 
 	private void btnAssoc_Click(object sender, EventArgs ea) {
-		MessageBoxHelper.ShowInfoMessage("TODO: Impl. associate button", "");
+		AppAssociator.RegisterApp(_data.ShortcutFiletypeExtension, _data.ShortcutFiletypeProgId, _data.ShortcutFiletypeDescription, _data.AppExePath);
+		AppAssociator.TriggerExplorerIconsRefresh();
+
+		MessageBoxHelper.ShowInfoMessage(
+			"DOSBoxLaunchX has been registered as a handler for .DLX files.",
+			"Associated app with .DLX files"
+		);
 	}
 
 	private void btnRemoveAssoc_Click(object sender, EventArgs ea) {
-		MessageBoxHelper.ShowInfoMessage("TODO: Impl. remove associate button", "");
+		AppAssociator.UnregisterApp(_data.ShortcutFiletypeExtension, _data.ShortcutFiletypeProgId);
+		AppAssociator.TriggerExplorerIconsRefresh();
+
+		MessageBoxHelper.ShowInfoMessage(
+			"DOSBoxLaunchX has been unregistered as a handler for .DLX files.",
+			"Removed app's association with .DLX files"
+		);
 	}
 
 	private void btnSave_Click(object sender, EventArgs ea) {

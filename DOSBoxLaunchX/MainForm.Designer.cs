@@ -102,7 +102,7 @@
 			btnAssoc.Name = "btnAssoc";
 			btnAssoc.Size = new Size(183, 23);
 			btnAssoc.TabIndex = 200;
-			btnAssoc.Text = "Associate app with .dlx files";
+			btnAssoc.Text = "Associate app with .DLX files";
 			btnAssoc.UseVisualStyleBackColor = true;
 			btnAssoc.Click += btnAssoc_Click;
 			// 
@@ -112,7 +112,7 @@
 			btnRemoveAssoc.Name = "btnRemoveAssoc";
 			btnRemoveAssoc.Size = new Size(245, 23);
 			btnRemoveAssoc.TabIndex = 201;
-			btnRemoveAssoc.Text = "Remove app's association with .dlx files";
+			btnRemoveAssoc.Text = "Remove app's association with .DLX files";
 			btnRemoveAssoc.UseVisualStyleBackColor = true;
 			btnRemoveAssoc.Click += btnRemoveAssoc_Click;
 			// 

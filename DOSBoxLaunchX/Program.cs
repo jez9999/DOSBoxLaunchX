@@ -70,8 +70,14 @@ internal static class Program {
 			.ConfigureServices((hostContext, services) => {
 				// Setup DI / IoC container
 				services.AddSingleton(new AppOptionsWithData {
+#if DEBUG
+					IsDebugBuild = true,
+#else
+					IsDebugBuild = false,
+#endif
 					EnvironmentName = hostContext.HostingEnvironment.EnvironmentName,
 					CurrentWorkingDirectory = cwd,
+					AppExePath = Application.ExecutablePath,
 				});
 				services.AddTransient<FormFactory>();
 				services.AddTransient(x => Random.Shared);

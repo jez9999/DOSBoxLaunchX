@@ -1,9 +1,15 @@
 ﻿namespace DOSBoxLaunchX.Models;
 
-internal class AppOptionsWithData {
+public class AppOptionsWithData {
 	// If this app needs options at some point, we can put them here...
 	//public required AppOptions Options;
 
+	public required bool IsDebugBuild;
 	public required string EnvironmentName;
 	public required string CurrentWorkingDirectory;
+	public required string AppExePath;
+
+	public string ShortcutFiletypeExtension => "dlx";
+	public string ShortcutFiletypeProgId => "DOSBoxLaunchX.Shortcut";
+	public string ShortcutFiletypeDescription => "DOSBoxLaunchX Shortcut File";
 }
