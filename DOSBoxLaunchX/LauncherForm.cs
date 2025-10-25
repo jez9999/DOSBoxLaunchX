@@ -27,6 +27,14 @@ public partial class LauncherForm : Form {
 #pragma warning disable IDE1006 // Naming Styles
 	private async void LauncherForm_Load(object sender, EventArgs ea) {
 		try {
+			_data.LocalAppDataDir = LocalAppDataHelper.EnsureLocalAppDataDir(_data.ProgramName);
+		}
+		catch (Exception ex) {
+			MessageBoxHelper.ShowErrorMessageOk($"FATAL ERROR: Failed to ensure local app data directory: {ex.Message}", "Error");
+			Environment.Exit(1);
+		}
+
+		try {
 			// Record positions of controls on form that we'll need later
 			_widthDiff = Width - txtOutput.Width;
 			_heightDiff = Height - txtOutput.Height;
@@ -51,7 +59,7 @@ public partial class LauncherForm : Form {
 		}
 		catch (Exception ex) {
 			MessageBoxHelper.ShowErrorMessageOk($"FATAL ERROR: {ex.Message}", "Error");
-			Application.Exit();
+			Environment.Exit(1);
 		}
 	}
 #pragma warning restore IDE1006 // Naming Styles

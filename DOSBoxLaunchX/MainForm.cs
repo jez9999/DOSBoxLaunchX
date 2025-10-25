@@ -26,6 +26,14 @@ public partial class MainForm : Form {
 
 #pragma warning disable IDE1006 // Naming Styles
 	private void MainForm_Load(object sender, EventArgs ea) {
+		try {
+			_data.LocalAppDataDir = LocalAppDataHelper.EnsureLocalAppDataDir(_data.ProgramName);
+		}
+		catch (Exception ex) {
+			MessageBoxHelper.ShowErrorMessageOk($"FATAL ERROR: Failed to ensure local app data directory: {ex.Message}", "Error");
+			Environment.Exit(1);
+		}
+
 		if (_data.IsDebugBuild) {
 			Text += " - DEBUG BUILD";
 		}
@@ -35,8 +43,6 @@ public partial class MainForm : Form {
 			sb.AppendLine($"- {arg}");
 		}
 		txtOutput.Text = $"{sb}";
-
-		_data.LocalAppDataDir = LocalAppDataHelper.EnsureLocalAppDataDir(_data.ProgramName);
 
 		// TODO: probable docs for 'executable name': When a shortcut is being used to run a DOS game/app rather than just start a DOS shell with a particular configuration, the name of the executable to run can be entered here to run it; if an autoexec section also exists, this will be added to the end of it.
 	}
