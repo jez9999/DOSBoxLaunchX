@@ -520,9 +520,9 @@
 			// pictureBox1
 			// 
 			pictureBox1.BackColor = Color.FromArgb(252, 252, 252);
-			pictureBox1.Location = new Point(174, 0);
+			pictureBox1.Location = new Point(0, 0);
 			pictureBox1.Name = "pictureBox1";
-			pictureBox1.Size = new Size(1085, 24);
+			pictureBox1.Size = new Size(1259, 24);
 			pictureBox1.TabIndex = 205;
 			pictureBox1.TabStop = false;
 			// 
@@ -531,7 +531,6 @@
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(1259, 867);
-			Controls.Add(pictureBox1);
 			Controls.Add(toolStripContainer1);
 			Controls.Add(lblIsRegistered);
 			Controls.Add(btnSave);
@@ -546,6 +545,7 @@
 			Controls.Add(radGlobal);
 			Controls.Add(radShortcut);
 			Controls.Add(txtOutput);
+			Controls.Add(pictureBox1);
 			FormBorderStyle = FormBorderStyle.FixedSingle;
 			Icon = (Icon)resources.GetObject("$this.Icon");
 			MainMenuStrip = menuStrip1;
