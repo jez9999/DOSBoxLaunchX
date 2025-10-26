@@ -93,11 +93,10 @@ public partial class MainForm : Form {
 
 	private void btnNew_Click(object sender, EventArgs ea) {
 		MessageBoxHelper.ShowInfoMessage("TODO: Impl. 'New shortcut config settings'", "");
-	}
 
-	private void btnHelp_Click(object sender, EventArgs ea) {
-		using var helpForm = _formFact.CreateHelpForm();
-		helpForm.ShowDialog();
+		// TODO: code to show help form:
+		//using var helpForm = _formFact.CreateHelpForm();
+		//helpForm.ShowDialog();
 	}
 
 	private void radShortcut_CheckedChanged(object sender, EventArgs ea) {

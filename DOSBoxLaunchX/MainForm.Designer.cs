@@ -36,6 +36,7 @@
 			btnRemoveAssoc = new Button();
 			txtShortcutFilePath = new TextBox();
 			tabsContainer = new TabControl();
+			tabGeneral = new TabPage();
 			tabCpu = new TabPage();
 			tabVideo = new TabPage();
 			tabAudio = new TabPage();
@@ -43,12 +44,10 @@
 			tabCustom = new TabPage();
 			tabKbMappings = new TabPage();
 			label2 = new Label();
-			btnHelp = new Button();
 			btnNew = new Button();
 			btnLoad = new Button();
 			btnSave = new Button();
 			lblIsRegistered = new Label();
-			tabGeneral = new TabPage();
 			tabsContainer.SuspendLayout();
 			SuspendLayout();
 			// 
@@ -141,6 +140,15 @@
 			tabsContainer.Size = new Size(1235, 572);
 			tabsContainer.TabIndex = 100;
 			// 
+			// tabGeneral
+			// 
+			tabGeneral.BackColor = SystemColors.Control;
+			tabGeneral.Location = new Point(4, 24);
+			tabGeneral.Name = "tabGeneral";
+			tabGeneral.Size = new Size(1227, 544);
+			tabGeneral.TabIndex = 6;
+			tabGeneral.Text = "General";
+			// 
 			// tabCpu
 			// 
 			tabCpu.BackColor = SystemColors.Control;
@@ -207,16 +215,6 @@
 			label2.TabIndex = 8;
 			label2.Text = "Output";
 			// 
-			// btnHelp
-			// 
-			btnHelp.Image = (Image)resources.GetObject("btnHelp.Image");
-			btnHelp.Location = new Point(1214, 9);
-			btnHelp.Name = "btnHelp";
-			btnHelp.Size = new Size(35, 35);
-			btnHelp.TabIndex = 90;
-			btnHelp.UseVisualStyleBackColor = true;
-			btnHelp.Click += btnHelp_Click;
-			// 
 			// btnNew
 			// 
 			btnNew.Location = new Point(1130, 15);
@@ -256,15 +254,6 @@
 			lblIsRegistered.TabIndex = 202;
 			lblIsRegistered.Text = "Registered: ???";
 			// 
-			// tabGeneral
-			// 
-			tabGeneral.BackColor = SystemColors.Control;
-			tabGeneral.Location = new Point(4, 24);
-			tabGeneral.Name = "tabGeneral";
-			tabGeneral.Size = new Size(1227, 544);
-			tabGeneral.TabIndex = 6;
-			tabGeneral.Text = "General";
-			// 
 			// MainForm
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
@@ -274,7 +263,6 @@
 			Controls.Add(btnSave);
 			Controls.Add(btnLoad);
 			Controls.Add(btnNew);
-			Controls.Add(btnHelp);
 			Controls.Add(label2);
 			Controls.Add(tabsContainer);
 			Controls.Add(txtShortcutFilePath);
@@ -314,7 +302,6 @@
 		private TabPage tabCustom;
 		private TabPage tabKbMappings;
 		private Label label2;
-		private Button btnHelp;
 		private Button btnNew;
 		private Button btnLoad;
 		private Button btnSave;
