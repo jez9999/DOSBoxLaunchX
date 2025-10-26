@@ -53,6 +53,13 @@ public partial class LauncherForm : Form {
 			var exePath = Path.Combine(baseDir, "dosbox-x.exe");
 			var configPath = Path.Combine(_data.LocalAppDataDir, configFile);
 
+			// TODO: the local app data dir will typically contain:
+			// - dosbox-x._Tyrian_.conf             // per-launch merged DOSBox-X configs for each shortcut; written each time a .dlx is opened
+			// - dosbox-x.[shortcutFilename2].conf
+			// - dosbox-x.[shortcutFilename3].conf
+			// - global.dlx                         // global shortcut providing default overrides; other shortcuts merge into it, with the non-global shortcut taking precedence for any conflicting settings
+			// - settings.json                      // app settings/preferences
+
 			addTxtboxMsg($"Generating config file: {configFile}");
 
 			await launchDosboxX(exePath, configPath, baseDir);

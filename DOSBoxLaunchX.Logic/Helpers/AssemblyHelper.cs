@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace DOSBoxLaunchX.Helpers;
+namespace DOSBoxLaunchX.Logic.Helpers;
 
 /// <summary>
 /// Used to specify the type of version string that should be generated.
@@ -15,7 +15,7 @@ public enum VersionStringType {
 	Major,
 }
 
-internal class AssemblyHelper {
+public class AssemblyHelper {
 	/// <summary>
 	/// Returns a string indicating the version of the Assembly supplied.
 	/// </summary>

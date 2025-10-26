@@ -51,7 +51,7 @@ public partial class MainForm : Form {
 #pragma warning restore IDE1006 // Naming Styles
 
 	private void updateIsRegisteredLabel() {
-		if (AppAssociator.IsAppRegistered(_data.ShortcutFiletypeExtension, _data.ShortcutFiletypeProgId)) {
+		if (WinAppAssociator.IsAppRegistered(_data.ShortcutFiletypeExtension, _data.ShortcutFiletypeProgId)) {
 			lblIsRegistered.Text = "Registered: YES";
 		}
 		else {
@@ -60,8 +60,8 @@ public partial class MainForm : Form {
 	}
 
 	private void btnAssoc_Click(object sender, EventArgs ea) {
-		AppAssociator.RegisterApp(_data.ShortcutFiletypeExtension, _data.ShortcutFiletypeProgId, $"{_data.ShortcutFiletypeDescription}{(_data.IsDebugBuild ? " - DEBUG BUILD" : "")}", _data.AppExePath);
-		AppAssociator.TriggerExplorerIconsRefresh();
+		WinAppAssociator.RegisterApp(_data.ShortcutFiletypeExtension, _data.ShortcutFiletypeProgId, $"{_data.ShortcutFiletypeDescription}{(_data.IsDebugBuild ? " - DEBUG BUILD" : "")}", _data.AppExePath);
+		WinAppAssociator.TriggerExplorerIconsRefresh();
 
 		updateIsRegisteredLabel();
 
@@ -72,8 +72,8 @@ public partial class MainForm : Form {
 	}
 
 	private void btnRemoveAssoc_Click(object sender, EventArgs ea) {
-		AppAssociator.UnregisterApp(_data.ShortcutFiletypeExtension, _data.ShortcutFiletypeProgId);
-		AppAssociator.TriggerExplorerIconsRefresh();
+		WinAppAssociator.UnregisterApp(_data.ShortcutFiletypeExtension, _data.ShortcutFiletypeProgId);
+		WinAppAssociator.TriggerExplorerIconsRefresh();
 
 		updateIsRegisteredLabel();
 

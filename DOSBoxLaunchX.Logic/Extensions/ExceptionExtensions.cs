@@ -1,8 +1,8 @@
-﻿using System.Text;
+﻿using System.Linq;
 
-namespace DOSBoxLaunchX.Extensions;
+namespace DOSBoxLaunchX.Logic.Extensions;
 
-internal static class ExceptionExtensions {
+public static class ExceptionExtensions {
 	#region Private methods
 
 	private static int buildFormattedExceptionMessages(StringBuilder sb, Exception ex, int maxNesting, int nesting = 1) {

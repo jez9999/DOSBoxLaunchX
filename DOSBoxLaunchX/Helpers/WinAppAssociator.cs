@@ -3,7 +3,7 @@ using Microsoft.Win32;
 
 namespace DOSBoxLaunchX.Helpers;
 
-public static partial class AppAssociator {
+public static partial class WinAppAssociator {
 	#region DLL Imports
 
 	[LibraryImport("shell32.dll")]

@@ -1,6 +1,6 @@
-﻿namespace DOSBoxLaunchX.Helpers;
+﻿namespace DOSBoxLaunchX.Logic.Helpers;
 
-internal static class NewlinesHelper {
+public static class NewlinesHelper {
 	public enum NewlineStyle {
 		Unix,     // LF (\n)
 		Windows,  // CRLF (\r\n)

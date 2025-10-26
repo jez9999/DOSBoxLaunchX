@@ -1,7 +1,8 @@
-using DOSBoxLaunchX.Extensions;
 using DOSBoxLaunchX.Factories;
 using DOSBoxLaunchX.Helpers;
 using DOSBoxLaunchX.Models;
+using DOSBoxLaunchX.Logic.Services;
+using DOSBoxLaunchX.Logic.Extensions;
 
 namespace DOSBoxLaunchX;
 
@@ -107,6 +108,8 @@ internal static class Program {
 				});
 				services.AddTransient<FormFactory>();
 				services.AddTransient(x => Random.Shared);
+				IJsonSerializerProvider jsonProvider = new JsonSerializerProvider();
+				services.AddSingleton(svc => jsonProvider);
 
 				// NOTE: whenever you find yourself tempted to consume IServiceProvider via DI, consider whether
 				// it might be a better idea to create a factory class for the service you're going to be
