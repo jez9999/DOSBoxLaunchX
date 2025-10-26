@@ -48,6 +48,10 @@ public partial class MainForm : Form {
 
 		// TODO: probable docs for 'executable name': When a shortcut is being used to run a DOS game/app rather than just start a DOS shell with a particular configuration, the name of the executable to run can be entered here to run it; if an autoexec section also exists, this will be added to the end of it.
 	}
+
+	private void MainForm_FormClosing(object sender, FormClosingEventArgs ea) {
+		// TODO: if data's still dirty, modal popup allowing save/don't save/cancel
+	}
 #pragma warning restore IDE1006 // Naming Styles
 
 	private void updateIsRegisteredLabel() {
@@ -95,8 +99,6 @@ public partial class MainForm : Form {
 		MessageBoxHelper.ShowInfoMessage("TODO: Impl. 'New shortcut config settings'", "");
 
 		// TODO: code to show help form:
-		//using var helpForm = _formFact.CreateHelpForm();
-		//helpForm.ShowDialog();
 	}
 
 	private void radShortcut_CheckedChanged(object sender, EventArgs ea) {
@@ -116,5 +118,42 @@ public partial class MainForm : Form {
 			txtShortcutFilePath.Enabled = true;
 			txtShortcutFilePath.BackColor = Color.WhiteSmoke;
 		}
+	}
+
+	private void newToolStripMenuItem_Click(object sender, EventArgs ea) {
+		MessageBoxHelper.ShowInfoMessage("TODO: Impl. 'New Shortcut'", "");
+	}
+
+	private void openToolStripMenuItem_Click(object sender, EventArgs ea) {
+		MessageBoxHelper.ShowInfoMessage("TODO: Impl. 'Open Shortcut'", "");
+	}
+
+	private void saveToolStripMenuItem_Click(object sender, EventArgs ea) {
+		MessageBoxHelper.ShowInfoMessage("TODO: Impl. 'Save Shortcut'", "");
+	}
+
+	private void saveAsToolStripMenuItem_Click(object sender, EventArgs ea) {
+		MessageBoxHelper.ShowInfoMessage("TODO: Impl. 'Save Shortcut As'", "");
+	}
+
+	private void saveGlobalsToolStripMenuItem_Click(object sender, EventArgs ea) {
+		MessageBoxHelper.ShowInfoMessage("TODO: Impl. 'Save Globals'", "");
+	}
+
+	private void exitToolStripMenuItem_Click(object sender, EventArgs ea) {
+		Application.Exit();
+	}
+
+	private void optionsToolStripMenuItem_Click(object sender, EventArgs ea) {
+		MessageBoxHelper.ShowInfoMessage("TODO: Impl. 'Options'", "");
+	}
+
+	private void infoToolStripMenuItem_Click(object sender, EventArgs ea) {
+		using var helpForm = _formFact.CreateHelpForm();
+		helpForm.ShowDialog();
+	}
+
+	private void aboutToolStripMenuItem_Click(object sender, EventArgs ea) {
+		MessageBoxHelper.ShowInfoMessage("TODO: Impl. 'About'", "");
 	}
 }
