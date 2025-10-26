@@ -17,6 +17,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Docs_", "_Docs_", "{78537D
 		_Docs_\_UI-IMAGES_.txt = _Docs_\_UI-IMAGES_.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DOSBoxLaunchX.Logic", "DOSBoxLaunchX.Logic\DOSBoxLaunchX.Logic.csproj", "{13757739-25A9-4E34-8683-4046AB3ACB02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DOSBoxLaunchX.Tests", "DOSBoxLaunchX.Tests\DOSBoxLaunchX.Tests.csproj", "{C0E703C5-9239-4673-8C07-6D2F128688B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{3E05047E-823D-436B-9A89-A069368EA072}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E05047E-823D-436B-9A89-A069368EA072}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E05047E-823D-436B-9A89-A069368EA072}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13757739-25A9-4E34-8683-4046AB3ACB02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13757739-25A9-4E34-8683-4046AB3ACB02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13757739-25A9-4E34-8683-4046AB3ACB02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13757739-25A9-4E34-8683-4046AB3ACB02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0E703C5-9239-4673-8C07-6D2F128688B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0E703C5-9239-4673-8C07-6D2F128688B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0E703C5-9239-4673-8C07-6D2F128688B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0E703C5-9239-4673-8C07-6D2F128688B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -44,13 +44,26 @@ public partial class MainForm : Form {
 		}
 		txtOutput.Text = $"{sb}";
 
+		updateIsRegisteredLabel();
+
 		// TODO: probable docs for 'executable name': When a shortcut is being used to run a DOS game/app rather than just start a DOS shell with a particular configuration, the name of the executable to run can be entered here to run it; if an autoexec section also exists, this will be added to the end of it.
 	}
 #pragma warning restore IDE1006 // Naming Styles
 
+	private void updateIsRegisteredLabel() {
+		if (AppAssociator.IsAppRegistered(_data.ShortcutFiletypeExtension, _data.ShortcutFiletypeProgId)) {
+			lblIsRegistered.Text = "Registered: YES";
+		}
+		else {
+			lblIsRegistered.Text = "Registered: NO";
+		}
+	}
+
 	private void btnAssoc_Click(object sender, EventArgs ea) {
 		AppAssociator.RegisterApp(_data.ShortcutFiletypeExtension, _data.ShortcutFiletypeProgId, $"{_data.ShortcutFiletypeDescription}{(_data.IsDebugBuild ? " - DEBUG BUILD" : "")}", _data.AppExePath);
 		AppAssociator.TriggerExplorerIconsRefresh();
+
+		updateIsRegisteredLabel();
 
 		MessageBoxHelper.ShowInfoMessage(
 			"DOSBoxLaunchX has been registered as a handler for .DLX files.",
@@ -61,6 +74,8 @@ public partial class MainForm : Form {
 	private void btnRemoveAssoc_Click(object sender, EventArgs ea) {
 		AppAssociator.UnregisterApp(_data.ShortcutFiletypeExtension, _data.ShortcutFiletypeProgId);
 		AppAssociator.TriggerExplorerIconsRefresh();
+
+		updateIsRegisteredLabel();
 
 		MessageBoxHelper.ShowInfoMessage(
 			"DOSBoxLaunchX has been unregistered as a handler for .DLX files.",

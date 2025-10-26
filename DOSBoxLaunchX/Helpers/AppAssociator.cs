@@ -71,4 +71,26 @@ public static partial class AppAssociator {
 		const uint SHCNF_IDLIST = 0x0000;
 		SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, IntPtr.Zero, IntPtr.Zero);
 	}
+
+	/// <summary>
+	/// Checks whether the app is currently registered as the default handler for a given file extension.
+	/// </summary>
+	/// <param name="extension">The file extension to check.</param>
+	/// <param name="progId">The ProgID expected for the association.</param>
+	/// <returns>If the app is currently registered as the default handler, true; otherwise false.</returns>
+	public static bool IsAppRegistered(string extension, string progId) {
+		if (string.IsNullOrWhiteSpace(extension)) { throw new ArgumentException("File extension cannot be null or empty/whitespace.", nameof(extension)); }
+		if (string.IsNullOrWhiteSpace(progId)) { throw new ArgumentException("ProgID cannot be null or empty/whitespace.", nameof(progId)); }
+
+		extension = $"{(extension.StartsWith('.') ? "" : ".")}{extension.ToLower()}";
+
+		using (var extKey = Registry.CurrentUser.OpenSubKey($@"{_classesPath}\{extension}")) {
+			if (extKey == null) {
+				return false; // Extension key does not exist
+			}
+
+			var currentProgId = extKey.GetValue("") as string;
+			return string.Equals(currentProgId, progId, StringComparison.OrdinalIgnoreCase);
+		}
+	}
 }

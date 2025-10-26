@@ -12,18 +12,7 @@ internal static class Program {
 	// TODO: If Linux support is ever needed, refactor this app's Form logic into an MVVM pattern for Uno.
 
 	// ====================================================
-	//Always convert config files line endings to newlines
-
-	//local / global (radioboxes) | Associate app with .dlx files, Remove app's association with .dlx files
-	// ^ Save / Load / New | ?
-	//textbox for entering location of local shortcut whose settings we're editing
-
-
-	//tabgroup settings
-
-
-
-	//output info textbox
+	// TODO: Always normalize all config files line endings to Unix newlines (LF)
 	// ====================================================
 
 	[STAThread]

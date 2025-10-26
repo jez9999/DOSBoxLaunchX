@@ -41,12 +41,14 @@
 			tabAudio = new TabPage();
 			tabPeripherals = new TabPage();
 			tabCustom = new TabPage();
-			tabMapper = new TabPage();
+			tabKbMappings = new TabPage();
 			label2 = new Label();
 			btnHelp = new Button();
 			btnNew = new Button();
 			btnLoad = new Button();
 			btnSave = new Button();
+			lblIsRegistered = new Label();
+			tabGeneral = new TabPage();
 			tabsContainer.SuspendLayout();
 			SuspendLayout();
 			// 
@@ -126,12 +128,13 @@
 			// 
 			// tabsContainer
 			// 
+			tabsContainer.Controls.Add(tabGeneral);
 			tabsContainer.Controls.Add(tabCpu);
 			tabsContainer.Controls.Add(tabVideo);
 			tabsContainer.Controls.Add(tabAudio);
 			tabsContainer.Controls.Add(tabPeripherals);
 			tabsContainer.Controls.Add(tabCustom);
-			tabsContainer.Controls.Add(tabMapper);
+			tabsContainer.Controls.Add(tabKbMappings);
 			tabsContainer.Location = new Point(12, 52);
 			tabsContainer.Name = "tabsContainer";
 			tabsContainer.SelectedIndex = 0;
@@ -185,14 +188,14 @@
 			tabCustom.TabIndex = 4;
 			tabCustom.Text = "Custom settings";
 			// 
-			// tabMapper
+			// tabKbMappings
 			// 
-			tabMapper.BackColor = SystemColors.Control;
-			tabMapper.Location = new Point(4, 24);
-			tabMapper.Name = "tabMapper";
-			tabMapper.Size = new Size(1227, 544);
-			tabMapper.TabIndex = 5;
-			tabMapper.Text = "Keyboard mapper";
+			tabKbMappings.BackColor = SystemColors.Control;
+			tabKbMappings.Location = new Point(4, 24);
+			tabKbMappings.Name = "tabKbMappings";
+			tabKbMappings.Size = new Size(1227, 544);
+			tabKbMappings.TabIndex = 5;
+			tabKbMappings.Text = "Keyboard mappings";
 			// 
 			// label2
 			// 
@@ -244,11 +247,30 @@
 			btnSave.UseVisualStyleBackColor = true;
 			btnSave.Click += btnSave_Click;
 			// 
+			// lblIsRegistered
+			// 
+			lblIsRegistered.AutoSize = true;
+			lblIsRegistered.Location = new Point(629, 629);
+			lblIsRegistered.Name = "lblIsRegistered";
+			lblIsRegistered.Size = new Size(83, 15);
+			lblIsRegistered.TabIndex = 202;
+			lblIsRegistered.Text = "Registered: ???";
+			// 
+			// tabGeneral
+			// 
+			tabGeneral.BackColor = SystemColors.Control;
+			tabGeneral.Location = new Point(4, 24);
+			tabGeneral.Name = "tabGeneral";
+			tabGeneral.Size = new Size(1227, 544);
+			tabGeneral.TabIndex = 6;
+			tabGeneral.Text = "General";
+			// 
 			// MainForm
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(1259, 867);
+			Controls.Add(lblIsRegistered);
 			Controls.Add(btnSave);
 			Controls.Add(btnLoad);
 			Controls.Add(btnNew);
@@ -290,11 +312,13 @@
 		private TabPage tabAudio;
 		private TabPage tabPeripherals;
 		private TabPage tabCustom;
-		private TabPage tabMapper;
+		private TabPage tabKbMappings;
 		private Label label2;
 		private Button btnHelp;
 		private Button btnNew;
 		private Button btnLoad;
 		private Button btnSave;
+		private Label lblIsRegistered;
+		private TabPage tabGeneral;
 	}
 }
