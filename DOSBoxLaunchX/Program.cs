@@ -1,8 +1,9 @@
 using DOSBoxLaunchX.Factories;
 using DOSBoxLaunchX.Helpers;
 using DOSBoxLaunchX.Models;
-using DOSBoxLaunchX.Logic.Services;
+using DOSBoxLaunchX.Services;
 using DOSBoxLaunchX.Logic.Extensions;
+using DOSBoxLaunchX.Logic.Services;
 
 namespace DOSBoxLaunchX;
 
@@ -107,6 +108,8 @@ internal static class Program {
 					Args = args,
 				});
 				services.AddTransient<FormFactory>();
+				services.AddTransient<FormsValidatorHelper>();
+				services.AddTransient<ControlInfoTagParser>();
 				services.AddTransient(x => Random.Shared);
 				IJsonSerializerProvider jsonProvider = new JsonSerializerProvider();
 				services.AddSingleton(svc => jsonProvider);

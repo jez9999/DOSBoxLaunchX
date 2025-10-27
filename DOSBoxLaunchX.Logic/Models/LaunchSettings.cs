@@ -25,6 +25,7 @@ public class LaunchSettings {
 	/// <summary>
 	/// If BaseDir is set, determines whether it's mounted with "-freesize 1024" (limit free hard disk space
 	/// to max. 1GiB).
+	/// TODO: maybe this should be a long and determine the freesize MB value?  "LimitBaseDirFreeSpace"
 	/// </summary>
 	public bool? LimitBaseDirToOneGiB { get; set; }
 

@@ -28,7 +28,6 @@
 		/// </summary>
 		private void InitializeComponent() {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-			txtOutput = new TextBox();
 			radShortcut = new RadioButton();
 			radGlobal = new RadioButton();
 			label1 = new Label();
@@ -37,16 +36,32 @@
 			txtShortcutFilePath = new TextBox();
 			tabsContainer = new TabControl();
 			tabGeneral = new TabPage();
+			lblNameDescriptionNote = new Label();
+			comboLimitBaseDirToOneGiB = new ComboBox();
+			cbLimitBaseDirToOneGiBSet = new CheckBox();
+			lblLimitBaseDirToOneGiB = new Label();
+			cbExecutableSet = new CheckBox();
+			txtExecutable = new TextBox();
+			lblExecutable = new Label();
+			cbBaseDirSet = new CheckBox();
+			label6 = new Label();
+			txtBaseDir = new TextBox();
+			lblBaseDir = new Label();
+			txtDescription = new TextBox();
+			lblDescription = new Label();
+			txtName = new TextBox();
+			lblName = new Label();
 			tabCpu = new TabPage();
+			cbCyclesSet = new CheckBox();
+			label4 = new Label();
+			txtCycles = new TextBox();
+			lblCycles = new Label();
 			tabVideo = new TabPage();
 			tabAudio = new TabPage();
 			tabPeripherals = new TabPage();
 			tabCustom = new TabPage();
 			tabKbMappings = new TabPage();
 			label2 = new Label();
-			btnNew = new Button();
-			btnLoad = new Button();
-			btnSave = new Button();
 			lblIsRegistered = new Label();
 			mainMenuStrip = new MenuStrip();
 			fileToolStripMenuItem = new ToolStripMenuItem();
@@ -66,30 +81,21 @@
 			aboutToolStripMenuItem = new ToolStripMenuItem();
 			mainMenuStripContainer = new ToolStripContainer();
 			pbBgMainMenuStrip = new PictureBox();
+			txtOutput = new RichTextBox();
 			tabsContainer.SuspendLayout();
+			tabGeneral.SuspendLayout();
+			tabCpu.SuspendLayout();
 			mainMenuStrip.SuspendLayout();
 			mainMenuStripContainer.TopToolStripPanel.SuspendLayout();
 			mainMenuStripContainer.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)pbBgMainMenuStrip).BeginInit();
 			SuspendLayout();
 			// 
-			// txtOutput
-			// 
-			txtOutput.BackColor = SystemColors.Window;
-			txtOutput.Font = new Font("Courier New", 9.75F);
-			txtOutput.Location = new Point(12, 656);
-			txtOutput.Multiline = true;
-			txtOutput.Name = "txtOutput";
-			txtOutput.ReadOnly = true;
-			txtOutput.ScrollBars = ScrollBars.Vertical;
-			txtOutput.Size = new Size(1235, 199);
-			txtOutput.TabIndex = 0;
-			txtOutput.TabStop = false;
-			// 
 			// radShortcut
 			// 
 			radShortcut.AutoSize = true;
-			radShortcut.Location = new Point(13, 45);
+			radShortcut.Checked = true;
+			radShortcut.Location = new Point(13, 50);
 			radShortcut.Name = "radShortcut";
 			radShortcut.Size = new Size(70, 19);
 			radShortcut.TabIndex = 1;
@@ -101,11 +107,10 @@
 			// radGlobal
 			// 
 			radGlobal.AutoSize = true;
-			radGlobal.Location = new Point(84, 45);
+			radGlobal.Location = new Point(84, 50);
 			radGlobal.Name = "radGlobal";
 			radGlobal.Size = new Size(59, 19);
 			radGlobal.TabIndex = 2;
-			radGlobal.TabStop = true;
 			radGlobal.Text = "Global";
 			radGlobal.UseVisualStyleBackColor = true;
 			radGlobal.CheckedChanged += radGlobal_CheckedChanged;
@@ -113,7 +118,7 @@
 			// label1
 			// 
 			label1.AutoSize = true;
-			label1.Location = new Point(12, 27);
+			label1.Location = new Point(12, 32);
 			label1.Name = "label1";
 			label1.Size = new Size(128, 15);
 			label1.TabIndex = 3;
@@ -121,7 +126,7 @@
 			// 
 			// btnAssoc
 			// 
-			btnAssoc.Location = new Point(814, 628);
+			btnAssoc.Location = new Point(814, 621);
 			btnAssoc.Name = "btnAssoc";
 			btnAssoc.Size = new Size(183, 23);
 			btnAssoc.TabIndex = 200;
@@ -131,7 +136,7 @@
 			// 
 			// btnRemoveAssoc
 			// 
-			btnRemoveAssoc.Location = new Point(1003, 628);
+			btnRemoveAssoc.Location = new Point(1003, 621);
 			btnRemoveAssoc.Name = "btnRemoveAssoc";
 			btnRemoveAssoc.Size = new Size(245, 23);
 			btnRemoveAssoc.TabIndex = 201;
@@ -141,10 +146,10 @@
 			// 
 			// txtShortcutFilePath
 			// 
-			txtShortcutFilePath.Location = new Point(153, 33);
+			txtShortcutFilePath.Location = new Point(153, 38);
 			txtShortcutFilePath.Name = "txtShortcutFilePath";
 			txtShortcutFilePath.ReadOnly = true;
-			txtShortcutFilePath.Size = new Size(798, 23);
+			txtShortcutFilePath.Size = new Size(1090, 23);
 			txtShortcutFilePath.TabIndex = 10;
 			// 
 			// tabsContainer
@@ -156,7 +161,7 @@
 			tabsContainer.Controls.Add(tabPeripherals);
 			tabsContainer.Controls.Add(tabCustom);
 			tabsContainer.Controls.Add(tabKbMappings);
-			tabsContainer.Location = new Point(12, 83);
+			tabsContainer.Location = new Point(12, 76);
 			tabsContainer.Name = "tabsContainer";
 			tabsContainer.SelectedIndex = 0;
 			tabsContainer.Size = new Size(1235, 539);
@@ -165,21 +170,223 @@
 			// tabGeneral
 			// 
 			tabGeneral.BackColor = SystemColors.Control;
+			tabGeneral.Controls.Add(lblNameDescriptionNote);
+			tabGeneral.Controls.Add(comboLimitBaseDirToOneGiB);
+			tabGeneral.Controls.Add(cbLimitBaseDirToOneGiBSet);
+			tabGeneral.Controls.Add(lblLimitBaseDirToOneGiB);
+			tabGeneral.Controls.Add(cbExecutableSet);
+			tabGeneral.Controls.Add(txtExecutable);
+			tabGeneral.Controls.Add(lblExecutable);
+			tabGeneral.Controls.Add(cbBaseDirSet);
+			tabGeneral.Controls.Add(label6);
+			tabGeneral.Controls.Add(txtBaseDir);
+			tabGeneral.Controls.Add(lblBaseDir);
+			tabGeneral.Controls.Add(txtDescription);
+			tabGeneral.Controls.Add(lblDescription);
+			tabGeneral.Controls.Add(txtName);
+			tabGeneral.Controls.Add(lblName);
 			tabGeneral.Location = new Point(4, 24);
 			tabGeneral.Name = "tabGeneral";
 			tabGeneral.Size = new Size(1227, 511);
 			tabGeneral.TabIndex = 6;
 			tabGeneral.Text = "General";
 			// 
+			// lblNameDescriptionNote
+			// 
+			lblNameDescriptionNote.AutoSize = true;
+			lblNameDescriptionNote.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
+			lblNameDescriptionNote.Location = new Point(127, 7);
+			lblNameDescriptionNote.Name = "lblNameDescriptionNote";
+			lblNameDescriptionNote.Size = new Size(463, 15);
+			lblNameDescriptionNote.TabIndex = 19;
+			lblNameDescriptionNote.Text = "(Name/Description are purely descriptive and don't affect the DOSBox-X configuration)";
+			// 
+			// comboLimitBaseDirToOneGiB
+			// 
+			comboLimitBaseDirToOneGiB.DropDownStyle = ComboBoxStyle.DropDownList;
+			comboLimitBaseDirToOneGiB.FormattingEnabled = true;
+			comboLimitBaseDirToOneGiB.Items.AddRange(new object[] { "Yes", "No" });
+			comboLimitBaseDirToOneGiB.Location = new Point(289, 174);
+			comboLimitBaseDirToOneGiB.Name = "comboLimitBaseDirToOneGiB";
+			comboLimitBaseDirToOneGiB.Size = new Size(64, 23);
+			comboLimitBaseDirToOneGiB.TabIndex = 41;
+			comboLimitBaseDirToOneGiB.Tag = "default";
+			// 
+			// cbLimitBaseDirToOneGiBSet
+			// 
+			cbLimitBaseDirToOneGiBSet.AutoSize = true;
+			cbLimitBaseDirToOneGiBSet.Location = new Point(11, 178);
+			cbLimitBaseDirToOneGiBSet.Name = "cbLimitBaseDirToOneGiBSet";
+			cbLimitBaseDirToOneGiBSet.Size = new Size(15, 14);
+			cbLimitBaseDirToOneGiBSet.TabIndex = 40;
+			cbLimitBaseDirToOneGiBSet.Tag = "assoc=lblLimitBaseDirToOneGiB,comboLimitBaseDirToOneGiB|default=true";
+			cbLimitBaseDirToOneGiBSet.UseVisualStyleBackColor = true;
+			// 
+			// lblLimitBaseDirToOneGiB
+			// 
+			lblLimitBaseDirToOneGiB.AutoSize = true;
+			lblLimitBaseDirToOneGiB.Location = new Point(36, 177);
+			lblLimitBaseDirToOneGiB.Name = "lblLimitBaseDirToOneGiB";
+			lblLimitBaseDirToOneGiB.Size = new Size(247, 15);
+			lblLimitBaseDirToOneGiB.TabIndex = 15;
+			lblLimitBaseDirToOneGiB.Text = "^ Limit reported free hard disk space to 1 GiB:";
+			// 
+			// cbExecutableSet
+			// 
+			cbExecutableSet.AutoSize = true;
+			cbExecutableSet.Location = new Point(11, 207);
+			cbExecutableSet.Name = "cbExecutableSet";
+			cbExecutableSet.Size = new Size(15, 14);
+			cbExecutableSet.TabIndex = 50;
+			cbExecutableSet.Tag = "assoc=lblExecutable,txtExecutable|default=true";
+			cbExecutableSet.UseVisualStyleBackColor = true;
+			// 
+			// txtExecutable
+			// 
+			txtExecutable.Location = new Point(127, 203);
+			txtExecutable.Name = "txtExecutable";
+			txtExecutable.Size = new Size(470, 23);
+			txtExecutable.TabIndex = 51;
+			txtExecutable.Tag = "default";
+			// 
+			// lblExecutable
+			// 
+			lblExecutable.AutoSize = true;
+			lblExecutable.Cursor = Cursors.Help;
+			lblExecutable.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point, 0);
+			lblExecutable.Location = new Point(36, 206);
+			lblExecutable.Name = "lblExecutable";
+			lblExecutable.Size = new Size(67, 15);
+			lblExecutable.TabIndex = 11;
+			lblExecutable.Text = "Executable:";
+			lblExecutable.Click += lblExecutable_Click;
+			// 
+			// cbBaseDirSet
+			// 
+			cbBaseDirSet.AutoSize = true;
+			cbBaseDirSet.Location = new Point(11, 149);
+			cbBaseDirSet.Name = "cbBaseDirSet";
+			cbBaseDirSet.Size = new Size(15, 14);
+			cbBaseDirSet.TabIndex = 30;
+			cbBaseDirSet.Tag = "assoc=lblBaseDir,txtBaseDir|default=true";
+			cbBaseDirSet.UseVisualStyleBackColor = true;
+			// 
+			// label6
+			// 
+			label6.AutoSize = true;
+			label6.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+			label6.Location = new Point(5, 7);
+			label6.Name = "label6";
+			label6.Size = new Size(26, 15);
+			label6.TabIndex = 6;
+			label6.Text = "Set";
+			// 
+			// txtBaseDir
+			// 
+			txtBaseDir.Location = new Point(127, 145);
+			txtBaseDir.Name = "txtBaseDir";
+			txtBaseDir.Size = new Size(470, 23);
+			txtBaseDir.TabIndex = 31;
+			txtBaseDir.Tag = "default";
+			// 
+			// lblBaseDir
+			// 
+			lblBaseDir.AutoSize = true;
+			lblBaseDir.Cursor = Cursors.Help;
+			lblBaseDir.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point, 0);
+			lblBaseDir.Location = new Point(36, 148);
+			lblBaseDir.Name = "lblBaseDir";
+			lblBaseDir.Size = new Size(85, 15);
+			lblBaseDir.TabIndex = 4;
+			lblBaseDir.Text = "Base Directory:";
+			lblBaseDir.Click += lblBaseDir_Click;
+			// 
+			// txtDescription
+			// 
+			txtDescription.Location = new Point(127, 54);
+			txtDescription.Multiline = true;
+			txtDescription.Name = "txtDescription";
+			txtDescription.ScrollBars = ScrollBars.Vertical;
+			txtDescription.Size = new Size(470, 85);
+			txtDescription.TabIndex = 21;
+			txtDescription.Tag = "allowNewlines=true";
+			// 
+			// lblDescription
+			// 
+			lblDescription.AutoSize = true;
+			lblDescription.Location = new Point(36, 57);
+			lblDescription.Name = "lblDescription";
+			lblDescription.Size = new Size(70, 15);
+			lblDescription.TabIndex = 2;
+			lblDescription.Text = "Description:";
+			// 
+			// txtName
+			// 
+			txtName.Location = new Point(127, 25);
+			txtName.Name = "txtName";
+			txtName.Size = new Size(470, 23);
+			txtName.TabIndex = 11;
+			txtName.Tag = "default";
+			// 
+			// lblName
+			// 
+			lblName.AutoSize = true;
+			lblName.Location = new Point(36, 28);
+			lblName.Name = "lblName";
+			lblName.Size = new Size(42, 15);
+			lblName.TabIndex = 0;
+			lblName.Text = "Name:";
+			// 
 			// tabCpu
 			// 
 			tabCpu.BackColor = SystemColors.Control;
+			tabCpu.Controls.Add(cbCyclesSet);
+			tabCpu.Controls.Add(label4);
+			tabCpu.Controls.Add(txtCycles);
+			tabCpu.Controls.Add(lblCycles);
 			tabCpu.Location = new Point(4, 24);
 			tabCpu.Name = "tabCpu";
 			tabCpu.Padding = new Padding(3);
 			tabCpu.Size = new Size(1227, 511);
 			tabCpu.TabIndex = 0;
 			tabCpu.Text = "CPU";
+			// 
+			// cbCyclesSet
+			// 
+			cbCyclesSet.AutoSize = true;
+			cbCyclesSet.Location = new Point(11, 29);
+			cbCyclesSet.Name = "cbCyclesSet";
+			cbCyclesSet.Size = new Size(15, 14);
+			cbCyclesSet.TabIndex = 10;
+			cbCyclesSet.Tag = "assoc=lblCycles,txtCycles";
+			cbCyclesSet.UseVisualStyleBackColor = true;
+			// 
+			// label4
+			// 
+			label4.AutoSize = true;
+			label4.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+			label4.Location = new Point(5, 7);
+			label4.Name = "label4";
+			label4.Size = new Size(26, 15);
+			label4.TabIndex = 35;
+			label4.Text = "Set";
+			// 
+			// txtCycles
+			// 
+			txtCycles.Location = new Point(127, 25);
+			txtCycles.Name = "txtCycles";
+			txtCycles.Size = new Size(470, 23);
+			txtCycles.TabIndex = 11;
+			txtCycles.Tag = "default";
+			// 
+			// lblCycles
+			// 
+			lblCycles.AutoSize = true;
+			lblCycles.Location = new Point(36, 28);
+			lblCycles.Name = "lblCycles";
+			lblCycles.Size = new Size(44, 15);
+			lblCycles.TabIndex = 34;
+			lblCycles.Text = "Cycles:";
 			// 
 			// tabVideo
 			// 
@@ -231,46 +438,16 @@
 			// 
 			label2.AutoSize = true;
 			label2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-			label2.Location = new Point(12, 636);
+			label2.Location = new Point(12, 629);
 			label2.Name = "label2";
 			label2.Size = new Size(47, 15);
 			label2.TabIndex = 8;
 			label2.Text = "Output";
 			// 
-			// btnNew
-			// 
-			btnNew.Location = new Point(1133, 33);
-			btnNew.Name = "btnNew";
-			btnNew.Size = new Size(75, 23);
-			btnNew.TabIndex = 82;
-			btnNew.Text = "New";
-			btnNew.UseVisualStyleBackColor = true;
-			btnNew.Click += btnNew_Click;
-			// 
-			// btnLoad
-			// 
-			btnLoad.Location = new Point(1044, 33);
-			btnLoad.Name = "btnLoad";
-			btnLoad.Size = new Size(83, 23);
-			btnLoad.TabIndex = 81;
-			btnLoad.Text = "Load";
-			btnLoad.UseVisualStyleBackColor = true;
-			btnLoad.Click += btnLoad_Click;
-			// 
-			// btnSave
-			// 
-			btnSave.Location = new Point(963, 33);
-			btnSave.Name = "btnSave";
-			btnSave.Size = new Size(75, 23);
-			btnSave.TabIndex = 80;
-			btnSave.Text = "Save";
-			btnSave.UseVisualStyleBackColor = true;
-			btnSave.Click += btnSave_Click;
-			// 
 			// lblIsRegistered
 			// 
 			lblIsRegistered.AutoSize = true;
-			lblIsRegistered.Location = new Point(629, 629);
+			lblIsRegistered.Location = new Point(629, 622);
 			lblIsRegistered.Name = "lblIsRegistered";
 			lblIsRegistered.Size = new Size(83, 15);
 			lblIsRegistered.TabIndex = 202;
@@ -425,17 +602,25 @@
 			pbBgMainMenuStrip.TabIndex = 205;
 			pbBgMainMenuStrip.TabStop = false;
 			// 
+			// txtOutput
+			// 
+			txtOutput.BackColor = SystemColors.Window;
+			txtOutput.Location = new Point(12, 647);
+			txtOutput.Name = "txtOutput";
+			txtOutput.ReadOnly = true;
+			txtOutput.Size = new Size(1231, 201);
+			txtOutput.TabIndex = 206;
+			txtOutput.Text = "";
+			// 
 			// MainForm
 			// 
 			AllowDrop = true;
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(1259, 867);
+			ClientSize = new Size(1259, 860);
+			Controls.Add(txtOutput);
 			Controls.Add(mainMenuStripContainer);
 			Controls.Add(lblIsRegistered);
-			Controls.Add(btnSave);
-			Controls.Add(btnLoad);
-			Controls.Add(btnNew);
 			Controls.Add(label2);
 			Controls.Add(tabsContainer);
 			Controls.Add(txtShortcutFilePath);
@@ -444,7 +629,6 @@
 			Controls.Add(label1);
 			Controls.Add(radGlobal);
 			Controls.Add(radShortcut);
-			Controls.Add(txtOutput);
 			Controls.Add(pbBgMainMenuStrip);
 			FormBorderStyle = FormBorderStyle.FixedSingle;
 			Icon = (Icon)resources.GetObject("$this.Icon");
@@ -459,6 +643,10 @@
 			DragDrop += MainForm_DragDrop;
 			DragEnter += MainForm_DragEnter;
 			tabsContainer.ResumeLayout(false);
+			tabGeneral.ResumeLayout(false);
+			tabGeneral.PerformLayout();
+			tabCpu.ResumeLayout(false);
+			tabCpu.PerformLayout();
 			mainMenuStrip.ResumeLayout(false);
 			mainMenuStrip.PerformLayout();
 			mainMenuStripContainer.TopToolStripPanel.ResumeLayout(false);
@@ -471,8 +659,6 @@
 		}
 
 		#endregion
-
-		private TextBox txtOutput;
 		private RadioButton radShortcut;
 		private RadioButton radGlobal;
 		private Label label1;
@@ -487,9 +673,6 @@
 		private TabPage tabCustom;
 		private TabPage tabKbMappings;
 		private Label label2;
-		private Button btnNew;
-		private Button btnLoad;
-		private Button btnSave;
 		private Label lblIsRegistered;
 		private TabPage tabGeneral;
 		private MenuStrip mainMenuStrip;
@@ -510,5 +693,25 @@
 		private ToolStripContainer mainMenuStripContainer;
 		private PictureBox pbBgMainMenuStrip;
 		private ToolStripMenuItem saveGlobalsToolStripMenuItem;
+		private TextBox txtName;
+		private Label lblName;
+		private TextBox txtDescription;
+		private Label lblDescription;
+		private CheckBox cbBaseDirSet;
+		private Label label6;
+		private TextBox txtBaseDir;
+		private Label lblBaseDir;
+		private CheckBox cbExecutableSet;
+		private TextBox txtExecutable;
+		private Label lblExecutable;
+		private ComboBox comboLimitBaseDirToOneGiB;
+		private CheckBox cbLimitBaseDirToOneGiBSet;
+		private Label lblLimitBaseDirToOneGiB;
+		private Label lblNameDescriptionNote;
+		private CheckBox cbCyclesSet;
+		private Label label4;
+		private TextBox txtCycles;
+		private Label lblCycles;
+		private RichTextBox txtOutput;
 	}
 }
