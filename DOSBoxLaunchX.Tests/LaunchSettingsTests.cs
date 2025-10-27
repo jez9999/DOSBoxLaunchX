@@ -48,13 +48,13 @@ public class LaunchSettingsTests {
 	public void Serialize_cpu_cycles() {
 		// Arrange
 		var settings = new LaunchSettings();
-		settings.CPU.Cycles = 3123;
+		settings.CPU.Cycles = "3123";
 
 		// Act
 		string json = JsonConvert.SerializeObject(settings, _jsonSettings);
 
 		// Assert
-		json.Should().Contain(@"""Settings"":{""cpu.cycles"":3123}");
+		json.Should().Contain(@"""Settings"":{""cpu.cycles"":""3123""}");
 	}
 
 	[Test]
@@ -67,7 +67,7 @@ public class LaunchSettingsTests {
 			LimitBaseDirToOneGiB = true,
 			Executable = "game.exe"
 		};
-		settings.CPU.Cycles = 3123;
+		settings.CPU.Cycles = "3123";
 
 		// Act
 		string json = JsonConvert.SerializeObject(settings, _jsonSettings);
@@ -78,7 +78,7 @@ public class LaunchSettingsTests {
 		json.Should().Contain(@"""BaseDir"":""C:\\Games""");
 		json.Should().Contain(@"""LimitBaseDirToOneGiB"":true");
 		json.Should().Contain(@"""Executable"":""game.exe""");
-		json.Should().Contain(@"""Settings"":{""cpu.cycles"":3123}");
+		json.Should().Contain(@"""Settings"":{""cpu.cycles"":""3123""}");
 	}
 
 	[Test]
@@ -124,14 +124,14 @@ public class LaunchSettingsTests {
 	[Test]
 	public void Deserialize_cpu_cycles() {
 		// Arrange
-		var json = @"{""Settings"":{""cpu.cycles"":3123}}";
+		var json = @"{""Settings"":{""cpu.cycles"":""3123""}}";
 
 		// Act
 		var settings = JsonConvert.DeserializeObject<LaunchSettings>(json, _jsonSettings);
 
 		// Assert
 		settings.Should().BeEquivalentTo(new LaunchSettings {
-			CPU = new LaunchSettings.CPUSettings { Cycles = 3123 }
+			CPU = new LaunchSettings.CPUSettings { Cycles = "3123" }
 		});
 	}
 
@@ -145,7 +145,7 @@ public class LaunchSettingsTests {
 				"BaseDir":"C:\\Games",
 				"LimitBaseDirToOneGiB":true,
 				"Executable":"game.exe",
-				"Settings":{"cpu.cycles":3123}
+				"Settings":{"cpu.cycles":"3123"}
 			}
 			""";
 
@@ -159,18 +159,7 @@ public class LaunchSettingsTests {
 			BaseDir = @"C:\Games",
 			LimitBaseDirToOneGiB = true,
 			Executable = "game.exe",
-			CPU = new LaunchSettings.CPUSettings { Cycles = 3123 }
+			CPU = new LaunchSettings.CPUSettings { Cycles = "3123" }
 		});
-	}
-
-	[Test]
-	public void Deserialize_invalid_cpu_cycles_type_throws() {
-		// Arrange
-		var json = @"{""Settings"":{""cpu.cycles"":""notanumber""}}";
-
-		// Act & Assert
-		json
-			.Invoking(x => JsonConvert.DeserializeObject<LaunchSettings>(x, _jsonSettings))
-			.Should().Throw<Exception>().WithMessage("Error setting value to 'Settings'*");
 	}
 }

@@ -63,7 +63,7 @@ public class LaunchSettings {
 		foreach (var kvp in flat) {
 			switch (kvp.Key) {
 				case "cpu.cycles":
-					CPU.Cycles = getValueOrThrow<long>(kvp.Value, kvp.Key);
+					CPU.Cycles = getValueOrThrow<string>(kvp.Value, kvp.Key);
 					break;
 			}
 		}
@@ -83,7 +83,7 @@ public class LaunchSettings {
 	#region Classes
 
 	public class CPUSettings {
-		public long? Cycles { get; set; }
+		public string? Cycles { get; set; }
 	}
 
 	#endregion
