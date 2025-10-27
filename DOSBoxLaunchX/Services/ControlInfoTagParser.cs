@@ -17,7 +17,7 @@ public class ControlInfoTagParser {
 			Tag = tagStr
 		};
 
-		if (string.Equals(tagStr, "default", StringComparison.OrdinalIgnoreCase)) { return info; }
+		if (string.Equals(tagStr, "defaults", StringComparison.OrdinalIgnoreCase)) { return info; }
 
 		// Parse key=value pairs separated by '|'
 		string[] parts = tagStr.Split('|', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);

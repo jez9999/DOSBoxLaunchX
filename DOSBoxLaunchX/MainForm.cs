@@ -3,6 +3,7 @@ using DOSBoxLaunchX.Helpers;
 using DOSBoxLaunchX.Models;
 using DOSBoxLaunchX.Services;
 using DOSBoxLaunchX.Logic.Models;
+using DOSBoxLaunchX.Logic.Services;
 
 namespace DOSBoxLaunchX;
 
@@ -13,7 +14,11 @@ public partial class MainForm : Form {
 	private readonly FormFactory _formFact;
 	private readonly FormsValidatorHelper _formsValidator;
 	private readonly ControlInfoTagParser _ctrlTagParser;
+	private readonly LaunchSettingsFileService _settingsFileService;
 	private readonly Dictionary<Control, ControlInfo> _controlInfo = [];
+
+	private readonly Font _radFontRegular;
+	private readonly Font _radFontBold;
 
 	private LaunchSettings _currentShortcut = null!;
 	private LaunchSettings _currentGlobals = new();
@@ -25,13 +30,17 @@ public partial class MainForm : Form {
 
 	#region Constructors
 
-	public MainForm(AppOptionsWithData data, FormFactory formFact, FormsValidatorHelper formsValidator, ControlInfoTagParser ctrlTagParser) {
+	public MainForm(AppOptionsWithData data, FormFactory formFact, FormsValidatorHelper formsValidator, ControlInfoTagParser ctrlTagParser, LaunchSettingsFileService settingsFileService) {
 		_data = data;
 		_formFact = formFact;
 		_formsValidator = formsValidator;
 		_ctrlTagParser = ctrlTagParser;
+		_settingsFileService = settingsFileService;
 
 		InitializeComponent();
+
+		_radFontRegular = new Font(radShortcut.Font, FontStyle.Regular);
+		_radFontBold = new Font(radShortcut.Font, FontStyle.Bold);
 	}
 
 	#endregion
@@ -41,12 +50,14 @@ public partial class MainForm : Form {
 	private void initNewShortcut() {
 		// Reset UI first...
 		resetControlDefaults(tabsContainer);
+		radShortcut.Checked = true;
 		selectFirstControl();
 
 		// ... then underlying model.
 		_currentShortcut = new LaunchSettings();
 		_currentShortcutFilePath = null;
 		_shortcutDirty = false;
+		updateUiShortcutFilePath();
 		updateUiDirtyState();
 	}
 
@@ -160,18 +171,20 @@ public partial class MainForm : Form {
 			};
 
 			tb.Validated += (sender, ea) => {
-				if (tb.Text != info.PreviousValue) {
+				if (info.PreviousValue != null && tb.Text != info.PreviousValue) {
 					controlValueChanged(sender, ea);
 				}
+				info.PreviousValue = tb.Text;
 			};
 		}
 		else if (ctl is ComboBox combo) {
 			combo.Enter += (sender, ea) => info.PreviousValue = $"{combo.SelectedIndex}";
 
 			combo.Validated += (sender, ea) => {
-				if ($"{combo.SelectedIndex}" != info.PreviousValue) {
+				if (info.PreviousValue != null && $"{combo.SelectedIndex}" != info.PreviousValue) {
 					controlValueChanged(sender, ea);
 				}
+				info.PreviousValue = $"{combo.SelectedIndex}";
 			};
 		}
 	}
@@ -197,9 +210,139 @@ public partial class MainForm : Form {
 		}
 	}
 
+	private void updateUiShortcutFilePath() {
+		if (radGlobal.Checked) {
+			txtShortcutFilePath.Text = "";
+			txtShortcutFilePath.Enabled = false;
+			txtShortcutFilePath.BackColor = SystemColors.Window;
+		}
+		else {
+			txtShortcutFilePath.Text = _currentShortcutFilePath ?? "[New shortcut]";
+			txtShortcutFilePath.Enabled = true;
+			txtShortcutFilePath.BackColor = Color.WhiteSmoke;
+		}
+	}
+
 	private void updateUiDirtyState() {
-		addTxtboxMsg("updating UI dirty state");
-		// TODO: implement
+		if (_shortcutDirty) {
+			if (radShortcut.Text[^1] != '*') {
+				radShortcut.Font = _radFontBold;
+				radShortcut.Text += "*";
+
+				//radGlobal.Font = _radFontBold;
+				//radGlobal.Text += "*";
+			}
+		}
+		else {
+			if (radShortcut.Text[^1] == '*') {
+				radShortcut.Font = _radFontRegular;
+				radShortcut.Text = radShortcut.Text[..^1];
+
+				//radGlobal.Font = _radFontRegular;
+				//radGlobal.Text = radGlobal.Text[..^1];
+			}
+		}
+
+		// Enable/disable menu items based on dirty state
+		mnuSave.Enabled = _shortcutDirty;
+		//mnuSaveGlobals.Enabled = _globalsDirty;
+	}
+
+	private bool promptSaveIfDirty(bool checkShortcutDirty = true, bool checkGlobalsDirty = false) {
+		// If this method returns true, action can continue; otherwise, it should abort.
+		bool shortcutDirty = checkShortcutDirty && _shortcutDirty;
+		bool globalsDirty = checkGlobalsDirty && _globalsDirty;
+
+		if (!shortcutDirty && !globalsDirty) {
+			return true;
+		}
+
+		string msg;
+		if (shortcutDirty && globalsDirty) {
+			msg = "You have unsaved changes to both the current shortcut and the global settings. Do you want to save them?";
+		}
+		else if (shortcutDirty) {
+			msg = "You have unsaved changes to the current shortcut. Do you want to save them?";
+		}
+		else {
+			msg = "You have unsaved changes to the global settings. Do you want to save them?";
+		}
+
+		var result = MessageBoxHelper.ShowQuestionMessage(
+			msg,
+			"Save changes?",
+			MessageBoxButtons.YesNoCancel,
+			MessageBoxDefaultButton.Button1
+		);
+
+		switch (result) {
+			case DialogResult.Yes:
+				// TODO: implement (Save Globals and Save Shortcut menu options)
+				//if (globalsDirty && !saveGlobals()) { return false; }
+				//if (shortcutDirty && !saveShortcut()) { return false; }
+				return true;
+
+			case DialogResult.No:
+				return true;
+
+			case DialogResult.Cancel:
+			default:
+				return false;
+		}
+	}
+
+	private void doSaveAs() {
+		saveFileDialog.Title = "Save Shortcut As";
+		// We purposely don't set the .InitialDirectory property.  When left unset,
+		// the dialog helpfully remembers the last directory the user was in, which
+		// is desired behaviour.
+		saveFileDialog.Filter = "DOSBoxLaunchX Shortcut (*.dlx)|*.dlx";
+		saveFileDialog.FilterIndex = 1;
+		saveFileDialog.DefaultExt = "dlx";
+		saveFileDialog.AddExtension = true;
+
+		// Pre-fill filename if one exists
+		try {
+			saveFileDialog.FileName =
+				!string.IsNullOrEmpty(_currentShortcutFilePath)
+				? Path.GetFileName(_currentShortcutFilePath)
+				: string.Empty;
+		}
+		catch {
+			saveFileDialog.FileName = string.Empty;
+		}
+
+		if (saveFileDialog.ShowDialog() != DialogResult.OK) { return; }
+
+		string path = saveFileDialog.FileName;
+		try {
+			_settingsFileService.SaveToFile(_currentShortcut, path);
+		}
+		catch (Exception ex) {
+			MessageBoxHelper.ShowErrorMessageOk(
+				$"""
+				Failed to save launch shortcut:
+				{ex.Message}
+				""",
+				"Error saving launch shortcut"
+			);
+			return;
+		}
+
+		// Saved successfully
+		_currentShortcutFilePath = path;
+		_shortcutDirty = false;
+		updateUiShortcutFilePath();
+		updateUiDirtyState();
+	}
+
+	private void updateIsRegisteredLabel() {
+		if (WinAppAssociator.IsAppRegistered(_data.ShortcutFiletypeExtension, _data.ShortcutFiletypeProgId)) {
+			lblIsRegistered.Text = "Registered: YES";
+		}
+		else {
+			lblIsRegistered.Text = "Registered: NO";
+		}
 	}
 
 	private void addTxtboxMsg(string msg) {
@@ -255,18 +398,19 @@ public partial class MainForm : Form {
 	}
 
 	private void MainForm_FormClosing(object sender, FormClosingEventArgs ea) {
-		// TODO: if data's still dirty, modal popup allowing save/don't save/cancel
+		// Force all controls to validate first
+		if (!ValidateChildren()) {
+			ea.Cancel = true;
+			return;
+		}
+
+		// Prompt for dirty shortcut/globals
+		if (!promptSaveIfDirty(true, true)) {
+			ea.Cancel = true;
+			return;
+		}
 	}
 #pragma warning restore IDE1006 // Naming Styles
-
-	private void updateIsRegisteredLabel() {
-		if (WinAppAssociator.IsAppRegistered(_data.ShortcutFiletypeExtension, _data.ShortcutFiletypeProgId)) {
-			lblIsRegistered.Text = "Registered: YES";
-		}
-		else {
-			lblIsRegistered.Text = "Registered: NO";
-		}
-	}
 
 	private void btnAssoc_Click(object sender, EventArgs ea) {
 		WinAppAssociator.RegisterApp(_data.ShortcutFiletypeExtension, _data.ShortcutFiletypeProgId, $"{_data.ShortcutFiletypeDescription}{(_data.IsDebugBuild ? " - DEBUG BUILD" : "")}", _data.AppExePath);
@@ -293,60 +437,53 @@ public partial class MainForm : Form {
 	}
 
 	private void radShortcut_CheckedChanged(object sender, EventArgs ea) {
-		updateShortcutFilePath();
+		updateUiShortcutFilePath();
 	}
 
 	private void radGlobal_CheckedChanged(object sender, EventArgs ea) {
-		updateShortcutFilePath();
+		updateUiShortcutFilePath();
 	}
 
-	private void updateShortcutFilePath() {
-		if (radGlobal.Checked) {
-			txtShortcutFilePath.Enabled = false;
-			txtShortcutFilePath.BackColor = SystemColors.Window;
+	private void mnuNew_Click(object sender, EventArgs ea) {
+		if (!ValidateChildren()) {
+			return;
 		}
-		else {
-			txtShortcutFilePath.Enabled = true;
-			txtShortcutFilePath.BackColor = Color.WhiteSmoke;
-		}
-	}
+		if (!promptSaveIfDirty()) { return; }
 
-	private void newToolStripMenuItem_Click(object sender, EventArgs ea) {
 		initNewShortcut();
 	}
 
-	private void openToolStripMenuItem_Click(object sender, EventArgs ea) {
+	private void mnuOpen_Click(object sender, EventArgs ea) {
 		MessageBoxHelper.ShowInfoMessage("TODO: Impl. 'Open Shortcut'", "");
 	}
 
-	private void saveToolStripMenuItem_Click(object sender, EventArgs ea) {
+	private void mnuSave_Click(object sender, EventArgs ea) {
 		MessageBoxHelper.ShowInfoMessage("TODO: Impl. 'Save Shortcut'", "");
 	}
 
-	private void saveAsToolStripMenuItem_Click(object sender, EventArgs ea) {
-		MessageBoxHelper.ShowInfoMessage("TODO: Impl. 'Save Shortcut As'", "");
+	private void mnuSaveAs_Click(object sender, EventArgs ea) {
+		doSaveAs();
 	}
 
-	private void saveGlobalsToolStripMenuItem_Click(object sender, EventArgs ea) {
+	private void mnuSaveGlobals_Click(object sender, EventArgs ea) {
 		MessageBoxHelper.ShowInfoMessage("TODO: Impl. 'Save Globals'", "");
 	}
 
-	private void exitToolStripMenuItem_Click(object sender, EventArgs ea) {
+	private void mnuExit_Click(object sender, EventArgs ea) {
 		Application.Exit();
 	}
 
-	private void optionsToolStripMenuItem_Click(object sender, EventArgs ea) {
+	private void mnuOptions_Click(object sender, EventArgs ea) {
 		MessageBoxHelper.ShowInfoMessage("TODO: Impl. 'Options'", "");
 	}
 
-	private void infoToolStripMenuItem_Click(object sender, EventArgs ea) {
+	private void mnuInfo_Click(object sender, EventArgs ea) {
 		using var helpForm = _formFact.CreateHelpForm();
 		helpForm.ShowDialog();
 	}
 
-	private void aboutToolStripMenuItem_Click(object sender, EventArgs ea) {
-		//MessageBoxHelper.ShowInfoMessage("TODO: Impl. 'About'", "");
-		MessageBoxHelper.ShowErrorMessageOk("msgText", "titleText");
+	private void mnuAbout_Click(object sender, EventArgs ea) {
+		MessageBoxHelper.ShowInfoMessage("TODO: Impl. 'About'", "");
 	}
 
 	private void lblExecutable_Click(object sender, EventArgs ea) {

@@ -64,24 +64,26 @@
 			label2 = new Label();
 			lblIsRegistered = new Label();
 			mainMenuStrip = new MenuStrip();
-			fileToolStripMenuItem = new ToolStripMenuItem();
-			newToolStripMenuItem = new ToolStripMenuItem();
-			openToolStripMenuItem = new ToolStripMenuItem();
+			mnuFile = new ToolStripMenuItem();
+			mnuNew = new ToolStripMenuItem();
+			mnuOpen = new ToolStripMenuItem();
 			toolStripSeparator = new ToolStripSeparator();
-			saveToolStripMenuItem = new ToolStripMenuItem();
-			saveAsToolStripMenuItem = new ToolStripMenuItem();
-			saveGlobalsToolStripMenuItem = new ToolStripMenuItem();
+			mnuSave = new ToolStripMenuItem();
+			mnuSaveAs = new ToolStripMenuItem();
+			mnuSaveGlobals = new ToolStripMenuItem();
 			toolStripSeparator2 = new ToolStripSeparator();
-			exitToolStripMenuItem = new ToolStripMenuItem();
-			toolsToolStripMenuItem = new ToolStripMenuItem();
-			optionsToolStripMenuItem = new ToolStripMenuItem();
-			helpToolStripMenuItem = new ToolStripMenuItem();
-			infoToolStripMenuItem = new ToolStripMenuItem();
+			mnuExit = new ToolStripMenuItem();
+			mnuTools = new ToolStripMenuItem();
+			mnuOptions = new ToolStripMenuItem();
+			mnuHelp = new ToolStripMenuItem();
+			mnuInfo = new ToolStripMenuItem();
 			toolStripSeparator5 = new ToolStripSeparator();
-			aboutToolStripMenuItem = new ToolStripMenuItem();
+			mnuAbout = new ToolStripMenuItem();
 			mainMenuStripContainer = new ToolStripContainer();
 			pbBgMainMenuStrip = new PictureBox();
 			txtOutput = new RichTextBox();
+			openFileDialog = new OpenFileDialog();
+			saveFileDialog = new SaveFileDialog();
 			tabsContainer.SuspendLayout();
 			tabGeneral.SuspendLayout();
 			tabCpu.SuspendLayout();
@@ -107,7 +109,7 @@
 			// radGlobal
 			// 
 			radGlobal.AutoSize = true;
-			radGlobal.Location = new Point(84, 50);
+			radGlobal.Location = new Point(96, 50);
 			radGlobal.Name = "radGlobal";
 			radGlobal.Size = new Size(59, 19);
 			radGlobal.TabIndex = 2;
@@ -118,7 +120,7 @@
 			// label1
 			// 
 			label1.AutoSize = true;
-			label1.Location = new Point(12, 32);
+			label1.Location = new Point(18, 32);
 			label1.Name = "label1";
 			label1.Size = new Size(128, 15);
 			label1.TabIndex = 3;
@@ -146,10 +148,10 @@
 			// 
 			// txtShortcutFilePath
 			// 
-			txtShortcutFilePath.Location = new Point(153, 38);
+			txtShortcutFilePath.Location = new Point(167, 38);
 			txtShortcutFilePath.Name = "txtShortcutFilePath";
 			txtShortcutFilePath.ReadOnly = true;
-			txtShortcutFilePath.Size = new Size(1090, 23);
+			txtShortcutFilePath.Size = new Size(1076, 23);
 			txtShortcutFilePath.TabIndex = 10;
 			// 
 			// tabsContainer
@@ -210,7 +212,7 @@
 			comboLimitBaseDirToOneGiB.Name = "comboLimitBaseDirToOneGiB";
 			comboLimitBaseDirToOneGiB.Size = new Size(64, 23);
 			comboLimitBaseDirToOneGiB.TabIndex = 41;
-			comboLimitBaseDirToOneGiB.Tag = "default";
+			comboLimitBaseDirToOneGiB.Tag = "defaults";
 			// 
 			// cbLimitBaseDirToOneGiBSet
 			// 
@@ -247,7 +249,7 @@
 			txtExecutable.Name = "txtExecutable";
 			txtExecutable.Size = new Size(470, 23);
 			txtExecutable.TabIndex = 51;
-			txtExecutable.Tag = "default";
+			txtExecutable.Tag = "defaults";
 			// 
 			// lblExecutable
 			// 
@@ -287,7 +289,7 @@
 			txtBaseDir.Name = "txtBaseDir";
 			txtBaseDir.Size = new Size(470, 23);
 			txtBaseDir.TabIndex = 31;
-			txtBaseDir.Tag = "default";
+			txtBaseDir.Tag = "defaults";
 			// 
 			// lblBaseDir
 			// 
@@ -326,7 +328,7 @@
 			txtName.Name = "txtName";
 			txtName.Size = new Size(470, 23);
 			txtName.TabIndex = 11;
-			txtName.Tag = "default";
+			txtName.Tag = "defaults";
 			// 
 			// lblName
 			// 
@@ -377,7 +379,7 @@
 			txtCycles.Name = "txtCycles";
 			txtCycles.Size = new Size(470, 23);
 			txtCycles.TabIndex = 11;
-			txtCycles.Tag = "default";
+			txtCycles.Tag = "defaults";
 			// 
 			// lblCycles
 			// 
@@ -456,7 +458,7 @@
 			// mainMenuStrip
 			// 
 			mainMenuStrip.Dock = DockStyle.None;
-			mainMenuStrip.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, toolsToolStripMenuItem, helpToolStripMenuItem });
+			mainMenuStrip.Items.AddRange(new ToolStripItem[] { mnuFile, mnuTools, mnuHelp });
 			mainMenuStrip.Location = new Point(0, 0);
 			mainMenuStrip.Name = "mainMenuStrip";
 			mainMenuStrip.RenderMode = ToolStripRenderMode.Professional;
@@ -464,115 +466,115 @@
 			mainMenuStrip.TabIndex = 203;
 			mainMenuStrip.Text = "menuStrip1";
 			// 
-			// fileToolStripMenuItem
+			// mnuFile
 			// 
-			fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { newToolStripMenuItem, openToolStripMenuItem, toolStripSeparator, saveToolStripMenuItem, saveAsToolStripMenuItem, saveGlobalsToolStripMenuItem, toolStripSeparator2, exitToolStripMenuItem });
-			fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-			fileToolStripMenuItem.Size = new Size(37, 20);
-			fileToolStripMenuItem.Text = "&File";
+			mnuFile.DropDownItems.AddRange(new ToolStripItem[] { mnuNew, mnuOpen, toolStripSeparator, mnuSave, mnuSaveAs, mnuSaveGlobals, toolStripSeparator2, mnuExit });
+			mnuFile.Name = "mnuFile";
+			mnuFile.Size = new Size(37, 20);
+			mnuFile.Text = "&File";
 			// 
-			// newToolStripMenuItem
+			// mnuNew
 			// 
-			newToolStripMenuItem.Image = (Image)resources.GetObject("newToolStripMenuItem.Image");
-			newToolStripMenuItem.ImageTransparentColor = Color.Magenta;
-			newToolStripMenuItem.Name = "newToolStripMenuItem";
-			newToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.N;
-			newToolStripMenuItem.Size = new Size(194, 22);
-			newToolStripMenuItem.Text = "&New Shortcut";
-			newToolStripMenuItem.Click += newToolStripMenuItem_Click;
+			mnuNew.Image = (Image)resources.GetObject("mnuNew.Image");
+			mnuNew.ImageTransparentColor = Color.Magenta;
+			mnuNew.Name = "mnuNew";
+			mnuNew.ShortcutKeys = Keys.Control | Keys.N;
+			mnuNew.Size = new Size(194, 22);
+			mnuNew.Text = "&New Shortcut";
+			mnuNew.Click += mnuNew_Click;
 			// 
-			// openToolStripMenuItem
+			// mnuOpen
 			// 
-			openToolStripMenuItem.Image = (Image)resources.GetObject("openToolStripMenuItem.Image");
-			openToolStripMenuItem.ImageTransparentColor = Color.Magenta;
-			openToolStripMenuItem.Name = "openToolStripMenuItem";
-			openToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.O;
-			openToolStripMenuItem.Size = new Size(194, 22);
-			openToolStripMenuItem.Text = "&Open Shortcut";
-			openToolStripMenuItem.Click += openToolStripMenuItem_Click;
+			mnuOpen.Image = (Image)resources.GetObject("mnuOpen.Image");
+			mnuOpen.ImageTransparentColor = Color.Magenta;
+			mnuOpen.Name = "mnuOpen";
+			mnuOpen.ShortcutKeys = Keys.Control | Keys.O;
+			mnuOpen.Size = new Size(194, 22);
+			mnuOpen.Text = "&Open Shortcut";
+			mnuOpen.Click += mnuOpen_Click;
 			// 
 			// toolStripSeparator
 			// 
 			toolStripSeparator.Name = "toolStripSeparator";
 			toolStripSeparator.Size = new Size(191, 6);
 			// 
-			// saveToolStripMenuItem
+			// mnuSave
 			// 
-			saveToolStripMenuItem.Image = (Image)resources.GetObject("saveToolStripMenuItem.Image");
-			saveToolStripMenuItem.ImageTransparentColor = Color.Magenta;
-			saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-			saveToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.S;
-			saveToolStripMenuItem.Size = new Size(194, 22);
-			saveToolStripMenuItem.Text = "&Save Shortcut";
-			saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
+			mnuSave.Image = (Image)resources.GetObject("mnuSave.Image");
+			mnuSave.ImageTransparentColor = Color.Magenta;
+			mnuSave.Name = "mnuSave";
+			mnuSave.ShortcutKeys = Keys.Control | Keys.S;
+			mnuSave.Size = new Size(194, 22);
+			mnuSave.Text = "&Save Shortcut";
+			mnuSave.Click += mnuSave_Click;
 			// 
-			// saveAsToolStripMenuItem
+			// mnuSaveAs
 			// 
-			saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-			saveAsToolStripMenuItem.Size = new Size(194, 22);
-			saveAsToolStripMenuItem.Text = "Save Shortcut &As";
-			saveAsToolStripMenuItem.Click += saveAsToolStripMenuItem_Click;
+			mnuSaveAs.Name = "mnuSaveAs";
+			mnuSaveAs.Size = new Size(194, 22);
+			mnuSaveAs.Text = "Save Shortcut &As";
+			mnuSaveAs.Click += mnuSaveAs_Click;
 			// 
-			// saveGlobalsToolStripMenuItem
+			// mnuSaveGlobals
 			// 
-			saveGlobalsToolStripMenuItem.Image = (Image)resources.GetObject("saveGlobalsToolStripMenuItem.Image");
-			saveGlobalsToolStripMenuItem.ImageTransparentColor = Color.Magenta;
-			saveGlobalsToolStripMenuItem.Name = "saveGlobalsToolStripMenuItem";
-			saveGlobalsToolStripMenuItem.Size = new Size(194, 22);
-			saveGlobalsToolStripMenuItem.Text = "Save &Globals";
-			saveGlobalsToolStripMenuItem.Click += saveGlobalsToolStripMenuItem_Click;
+			mnuSaveGlobals.Image = (Image)resources.GetObject("mnuSaveGlobals.Image");
+			mnuSaveGlobals.ImageTransparentColor = Color.Magenta;
+			mnuSaveGlobals.Name = "mnuSaveGlobals";
+			mnuSaveGlobals.Size = new Size(194, 22);
+			mnuSaveGlobals.Text = "Save &Globals";
+			mnuSaveGlobals.Click += mnuSaveGlobals_Click;
 			// 
 			// toolStripSeparator2
 			// 
 			toolStripSeparator2.Name = "toolStripSeparator2";
 			toolStripSeparator2.Size = new Size(191, 6);
 			// 
-			// exitToolStripMenuItem
+			// mnuExit
 			// 
-			exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			exitToolStripMenuItem.Size = new Size(194, 22);
-			exitToolStripMenuItem.Text = "E&xit";
-			exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
+			mnuExit.Name = "mnuExit";
+			mnuExit.Size = new Size(194, 22);
+			mnuExit.Text = "E&xit";
+			mnuExit.Click += mnuExit_Click;
 			// 
-			// toolsToolStripMenuItem
+			// mnuTools
 			// 
-			toolsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { optionsToolStripMenuItem });
-			toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-			toolsToolStripMenuItem.Size = new Size(46, 20);
-			toolsToolStripMenuItem.Text = "&Tools";
+			mnuTools.DropDownItems.AddRange(new ToolStripItem[] { mnuOptions });
+			mnuTools.Name = "mnuTools";
+			mnuTools.Size = new Size(46, 20);
+			mnuTools.Text = "&Tools";
 			// 
-			// optionsToolStripMenuItem
+			// mnuOptions
 			// 
-			optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-			optionsToolStripMenuItem.Size = new Size(116, 22);
-			optionsToolStripMenuItem.Text = "&Options";
-			optionsToolStripMenuItem.Click += optionsToolStripMenuItem_Click;
+			mnuOptions.Name = "mnuOptions";
+			mnuOptions.Size = new Size(116, 22);
+			mnuOptions.Text = "&Options";
+			mnuOptions.Click += mnuOptions_Click;
 			// 
-			// helpToolStripMenuItem
+			// mnuHelp
 			// 
-			helpToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { infoToolStripMenuItem, toolStripSeparator5, aboutToolStripMenuItem });
-			helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-			helpToolStripMenuItem.Size = new Size(44, 20);
-			helpToolStripMenuItem.Text = "&Help";
+			mnuHelp.DropDownItems.AddRange(new ToolStripItem[] { mnuInfo, toolStripSeparator5, mnuAbout });
+			mnuHelp.Name = "mnuHelp";
+			mnuHelp.Size = new Size(44, 20);
+			mnuHelp.Text = "&Help";
 			// 
-			// infoToolStripMenuItem
+			// mnuInfo
 			// 
-			infoToolStripMenuItem.Name = "infoToolStripMenuItem";
-			infoToolStripMenuItem.Size = new Size(116, 22);
-			infoToolStripMenuItem.Text = "&Info";
-			infoToolStripMenuItem.Click += infoToolStripMenuItem_Click;
+			mnuInfo.Name = "mnuInfo";
+			mnuInfo.Size = new Size(116, 22);
+			mnuInfo.Text = "&Info";
+			mnuInfo.Click += mnuInfo_Click;
 			// 
 			// toolStripSeparator5
 			// 
 			toolStripSeparator5.Name = "toolStripSeparator5";
 			toolStripSeparator5.Size = new Size(113, 6);
 			// 
-			// aboutToolStripMenuItem
+			// mnuAbout
 			// 
-			aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			aboutToolStripMenuItem.Size = new Size(116, 22);
-			aboutToolStripMenuItem.Text = "&About...";
-			aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
+			mnuAbout.Name = "mnuAbout";
+			mnuAbout.Size = new Size(116, 22);
+			mnuAbout.Text = "&About...";
+			mnuAbout.Click += mnuAbout_Click;
 			// 
 			// mainMenuStripContainer
 			// 
@@ -676,23 +678,23 @@
 		private Label lblIsRegistered;
 		private TabPage tabGeneral;
 		private MenuStrip mainMenuStrip;
-		private ToolStripMenuItem fileToolStripMenuItem;
-		private ToolStripMenuItem newToolStripMenuItem;
-		private ToolStripMenuItem openToolStripMenuItem;
+		private ToolStripMenuItem mnuFile;
+		private ToolStripMenuItem mnuNew;
+		private ToolStripMenuItem mnuOpen;
 		private ToolStripSeparator toolStripSeparator;
-		private ToolStripMenuItem saveToolStripMenuItem;
-		private ToolStripMenuItem saveAsToolStripMenuItem;
+		private ToolStripMenuItem mnuSave;
+		private ToolStripMenuItem mnuSaveAs;
 		private ToolStripSeparator toolStripSeparator2;
-		private ToolStripMenuItem exitToolStripMenuItem;
-		private ToolStripMenuItem toolsToolStripMenuItem;
-		private ToolStripMenuItem optionsToolStripMenuItem;
-		private ToolStripMenuItem helpToolStripMenuItem;
-		private ToolStripMenuItem infoToolStripMenuItem;
+		private ToolStripMenuItem mnuExit;
+		private ToolStripMenuItem mnuTools;
+		private ToolStripMenuItem mnuOptions;
+		private ToolStripMenuItem mnuHelp;
+		private ToolStripMenuItem mnuInfo;
 		private ToolStripSeparator toolStripSeparator5;
-		private ToolStripMenuItem aboutToolStripMenuItem;
+		private ToolStripMenuItem mnuAbout;
 		private ToolStripContainer mainMenuStripContainer;
 		private PictureBox pbBgMainMenuStrip;
-		private ToolStripMenuItem saveGlobalsToolStripMenuItem;
+		private ToolStripMenuItem mnuSaveGlobals;
 		private TextBox txtName;
 		private Label lblName;
 		private TextBox txtDescription;
@@ -713,5 +715,7 @@
 		private TextBox txtCycles;
 		private Label lblCycles;
 		private RichTextBox txtOutput;
+		private OpenFileDialog openFileDialog;
+		private SaveFileDialog saveFileDialog;
 	}
 }

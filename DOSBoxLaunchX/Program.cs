@@ -15,6 +15,10 @@ internal static class Program {
 
 	// ====================================================
 	// TODO: Always normalize all config files line endings to Unix newlines (LF)
+	// TODO: Any config setting or section that does not exist in the base configuration when applying
+	// overrides should trigger a warning in the output (may indicate a typo). Additionally, any planned
+	// parsing of dosbox-x.conf should treat blank lines as comment lines, normalize all newlines to LF,
+	// and allow round-trip parsing with exact reconstruction of lines.
 	// ====================================================
 
 	[STAThread]
@@ -113,6 +117,7 @@ internal static class Program {
 				services.AddTransient(x => Random.Shared);
 				IJsonSerializerProvider jsonProvider = new JsonSerializerProvider();
 				services.AddSingleton(svc => jsonProvider);
+				services.AddTransient<LaunchSettingsFileService>();
 
 				// NOTE: whenever you find yourself tempted to consume IServiceProvider via DI, consider whether
 				// it might be a better idea to create a factory class for the service you're going to be
