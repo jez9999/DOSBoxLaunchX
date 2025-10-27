@@ -381,19 +381,19 @@
 			// infoToolStripMenuItem
 			// 
 			infoToolStripMenuItem.Name = "infoToolStripMenuItem";
-			infoToolStripMenuItem.Size = new Size(180, 22);
+			infoToolStripMenuItem.Size = new Size(116, 22);
 			infoToolStripMenuItem.Text = "&Info";
 			infoToolStripMenuItem.Click += infoToolStripMenuItem_Click;
 			// 
 			// toolStripSeparator5
 			// 
 			toolStripSeparator5.Name = "toolStripSeparator5";
-			toolStripSeparator5.Size = new Size(177, 6);
+			toolStripSeparator5.Size = new Size(113, 6);
 			// 
 			// aboutToolStripMenuItem
 			// 
 			aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			aboutToolStripMenuItem.Size = new Size(180, 22);
+			aboutToolStripMenuItem.Size = new Size(116, 22);
 			aboutToolStripMenuItem.Text = "&About...";
 			aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
 			// 
@@ -427,6 +427,7 @@
 			// 
 			// MainForm
 			// 
+			AllowDrop = true;
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(1259, 867);
@@ -455,6 +456,8 @@
 			Text = "DOSBoxLaunchX";
 			FormClosing += MainForm_FormClosing;
 			Load += MainForm_Load;
+			DragDrop += MainForm_DragDrop;
+			DragEnter += MainForm_DragEnter;
 			tabsContainer.ResumeLayout(false);
 			mainMenuStrip.ResumeLayout(false);
 			mainMenuStrip.PerformLayout();

@@ -49,6 +49,28 @@ public partial class MainForm : Form {
 		// TODO: probable docs for 'executable name': When a shortcut is being used to run a DOS game/app rather than just start a DOS shell with a particular configuration, the name of the executable to run can be entered here to run it; if an autoexec section also exists, this will be added to the end of it.
 	}
 
+	private void MainForm_DragEnter(object sender, DragEventArgs ea) {
+		if (ea.Data?.GetDataPresent(DataFormats.FileDrop) == true) {
+			string[] files = (string[])ea.Data.GetData(DataFormats.FileDrop)!;
+			if (files.Length == 1 && Path.GetExtension(files[0]).Equals($".{_data.ShortcutFiletypeExtension.ToLower()}", StringComparison.OrdinalIgnoreCase)) {
+				ea.Effect = DragDropEffects.Copy;
+				return;
+			}
+		}
+		ea.Effect = DragDropEffects.None;
+	}
+
+	private void MainForm_DragDrop(object sender, DragEventArgs ea) {
+		if (ea.Data?.GetDataPresent(DataFormats.FileDrop) == true) {
+			string[] files = (string[])ea.Data.GetData(DataFormats.FileDrop)!;
+			if (files.Length == 1 && Path.GetExtension(files[0]).Equals(".dlx", StringComparison.OrdinalIgnoreCase)) {
+				string filePath = files[0];
+				MessageBoxHelper.ShowInfoMessage("TODO: impl. drag/drop open", "");
+				//OpenShortcut(filePath); // your existing open logic
+			}
+		}
+	}
+
 	private void MainForm_FormClosing(object sender, FormClosingEventArgs ea) {
 		// TODO: if data's still dirty, modal popup allowing save/don't save/cancel
 	}
