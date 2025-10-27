@@ -19,9 +19,6 @@ public partial class MainForm : Form {
 
 	private readonly Font _radFontRegular;
 	private readonly Font _radFontBold;
-
-	private LaunchSettings _currentShortcut = null!;
-	private LaunchSettings _currentGlobals = new();
 	private string? _currentShortcutFilePath = null;
 	private bool _shortcutDirty = false;
 	private bool _globalsDirty = false;
@@ -54,7 +51,6 @@ public partial class MainForm : Form {
 		selectFirstControl();
 
 		// ... then underlying model.
-		_currentShortcut = new LaunchSettings();
 		_currentShortcutFilePath = null;
 		_shortcutDirty = false;
 		updateUiShortcutFilePath();
@@ -316,7 +312,7 @@ public partial class MainForm : Form {
 
 		string path = saveFileDialog.FileName;
 		try {
-			_settingsFileService.SaveToFile(_currentShortcut, path);
+			_settingsFileService.SaveToFile(generateShortcutLaunchSettings(), path);
 		}
 		catch (Exception ex) {
 			MessageBoxHelper.ShowErrorMessageOk(
@@ -334,6 +330,23 @@ public partial class MainForm : Form {
 		_shortcutDirty = false;
 		updateUiShortcutFilePath();
 		updateUiDirtyState();
+	}
+
+	private LaunchSettings generateShortcutLaunchSettings() {
+		var sett = new LaunchSettings {
+			Name = txtName.Text,
+			Description = txtDescription.Text,
+		};
+
+		if (cbBaseDirSet.Checked) { sett.BaseDir = txtBaseDir.Text; }
+		if (cbLimitBaseDirToOneGiBSet.Checked) { sett.LimitBaseDirToOneGiB = (comboLimitBaseDirToOneGiB.SelectedItem as string ?? "") == "Yes"; }
+		if (cbExecutableSet.Checked) { sett.Executable = txtExecutable.Text; }
+
+		if (cbCyclesSet.Checked) {
+			sett.CPU.Cycles = txtCycles.Text;
+		}
+
+		return sett;
 	}
 
 	private void updateIsRegisteredLabel() {
