@@ -291,21 +291,59 @@ public partial class MainForm : Form {
 		}
 	}
 
+	private bool doOpen() {
+		if (!ValidateChildren()) { return false; }
+		if (!promptSaveIfDirty()) { return false; }
+
+		// We purposely don't set the .InitialDirectory property.  When left unset,
+		// the dialog helpfully remembers the last directory the user was in, which
+		// is desired behaviour.
+		openFileDialog.Title = "Open Shortcut";
+		openFileDialog.FileName = "";
+		openFileDialog.Filter = "DOSBoxLaunchX Shortcut (*.dlx)|*.dlx";
+		openFileDialog.FilterIndex = 1;
+
+		if (openFileDialog.ShowDialog() != DialogResult.OK) { return false; }
+
+		string path = openFileDialog.FileName;
+
+		try {
+			var sett = _settingsFileService.LoadFromFile(path);
+			generateUiFromShortcutLaunchSettings(sett);
+		}
+		catch (Exception ex) {
+			MessageBoxHelper.ShowErrorMessageOk(
+				$"""
+				Failed to open launch shortcut:
+				{ex.Message}
+				""",
+				"Error opening launch shortcut"
+			);
+			return false;
+		}
+
+		// Loaded successfully
+		_currentShortcutFilePath = path;
+		_shortcutDirty = false;
+		updateUiShortcutFilePath();
+		updateUiDirtyState();
+
+		return true;
+	}
+
 	private bool doSave() {
 		return doSaveAs(_currentShortcutFilePath);
 	}
 
 	private bool doSaveAs(string? path = null) {
-		if (!ValidateChildren()) {
-			return false;
-		}
+		if (!ValidateChildren()) { return false; }
 
 		// If no path is supplied, show the Save As dialog
 		if (string.IsNullOrWhiteSpace(path)) {
-			saveFileDialog.Title = "Save Shortcut As";
 			// We purposely don't set the .InitialDirectory property.  When left unset,
 			// the dialog helpfully remembers the last directory the user was in, which
 			// is desired behaviour.
+			saveFileDialog.Title = "Save Shortcut As";
 			saveFileDialog.Filter = "DOSBoxLaunchX Shortcut (*.dlx)|*.dlx";
 			saveFileDialog.FilterIndex = 1;
 			saveFileDialog.DefaultExt = "dlx";
@@ -328,7 +366,7 @@ public partial class MainForm : Form {
 		}
 
 		try {
-			_settingsFileService.SaveToFile(generateShortcutLaunchSettings(), path);
+			_settingsFileService.SaveToFile(generateShortcutLaunchSettingsFromUi(), path);
 		}
 		catch (Exception ex) {
 			MessageBoxHelper.ShowErrorMessageOk(
@@ -350,21 +388,36 @@ public partial class MainForm : Form {
 		return true;
 	}
 
-	private LaunchSettings generateShortcutLaunchSettings() {
+	private LaunchSettings generateShortcutLaunchSettingsFromUi() {
 		var sett = new LaunchSettings {
-			Name = txtName.Text,
-			Description = txtDescription.Text,
+			Name = UiHelper.GetTextValue(txtName),
+			Description = UiHelper.GetTextValue(txtDescription),
 		};
 
-		if (cbBaseDirSet.Checked) { sett.BaseDir = txtBaseDir.Text; }
-		if (cbLimitBaseDirToOneGiBSet.Checked) { sett.LimitBaseDirToOneGiB = (comboLimitBaseDirToOneGiB.SelectedItem as string ?? "") == "Yes"; }
-		if (cbExecutableSet.Checked) { sett.Executable = txtExecutable.Text; }
+		if (cbBaseDirSet.Checked) { sett.BaseDir = UiHelper.GetTextValue(txtBaseDir); }
+		if (cbLimitBaseDirToOneGiBSet.Checked) { sett.LimitBaseDirToOneGiB = UiHelper.GetComboValue<bool>(comboLimitBaseDirToOneGiB); }
+		if (cbExecutableSet.Checked) { sett.Executable = UiHelper.GetTextValue(txtExecutable); }
 
-		if (cbCyclesSet.Checked) {
-			sett.CPU.Cycles = txtCycles.Text;
-		}
+		if (cbCyclesSet.Checked) { sett.CPU.Cycles = UiHelper.GetTextValue(txtCycles); }
 
 		return sett;
+	}
+
+	private void generateUiFromShortcutLaunchSettings(LaunchSettings sett) {
+		UiHelper.SetTextFromValue(txtName, sett.Name);
+		UiHelper.SetTextFromValue(txtDescription, sett.Description);
+
+		UiHelper.SetCheckboxFromValue(cbBaseDirSet, sett.BaseDir != null);
+		UiHelper.SetTextFromValue(txtBaseDir, sett.BaseDir);
+
+		UiHelper.SetCheckboxFromValue(cbLimitBaseDirToOneGiBSet, sett.LimitBaseDirToOneGiB != null);
+		UiHelper.SetComboFromValue(comboLimitBaseDirToOneGiB, sett.LimitBaseDirToOneGiB);
+
+		UiHelper.SetCheckboxFromValue(cbExecutableSet, sett.Executable != null);
+		UiHelper.SetTextFromValue(txtExecutable, sett.Executable);
+
+		UiHelper.SetCheckboxFromValue(cbCyclesSet, sett.CPU.Cycles != null);
+		UiHelper.SetTextFromValue(txtCycles, sett.CPU.Cycles);
 	}
 
 	private void updateIsRegisteredLabel() {
@@ -476,16 +529,14 @@ public partial class MainForm : Form {
 	}
 
 	private void mnuNew_Click(object sender, EventArgs ea) {
-		if (!ValidateChildren()) {
-			return;
-		}
+		if (!ValidateChildren()) { return; }
 		if (!promptSaveIfDirty()) { return; }
 
 		initNewShortcut();
 	}
 
 	private void mnuOpen_Click(object sender, EventArgs ea) {
-		MessageBoxHelper.ShowInfoMessage("TODO: Impl. 'Open Shortcut'", "");
+		doOpen();
 	}
 
 	private void mnuSave_Click(object sender, EventArgs ea) {
