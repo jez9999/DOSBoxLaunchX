@@ -287,30 +287,38 @@ public partial class MainForm : Form {
 		}
 	}
 
-	private void doSaveAs() {
-		saveFileDialog.Title = "Save Shortcut As";
-		// We purposely don't set the .InitialDirectory property.  When left unset,
-		// the dialog helpfully remembers the last directory the user was in, which
-		// is desired behaviour.
-		saveFileDialog.Filter = "DOSBoxLaunchX Shortcut (*.dlx)|*.dlx";
-		saveFileDialog.FilterIndex = 1;
-		saveFileDialog.DefaultExt = "dlx";
-		saveFileDialog.AddExtension = true;
+	private void doSave() {
+		doSaveAs(_currentShortcutFilePath);
+	}
 
-		// Pre-fill filename if one exists
-		try {
-			saveFileDialog.FileName =
-				!string.IsNullOrEmpty(_currentShortcutFilePath)
-				? Path.GetFileName(_currentShortcutFilePath)
-				: string.Empty;
+	private void doSaveAs(string? path = null) {
+		// If no path is supplied, show the Save As dialog
+		if (string.IsNullOrWhiteSpace(path)) {
+			saveFileDialog.Title = "Save Shortcut As";
+			// We purposely don't set the .InitialDirectory property.  When left unset,
+			// the dialog helpfully remembers the last directory the user was in, which
+			// is desired behaviour.
+			saveFileDialog.Filter = "DOSBoxLaunchX Shortcut (*.dlx)|*.dlx";
+			saveFileDialog.FilterIndex = 1;
+			saveFileDialog.DefaultExt = "dlx";
+			saveFileDialog.AddExtension = true;
+
+			// Pre-fill filename if one exists
+			try {
+				saveFileDialog.FileName =
+					!string.IsNullOrEmpty(_currentShortcutFilePath)
+					? Path.GetFileName(_currentShortcutFilePath)
+					: string.Empty;
+			}
+			catch {
+				saveFileDialog.FileName = string.Empty;
+			}
+
+			if (saveFileDialog.ShowDialog() != DialogResult.OK) { return; }
+
+			path = saveFileDialog.FileName;
 		}
-		catch {
-			saveFileDialog.FileName = string.Empty;
-		}
 
-		if (saveFileDialog.ShowDialog() != DialogResult.OK) { return; }
-
-		string path = saveFileDialog.FileName;
 		try {
 			_settingsFileService.SaveToFile(generateShortcutLaunchSettings(), path);
 		}
@@ -471,7 +479,7 @@ public partial class MainForm : Form {
 	}
 
 	private void mnuSave_Click(object sender, EventArgs ea) {
-		MessageBoxHelper.ShowInfoMessage("TODO: Impl. 'Save Shortcut'", "");
+		doSave();
 	}
 
 	private void mnuSaveAs_Click(object sender, EventArgs ea) {
