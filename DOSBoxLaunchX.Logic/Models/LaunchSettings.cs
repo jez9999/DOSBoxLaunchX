@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using DOSBoxLaunchX.Logic.Services;
 
 namespace DOSBoxLaunchX.Logic.Models;
 
@@ -43,12 +44,46 @@ public class LaunchSettings {
 
 	#endregion
 
+	#region Custom settings
+
+	[JsonIgnore]
+	private readonly Dictionary<string, object> _customSettings = [];
+
+	public T? GetCustomSetting<T>(string key) {
+		if (_customSettings.TryGetValue(key, out var val)) {
+			return getValueOrThrow<T>(val, key);
+		}
+		return default;
+	}
+
+	public void SetCustomSetting<T>(string key, T value) where T : notnull {
+		if (value is null) {
+			throw new ArgumentNullException(nameof(value), $"Cannot set custom setting '{key}' to null.");
+		}
+		_customSettings[key] = value;
+	}
+
+	public void DeleteCustomSetting(string key) {
+		_customSettings.Remove(key);
+	}
+
+	#endregion
+
 	#region Flat settings dictionary for serialization
 
+	/// <summary>
+	/// Flat dictionary of all settings, generated dynamically from the strongly-typed properties.
+	///
+	/// IMPORTANT: This property is intended for serialization/deserialization only.  Do not modify
+	/// or access it directly in your code.
+	///
+	/// To set values, use the strongly-typed properties or use the get/set CustomSetting methods.
+	/// </summary>
 	[JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
-	public Dictionary<string, object> Settings {
+	[JsonConverter(typeof(InterfaceToConcreteConverter<IReadOnlyDictionary<string, object>, Dictionary<string, object>>))]
+	public IReadOnlyDictionary<string, object> Settings {
 		get => toFlatSettings();
-		set => fromFlatSettings(value);
+		private set => fromFlatSettings(value); // Private setter only for deserialization
 	}
 
 	private Dictionary<string, object> toFlatSettings() {
@@ -56,14 +91,22 @@ public class LaunchSettings {
 
 		if (CPU.Cycles != null) { dict["cpu.cycles"] = CPU.Cycles; }
 
+		foreach (var kvp in _customSettings) {
+			dict[kvp.Key] = kvp.Value;
+		}
+
 		return dict;
 	}
 
-	private void fromFlatSettings(Dictionary<string, object> flat) {
+	private void fromFlatSettings(IReadOnlyDictionary<string, object> flat) {
 		foreach (var kvp in flat) {
 			switch (kvp.Key) {
 				case "cpu.cycles":
 					CPU.Cycles = getValueOrThrow<string>(kvp.Value, kvp.Key);
+					break;
+
+				default:
+					_customSettings[kvp.Key] = kvp.Value;
 					break;
 			}
 		}

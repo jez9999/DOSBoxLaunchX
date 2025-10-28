@@ -239,7 +239,7 @@ public partial class MainForm : Form {
 
 		switch (result) {
 			case DialogResult.Yes:
-				// TODO: implement (Save Globals and Save Shortcut menu options)
+				// TODO: implement (Save Globals menu option code)
 				//if (globalsDirty && !saveGlobals()) { return false; }
 				if (shortcutDirty && !doSave()) { return false; }
 				return true;

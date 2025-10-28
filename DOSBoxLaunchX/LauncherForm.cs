@@ -45,7 +45,7 @@ public partial class LauncherForm : Form {
 			_data.LocalAppDataDir = LocalAppDataHelper.EnsureLocalAppDataDir(_data.ProgramName);
 
 			// Read global config settings
-			// TODO: impl.
+			// TODO: impl. read global config settings
 
 			// For now we'll assume the base dir of DOSBox-X...
 			var baseDir = @"C:\games\_DOSBox-X_";

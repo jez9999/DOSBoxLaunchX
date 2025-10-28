@@ -162,4 +162,124 @@ public class LaunchSettingsTests {
 			CPU = new LaunchSettings.CPUSettings { Cycles = "3123" }
 		});
 	}
+
+	[Test]
+	public void Deserialize_custom_setting_present_and_correct() {
+		// Arrange
+		var json = @"{""Settings"":{""my.setting"":42}}";
+
+		// Act
+		var settings = JsonConvert.DeserializeObject<LaunchSettings>(json, _jsonSettings)!;
+
+		// Assert
+		settings.GetCustomSetting<long>("my.setting").Should().Be(42);
+	}
+
+	[Test]
+	public void Set_custom_setting_stores_correctly() {
+		// Arrange
+		var settings = new LaunchSettings();
+
+		// Act
+		settings.SetCustomSetting("difficulty", "hard");
+
+		// Assert
+		settings.GetCustomSetting<string>("difficulty").Should().Be("hard");
+	}
+
+	[Test]
+	public void Delete_custom_setting_removes_correctly() {
+		// Arrange
+		var settings = new LaunchSettings();
+		settings.SetCustomSetting("temp", "abc");
+
+		// Act
+		settings.DeleteCustomSetting("temp");
+
+		// Assert
+		settings.GetCustomSetting<string>("temp").Should().BeNull();
+	}
+
+	[Test]
+	public void Custom_setting_serialized_correctly() {
+		// Arrange
+		var settings = new LaunchSettings();
+		settings.SetCustomSetting("map.size", 128);
+
+		// Act
+		string json = JsonConvert.SerializeObject(settings, _jsonSettings);
+
+		// Assert
+		json.Should().Contain(@"""Settings"":{""map.size"":128}");
+	}
+
+	[Test]
+	public void Roundtrip_strong_and_custom_settings_preserve_ok() {
+		// Arrange
+		var originalJson = @"{""Settings"":{""cpu.cycles"":""3123"",""speed"":""fast"",""volume"":75}}";
+
+		// Act
+		var settings = JsonConvert.DeserializeObject<LaunchSettings>(originalJson, _jsonSettings)!;
+		string reserializedJson = JsonConvert.SerializeObject(settings, _jsonSettings);
+
+		// Assert
+		settings.CPU.Cycles.Should().Be("3123");
+		settings.GetCustomSetting<string>("speed").Should().Be("fast");
+		settings.GetCustomSetting<long>("volume").Should().Be(75);
+		reserializedJson.Should().Be(originalJson);
+	}
+
+	[Test]
+	public void Custom_and_strongly_typed_setting_conflict_resolves_ok() {
+		// Arrange
+		var json = @"{""Settings"":{""cpu.cycles"":""3123""}}";
+		var settings = JsonConvert.DeserializeObject<LaunchSettings>(json, _jsonSettings)!;
+
+		// Act
+		settings.SetCustomSetting("cpu.cycles", "9999"); // This should override CPU.Cycles
+		string jsonOut = JsonConvert.SerializeObject(settings, _jsonSettings);
+
+		// Assert
+		settings.CPU.Cycles.Should().Be("3123");
+		settings.GetCustomSetting<string>("cpu.cycles").Should().Be("9999");
+		jsonOut.Should().Contain(@"""cpu.cycles"":""9999""");
+		jsonOut.Should().NotContain(@"""cpu.cycles"":""3123""");
+	}
+
+	[Test]
+	public void Deserialize_invalid_cpu_cycles_type_throws() {
+		// Arrange
+		var json = @"{""Settings"":{""cpu.cycles"":1234}}"; // Expecting string
+
+		// Act & Assert
+		json
+			.Invoking(x => JsonConvert.DeserializeObject<LaunchSettings>(x, _jsonSettings))
+			.Should().Throw<Exception>().WithMessage("Error setting value to 'Settings'*");
+	}
+
+	[Test]
+	public void Set_custom_setting_with_null_throws() {
+		// Arrange
+		var settings = new LaunchSettings();
+
+		// Act & Assert
+		"nulltest"
+			.Invoking(x => settings.SetCustomSetting<string>(x, null!))
+			.Should().Throw<ArgumentNullException>();
+	}
+
+	[Test]
+	public void Get_custom_setting_with_wrong_type_throws() {
+		// Arrange
+		var settings = new LaunchSettings();
+		settings.SetCustomSetting("difficulty", "hard");
+
+		// Act
+		Action act = () => settings.GetCustomSetting<int>("difficulty");
+
+		// Assert
+		act
+			.Should().Throw<InvalidDataException>()
+			.WithMessage("*Expected a value of type Int32*");
+	}
 }
