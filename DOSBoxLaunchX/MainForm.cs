@@ -275,20 +275,27 @@ public partial class MainForm : Form {
 	}
 
 	private bool doOpen() {
+		return doOpen(null);
+	}
+
+	private bool doOpen(string? path = null) {
 		if (!ValidateChildren()) { return false; }
 		if (!promptSaveIfDirty()) { return false; }
 
-		// We purposely don't set the .InitialDirectory property.  When left unset,
-		// the dialog helpfully remembers the last directory the user was in, which
-		// is desired behaviour.
-		openFileDialog.Title = "Open Shortcut";
-		openFileDialog.FileName = "";
-		openFileDialog.Filter = "DOSBoxLaunchX Shortcut (*.dlx)|*.dlx";
-		openFileDialog.FilterIndex = 1;
+		// If no path is supplied, show the Open dialog
+		if (string.IsNullOrWhiteSpace(path)) {
+			// We purposely don't set the .InitialDirectory property.  When left unset,
+			// the dialog helpfully remembers the last directory the user was in, which
+			// is desired behaviour.
+			openFileDialog.Title = "Open Shortcut";
+			openFileDialog.FileName = "";
+			openFileDialog.Filter = "DOSBoxLaunchX Shortcut (*.dlx)|*.dlx";
+			openFileDialog.FilterIndex = 1;
 
-		if (openFileDialog.ShowDialog() != DialogResult.OK) { return false; }
+			if (openFileDialog.ShowDialog() != DialogResult.OK) { return false; }
 
-		var path = openFileDialog.FileName;
+			path = openFileDialog.FileName;
+		}
 
 		try {
 			var sett = _settingsFileService.LoadFromFile(path);
@@ -457,9 +464,9 @@ public partial class MainForm : Form {
 		if (ea.Data?.GetDataPresent(DataFormats.FileDrop) == true) {
 			string[] files = (string[])ea.Data.GetData(DataFormats.FileDrop)!;
 			if (files.Length == 1 && Path.GetExtension(files[0]).Equals(".dlx", StringComparison.OrdinalIgnoreCase)) {
-				string filePath = files[0];
-				MessageBoxHelper.ShowInfoMessage("TODO: impl. drag/drop open", "");
-				//OpenShortcut(filePath); // exec. existing open logic
+				BringToFront();
+				Activate();
+				doOpen(files[0]);
 			}
 		}
 	}
