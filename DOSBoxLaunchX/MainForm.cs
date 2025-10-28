@@ -4,6 +4,7 @@ using DOSBoxLaunchX.Models;
 using DOSBoxLaunchX.Services;
 using DOSBoxLaunchX.Logic.Models;
 using DOSBoxLaunchX.Logic.Services;
+using DOSBoxLaunchX.Logic.Helpers;
 
 namespace DOSBoxLaunchX;
 
@@ -157,7 +158,8 @@ public partial class MainForm : Form {
 			};
 		}
 		else if (ctl is TextBox tb) {
-			tb.Enter += (sender, ea) => info.PreviousValue = tb.Text;
+			// Mark dirty on change
+			tb.TextChanged += controlValueChanged;
 
 			tb.Validating += (sender, ea) => {
 				if (!info.AllowNewlines && (tb.Text.Contains('\r') || tb.Text.Contains('\n'))) {
@@ -167,21 +169,23 @@ public partial class MainForm : Form {
 			};
 
 			tb.Validated += (sender, ea) => {
-				if (info.PreviousValue != null && tb.Text != info.PreviousValue) {
-					controlValueChanged(sender, ea);
+				if (info.AllowNewlines) {
+					var newlineStyle = Environment.NewLine switch {
+						"\n" => NewlinesHelper.NewlineStyle.Unix,
+						"\r\n" => NewlinesHelper.NewlineStyle.Windows,
+						"\r" => NewlinesHelper.NewlineStyle.OldMac,
+						_ => throw new InvalidOperationException($"Unrecognized environment newline format: {BitConverter.ToString(System.Text.Encoding.ASCII.GetBytes(Environment.NewLine))}")
+					};
+					var normalized = NewlinesHelper.NormalizeNewlines(tb.Text, newlineStyle);
+					if (tb.Text != normalized) {
+						tb.Text = normalized;
+					}
 				}
-				info.PreviousValue = tb.Text;
 			};
 		}
 		else if (ctl is ComboBox combo) {
-			combo.Enter += (sender, ea) => info.PreviousValue = $"{combo.SelectedIndex}";
-
-			combo.Validated += (sender, ea) => {
-				if (info.PreviousValue != null && $"{combo.SelectedIndex}" != info.PreviousValue) {
-					controlValueChanged(sender, ea);
-				}
-				info.PreviousValue = $"{combo.SelectedIndex}";
-			};
+			// Mark dirty on change
+			combo.SelectedIndexChanged += controlValueChanged;
 		}
 	}
 
@@ -292,6 +296,10 @@ public partial class MainForm : Form {
 	}
 
 	private void doSaveAs(string? path = null) {
+		if (!ValidateChildren()) {
+			return;
+		}
+
 		// If no path is supplied, show the Save As dialog
 		if (string.IsNullOrWhiteSpace(path)) {
 			saveFileDialog.Title = "Save Shortcut As";

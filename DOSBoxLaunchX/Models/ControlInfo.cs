@@ -21,9 +21,4 @@ public class ControlInfo {
 	/// Only relevant for textboxes: whether newlines are allowed.  Defaults to false.
 	/// </summary>
 	public bool AllowNewlines { get; set; } = false;
-
-	/// <summary>
-	/// Stores the previous value of the control to detect changes on Validated.
-	/// </summary>
-	public string? PreviousValue { get; set; }
 }
