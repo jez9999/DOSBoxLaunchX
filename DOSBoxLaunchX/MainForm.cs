@@ -94,7 +94,7 @@ public partial class MainForm : Form {
 			}
 
 			var info = _ctrlTagParser.ParseTag(tagStr, ctl);
-			if (info == null) { continue; }
+			if (info == null || info.Ignore) { continue; }
 
 			// Store in dictionary
 			_controlInfo[ctl] = info;
@@ -170,6 +170,21 @@ public partial class MainForm : Form {
 			_shortcutDirty = true;
 			updateUiDirtyState();
 		}
+	}
+
+	private void attachPrePostAutoexecHandlers() {
+		cbBaseDirSet.CheckedChanged += (sender, ea) => {
+			refreshPrePostAutoexec();
+		};
+		txtBaseDir.TextChanged += (sender, ea) => {
+			refreshPrePostAutoexec();
+		};
+		cbExecutableSet.CheckedChanged += (sender, ea) => {
+			refreshPrePostAutoexec();
+		};
+		txtExecutable.TextChanged += (sender, ea) => {
+			refreshPrePostAutoexec();
+		};
 	}
 
 	private void updateUiShortcutFilePath() {
@@ -419,6 +434,21 @@ public partial class MainForm : Form {
 		}
 	}
 
+	private void refreshPrePostAutoexec() {
+		txtPreAutoexec.Text = """
+			@REM [No BaseDir set]                                    eg. MOUNT C C:\games\pizza -freesize 1024
+			@REM TODO: now C: command here potentially, mount above  eg. C:
+			""";
+
+		txtPostAutoexec.Text = """
+			@REM [No Executable set]                                 eg. PIZZA.BAT
+			@REM TODO: these texts should be pulled from utility code that generates them at launch time too
+			""";
+
+		// TODO: remember that global autoexec should be merged with local autoexec with global autoexec
+		// coming BEFORE shortcut autoexec; not like other settings where shortcut overrides global.
+	}
+
 	private void addTxtboxMsg(string msg) {
 		txtOutput.SelectionColor = Color.Black;
 		txtOutput.SelectedText += msg + Environment.NewLine;
@@ -445,6 +475,8 @@ public partial class MainForm : Form {
 		updateIsRegisteredLabel();
 
 		initAndProcessControls(tabsContainer);
+		attachPrePostAutoexecHandlers();
+		refreshPrePostAutoexec();
 		initNewShortcut();
 		BeginInvoke(selectFirstControl);
 	}
@@ -582,5 +614,16 @@ public partial class MainForm : Form {
 
 	private void btnExecutableBrowse_Click(object sender, EventArgs ea) {
 		doBrowseExecutable();
+	}
+
+	private void lblAutoexecScript_Click(object sender, EventArgs ea) {
+		MessageBoxHelper.ShowInfoMessage(
+			"""
+			The autoexec script that will be run on start.
+
+			If there are already existing commands in the autoexec section of the base config file, this script will be added after them.
+			""",
+			"Autoexec Script setting"
+		);
 	}
 }

@@ -60,6 +60,12 @@
 			tabVideo = new TabPage();
 			tabAudio = new TabPage();
 			tabPeripherals = new TabPage();
+			tabAutoexec = new TabPage();
+			txtAutoexec = new TextBox();
+			lblAutoexecScript = new Label();
+			lblAutoexecEllipsis = new Label();
+			txtPostAutoexec = new TextBox();
+			txtPreAutoexec = new TextBox();
 			tabCustom = new TabPage();
 			tabKbMappings = new TabPage();
 			label2 = new Label();
@@ -88,6 +94,7 @@
 			tabsContainer.SuspendLayout();
 			tabGeneral.SuspendLayout();
 			tabCpu.SuspendLayout();
+			tabAutoexec.SuspendLayout();
 			mainMenuStrip.SuspendLayout();
 			mainMenuStripContainer.TopToolStripPanel.SuspendLayout();
 			mainMenuStripContainer.SuspendLayout();
@@ -162,6 +169,7 @@
 			tabsContainer.Controls.Add(tabVideo);
 			tabsContainer.Controls.Add(tabAudio);
 			tabsContainer.Controls.Add(tabPeripherals);
+			tabsContainer.Controls.Add(tabAutoexec);
 			tabsContainer.Controls.Add(tabCustom);
 			tabsContainer.Controls.Add(tabKbMappings);
 			tabsContainer.Location = new Point(12, 76);
@@ -430,6 +438,79 @@
 			tabPeripherals.TabIndex = 3;
 			tabPeripherals.Text = "Peripherals";
 			// 
+			// tabAutoexec
+			// 
+			tabAutoexec.BackColor = SystemColors.Control;
+			tabAutoexec.Controls.Add(txtAutoexec);
+			tabAutoexec.Controls.Add(lblAutoexecScript);
+			tabAutoexec.Controls.Add(lblAutoexecEllipsis);
+			tabAutoexec.Controls.Add(txtPostAutoexec);
+			tabAutoexec.Controls.Add(txtPreAutoexec);
+			tabAutoexec.Location = new Point(4, 24);
+			tabAutoexec.Name = "tabAutoexec";
+			tabAutoexec.Size = new Size(1227, 511);
+			tabAutoexec.TabIndex = 7;
+			tabAutoexec.Text = "Autoexec";
+			// 
+			// txtAutoexec
+			// 
+			txtAutoexec.Font = new Font("Courier New", 9.75F);
+			txtAutoexec.Location = new Point(8, 92);
+			txtAutoexec.Multiline = true;
+			txtAutoexec.Name = "txtAutoexec";
+			txtAutoexec.ScrollBars = ScrollBars.Vertical;
+			txtAutoexec.Size = new Size(1211, 367);
+			txtAutoexec.TabIndex = 20;
+			txtAutoexec.Tag = "allowNewlines=true";
+			// 
+			// lblAutoexecScript
+			// 
+			lblAutoexecScript.AutoSize = true;
+			lblAutoexecScript.Cursor = Cursors.Help;
+			lblAutoexecScript.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point, 0);
+			lblAutoexecScript.Location = new Point(8, 74);
+			lblAutoexecScript.Name = "lblAutoexecScript";
+			lblAutoexecScript.Size = new Size(93, 15);
+			lblAutoexecScript.TabIndex = 101;
+			lblAutoexecScript.Text = "Autoexec Script:";
+			lblAutoexecScript.Click += lblAutoexecScript_Click;
+			// 
+			// lblAutoexecEllipsis
+			// 
+			lblAutoexecEllipsis.AutoSize = true;
+			lblAutoexecEllipsis.Font = new Font("Courier New", 9.75F);
+			lblAutoexecEllipsis.Location = new Point(8, 49);
+			lblAutoexecEllipsis.Name = "lblAutoexecEllipsis";
+			lblAutoexecEllipsis.Size = new Size(183, 16);
+			lblAutoexecEllipsis.TabIndex = 2;
+			lblAutoexecEllipsis.Text = "[....................]";
+			// 
+			// txtPostAutoexec
+			// 
+			txtPostAutoexec.BackColor = SystemColors.Info;
+			txtPostAutoexec.Font = new Font("Courier New", 9.75F);
+			txtPostAutoexec.Location = new Point(8, 465);
+			txtPostAutoexec.Multiline = true;
+			txtPostAutoexec.Name = "txtPostAutoexec";
+			txtPostAutoexec.ReadOnly = true;
+			txtPostAutoexec.ScrollBars = ScrollBars.Vertical;
+			txtPostAutoexec.Size = new Size(1211, 39);
+			txtPostAutoexec.TabIndex = 100;
+			txtPostAutoexec.Tag = "ignore";
+			// 
+			// txtPreAutoexec
+			// 
+			txtPreAutoexec.BackColor = SystemColors.Info;
+			txtPreAutoexec.Font = new Font("Courier New", 9.75F);
+			txtPreAutoexec.Location = new Point(8, 7);
+			txtPreAutoexec.Multiline = true;
+			txtPreAutoexec.Name = "txtPreAutoexec";
+			txtPreAutoexec.ReadOnly = true;
+			txtPreAutoexec.ScrollBars = ScrollBars.Vertical;
+			txtPreAutoexec.Size = new Size(1211, 39);
+			txtPreAutoexec.TabIndex = 10;
+			txtPreAutoexec.Tag = "ignore";
+			// 
 			// tabCustom
 			// 
 			tabCustom.BackColor = SystemColors.Control;
@@ -661,6 +742,8 @@
 			tabGeneral.PerformLayout();
 			tabCpu.ResumeLayout(false);
 			tabCpu.PerformLayout();
+			tabAutoexec.ResumeLayout(false);
+			tabAutoexec.PerformLayout();
 			mainMenuStrip.ResumeLayout(false);
 			mainMenuStrip.PerformLayout();
 			mainMenuStripContainer.TopToolStripPanel.ResumeLayout(false);
@@ -730,5 +813,11 @@
 		private OpenFileDialog openFileDialog;
 		private SaveFileDialog saveFileDialog;
 		private Button btnExecutableBrowse;
+		private TabPage tabAutoexec;
+		private TextBox txtPreAutoexec;
+		private TextBox txtPostAutoexec;
+		private Label lblAutoexecScript;
+		private Label lblAutoexecEllipsis;
+		private TextBox txtAutoexec;
 	}
 }

@@ -20,18 +20,21 @@ public class LaunchSettings {
 
 	/// <summary>
 	/// Optional base directory to mount as C: at the start of autoexec.
+	/// When used for storing global settings, this field is ignored.
 	/// </summary>
 	public string? BaseDir { get; set; }
 
 	/// <summary>
 	/// If BaseDir is set, determines whether it's mounted with "-freesize 1024" (limit free hard disk space
 	/// to max. 1GiB).
+	/// When used for storing global settings, this field is ignored.
 	/// TODO: maybe this should be a long and determine the freesize MB value?  "LimitBaseDirFreeSpace"
 	/// </summary>
 	public bool? LimitBaseDirToOneGiB { get; set; }
 
 	/// <summary>
 	/// Optional executable to launch at the end of autoexec.
+	/// When used for storing global settings, this field is ignored.
 	/// </summary>
 	public string? Executable { get; set; }
 

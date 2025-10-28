@@ -7,6 +7,11 @@ public class ControlInfo {
 	public required string Tag { get; set; }
 
 	/// <summary>
+	/// Whether this control should be ignored for processing by the event handlers, etc.
+	/// </summary>
+	public bool Ignore { get; set; } = false;
+
+	/// <summary>
 	/// For "Set" checkboxes: the controls (labels, textboxes, comboboxes, etc.) that are enabled/disabled
 	/// when this checkbox is toggled.
 	/// </summary>
