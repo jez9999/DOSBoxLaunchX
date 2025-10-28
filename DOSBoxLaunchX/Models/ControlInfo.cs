@@ -13,11 +13,6 @@ public class ControlInfo {
 	public readonly List<Control> AssociatedControls = [];
 
 	/// <summary>
-	/// Default value for this control when initializing a new shortcut.
-	/// </summary>
-	public string? DefaultValue { get; set; }
-
-	/// <summary>
 	/// Only relevant for textboxes: whether newlines are allowed.  Defaults to false.
 	/// </summary>
 	public bool AllowNewlines { get; set; } = false;

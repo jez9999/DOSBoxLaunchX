@@ -36,6 +36,7 @@
 			txtShortcutFilePath = new TextBox();
 			tabsContainer = new TabControl();
 			tabGeneral = new TabPage();
+			btnExecutableBrowse = new Button();
 			lblNameDescriptionNote = new Label();
 			comboLimitBaseDirToOneGiB = new ComboBox();
 			cbLimitBaseDirToOneGiBSet = new CheckBox();
@@ -172,6 +173,7 @@
 			// tabGeneral
 			// 
 			tabGeneral.BackColor = SystemColors.Control;
+			tabGeneral.Controls.Add(btnExecutableBrowse);
 			tabGeneral.Controls.Add(lblNameDescriptionNote);
 			tabGeneral.Controls.Add(comboLimitBaseDirToOneGiB);
 			tabGeneral.Controls.Add(cbLimitBaseDirToOneGiBSet);
@@ -192,6 +194,16 @@
 			tabGeneral.Size = new Size(1227, 511);
 			tabGeneral.TabIndex = 6;
 			tabGeneral.Text = "General";
+			// 
+			// btnExecutableBrowse
+			// 
+			btnExecutableBrowse.Location = new Point(522, 203);
+			btnExecutableBrowse.Name = "btnExecutableBrowse";
+			btnExecutableBrowse.Size = new Size(75, 23);
+			btnExecutableBrowse.TabIndex = 52;
+			btnExecutableBrowse.Text = "&Browse...";
+			btnExecutableBrowse.UseVisualStyleBackColor = true;
+			btnExecutableBrowse.Click += btnExecutableBrowse_Click;
 			// 
 			// lblNameDescriptionNote
 			// 
@@ -221,7 +233,7 @@
 			cbLimitBaseDirToOneGiBSet.Name = "cbLimitBaseDirToOneGiBSet";
 			cbLimitBaseDirToOneGiBSet.Size = new Size(15, 14);
 			cbLimitBaseDirToOneGiBSet.TabIndex = 40;
-			cbLimitBaseDirToOneGiBSet.Tag = "assoc=lblLimitBaseDirToOneGiB,comboLimitBaseDirToOneGiB|default=true";
+			cbLimitBaseDirToOneGiBSet.Tag = "assoc=lblLimitBaseDirToOneGiB,comboLimitBaseDirToOneGiB";
 			cbLimitBaseDirToOneGiBSet.UseVisualStyleBackColor = true;
 			// 
 			// lblLimitBaseDirToOneGiB
@@ -240,14 +252,14 @@
 			cbExecutableSet.Name = "cbExecutableSet";
 			cbExecutableSet.Size = new Size(15, 14);
 			cbExecutableSet.TabIndex = 50;
-			cbExecutableSet.Tag = "assoc=lblExecutable,txtExecutable|default=true";
+			cbExecutableSet.Tag = "assoc=lblExecutable,txtExecutable,btnExecutableBrowse";
 			cbExecutableSet.UseVisualStyleBackColor = true;
 			// 
 			// txtExecutable
 			// 
 			txtExecutable.Location = new Point(127, 203);
 			txtExecutable.Name = "txtExecutable";
-			txtExecutable.Size = new Size(470, 23);
+			txtExecutable.Size = new Size(389, 23);
 			txtExecutable.TabIndex = 51;
 			txtExecutable.Tag = "defaults";
 			// 
@@ -270,7 +282,7 @@
 			cbBaseDirSet.Name = "cbBaseDirSet";
 			cbBaseDirSet.Size = new Size(15, 14);
 			cbBaseDirSet.TabIndex = 30;
-			cbBaseDirSet.Tag = "assoc=lblBaseDir,txtBaseDir|default=true";
+			cbBaseDirSet.Tag = "assoc=lblBaseDir,txtBaseDir";
 			cbBaseDirSet.UseVisualStyleBackColor = true;
 			// 
 			// label6
@@ -717,5 +729,6 @@
 		private RichTextBox txtOutput;
 		private OpenFileDialog openFileDialog;
 		private SaveFileDialog saveFileDialog;
+		private Button btnExecutableBrowse;
 	}
 }

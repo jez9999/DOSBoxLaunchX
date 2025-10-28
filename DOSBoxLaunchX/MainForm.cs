@@ -47,7 +47,7 @@ public partial class MainForm : Form {
 
 	private void initNewShortcut() {
 		// Reset UI first...
-		resetControlDefaults(tabsContainer);
+		resetControlDefaults();
 		radShortcut.Checked = true;
 		selectFirstControl();
 
@@ -58,50 +58,12 @@ public partial class MainForm : Form {
 		updateUiDirtyState();
 	}
 
-	private void resetControlDefaults(Control parent) {
-		foreach (Control ctl in parent.Controls) {
-			// Recurse first so children are processed
-			if (ctl.HasChildren) { resetControlDefaults(ctl); }
-
-			// Only process relevant control types
-			if (!(ctl is CheckBox || ctl is TextBox || ctl is ComboBox)) { continue; }
-
-			// Set default values from ControlInfo
-			if (!_controlInfo.TryGetValue(ctl, out ControlInfo? info)) { continue; }
-
-			switch (ctl) {
-				case CheckBox cb:
-					bool? cbVal = null;
-					if (string.IsNullOrEmpty(info.DefaultValue)) {
-						cbVal = false;
-					}
-					else if (bool.TryParse(info.DefaultValue, out bool cbValOut)) {
-						cbVal = cbValOut;
-					}
-					cb.Checked = cbVal ?? cb.Checked;
-					break;
-
-				case TextBox tb:
-					tb.Text = info.DefaultValue ?? "";
-					break;
-
-				case ComboBox combo:
-					int? comboVal = null;
-					if (string.IsNullOrEmpty(info.DefaultValue)) {
-						comboVal = 0;
-					}
-					else if (int.TryParse(info.DefaultValue, out int comboValOut)) {
-						if (comboValOut >= 0 && comboValOut < combo.Items.Count) {
-							comboVal = comboValOut;
-						}
-						else {
-							comboVal = 0;
-						}
-					}
-					combo.SelectedIndex = comboVal ?? combo.SelectedIndex;
-					break;
-			}
-		}
+	private void resetControlDefaults() {
+		generateUiFromShortcutLaunchSettings(new LaunchSettings {
+			BaseDir = "",
+			LimitBaseDirToOneGiB = true,
+			Executable = "",
+		});
 	}
 
 	private void selectFirstControl() {
@@ -291,6 +253,27 @@ public partial class MainForm : Form {
 		}
 	}
 
+	private bool doBrowseExecutable() {
+		// We purposely don't set the .InitialDirectory property.  When left unset,
+		// the dialog helpfully remembers the last directory the user was in, which
+		// is desired behaviour.
+		openFileDialog.Title = "Browse To Executable";
+		openFileDialog.FileName = "";
+		openFileDialog.Filter = "DOS Executables (*.exe;*.com;*.bat)|*.exe;*.com;*.bat";
+		openFileDialog.FilterIndex = 1;
+
+		if (openFileDialog.ShowDialog() != DialogResult.OK) { return false; }
+
+		// Browsed successfully
+		var path = openFileDialog.FileName;
+		cbExecutableSet.Checked = true;
+		txtExecutable.Text = Path.GetFileName(path) ?? "";
+		cbBaseDirSet.Checked = true;
+		txtBaseDir.Text = Path.GetDirectoryName(path) ?? "";
+
+		return true;
+	}
+
 	private bool doOpen() {
 		if (!ValidateChildren()) { return false; }
 		if (!promptSaveIfDirty()) { return false; }
@@ -305,7 +288,7 @@ public partial class MainForm : Form {
 
 		if (openFileDialog.ShowDialog() != DialogResult.OK) { return false; }
 
-		string path = openFileDialog.FileName;
+		var path = openFileDialog.FileName;
 
 		try {
 			var sett = _settingsFileService.LoadFromFile(path);
@@ -588,5 +571,9 @@ public partial class MainForm : Form {
 			""",
 			"Base Directory setting"
 		);
+	}
+
+	private void btnExecutableBrowse_Click(object sender, EventArgs ea) {
+		doBrowseExecutable();
 	}
 }

@@ -57,10 +57,6 @@ public class ControlInfoTagParser {
 					}
 					break;
 
-				case "default":
-					info.DefaultValue = value;
-					break;
-
 				case "allownewlines":
 					if (bool.TryParse(value, out bool allow)) { info.AllowNewlines = allow; }
 					else {
