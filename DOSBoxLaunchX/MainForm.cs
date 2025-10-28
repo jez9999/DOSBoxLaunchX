@@ -394,6 +394,7 @@ public partial class MainForm : Form {
 	}
 
 	private LaunchSettings generateShortcutLaunchSettingsFromUi() {
+		// General and main settings
 		var sett = new LaunchSettings {
 			Name = UiHelper.GetTextValue(txtName),
 			Description = UiHelper.GetTextValue(txtDescription),
@@ -405,10 +406,33 @@ public partial class MainForm : Form {
 
 		if (cbCyclesSet.Checked) { sett.CPU.Cycles = UiHelper.GetTextValue(txtCycles); }
 
+		// Autoexec script
+		saveAutoexec(sett, txtAutoexec);
+
+		// Other custom settings
+		// TODO: Impl. Other custom settings
+
 		return sett;
+
+		static void saveAutoexec(LaunchSettings sett, TextBox ctrl) {
+			// Split main textbox lines
+			var lines = ctrl.Text.Split(Environment.NewLine).ToList();
+
+			// Trim trailing blank lines, keep leading
+			for (int i = lines.Count - 1; i >= 0; i--) {
+				if (string.IsNullOrWhiteSpace(lines[i])) { lines.RemoveAt(i); }
+				else { break; }
+			}
+
+			// Write back as autoexec.0, autoexec.1, ...
+			for (int i = 0; i < lines.Count; i++) { sett.SetCustomSetting($"autoexec.{i}", lines[i]); }
+		}
 	}
 
 	private void generateUiFromShortcutLaunchSettings(LaunchSettings sett) {
+		var settFlat = sett.Settings;
+
+		// General and main settings
 		UiHelper.SetTextFromValue(txtName, sett.Name);
 		UiHelper.SetTextFromValue(txtDescription, sett.Description);
 
@@ -423,6 +447,22 @@ public partial class MainForm : Form {
 
 		UiHelper.SetCheckboxFromValue(cbCyclesSet, sett.CPU.Cycles != null);
 		UiHelper.SetTextFromValue(txtCycles, sett.CPU.Cycles);
+
+		// Autoexec script
+		loadAutoexec(settFlat, txtAutoexec);
+
+		// Other custom settings
+		// TODO: Impl. Other custom settings
+
+		static void loadAutoexec(IReadOnlyDictionary<string, object> settFlat, TextBox ctrl) {
+			var autoexecLines = settFlat
+				.Where(kvp => kvp.Key.StartsWith("autoexec."))
+				.OrderBy(kvp => int.TryParse(kvp.Key["autoexec.".Length..], out var n) ? n : int.MaxValue)
+				.Select(kvp => kvp.Value.ToString())
+				.ToList();
+
+			ctrl.Text = string.Join(Environment.NewLine, autoexecLines);
+		}
 	}
 
 	private void updateIsRegisteredLabel() {
@@ -621,7 +661,7 @@ public partial class MainForm : Form {
 			"""
 			The autoexec script that will be run on start.
 
-			If there are already existing commands in the autoexec section of the base config file, this script will be added after them.
+			If there are already existing commands in the autoexec section of the base DOSBox-X config file, this script will be added after them.
 			""",
 			"Autoexec Script setting"
 		);
