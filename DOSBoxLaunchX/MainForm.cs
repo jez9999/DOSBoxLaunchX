@@ -279,7 +279,7 @@ public partial class MainForm : Form {
 			case DialogResult.Yes:
 				// TODO: implement (Save Globals and Save Shortcut menu options)
 				//if (globalsDirty && !saveGlobals()) { return false; }
-				//if (shortcutDirty && !saveShortcut()) { return false; }
+				if (shortcutDirty && !doSave()) { return false; }
 				return true;
 
 			case DialogResult.No:
@@ -291,13 +291,13 @@ public partial class MainForm : Form {
 		}
 	}
 
-	private void doSave() {
-		doSaveAs(_currentShortcutFilePath);
+	private bool doSave() {
+		return doSaveAs(_currentShortcutFilePath);
 	}
 
-	private void doSaveAs(string? path = null) {
+	private bool doSaveAs(string? path = null) {
 		if (!ValidateChildren()) {
-			return;
+			return false;
 		}
 
 		// If no path is supplied, show the Save As dialog
@@ -322,7 +322,7 @@ public partial class MainForm : Form {
 				saveFileDialog.FileName = string.Empty;
 			}
 
-			if (saveFileDialog.ShowDialog() != DialogResult.OK) { return; }
+			if (saveFileDialog.ShowDialog() != DialogResult.OK) { return false; }
 
 			path = saveFileDialog.FileName;
 		}
@@ -338,7 +338,7 @@ public partial class MainForm : Form {
 				""",
 				"Error saving launch shortcut"
 			);
-			return;
+			return false;
 		}
 
 		// Saved successfully
@@ -346,6 +346,8 @@ public partial class MainForm : Form {
 		_shortcutDirty = false;
 		updateUiShortcutFilePath();
 		updateUiDirtyState();
+
+		return true;
 	}
 
 	private LaunchSettings generateShortcutLaunchSettings() {
