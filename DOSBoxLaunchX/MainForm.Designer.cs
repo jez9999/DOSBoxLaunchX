@@ -67,6 +67,8 @@
 			txtPostAutoexec = new TextBox();
 			txtPreAutoexec = new TextBox();
 			tabCustom = new TabPage();
+			flowPnlCustom = new FlowLayoutPanel();
+			btnAddCustomSetting = new Button();
 			tabKbMappings = new TabPage();
 			label2 = new Label();
 			lblIsRegistered = new Label();
@@ -95,6 +97,7 @@
 			tabGeneral.SuspendLayout();
 			tabCpu.SuspendLayout();
 			tabAutoexec.SuspendLayout();
+			tabCustom.SuspendLayout();
 			mainMenuStrip.SuspendLayout();
 			mainMenuStripContainer.TopToolStripPanel.SuspendLayout();
 			mainMenuStripContainer.SuspendLayout();
@@ -514,11 +517,31 @@
 			// tabCustom
 			// 
 			tabCustom.BackColor = SystemColors.Control;
+			tabCustom.Controls.Add(flowPnlCustom);
+			tabCustom.Controls.Add(btnAddCustomSetting);
 			tabCustom.Location = new Point(4, 24);
 			tabCustom.Name = "tabCustom";
 			tabCustom.Size = new Size(1227, 511);
 			tabCustom.TabIndex = 4;
 			tabCustom.Text = "Custom settings";
+			// 
+			// flowPnlCustom
+			// 
+			flowPnlCustom.AutoScroll = true;
+			flowPnlCustom.Location = new Point(0, 4);
+			flowPnlCustom.Name = "flowPnlCustom";
+			flowPnlCustom.Size = new Size(1227, 473);
+			flowPnlCustom.TabIndex = 101;
+			// 
+			// btnAddCustomSetting
+			// 
+			btnAddCustomSetting.Location = new Point(5, 483);
+			btnAddCustomSetting.Name = "btnAddCustomSetting";
+			btnAddCustomSetting.Size = new Size(212, 23);
+			btnAddCustomSetting.TabIndex = 100;
+			btnAddCustomSetting.Text = "Add new custom setting";
+			btnAddCustomSetting.UseVisualStyleBackColor = true;
+			btnAddCustomSetting.Click += btnAddCustomSetting_Click;
 			// 
 			// tabKbMappings
 			// 
@@ -691,6 +714,7 @@
 			// pbBgMainMenuStrip
 			// 
 			pbBgMainMenuStrip.BackColor = Color.FromArgb(252, 252, 252);
+			pbBgMainMenuStrip.Dock = DockStyle.Top;
 			pbBgMainMenuStrip.Location = new Point(0, 0);
 			pbBgMainMenuStrip.Name = "pbBgMainMenuStrip";
 			pbBgMainMenuStrip.Size = new Size(1259, 24);
@@ -744,6 +768,7 @@
 			tabCpu.PerformLayout();
 			tabAutoexec.ResumeLayout(false);
 			tabAutoexec.PerformLayout();
+			tabCustom.ResumeLayout(false);
 			mainMenuStrip.ResumeLayout(false);
 			mainMenuStrip.PerformLayout();
 			mainMenuStripContainer.TopToolStripPanel.ResumeLayout(false);
@@ -819,5 +844,7 @@
 		private Label lblAutoexecScript;
 		private Label lblAutoexecEllipsis;
 		private TextBox txtAutoexec;
+		private Button btnAddCustomSetting;
+		private FlowLayoutPanel flowPnlCustom;
 	}
 }

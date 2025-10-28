@@ -70,6 +70,10 @@ public class LaunchSettings {
 		_customSettings.Remove(key);
 	}
 
+	public IReadOnlyDictionary<string, object> GetCustomSettings() {
+		return _customSettings.AsReadOnly();
+	}
+
 	#endregion
 
 	#region Flat settings dictionary for serialization
@@ -89,7 +93,7 @@ public class LaunchSettings {
 		private set => fromFlatSettings(value); // Private setter only for deserialization
 	}
 
-	private Dictionary<string, object> toFlatSettings() {
+	private IReadOnlyDictionary<string, object> toFlatSettings() {
 		var dict = new Dictionary<string, object>();
 
 		if (CPU.Cycles != null) { dict["cpu.cycles"] = CPU.Cycles; }
@@ -98,7 +102,7 @@ public class LaunchSettings {
 			dict[kvp.Key] = kvp.Value;
 		}
 
-		return dict;
+		return dict.AsReadOnly();
 	}
 
 	private void fromFlatSettings(IReadOnlyDictionary<string, object> flat) {

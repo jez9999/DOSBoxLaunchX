@@ -109,6 +109,10 @@ public partial class MainForm : Form {
 		}
 	}
 
+	private void attachControlHandlers(Control ctl) {
+		attachControlHandlers(ctl, new ControlInfo { Tag = "" });
+	}
+
 	private void attachControlHandlers(Control ctl, ControlInfo info) {
 		if (ctl is CheckBox cb) {
 			cb.CheckedChanged += (sender, ea) => {
@@ -410,7 +414,7 @@ public partial class MainForm : Form {
 		saveAutoexec(sett, txtAutoexec);
 
 		// Other custom settings
-		// TODO: Impl. Other custom settings
+		saveCustomSettings(sett, flowPnlCustom);
 
 		return sett;
 
@@ -427,10 +431,34 @@ public partial class MainForm : Form {
 			// Write back as autoexec.0, autoexec.1, ...
 			for (int i = 0; i < lines.Count; i++) { sett.SetCustomSetting($"autoexec.{i}", lines[i]); }
 		}
+
+		static void saveCustomSettings(LaunchSettings sett, FlowLayoutPanel ctrl) {
+			foreach (var row in ctrl.Controls.OfType<FlowLayoutPanel>()) {
+				var txtSection = row.Controls.OfType<TextBox>().FirstOrDefault(c => c.Name == "txtSection");
+				var txtKey = row.Controls.OfType<TextBox>().FirstOrDefault(c => c.Name == "txtKey");
+				var txtValue = row.Controls.OfType<TextBox>().FirstOrDefault(c => c.Name == "txtValue");
+
+				if (txtSection == null || txtKey == null || txtValue == null) { continue; }
+
+				string section = txtSection.Text.Trim();
+				string key = txtKey.Text.Trim();
+				string value = txtValue.Text.Trim();
+
+				if (string.IsNullOrEmpty(section)) { continue; } // Skip entries with no section (mandatory)
+				if (section.Equals("autoexec", StringComparison.OrdinalIgnoreCase)) { continue; }
+				// ^ reserved name
+
+				string fullKey = string.IsNullOrEmpty(key)
+					? section
+					: $"{section}.{key}";
+
+				sett.SetCustomSetting(fullKey, value);
+			}
+		}
 	}
 
 	private void generateUiFromShortcutLaunchSettings(LaunchSettings sett) {
-		var settFlat = sett.Settings;
+		var settFlatCustom = sett.GetCustomSettings();
 
 		// General and main settings
 		UiHelper.SetTextFromValue(txtName, sett.Name);
@@ -449,10 +477,10 @@ public partial class MainForm : Form {
 		UiHelper.SetTextFromValue(txtCycles, sett.CPU.Cycles);
 
 		// Autoexec script
-		loadAutoexec(settFlat, txtAutoexec);
+		loadAutoexec(settFlatCustom, txtAutoexec);
 
 		// Other custom settings
-		// TODO: Impl. Other custom settings
+		loadCustomSettings(settFlatCustom, flowPnlCustom, addCustomSettingRow);
 
 		static void loadAutoexec(IReadOnlyDictionary<string, object> settFlat, TextBox ctrl) {
 			var autoexecLines = settFlat
@@ -462,6 +490,19 @@ public partial class MainForm : Form {
 				.ToList();
 
 			ctrl.Text = string.Join(Environment.NewLine, autoexecLines);
+		}
+
+		static void loadCustomSettings(IReadOnlyDictionary<string, object> settFlat, FlowLayoutPanel ctrl, Action<string, string, string> addCustomSettingRow) {
+			ctrl.Controls.Clear();
+
+			foreach (var (sectionKey, val) in settFlat) {
+				var parts = sectionKey.Split('.', 2);
+
+				var section = parts[0];
+				var key = parts.Length > 1 ? parts[1] : "";
+				var value = val?.ToString() ?? "";
+				addCustomSettingRow(section, key, value);
+			}
 		}
 	}
 
@@ -487,6 +528,82 @@ public partial class MainForm : Form {
 
 		// TODO: remember that global autoexec should be merged with local autoexec with global autoexec
 		// coming BEFORE shortcut autoexec; not like other settings where shortcut overrides global.
+	}
+
+	private void addCustomSettingRow(string section, string key, string value) {
+		var fixedFont = txtAutoexec.Font;
+
+		// Create the container panel for this row
+		var rowPanel = new FlowLayoutPanel {
+			AutoSize = true,
+			AutoSizeMode = AutoSizeMode.GrowAndShrink,
+			Dock = DockStyle.Top,
+			FlowDirection = FlowDirection.LeftToRight,
+			WrapContents = false,
+			Margin = new Padding(3, 0, 3, 0),
+		};
+
+		// Section textbox
+		var txtSection = new TextBox {
+			Name = "txtSection",
+			PlaceholderText = "Section (eg. cpu)",
+			Text = section,
+			Width = 180,
+			Margin = new Padding(3),
+			Font = fixedFont,
+		};
+		txtSection.Validating += (sender, ea) => {
+			if (txtSection.Text.Trim().Equals("autoexec", StringComparison.OrdinalIgnoreCase)) {
+				MessageBoxHelper.ShowErrorMessageOk(@"The section name ""autoexec"" is reserved and cannot be used for custom settings.", "Invalid Section Name");
+				ea.Cancel = true;
+			}
+		};
+		rowPanel.Controls.Add(txtSection);
+
+		// Key textbox
+		var txtKey = new TextBox {
+			Name = "txtKey",
+			PlaceholderText = "Key (eg. cycles)",
+			Text = key,
+			Width = 300,
+			Margin = new Padding(3),
+			Font = fixedFont,
+		};
+		rowPanel.Controls.Add(txtKey);
+
+		// Value textbox
+		var txtValue = new TextBox {
+			Name = "txtValue",
+			PlaceholderText = "Value (eg. 30000)",
+			Text = value,
+			Width = 620,
+			Margin = new Padding(3),
+			Font = fixedFont,
+		};
+		rowPanel.Controls.Add(txtValue);
+
+		// Delete button
+		var btnDelete = new Button {
+			Text = "Delete",
+			AutoSize = true,
+			Margin = new Padding(2),
+		};
+		btnDelete.Click += (sender, ea) => {
+			flowPnlCustom.Controls.Remove(rowPanel);
+			rowPanel.Dispose();
+			_shortcutDirty = true;
+			updateUiDirtyState();
+		};
+		rowPanel.Controls.Add(btnDelete);
+
+		// Add the row to the FlowLayoutPanel and scroll
+		flowPnlCustom.Controls.Add(rowPanel);
+		flowPnlCustom.ScrollControlIntoView(rowPanel);
+
+		// Attach handlers for controls
+		attachControlHandlers(txtSection);
+		attachControlHandlers(txtKey);
+		attachControlHandlers(txtValue);
 	}
 
 	private void addTxtboxMsg(string msg) {
@@ -665,5 +782,14 @@ public partial class MainForm : Form {
 			""",
 			"Autoexec Script setting"
 		);
+	}
+
+	private void btnAddCustomSetting_Click(object sender, EventArgs ea) {
+		addCustomSettingRow("", "", "");
+
+		if (!_shortcutDirty) {
+			_shortcutDirty = true;
+			updateUiDirtyState();
+		}
 	}
 }

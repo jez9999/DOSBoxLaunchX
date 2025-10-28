@@ -231,19 +231,21 @@ public class LaunchSettingsTests {
 
 	[Test]
 	public void Custom_and_strongly_typed_setting_conflict_resolves_ok() {
+		// TODO: test is failing.  we need typed settings to override custom ones of the same name i reckon...
+
 		// Arrange
 		var json = @"{""Settings"":{""cpu.cycles"":""3123""}}";
 		var settings = JsonConvert.DeserializeObject<LaunchSettings>(json, _jsonSettings)!;
 
 		// Act
-		settings.SetCustomSetting("cpu.cycles", "9999"); // This should override CPU.Cycles
+		settings.SetCustomSetting("cpu.cycles", "9999"); // This should *not* override CPU.Cycles
 		string jsonOut = JsonConvert.SerializeObject(settings, _jsonSettings);
 
 		// Assert
 		settings.CPU.Cycles.Should().Be("3123");
 		settings.GetCustomSetting<string>("cpu.cycles").Should().Be("9999");
-		jsonOut.Should().Contain(@"""cpu.cycles"":""9999""");
-		jsonOut.Should().NotContain(@"""cpu.cycles"":""3123""");
+		jsonOut.Should().Contain(@"""cpu.cycles"":""3123""");
+		jsonOut.Should().NotContain(@"""cpu.cycles"":""9999""");
 	}
 
 	[Test]
