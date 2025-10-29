@@ -1,3 +1,5 @@
+using System.Reflection;
+using System.ComponentModel;
 using DOSBoxLaunchX.Factories;
 using DOSBoxLaunchX.Helpers;
 using DOSBoxLaunchX.Models;
@@ -17,6 +19,7 @@ public partial class MainForm : Form {
 	private readonly ControlInfoTagParser _ctrlTagParser;
 	private readonly LaunchSettingsFileService _settingsFileService;
 	private readonly Dictionary<Control, ControlInfo> _controlInfo = [];
+	private readonly HashSet<string> _reservedSectionKeys;
 
 	private readonly Font _radFontRegular;
 	private readonly Font _radFontBold;
@@ -39,11 +42,23 @@ public partial class MainForm : Form {
 
 		_radFontRegular = new Font(radShortcut.Font, FontStyle.Regular);
 		_radFontBold = new Font(radShortcut.Font, FontStyle.Bold);
+		_reservedSectionKeys = getReservedSectionKeys(new LaunchSettings());
 	}
 
 	#endregion
 
 	#region Non-event helper methods
+
+	private HashSet<string> getReservedSectionKeys(LaunchSettings sett) {
+		var map = new Dictionary<string, (PropertyInfo, object)>();
+		LaunchSettingsMetaHelper.AddGroupedPropertiesToMap(map, sett);
+		return [.. map.Keys];
+	}
+
+	private string? sectionKeyReserved(string section, string key) {
+		string sectionKey = string.IsNullOrEmpty(key) ? section : $"{section}.{key}";
+		return _reservedSectionKeys.Contains(sectionKey) ? sectionKey : null;
+	}
 
 	private void initNewShortcut() {
 		// Reset UI first...
@@ -210,7 +225,7 @@ public partial class MainForm : Form {
 				radShortcut.Font = _radFontBold;
 				radShortcut.Text += "*";
 
-				//radGlobal.Font = _radFontBold;
+				//radGlobal.Font = _radFontBold; // TODO: use when implementing global settings
 				//radGlobal.Text += "*";
 			}
 		}
@@ -219,7 +234,7 @@ public partial class MainForm : Form {
 				radShortcut.Font = _radFontRegular;
 				radShortcut.Text = radShortcut.Text[..^1];
 
-				//radGlobal.Font = _radFontRegular;
+				//radGlobal.Font = _radFontRegular; // TODO: use when implementing global settings
 				//radGlobal.Text = radGlobal.Text[..^1];
 			}
 		}
@@ -531,7 +546,6 @@ public partial class MainForm : Form {
 	}
 
 	private void addCustomSettingRow(string section, string key, string value) {
-		var fixedFont = txtAutoexec.Font;
 
 		// Create the container panel for this row
 		var rowPanel = new FlowLayoutPanel {
@@ -546,41 +560,58 @@ public partial class MainForm : Form {
 		// Section textbox
 		var txtSection = new TextBox {
 			Name = "txtSection",
-			PlaceholderText = "Section (eg. cpu)",
 			Text = section,
 			Width = 180,
 			Margin = new Padding(3),
-			Font = fixedFont,
-		};
-		txtSection.Validating += (sender, ea) => {
-			if (txtSection.Text.Trim().Equals("autoexec", StringComparison.OrdinalIgnoreCase)) {
-				MessageBoxHelper.ShowErrorMessageOk(@"The section name ""autoexec"" is reserved and cannot be used for custom settings.", "Invalid Section Name");
-				ea.Cancel = true;
-			}
 		};
 		rowPanel.Controls.Add(txtSection);
 
 		// Key textbox
 		var txtKey = new TextBox {
 			Name = "txtKey",
-			PlaceholderText = "Key (eg. cycles)",
 			Text = key,
 			Width = 300,
 			Margin = new Padding(3),
-			Font = fixedFont,
 		};
 		rowPanel.Controls.Add(txtKey);
 
 		// Value textbox
 		var txtValue = new TextBox {
 			Name = "txtValue",
-			PlaceholderText = "Value (eg. 30000)",
 			Text = value,
 			Width = 620,
 			Margin = new Padding(3),
-			Font = fixedFont,
 		};
 		rowPanel.Controls.Add(txtValue);
+
+		// Validations
+		void validateSectionAndKey(string section, string key, CancelEventArgs ea) {
+			section = section.Trim().ToLower();
+			key = key.Trim().ToLower();
+
+			if (section.Contains('.')) {
+				MessageBoxHelper.ShowErrorMessageOk(@"A section name may not contain a dot.", "Invalid Section Name");
+				ea.Cancel = true;
+				return;
+			}
+
+			if (section == "autoexec") {
+				MessageBoxHelper.ShowErrorMessageOk(@"The section name ""autoexec"" is reserved and cannot be used for custom settings.", "Invalid Section Name");
+				ea.Cancel = true;
+				return;
+			}
+
+			var reserved = sectionKeyReserved(section, key);
+			if (reserved != null) {
+				MessageBoxHelper.ShowErrorMessageOk($@"The section/key ""{reserved}"" is already managed by the main settings and can't be overridden by a custom setting.", "Invalid Section/Key Name");
+				ea.Cancel = true;
+			}
+		}
+
+		txtSection.Validating += (sender, ea) => validateSectionAndKey(txtSection.Text, txtKey.Text, ea);
+		txtKey.Validating += (sender, ea) => validateSectionAndKey(txtSection.Text, txtKey.Text, ea);
+		txtSection.Validated += (sender, ea) => { txtSection.Text = txtSection.Text.Trim().ToLower(); };
+		txtKey.Validated += (sender, ea) => { txtKey.Text = txtKey.Text.Trim().ToLower(); };
 
 		// Delete button
 		var btnDelete = new Button {

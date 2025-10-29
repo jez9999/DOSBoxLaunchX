@@ -67,6 +67,9 @@
 			txtPostAutoexec = new TextBox();
 			txtPreAutoexec = new TextBox();
 			tabCustom = new TabPage();
+			lblHeadingValue = new Label();
+			lblHeadingKey = new Label();
+			lblHeadingSection = new Label();
 			flowPnlCustom = new FlowLayoutPanel();
 			btnAddCustomSetting = new Button();
 			tabKbMappings = new TabPage();
@@ -517,6 +520,9 @@
 			// tabCustom
 			// 
 			tabCustom.BackColor = SystemColors.Control;
+			tabCustom.Controls.Add(lblHeadingValue);
+			tabCustom.Controls.Add(lblHeadingKey);
+			tabCustom.Controls.Add(lblHeadingSection);
 			tabCustom.Controls.Add(flowPnlCustom);
 			tabCustom.Controls.Add(btnAddCustomSetting);
 			tabCustom.Location = new Point(4, 24);
@@ -525,12 +531,42 @@
 			tabCustom.TabIndex = 4;
 			tabCustom.Text = "Custom settings";
 			// 
+			// lblHeadingValue
+			// 
+			lblHeadingValue.AutoSize = true;
+			lblHeadingValue.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+			lblHeadingValue.Location = new Point(496, 7);
+			lblHeadingValue.Name = "lblHeadingValue";
+			lblHeadingValue.Size = new Size(37, 15);
+			lblHeadingValue.TabIndex = 104;
+			lblHeadingValue.Text = "Value";
+			// 
+			// lblHeadingKey
+			// 
+			lblHeadingKey.AutoSize = true;
+			lblHeadingKey.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+			lblHeadingKey.Location = new Point(190, 7);
+			lblHeadingKey.Name = "lblHeadingKey";
+			lblHeadingKey.Size = new Size(28, 15);
+			lblHeadingKey.TabIndex = 103;
+			lblHeadingKey.Text = "Key";
+			// 
+			// lblHeadingSection
+			// 
+			lblHeadingSection.AutoSize = true;
+			lblHeadingSection.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+			lblHeadingSection.Location = new Point(5, 7);
+			lblHeadingSection.Name = "lblHeadingSection";
+			lblHeadingSection.Size = new Size(49, 15);
+			lblHeadingSection.TabIndex = 102;
+			lblHeadingSection.Text = "Section";
+			// 
 			// flowPnlCustom
 			// 
 			flowPnlCustom.AutoScroll = true;
-			flowPnlCustom.Location = new Point(0, 4);
+			flowPnlCustom.Location = new Point(0, 25);
 			flowPnlCustom.Name = "flowPnlCustom";
-			flowPnlCustom.Size = new Size(1227, 473);
+			flowPnlCustom.Size = new Size(1227, 452);
 			flowPnlCustom.TabIndex = 101;
 			// 
 			// btnAddCustomSetting
@@ -769,6 +805,7 @@
 			tabAutoexec.ResumeLayout(false);
 			tabAutoexec.PerformLayout();
 			tabCustom.ResumeLayout(false);
+			tabCustom.PerformLayout();
 			mainMenuStrip.ResumeLayout(false);
 			mainMenuStrip.PerformLayout();
 			mainMenuStripContainer.TopToolStripPanel.ResumeLayout(false);
@@ -846,5 +883,8 @@
 		private TextBox txtAutoexec;
 		private Button btnAddCustomSetting;
 		private FlowLayoutPanel flowPnlCustom;
+		private Label lblHeadingValue;
+		private Label lblHeadingKey;
+		private Label lblHeadingSection;
 	}
 }

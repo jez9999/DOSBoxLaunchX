@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using System.Reflection;
+using Newtonsoft.Json;
 using DOSBoxLaunchX.Logic.Services;
+using DOSBoxLaunchX.Logic.Helpers;
 
 namespace DOSBoxLaunchX.Logic.Models;
 
@@ -74,6 +76,15 @@ public class LaunchSettings {
 		return _customSettings.AsReadOnly();
 	}
 
+	private static T getValueOrThrow<T>(object value, string keyName) {
+		if (value is T typedValue) {
+			return typedValue;
+		}
+		throw new InvalidDataException(
+			$"Expected a value of type {typeof(T).Name} for '{keyName}', but got {value?.GetType().Name ?? "[null]"}."
+		);
+	}
+
 	#endregion
 
 	#region Flat settings dictionary for serialization
@@ -96,7 +107,7 @@ public class LaunchSettings {
 	private IReadOnlyDictionary<string, object> toFlatSettings() {
 		var dict = new Dictionary<string, object>();
 
-		if (CPU.Cycles != null) { dict["cpu.cycles"] = CPU.Cycles; }
+		LaunchSettingsMetaHelper.AddGroupedSettingsToDict(dict, this);
 
 		foreach (var kvp in _customSettings) {
 			dict[kvp.Key] = kvp.Value;
@@ -106,26 +117,25 @@ public class LaunchSettings {
 	}
 
 	private void fromFlatSettings(IReadOnlyDictionary<string, object> flat) {
-		foreach (var kvp in flat) {
-			switch (kvp.Key) {
-				case "cpu.cycles":
-					CPU.Cycles = getValueOrThrow<string>(kvp.Value, kvp.Key);
-					break;
+		var groupedMap = new Dictionary<string, (PropertyInfo prop, object instance)>();
+		LaunchSettingsMetaHelper.AddGroupedPropertiesToMap(groupedMap, this);
 
-				default:
-					_customSettings[kvp.Key] = kvp.Value;
-					break;
+		foreach (var kvp in flat) {
+			if (groupedMap.TryGetValue(kvp.Key, out var tuple)) {
+				var (prop, instance) = tuple;
+
+				if (!prop.PropertyType.IsAssignableFrom(kvp.Value.GetType())) {
+					throw new InvalidDataException(
+						$"Expected a value of type {prop.PropertyType.Name} for '{kvp.Key}', but got {kvp.Value.GetType().Name}."
+					);
+				}
+
+				prop.SetValue(instance, kvp.Value);
+			}
+			else {
+				_customSettings[kvp.Key] = kvp.Value;
 			}
 		}
-	}
-
-	private static T getValueOrThrow<T>(object value, string keyName) {
-		if (value is T typedValue) {
-			return typedValue;
-		}
-		throw new InvalidDataException(
-			$"Expected a value of type {typeof(T).Name} for '{keyName}', but got {value?.GetType().Name ?? "[null]"}."
-		);
 	}
 
 	#endregion
@@ -133,6 +143,7 @@ public class LaunchSettings {
 	#region Classes
 
 	public class CPUSettings {
+		[GroupedSetting("cpu", "cycles")]
 		public string? Cycles { get; set; }
 	}
 
