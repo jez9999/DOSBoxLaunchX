@@ -28,6 +28,11 @@ public partial class LauncherForm : Form {
 	private async void LauncherForm_Load(object sender, EventArgs ea) {
 		try {
 			_data.LocalAppDataDir = LocalAppDataHelper.EnsureLocalAppDataDir(_data.ProgramName);
+
+			if (_data.IsDebugBuild) {
+				Text += " (DEBUG BUILD)";
+			}
+			Text += " - Launching DOSBox-X...";
 		}
 		catch (Exception ex) {
 			MessageBoxHelper.ShowErrorMessageOk($"FATAL ERROR: Failed to ensure local app data directory: {ex.Message}", "Error");

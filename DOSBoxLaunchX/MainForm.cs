@@ -626,7 +626,7 @@ public partial class MainForm : Form {
 		}
 
 		if (_data.IsDebugBuild) {
-			Text += " - DEBUG BUILD";
+			Text += " (DEBUG BUILD)";
 		}
 
 		updateIsRegisteredLabel();

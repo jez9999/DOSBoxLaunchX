@@ -14,11 +14,10 @@ internal static class Program {
 	// TODO: If Linux support is ever needed, refactor this app's Form logic into an MVVM pattern for Uno.
 
 	// ====================================================
-	// TODO: Always normalize all config files line endings to Unix newlines (LF)
 	// TODO: Any config setting or section that does not exist in the base configuration when applying
 	// overrides should trigger a warning in the output (may indicate a typo). Additionally, any planned
 	// parsing of dosbox-x.conf should treat blank lines as comment lines, normalize all newlines to LF,
-	// and allow round-trip parsing with exact reconstruction of lines.
+	// and allow round-trip parsing with exact reconstruction of lines (except for newlines; see above).
 	// ====================================================
 
 	[STAThread]

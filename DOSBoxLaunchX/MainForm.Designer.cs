@@ -484,9 +484,9 @@
 			lblAutoexecEllipsis.Font = new Font("Courier New", 9.75F);
 			lblAutoexecEllipsis.Location = new Point(8, 49);
 			lblAutoexecEllipsis.Name = "lblAutoexecEllipsis";
-			lblAutoexecEllipsis.Size = new Size(183, 16);
+			lblAutoexecEllipsis.Size = new Size(47, 16);
 			lblAutoexecEllipsis.TabIndex = 2;
-			lblAutoexecEllipsis.Text = "[....................]";
+			lblAutoexecEllipsis.Text = "[...]";
 			// 
 			// txtPostAutoexec
 			// 

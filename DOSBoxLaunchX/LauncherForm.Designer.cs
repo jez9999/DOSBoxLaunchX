@@ -60,7 +60,7 @@
 			Icon = (Icon)resources.GetObject("$this.Icon");
 			Name = "LauncherForm";
 			StartPosition = FormStartPosition.CenterScreen;
-			Text = "Launching DOSBox-X...";
+			Text = "DOSBoxLaunchX";
 			Load += LauncherForm_Load;
 			ResumeLayout(false);
 			PerformLayout();
