@@ -28,19 +28,19 @@ public partial class LauncherForm : Form {
 	private async void LauncherForm_Load(object sender, EventArgs ea) {
 		try {
 			_data.LocalAppDataDir = LocalAppDataHelper.EnsureLocalAppDataDir(_data.ProgramName);
-
-			if (_data.IsDebugBuild) {
-				Text += " (DEBUG BUILD)";
-			}
-			Text += " - Launching DOSBox-X...";
 		}
 		catch (Exception ex) {
 			MessageBoxHelper.ShowErrorMessageOk($"FATAL ERROR: Failed to ensure local app data directory: {ex.Message}", "Error");
 			Environment.Exit(1);
 		}
 
+		if (_data.IsDebugBuild) {
+			Text += " (DEBUG BUILD)";
+		}
+		Text += " - Launching DOSBox-X...";
+
 		try {
-			// Record positions of controls on form that we'll need later
+			// Record sizes on form that we'll need later
 			_widthDiff = Width - txtOutput.Width;
 			_heightDiff = Height - txtOutput.Height;
 			SizeChanged += new EventHandler(positionFormControls);
@@ -57,6 +57,11 @@ public partial class LauncherForm : Form {
 			var configFile = "dosbox-x.custom.conf";
 			var exePath = Path.Combine(baseDir, "dosbox-x.exe");
 			var configPath = Path.Combine(_data.LocalAppDataDir, configFile);
+
+			// Read given shortcut file from args
+			// look at: _data.Args
+
+			// Generate config from given shortcut merged with global config settings
 
 			// TODO: the local app data dir will typically contain:
 			// - dosbox-x._Tyrian_.conf             // per-launch merged DOSBox-X configs for each shortcut; written each time a .dlx is opened

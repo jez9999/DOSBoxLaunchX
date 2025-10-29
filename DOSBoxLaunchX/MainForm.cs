@@ -607,6 +607,7 @@ public partial class MainForm : Form {
 				ea.Cancel = true;
 			}
 		}
+		// TODO: ^ handle section/key dupes where multiple custom settings have the same one
 
 		txtSection.Validating += (sender, ea) => validateSectionAndKey(txtSection.Text, txtKey.Text, ea);
 		txtKey.Validating += (sender, ea) => validateSectionAndKey(txtSection.Text, txtKey.Text, ea);
