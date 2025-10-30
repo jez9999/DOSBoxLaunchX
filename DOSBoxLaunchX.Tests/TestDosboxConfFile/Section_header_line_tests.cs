@@ -17,8 +17,8 @@ public class Section_header_line_tests {
 		var header = file.Lines.OfType<SectionHeaderLine>().First();
 
 		// Assert
-		header.SectionName.Should().Be("autoexec");
-		header.RawText.Should().Be("[autoexec]extra");
+		header.Should().BeOfType<SectionHeaderLine>();
+		header.Should().BeEquivalentTo(new { SectionName = "autoexec", RawText = "[autoexec]extra" });
 	}
 
 	[Test]
@@ -48,7 +48,8 @@ public class Section_header_line_tests {
 		var header = file.Lines.OfType<SectionHeaderLine>().First();
 
 		// Assert
-		header.SectionName.Should().Be("midi device");
+		header.Should().BeOfType<SectionHeaderLine>();
+		header.Should().BeEquivalentTo(new { SectionName = "midi device", RawText = "[midi device]" });
 	}
 
 	[Test]
@@ -66,8 +67,8 @@ public class Section_header_line_tests {
 		var setting = file.GetSetting("midi device", "mpu401").Single();
 
 		// Assert
-		setting.Value.Should().Be("intelligent");
-		header.SectionName.Should().Be("midi device");
-		header.RawText.Should().Be("[midi device]");
+		header.Should().BeOfType<SectionHeaderLine>();
+		header.Should().BeEquivalentTo(new { SectionName = "midi device", RawText = "[midi device]" });
+		setting.Should().BeEquivalentTo(new { Value = "intelligent" });
 	}
 }

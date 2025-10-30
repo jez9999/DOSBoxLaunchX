@@ -17,9 +17,10 @@ public class Comment_and_malformed_line_tests {
 		var line = file.Lines[0];
 
 		// Assert
-		line.Should().BeOfType<CommentLine>();
-		line.As<CommentLine>().Comment.Should().Be(" this is a comment");
-		line.As<CommentLine>().RawText.Should().Be("# this is a comment");
+		line.Should().BeOfType<CommentLine>().Which.Should().BeEquivalentTo(new {
+			Comment = " this is a comment",
+			RawText = "# this is a comment"
+		});
 	}
 
 	[Test]
@@ -46,13 +47,13 @@ public class Comment_and_malformed_line_tests {
 		var lines = file.Lines.ToList();
 
 		// Assert
-		lines.Count.Should().Be(3);
-		lines[0].Should().BeOfType<CommentLine>();
-		lines[1].Should().BeOfType<CommentLine>();
-		lines[2].Should().BeOfType<CommentLine>();
-		lines[0].RawText.Should().Be(string.Empty);
-		lines[1].RawText.Should().Be("   ");
-		lines[2].RawText.Should().Be(string.Empty);
+		lines.Should().HaveCount(3);
+		lines.All(l => l is CommentLine).Should().BeTrue();
+		lines.Should().BeEquivalentTo([
+			new { Comment = string.Empty, RawText = string.Empty },
+			new { Comment = string.Empty, RawText = "   " },
+			new { Comment = string.Empty, RawText = string.Empty }
+		], options => options.WithStrictOrdering());
 	}
 
 	[Test]
@@ -65,8 +66,7 @@ public class Comment_and_malformed_line_tests {
 		var line = file.Lines[0];
 
 		// Assert
-		line.Should().BeOfType<MalformedLine>();
-		line.As<MalformedLine>().RawText.Should().Be("[abc");
+		line.Should().BeOfType<MalformedLine>().Which.RawText.Should().Be("[abc");
 	}
 
 	[Test]
@@ -79,8 +79,9 @@ public class Comment_and_malformed_line_tests {
 		var line = file.Lines[0];
 
 		// Assert
-		line.Should().BeOfType<CommentLine>();
-		line.As<CommentLine>().Comment.Should().Be(" spaced comment");
-		line.As<CommentLine>().RawText.Should().Be("   # spaced comment");
+		line.Should().BeOfType<CommentLine>().Which.Should().BeEquivalentTo(new {
+			Comment = " spaced comment",
+			RawText = "   # spaced comment"
+		});
 	}
 }

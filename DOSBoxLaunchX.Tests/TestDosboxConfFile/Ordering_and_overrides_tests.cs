@@ -61,10 +61,12 @@ public class Ordering_and_overrides_tests {
 		var serialized = file.ToText().Split('\n');
 
 		// Assert
-		serialized[0].Should().Be("[cpu]");
-		serialized[1].Should().Be("cycles=auto");
-		serialized[2].Should().Be("core=dynamic");
-		serialized[3].Should().Be("frameskip=2");
+		serialized.Should().BeEquivalentTo([
+			"[cpu]",
+			"cycles=auto",
+			"core=dynamic",
+			"frameskip=2"
+		], options => options.WithStrictOrdering());
 	}
 
 	[Test]
@@ -85,9 +87,10 @@ public class Ordering_and_overrides_tests {
 		var allCycles = file.GetSetting("cpu", "cycles").ToList();
 
 		// Assert
-		allCpu.Count.Should().Be(1);
-		allCpu.First().Value.Should().Be("1");
-		allCycles.Count.Should().Be(2);
-		allCycles.Last().Value.Should().Be("max");
+		allCpu.Should().HaveCount(1);
+		allCpu[0].Should().BeEquivalentTo(new { Value = "1" });
+
+		allCycles.Should().HaveCount(2);
+		allCycles.Last().Should().BeEquivalentTo(new { Value = "max" });
 	}
 }

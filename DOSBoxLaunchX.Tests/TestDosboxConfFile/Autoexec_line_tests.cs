@@ -23,10 +23,12 @@ public class Autoexec_line_tests {
 		var autoexecLines = file.Lines.OfType<AutoexecLine>().ToList();
 
 		// Assert
-		autoexecLines.Count.Should().Be(3);
-		autoexecLines[0].Command.Should().Be("mount c c:\\games");
-		autoexecLines[1].Command.Should().Be("c:");
-		autoexecLines[2].Command.Should().Be("game.exe");
+		autoexecLines.Should().HaveCount(3);
+		autoexecLines.Should().BeEquivalentTo([
+			new { Command = "mount c c:\\games" },
+			new { Command = "c:" },
+			new { Command = "game.exe" }
+		]);
 	}
 
 	[Test]
@@ -61,10 +63,14 @@ public class Autoexec_line_tests {
 		var autoexecLines = file.Lines.OfType<AutoexecLine>().Select(l => l.Command).ToList();
 
 		// Assert
-		autoexecLines[0].Should().Be("start1.1");
-		autoexecLines[1].Should().Be("start1.2");
-		autoexecLines[^2].Should().Be("end1.1");
-		autoexecLines[^1].Should().Be("end1.2");
+		autoexecLines.Should().BeEquivalentTo([
+			"start1.1",
+			"start1.2",
+			"first",
+			"second",
+			"end1.1",
+			"end1.2"
+		]);
 	}
 
 	[Test]
@@ -81,7 +87,7 @@ public class Autoexec_line_tests {
 		var autoexecLines = file.Lines.OfType<AutoexecLine>().ToList();
 
 		// Assert
-		autoexecLines.Count.Should().Be(1);
-		autoexecLines[0].Command.Should().Be(@"SET PATH=C:\DOS");
+		autoexecLines.Should().HaveCount(1);
+		autoexecLines[0].Should().BeEquivalentTo(new { Command = @"SET PATH=C:\DOS" });
 	}
 }

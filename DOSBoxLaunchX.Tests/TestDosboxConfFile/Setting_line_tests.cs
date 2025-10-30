@@ -17,10 +17,13 @@ public class Setting_line_tests {
 		var setting = file.Lines.OfType<SettingLine>().First();
 
 		// Assert
-		setting.Section.Should().BeNull();
-		setting.Key.Should().Be("core");
-		setting.Value.Should().Be("dynamic");
-		setting.RawText.Should().Be("core = dynamic");
+		setting.Should().BeOfType<SettingLine>();
+		setting.Should().BeEquivalentTo(new {
+			Section = (string?)null,
+			Key = "core",
+			Value = "dynamic",
+			RawText = "core = dynamic"
+		});
 	}
 
 	[Test]
@@ -33,10 +36,13 @@ public class Setting_line_tests {
 		var setting = file.Lines.OfType<SettingLine>().First();
 
 		// Assert
-		setting.Section.Should().BeNull();
-		setting.Key.Should().Be("cycles");
-		setting.Value.Should().Be("");
-		setting.RawText.Should().Be("cycles=");
+		setting.Should().BeOfType<SettingLine>();
+		setting.Should().BeEquivalentTo(new {
+			Section = (string?)null,
+			Key = "cycles",
+			Value = "",
+			RawText = "cycles="
+		});
 	}
 
 	[Test]
@@ -49,10 +55,13 @@ public class Setting_line_tests {
 		var setting = file.Lines.OfType<SettingLine>().First();
 
 		// Assert
-		setting.Section.Should().BeNull();
-		setting.Key.Should().Be("title");
-		setting.Value.Should().Be("hello world # literal");
-		setting.RawText.Should().Be("title = hello world # literal");
+		setting.Should().BeOfType<SettingLine>();
+		setting.Should().BeEquivalentTo(new {
+			Section = (string?)null,
+			Key = "title",
+			Value = "hello world # literal",
+			RawText = "title = hello world # literal"
+		});
 	}
 
 	[Test]
@@ -71,6 +80,7 @@ public class Setting_line_tests {
 		var result = file.GetSetting(null, "foo").First();
 
 		// Assert
-		result.Value.Should().Be("bar");
+		result.Should().BeOfType<SettingLine>();
+		result.Should().BeEquivalentTo(new { Value = "bar" });
 	}
 }

@@ -19,13 +19,11 @@ public class Dosbox_conf_file_tests {
 		var linesText = fileText.Lines;
 
 		// Assert
-		linesEmpty.Count.Should().Be(1);
-		linesEmpty[0].Should().BeOfType<CommentLine>();
-		linesEmpty[0].RawText.Should().Be(string.Empty);
+		linesEmpty.Should().HaveCount(1);
+		linesEmpty[0].Should().BeOfType<CommentLine>().Which.RawText.Should().Be(string.Empty);
 
-		linesText.Count.Should().Be(1);
-		linesText[0].Should().BeOfType<CommentLine>();
-		linesText[0].RawText.Should().Be(string.Empty);
+		linesText.Should().HaveCount(1);
+		linesText[0].Should().BeOfType<CommentLine>().Which.RawText.Should().Be(string.Empty);
 	}
 
 	[Test]
@@ -42,8 +40,8 @@ public class Dosbox_conf_file_tests {
 		var cpuSettings = file.GetSetting("cpu", "cycles").ToList();
 
 		// Assert
-		cpuSettings.Count.Should().Be(1);
-		cpuSettings[0].Value.Should().Be("auto");
+		cpuSettings.Should().HaveCount(1);
+		cpuSettings[0].Should().BeEquivalentTo(new { Value = "auto" });
 	}
 
 	[Test]
@@ -59,8 +57,8 @@ public class Dosbox_conf_file_tests {
 		var cpuSettings = file.GetSetting("cpu", "cycles").ToList();
 
 		// Assert
-		cpuSettings.Count.Should().Be(1);
-		cpuSettings[0].Value.Should().Be("auto");
+		cpuSettings.Should().HaveCount(1);
+		cpuSettings[0].Should().BeEquivalentTo(new { Value = "auto" });
 	}
 
 	[Test]
@@ -78,9 +76,11 @@ public class Dosbox_conf_file_tests {
 		var settings = file.GetSetting("cpu", "cycles").ToList();
 
 		// Assert
-		settings.Count.Should().Be(2);
-		settings[0].Value.Should().Be("auto");
-		settings[1].Value.Should().Be("fixed");
+		settings.Should().HaveCount(2);
+		settings.Should().BeEquivalentTo([
+			new { Value = "auto" },
+			new { Value = "fixed" }
+		], options => options.WithStrictOrdering());
 	}
 
 	[Test]
@@ -99,7 +99,7 @@ public class Dosbox_conf_file_tests {
 		var updated = file.GetSetting("cpu", "cycles").ToList();
 
 		// Assert
-		updated.Count.Should().Be(2);
+		updated.Should().HaveCount(2);
 		updated.All(s => s.Value == "max").Should().BeTrue();
 	}
 
@@ -115,12 +115,11 @@ public class Dosbox_conf_file_tests {
 		var lastSetting = lines[lines.Count - 1];
 
 		// Assert
-		header.Should().BeOfType<SectionHeaderLine>();
-		header.As<SectionHeaderLine>().SectionName.Should().Be("sblaster");
-
-		lastSetting.Should().BeOfType<SettingLine>();
-		lastSetting.As<SettingLine>().Key.Should().Be("irq");
-		lastSetting.As<SettingLine>().Value.Should().Be("7");
+		header.Should().BeOfType<SectionHeaderLine>().Which.SectionName.Should().Be("sblaster");
+		lastSetting.Should().BeOfType<SettingLine>().Which.Should().BeEquivalentTo(new {
+			Key = "irq",
+			Value = "7"
+		});
 	}
 
 	[Test]
@@ -143,13 +142,13 @@ public class Dosbox_conf_file_tests {
 
 		// Assert
 		var lastHeader = lines[^2];
-		lastHeader.Should().BeOfType<SectionHeaderLine>();
-		lastHeader.As<SectionHeaderLine>().SectionName.Should().Be("sblaster");
+		lastHeader.Should().BeOfType<SectionHeaderLine>().Which.SectionName.Should().Be("sblaster");
 
 		var lastSetting = lines[^1];
-		lastSetting.Should().BeOfType<SettingLine>();
-		lastSetting.As<SettingLine>().Key.Should().Be("irq");
-		lastSetting.As<SettingLine>().Value.Should().Be("7");
+		lastSetting.Should().BeOfType<SettingLine>().Which.Should().BeEquivalentTo(new {
+			Key = "irq",
+			Value = "7"
+		});
 	}
 
 	[Test]
@@ -170,10 +169,12 @@ public class Dosbox_conf_file_tests {
 		var lines = serialized.Split('\n');
 
 		// Assert
-		lines[0].Should().Be("[cpu]");
-		lines[1].Should().Be("cycles=max");
-		lines[2].Should().Be("[misc]");
-		lines[3].Should().Be("volume=75");
+		lines.Should().BeEquivalentTo([
+			"[cpu]",
+			"cycles=max",
+			"[misc]",
+			"volume=75"
+		], options => options.WithStrictOrdering());
 	}
 
 	[Test]

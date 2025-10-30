@@ -18,10 +18,10 @@ public class Whitespace_and_formatting_tests {
 		var setting = file.Lines.OfType<SettingLine>().First();
 
 		// Assert
-		section.SectionName.Should().Be("cpu");
-		setting.Section.Should().Be("cpu");
-		setting.Key.Should().Be("cycles");
-		setting.Value.Should().Be("auto");
+		section.Should().BeOfType<SectionHeaderLine>();
+		setting.Should().BeOfType<SettingLine>();
+		section.Should().BeEquivalentTo(new { SectionName = "cpu" });
+		setting.Should().BeEquivalentTo(new { Section = "cpu", Key = "cycles", Value = "auto" });
 	}
 
 	[Test]
@@ -35,9 +35,13 @@ public class Whitespace_and_formatting_tests {
 		string output = file.ToText();
 
 		// Assert
-		setting.Section.Should().Be("cpu");
-		setting.Key.Should().Be("cycles");
-		setting.Value.Should().Be("max");
+		setting.Should().BeOfType<SettingLine>();
+		setting.Should().BeEquivalentTo(new {
+			Section = "cpu",
+			Key = "cycles",
+			Value = "max",
+			RawText = "cycles   =   max"
+		});
 		output.Should().Be(text);
 	}
 
@@ -51,9 +55,8 @@ public class Whitespace_and_formatting_tests {
 		var setting = file.Lines.OfType<SettingLine>().First();
 
 		// Assert
-		setting.Section.Should().Be("cpu");
-		setting.Key.Should().Be("cycles");
-		setting.Value.Should().Be("dynamic");
+		setting.Should().BeOfType<SettingLine>();
+		setting.Should().BeEquivalentTo(new { Section = "cpu", Key = "cycles", Value = "dynamic" });
 	}
 
 	[Test]
@@ -70,7 +73,7 @@ public class Whitespace_and_formatting_tests {
 		lines.Count(l => l is IgnoredLine).Should().Be(1);
 		lines.Count(l => l is SettingLine).Should().Be(1);
 		lines.OfType<IgnoredLine>().First().RawText.Should().Be("   ");
-		lines.OfType<SettingLine>().First().Value.Should().Be("auto");
+		lines.OfType<SettingLine>().First().Should().BeEquivalentTo(new { Value = "auto" });
 	}
 
 	[Test]
@@ -84,11 +87,13 @@ public class Whitespace_and_formatting_tests {
 		string output = file.ToText();
 
 		// Assert
-		autoexecLines.Count.Should().Be(2);
-		autoexecLines[0].RawText.Should().Be("  mount c c:\\games\\mygame  ");
-		autoexecLines[0].Command.Should().Be("mount c c:\\games\\mygame");
-		autoexecLines[1].RawText.Should().Be("  mygame.exe  ");
-		autoexecLines[1].Command.Should().Be("mygame.exe");
+		autoexecLines.Should().HaveCount(2);
+		autoexecLines[0].Should().BeOfType<AutoexecLine>();
+		autoexecLines[1].Should().BeOfType<AutoexecLine>();
+		autoexecLines.Should().BeEquivalentTo(new[] {
+			new { RawText = "  mount c c:\\games\\mygame  ", Command = "mount c c:\\games\\mygame" },
+			new { RawText = "  mygame.exe  ", Command = "mygame.exe" }
+		}, options => options.WithStrictOrdering());
 		output.Should().Be(text);
 	}
 
@@ -115,8 +120,8 @@ public class Whitespace_and_formatting_tests {
 		var header = file.Lines.OfType<SectionHeaderLine>().First();
 
 		// Assert
-		header.SectionName.Should().Be("cpu");
-		header.RawText.Should().Be("[cpu]   ");
+		header.Should().BeOfType<SectionHeaderLine>();
+		header.Should().BeEquivalentTo(new { SectionName = "cpu", RawText = "[cpu]   " });
 	}
 
 	[Test]
@@ -130,8 +135,10 @@ public class Whitespace_and_formatting_tests {
 
 		// Assert
 		comment.Should().BeOfType<CommentLine>();
-		comment.As<CommentLine>().Comment.Should().Be("comment with leading spaces");
-		comment.As<CommentLine>().RawText.Should().Be("   #comment with leading spaces");
+		comment.Should().BeEquivalentTo(new {
+			Comment = "comment with leading spaces",
+			RawText = "   #comment with leading spaces"
+		});
 	}
 
 	[Test]
@@ -144,6 +151,7 @@ public class Whitespace_and_formatting_tests {
 		var setting = file.Lines.OfType<SettingLine>().First();
 
 		// Assert
+		setting.Should().BeOfType<SettingLine>();
 		setting.Value.Should().Be("");
 	}
 
@@ -157,8 +165,11 @@ public class Whitespace_and_formatting_tests {
 		var setting = file.Lines.OfType<SettingLine>().First();
 
 		// Assert
-		setting.Key.Should().Be("cycles per second");
-		setting.Value.Should().Be("1000");
-		setting.RawText.Should().Be("cycles per second = 1000");
+		setting.Should().BeOfType<SettingLine>();
+		setting.Should().BeEquivalentTo(new {
+			Key = "cycles per second",
+			Value = "1000",
+			RawText = "cycles per second = 1000"
+		});
 	}
 }
