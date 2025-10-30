@@ -200,6 +200,9 @@ dotnet_diagnostic.IDE0052.severity = silent
 # IDE0290: Use primary constructor
 dotnet_diagnostic.IDE0290.severity = silent
 
+# IDE0130: Namespace does not match folder structure
+dotnet_diagnostic.IDE0130.severity = silent
+
 # 4-space indentation
 indent_style = tab
 indent_size = 4

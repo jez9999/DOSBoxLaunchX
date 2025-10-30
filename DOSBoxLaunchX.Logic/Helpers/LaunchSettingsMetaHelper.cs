@@ -26,7 +26,7 @@ public static class LaunchSettingsMetaHelper {
 		}
 	}
 
-	public static void AddGroupedPropertiesToMap(Dictionary<string, (PropertyInfo, object)> map, object obj) {
+	public static void AddGroupedPropertiesToMap(Dictionary<string, (PropertyInfo Prop, object Instance)> map, object obj) {
 		foreach (var prop in obj.GetType().GetProperties()) {
 			if (!prop.CanRead || prop.GetIndexParameters().Length > 0 || prop.Name == nameof(LaunchSettings.Settings)) {
 				continue; // Skip write-only or indexed properties

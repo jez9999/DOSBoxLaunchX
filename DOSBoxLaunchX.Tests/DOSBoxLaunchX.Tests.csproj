@@ -7,10 +7,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\dosbox-x.large.conf" />
+    <None Remove="Assets\dosbox-x.large.expected.conf" />
+    <None Remove="Assets\weird_whitespace_vol_100.conf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\dosbox-x.large.conf" />
+    <EmbeddedResource Include="Assets\dosbox-x.large.expected.conf" />
+    <EmbeddedResource Include="Assets\weird_whitespace_vol_100.conf" />
+    <EmbeddedResource Include="Assets\weird_whitespace_vol_75.conf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AwesomeAssertions" Version="9.2.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
     <PackageReference Include="NUnit" Version="4.4.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="5.2.0" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>

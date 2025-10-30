@@ -546,7 +546,6 @@ public partial class MainForm : Form {
 	}
 
 	private void addCustomSettingRow(string section, string key, string value) {
-
 		// Create the container panel for this row
 		var rowPanel = new FlowLayoutPanel {
 			AutoSize = true,

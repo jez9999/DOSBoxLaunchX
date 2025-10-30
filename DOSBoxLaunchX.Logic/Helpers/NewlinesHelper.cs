@@ -2,9 +2,20 @@
 
 public static class NewlinesHelper {
 	public enum NewlineStyle {
-		Unix,     // LF (\n)
-		Windows,  // CRLF (\r\n)
-		OldMac    // CR (\r)
+		/// <summary>
+		/// Unix: LF (\n)
+		/// </summary>
+		Unix,
+
+		/// <summary>
+		/// Windows: CRLF (\r\n)
+		/// </summary>
+		Windows,
+
+		/// <summary>
+		/// Old Mac: CR (\r)
+		/// </summary>
+		OldMac,
 	}
 
 	/// <summary>

@@ -4,10 +4,10 @@ using Newtonsoft.Json;
 using DOSBoxLaunchX.Logic.Models;
 using DOSBoxLaunchX.Logic.Services;
 
-namespace DOSBoxLaunchX.Tests;
+namespace DOSBoxLaunchX.Tests.TestLaunchSettings;
 
 [TestFixture]
-public class LaunchSettingsTests {
+public class Launch_settings_tests {
 	private JsonSerializerSettings _jsonSettings = null!;
 
 	[SetUp]
@@ -92,7 +92,6 @@ public class LaunchSettingsTests {
 		// Assert
 		settings.Should().BeEquivalentTo(new LaunchSettings());
 	}
-
 
 	[Test]
 	public void Deserialize_minimal_settings() {
