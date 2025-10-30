@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using AwesomeAssertions;
 using DOSBoxLaunchX.Logic.DosboxParsing;
+using DOSBoxLaunchX.Logic.Helpers;
 
 namespace DOSBoxLaunchX.Tests.TestDosboxConfFile;
 
@@ -89,5 +90,40 @@ public class Autoexec_line_tests {
 		// Assert
 		autoexecLines.Should().HaveCount(1);
 		autoexecLines[0].Should().BeEquivalentTo(new { Command = @"SET PATH=C:\DOS" });
+	}
+
+	[Test]
+	public void Autoexec_add_appends_to_end_when_autoexec_is_last_section() {
+		// Arrange
+		string input =
+			NewlinesHelper.NormalizeNewlines(
+			"""
+			[sdl]
+			fullscreen=true
+			[autoexec]
+			mount c c:\games
+			C:
+			""", NewlinesHelper.NewlineStyle.Unix);
+
+		// Expected: new command should appear *after* the existing lines.
+		string expected =
+			NewlinesHelper.NormalizeNewlines(
+			"""
+			[sdl]
+			fullscreen=true
+			[autoexec]
+			mount c c:\games
+			C:
+			game.exe
+			""", NewlinesHelper.NewlineStyle.Unix);
+
+		var file = DosboxConfFile.FromText(input);
+
+		// Act
+		file.AddAutoexecCommands(["game.exe"]);
+		string output = file.ToText();
+
+		// Assert
+		output.Should().Be(expected);
 	}
 }
