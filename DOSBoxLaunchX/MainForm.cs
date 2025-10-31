@@ -1,3 +1,4 @@
+using System.Text;
 using System.Reflection;
 using System.ComponentModel;
 using DOSBoxLaunchX.Logic.Models;
@@ -23,6 +24,7 @@ public partial class MainForm : Form {
 
 	private readonly Font _radFontRegular;
 	private readonly Font _radFontBold;
+	private string _localAppDataDir = null!;
 	private string? _currentShortcutFilePath = null;
 	private bool _shortcutDirty = false;
 	private bool _globalsDirty = false;
@@ -196,6 +198,12 @@ public partial class MainForm : Form {
 			refreshPrePostAutoexec();
 		};
 		txtBaseDir.TextChanged += (sender, ea) => {
+			refreshPrePostAutoexec();
+		};
+		cbLimitBaseDirToOneGiBSet.CheckedChanged += (sender, ea) => {
+			refreshPrePostAutoexec();
+		};
+		comboLimitBaseDirToOneGiB.SelectedIndexChanged += (sender, ea) => {
 			refreshPrePostAutoexec();
 		};
 		cbExecutableSet.CheckedChanged += (sender, ea) => {
@@ -497,14 +505,8 @@ public partial class MainForm : Form {
 		// Other custom settings
 		loadCustomSettings(settFlatCustom, flowPnlCustom, addCustomSettingRow);
 
-		static void loadAutoexec(IReadOnlyDictionary<string, object> settFlat, TextBox ctrl) {
-			var autoexecLines = settFlat
-				.Where(kvp => kvp.Key.StartsWith("autoexec."))
-				.OrderBy(kvp => int.TryParse(kvp.Key["autoexec.".Length..], out var n) ? n : int.MaxValue)
-				.Select(kvp => kvp.Value.ToString())
-				.ToList();
-
-			ctrl.Text = string.Join(Environment.NewLine, autoexecLines);
+		static void loadAutoexec(IReadOnlyDictionary<string, object> settFlatCustom, TextBox ctrl) {
+			ctrl.Text = string.Join(Environment.NewLine, DosboxConfigMergeHelper.GetAutoexecLinesFromCustomSettings(settFlatCustom));
 		}
 
 		static void loadCustomSettings(IReadOnlyDictionary<string, object> settFlat, FlowLayoutPanel ctrl, Action<string, string, string> addCustomSettingRow) {
@@ -516,6 +518,8 @@ public partial class MainForm : Form {
 				var section = parts[0];
 				var key = parts.Length > 1 ? parts[1] : "";
 				var value = val?.ToString() ?? "";
+				if (section == "autoexec") { continue; }
+
 				addCustomSettingRow(section, key, value);
 			}
 		}
@@ -531,18 +535,29 @@ public partial class MainForm : Form {
 	}
 
 	private void refreshPrePostAutoexec() {
-		txtPreAutoexec.Text = """
-			@REM [No BaseDir set]                                    eg. MOUNT C C:\games\pizza -freesize 1024
-			@REM TODO: now C: command here potentially, mount above  eg. C:
-			""";
+		StringBuilder sb = new();
 
-		txtPostAutoexec.Text = """
-			@REM [No Executable set]                                 eg. PIZZA.BAT
-			@REM TODO: these texts should be pulled from utility code that generates them at launch time too
-			""";
+		string? baseDir = cbBaseDirSet.Checked ? UiHelper.GetTextValue(txtBaseDir) : null;
+		bool? limitBaseDirToOneGiB = cbLimitBaseDirToOneGiBSet.Checked ? UiHelper.GetComboValue<bool>(comboLimitBaseDirToOneGiB) : null;
+		string? executable = cbExecutableSet.Checked ? UiHelper.GetTextValue(txtExecutable) : null;
 
-		// TODO: remember that global autoexec should be merged with local autoexec with global autoexec
-		// coming BEFORE shortcut autoexec; not like other settings where shortcut overrides global.
+		(var preAutoexec, var postAutoexec) = DosboxConfigMergeHelper.GeneratePrePostAutoexec(
+			baseDir,
+			limitBaseDirToOneGiB,
+			executable
+		);
+
+		sb.Clear();
+		foreach (var line in preAutoexec) {
+			sb.AppendLine(line);
+		}
+		txtPreAutoexec.Text = $"{sb}";
+
+		sb.Clear();
+		foreach (var line in postAutoexec) {
+			sb.AppendLine(line);
+		}
+		txtPostAutoexec.Text = $"{sb}";
 	}
 
 	private void addCustomSettingRow(string section, string key, string value) {
@@ -649,7 +664,7 @@ public partial class MainForm : Form {
 #pragma warning disable IDE1006 // Naming Styles
 	private void MainForm_Load(object sender, EventArgs ea) {
 		try {
-			_data.LocalAppDataDir = LocalAppDataHelper.EnsureLocalAppDataDir(_data.ProgramName);
+			_localAppDataDir = LocalAppDataHelper.EnsureLocalAppDataDir(_data.ProgramName);
 
 			if (_data.IsDebugBuild) {
 				Text += " (DEBUG BUILD)";

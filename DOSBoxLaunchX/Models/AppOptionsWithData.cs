@@ -11,9 +11,10 @@ public class AppOptionsWithData {
 	public required string AppExePath;
 	public required string[] Args;
 
-	public string? LocalAppDataDir = null;
-
 	public string ShortcutFiletypeExtension => "dlx";
 	public string ShortcutFiletypeProgId => "DOSBoxLaunchX.Shortcut";
 	public string ShortcutFiletypeDescription => "DOSBoxLaunchX Shortcut File";
+
+	public string DosboxConfBaseFilename => "dosbox-x.conf";
+	public string DosboxConfTemplateFilename => "dosbox-x.[shortcutName].conf";
 }

@@ -27,6 +27,7 @@
 			lblLaunchShortcut = new Label();
 			txtOutput = new RichTextBox();
 			txtLaunchShortcut = new TextBox();
+			cbCloseOnDosboxExit = new CheckBox();
 			SuspendLayout();
 			// 
 			// lblLaunchShortcut
@@ -47,7 +48,7 @@
 			txtOutput.ReadOnly = true;
 			txtOutput.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
 			txtOutput.Size = new Size(1235, 402);
-			txtOutput.TabIndex = 2;
+			txtOutput.TabIndex = 100;
 			txtOutput.Text = "";
 			txtOutput.WordWrap = false;
 			// 
@@ -57,20 +58,33 @@
 			txtLaunchShortcut.Location = new Point(92, 9);
 			txtLaunchShortcut.Name = "txtLaunchShortcut";
 			txtLaunchShortcut.ReadOnly = true;
-			txtLaunchShortcut.Size = new Size(1155, 23);
-			txtLaunchShortcut.TabIndex = 11;
+			txtLaunchShortcut.Size = new Size(1004, 23);
+			txtLaunchShortcut.TabIndex = 10;
+			// 
+			// cbCloseOnDosboxExit
+			// 
+			cbCloseOnDosboxExit.AutoSize = true;
+			cbCloseOnDosboxExit.Checked = true;
+			cbCloseOnDosboxExit.CheckState = CheckState.Checked;
+			cbCloseOnDosboxExit.Location = new Point(1107, 12);
+			cbCloseOnDosboxExit.Name = "cbCloseOnDosboxExit";
+			cbCloseOnDosboxExit.Size = new Size(140, 19);
+			cbCloseOnDosboxExit.TabIndex = 11;
+			cbCloseOnDosboxExit.Text = "Close on DOSBox exit";
+			cbCloseOnDosboxExit.UseVisualStyleBackColor = true;
 			// 
 			// LauncherForm
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(1259, 454);
+			Controls.Add(cbCloseOnDosboxExit);
 			Controls.Add(txtLaunchShortcut);
 			Controls.Add(txtOutput);
 			Controls.Add(lblLaunchShortcut);
 			Icon = (Icon)resources.GetObject("$this.Icon");
 			Name = "LauncherForm";
-			StartPosition = FormStartPosition.CenterScreen;
+			StartPosition = FormStartPosition.Manual;
 			Text = "DOSBoxLaunchX";
 			Load += LauncherForm_Load;
 			ResumeLayout(false);
@@ -81,5 +95,6 @@
 		private Label lblLaunchShortcut;
 		private RichTextBox txtOutput;
 		private TextBox txtLaunchShortcut;
+		private CheckBox cbCloseOnDosboxExit;
 	}
 }

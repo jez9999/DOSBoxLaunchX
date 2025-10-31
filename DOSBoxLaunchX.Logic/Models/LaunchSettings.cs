@@ -90,10 +90,12 @@ public class LaunchSettings {
 	#region Flat settings dictionary for serialization
 
 	/// <summary>
-	/// Flat dictionary of all settings, generated dynamically from the strongly-typed properties.
+	/// Flat dictionary of all settings, generated dynamically from the strongly-typed properties and
+	/// custom settings.
 	///
-	/// IMPORTANT: This property is intended for serialization/deserialization only.  Do not modify
-	/// or access it directly in your code.
+	/// IMPORTANT: This property is intended for serialization/deserialization.  Do not modify it
+	/// directly in your code, and don't *frequently* access the getter as generating the Settings
+	/// dictionary each time is a heavyweight operation.
 	///
 	/// To set values, use the strongly-typed properties or use the get/set CustomSetting methods.
 	/// </summary>

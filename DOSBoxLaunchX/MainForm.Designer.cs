@@ -234,7 +234,7 @@
 			comboLimitBaseDirToOneGiB.DropDownStyle = ComboBoxStyle.DropDownList;
 			comboLimitBaseDirToOneGiB.FormattingEnabled = true;
 			comboLimitBaseDirToOneGiB.Items.AddRange(new object[] { "Yes", "No" });
-			comboLimitBaseDirToOneGiB.Location = new Point(289, 174);
+			comboLimitBaseDirToOneGiB.Location = new Point(288, 174);
 			comboLimitBaseDirToOneGiB.Name = "comboLimitBaseDirToOneGiB";
 			comboLimitBaseDirToOneGiB.Size = new Size(64, 23);
 			comboLimitBaseDirToOneGiB.TabIndex = 41;
@@ -255,9 +255,9 @@
 			lblLimitBaseDirToOneGiB.AutoSize = true;
 			lblLimitBaseDirToOneGiB.Location = new Point(36, 177);
 			lblLimitBaseDirToOneGiB.Name = "lblLimitBaseDirToOneGiB";
-			lblLimitBaseDirToOneGiB.Size = new Size(247, 15);
+			lblLimitBaseDirToOneGiB.Size = new Size(246, 15);
 			lblLimitBaseDirToOneGiB.TabIndex = 15;
-			lblLimitBaseDirToOneGiB.Text = "^ Limit reported free hard disk space to 1 GiB:";
+			lblLimitBaseDirToOneGiB.Text = "^ Limit reported free hard disk space at 1 GiB:";
 			// 
 			// cbExecutableSet
 			// 

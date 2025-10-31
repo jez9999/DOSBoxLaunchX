@@ -18,6 +18,9 @@ internal static class Program {
 	// overrides should trigger a warning in the output (may indicate a typo). Additionally, any planned
 	// parsing of dosbox-x.conf should treat blank lines as comment lines, normalize all newlines to LF,
 	// and allow round-trip parsing with exact reconstruction of lines (except for newlines; see above).
+	//
+	// TODO: remember that global autoexec should be merged with local autoexec with global autoexec
+	// coming BEFORE shortcut autoexec; not like other settings where shortcut overrides global.
 	// ====================================================
 
 	[STAThread]
