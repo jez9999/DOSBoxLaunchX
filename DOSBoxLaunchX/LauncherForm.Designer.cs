@@ -46,7 +46,7 @@
 			txtOutput.Name = "txtOutput";
 			txtOutput.ReadOnly = true;
 			txtOutput.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
-			txtOutput.Size = new Size(1261, 402);
+			txtOutput.Size = new Size(1235, 402);
 			txtOutput.TabIndex = 2;
 			txtOutput.Text = "";
 			txtOutput.WordWrap = false;
@@ -57,14 +57,14 @@
 			txtLaunchShortcut.Location = new Point(92, 9);
 			txtLaunchShortcut.Name = "txtLaunchShortcut";
 			txtLaunchShortcut.ReadOnly = true;
-			txtLaunchShortcut.Size = new Size(1181, 23);
+			txtLaunchShortcut.Size = new Size(1155, 23);
 			txtLaunchShortcut.TabIndex = 11;
 			// 
 			// LauncherForm
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(1285, 454);
+			ClientSize = new Size(1259, 454);
 			Controls.Add(txtLaunchShortcut);
 			Controls.Add(txtOutput);
 			Controls.Add(lblLaunchShortcut);

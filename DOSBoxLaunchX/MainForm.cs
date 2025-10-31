@@ -1,12 +1,12 @@
 using System.Reflection;
 using System.ComponentModel;
+using DOSBoxLaunchX.Logic.Models;
+using DOSBoxLaunchX.Logic.Services;
+using DOSBoxLaunchX.Logic.Helpers;
 using DOSBoxLaunchX.Factories;
 using DOSBoxLaunchX.Helpers;
 using DOSBoxLaunchX.Models;
 using DOSBoxLaunchX.Services;
-using DOSBoxLaunchX.Logic.Models;
-using DOSBoxLaunchX.Logic.Services;
-using DOSBoxLaunchX.Logic.Helpers;
 
 namespace DOSBoxLaunchX;
 
@@ -650,23 +650,23 @@ public partial class MainForm : Form {
 	private void MainForm_Load(object sender, EventArgs ea) {
 		try {
 			_data.LocalAppDataDir = LocalAppDataHelper.EnsureLocalAppDataDir(_data.ProgramName);
+
+			if (_data.IsDebugBuild) {
+				Text += " (DEBUG BUILD)";
+			}
+
+			updateIsRegisteredLabel();
+
+			initAndProcessControls(tabsContainer);
+			attachPrePostAutoexecHandlers();
+			refreshPrePostAutoexec();
+			initNewShortcut();
+			BeginInvoke(selectFirstControl);
 		}
 		catch (Exception ex) {
-			MessageBoxHelper.ShowErrorMessageOk($"FATAL ERROR: Failed to ensure local app data directory: {ex.Message}", "Error");
+			MessageBoxHelper.ShowErrorMessageOk($"FATAL ERROR: {ex.Message}", "Error");
 			Environment.Exit(1);
 		}
-
-		if (_data.IsDebugBuild) {
-			Text += " (DEBUG BUILD)";
-		}
-
-		updateIsRegisteredLabel();
-
-		initAndProcessControls(tabsContainer);
-		attachPrePostAutoexecHandlers();
-		refreshPrePostAutoexec();
-		initNewShortcut();
-		BeginInvoke(selectFirstControl);
 	}
 
 	private void MainForm_DragEnter(object sender, DragEventArgs ea) {

@@ -1,59 +1,65 @@
-﻿using DOSBoxLaunchX.Models;
+﻿using DOSBoxLaunchX.Logic.Services;
+using DOSBoxLaunchX.Models;
 
 namespace DOSBoxLaunchX.Factories;
 
 public class FormFactory(IServiceProvider sp) {
 	private readonly IServiceProvider _sp = sp;
 
-	// There are 3 basic ways of achieving DI when you need to have some params resolved by your service
-	// provider, and some dynamically passed in:
+	// To achieve DI when you need to have some params resolved by your service provider, but also some
+	// dynamically passed in, you can either:
 	//
-	// 1) Use ActivatorUtilities.CreateInstance<T>, eg.:
-	// public ImageSelectForm CreateImageSelectForm(Size cropSize, Action<string> debugLogWriter) {
-	//     return ActivatorUtilities.CreateInstance<ImageSelectForm>(_sp, cropSize, debugLogWriter);
-	// }
-	//
-	// 2) Create with 'new', and pass all params separately, eg.:
-	// public ImageSelectForm CreateImageSelectForm(Size cropSize, Action<string>? debugLogWriter = null) {
+	// 1) Create the instance with 'new', eg.:
+	// public ImageSelectForm CreateImageSelectForm([...dynamic params...]) {
 	//     return new ImageSelectForm(
-	//         _sp.GetRequiredService<ValidatorHelper>(),
-	//         cropSize,
-	//         debugLogWriter
+	//         _sp.GetRequiredService<AppOptionsWithData>(),
+	//         _sp.GetRequiredService<ValidatorService>(),
+	//         [...dynamic params...]
 	//     );
 	// }
 	//
-	// 3) Create with 'new' and pass SP-resolved params separately, but dynamic params all in one class, eg.:
+	// or 2) Use ActivatorUtilities.CreateInstance<T>, eg.:
+	// public ImageSelectForm CreateImageSelectForm([...dynamic params...]) {
+	//     return ActivatorUtilities.CreateInstance<ImageSelectForm>(_sp, [...dynamic params...]);
+	// }
+	//
+	// In each possibility, you can either pass in dynamic params individually, which causes issues when
+	// using ActivatorUtilities.CreateInstance<T> (if there are multiple primitives like bools, ints, etc.
+	// then which provided bools/ints/etc. map to which required bools/ints/etc.? Also how are null values
+	// dealt with?), or you can wrap them all up in a class dedicated to holding the dynamic parameters
+	// for the class you're instantiating, and just pass in an instance of that. This class should, of
+	// course, not be registered with the DI container.
+	//
+	// My personal preference for how to do this is: ALWAYS wrap up all dynamic params into a class
+	// dedicated to holding them (even if there's just 1 dynamic param, still use this pattern). That way,
+	// you get the best of both worlds; you can use ActivatorUtilities.CreateInstance<T>, allowing non-
+	// dynamic dependencies to be added without changing the factory method, and you can easily pass in a
+	// set of dynamic params in a class which can be modified when you want to modify the dynamic params. So:
+	//
 	// public ImageSelectForm CreateImageSelectForm(ImageSelectFormDynamicParams dynamicParams) {
-	//     return new ImageSelectForm(
-	//         _sp.GetRequiredService<ValidatorHelper>(),
-	//         dynamicParams
-	//     );
+	//     return ActivatorUtilities.CreateInstance<ImageSelectForm>(_sp, dynamicParams);
 	// }
+	//
 	// ... and elsewhere:
 	// public class ImageSelectFormDynamicParams {
 	//     public required Size CropSize { get; set; }
 	//     public Action<string>? DebugLogWriter { get; set; } = null;
 	// }
 	//
-	// Is there a more "correct" way?  Not really.  Just different ways.  However, my preference is for
-	// option 3), because of tidiness, explicitness, and easy extensibility (just add to the class holding
-	// the dynamic params if you need to add more dynamic params).  It also allows dynamic params to be
-	// easily nullable, whereas this is a problem when using ActivatorUtilities.CreateInstance<T>.  So,
-	// just use option 3) when you need to inject some dynamic params in a DI-friendly way.
+	// Of course if you don't have any dynamic params at all, you can simply do:
+	// public ImageSelectForm CreateImageSelectForm() {
+	//     return ActivatorUtilities.CreateInstance<ImageSelectForm>(_sp);
+	// }
 
 	public MainForm CreateMainForm() {
-		// One little exception: when *every* param can be resolved via the service provider and there are
-		// a lot of params, it may be more convenient/concise to use ActivatorUtilities.CreateInstance<T>.
 		return ActivatorUtilities.CreateInstance<MainForm>(_sp);
 	}
 
 	public HelpForm CreateHelpForm() {
-		return new HelpForm();
+		return ActivatorUtilities.CreateInstance<HelpForm>(_sp);
 	}
 
 	public LauncherForm CreateLauncherForm() {
-		return new LauncherForm(
-			_sp.GetRequiredService<AppOptionsWithData>()
-		);
+		return ActivatorUtilities.CreateInstance<LauncherForm>(_sp);
 	}
 }

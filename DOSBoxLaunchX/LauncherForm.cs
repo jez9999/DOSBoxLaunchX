@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using DOSBoxLaunchX.Logic.Services;
 using DOSBoxLaunchX.Helpers;
 using DOSBoxLaunchX.Models;
 
@@ -8,16 +9,19 @@ public partial class LauncherForm : Form {
 	#region Private vars
 
 	private readonly AppOptionsWithData _data;
+	private readonly LaunchSettingsFileService _settingsFileService;
 
-	private int _widthDiff = 0;
-	private int _heightDiff = 0;
+	private int _widthDiffOutput = 0;
+	private int _heightDiffOutput = 0;
+	private int _widthDiffShortcut = 0;
 
 	#endregion
 
 	#region Constructors
 
-	public LauncherForm(AppOptionsWithData data) {
+	public LauncherForm(AppOptionsWithData data, LaunchSettingsFileService settingsFileService) {
 		_data = data;
+		_settingsFileService = settingsFileService;
 
 		InitializeComponent();
 	}
@@ -27,22 +31,15 @@ public partial class LauncherForm : Form {
 #pragma warning disable IDE1006 // Naming Styles
 	private async void LauncherForm_Load(object sender, EventArgs ea) {
 		try {
-			_data.LocalAppDataDir = LocalAppDataHelper.EnsureLocalAppDataDir(_data.ProgramName);
-		}
-		catch (Exception ex) {
-			MessageBoxHelper.ShowErrorMessageOk($"FATAL ERROR: Failed to ensure local app data directory: {ex.Message}", "Error");
-			Environment.Exit(1);
-		}
+			if (_data.IsDebugBuild) {
+				Text += " (DEBUG BUILD)";
+			}
+			Text += " - Launching DOSBox-X...";
 
-		if (_data.IsDebugBuild) {
-			Text += " (DEBUG BUILD)";
-		}
-		Text += " - Launching DOSBox-X...";
-
-		try {
 			// Record sizes on form that we'll need later
-			_widthDiff = Width - txtOutput.Width;
-			_heightDiff = Height - txtOutput.Height;
+			_widthDiffOutput = Width - txtOutput.Width;
+			_heightDiffOutput = Height - txtOutput.Height;
+			_widthDiffShortcut = Width - txtLaunchShortcut.Width;
 			SizeChanged += new EventHandler(positionFormControls);
 
 			txtOutput.BackColor = SystemColors.Window;
@@ -82,8 +79,9 @@ public partial class LauncherForm : Form {
 #pragma warning restore IDE1006 // Naming Styles
 
 	private void positionFormControls(object? sender, EventArgs ea) {
-		txtOutput.Width = Width - _widthDiff;
-		txtOutput.Height = Height - _heightDiff;
+		txtOutput.Width = Width - _widthDiffOutput;
+		txtOutput.Height = Height - _heightDiffOutput;
+		txtLaunchShortcut.Width = Width - _widthDiffShortcut;
 	}
 
 	private void addTxtboxMsg(string msg) {
