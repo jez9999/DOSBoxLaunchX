@@ -24,6 +24,7 @@ public partial class MainForm : Form {
 
 	private readonly Font _radFontRegular;
 	private readonly Font _radFontBold;
+	private readonly Font _lblFontNa;
 	private string _localAppDataDir = null!;
 	private string? _currentShortcutFilePath = null;
 	private bool _shortcutDirty = false;
@@ -44,6 +45,7 @@ public partial class MainForm : Form {
 
 		_radFontRegular = new Font(radShortcut.Font, FontStyle.Regular);
 		_radFontBold = new Font(radShortcut.Font, FontStyle.Bold);
+		_lblFontNa = new Font("Courier New", 120, FontStyle.Bold);
 		_reservedSectionKeys = getReservedSectionKeys(new LaunchSettings());
 	}
 
@@ -81,6 +83,10 @@ public partial class MainForm : Form {
 			LimitBaseDirToOneGiB = true,
 			Executable = "",
 		});
+
+		// TODO: temp. test overlaying N/A in front of general controls
+		//showGeneralNotApplicable(true);
+		showGeneralNotApplicable(false);
 	}
 
 	private void selectFirstControl() {
@@ -650,6 +656,23 @@ public partial class MainForm : Form {
 		attachControlHandlers(txtSection);
 		attachControlHandlers(txtKey);
 		attachControlHandlers(txtValue);
+	}
+
+	private void showGeneralNotApplicable(bool makeVisible) {
+		// When showing N/A, general controls must be disabled; otherwise, enabled.
+		lblGeneralSet.Enabled =
+			lblNameDescriptionNote.Enabled =
+			lblName.Enabled = txtName.Enabled =
+			lblDescription.Enabled = txtDescription.Enabled =
+			cbBaseDirSet.Enabled = lblBaseDir.Enabled = txtBaseDir.Enabled =
+			cbLimitBaseDirToOneGiBSet.Enabled = lblLimitBaseDirToOneGiB.Enabled = comboLimitBaseDirToOneGiB.Enabled =
+			cbExecutableSet.Enabled = lblExecutable.Enabled = txtExecutable.Enabled = btnExecutableBrowse.Enabled =
+			!makeVisible;
+		lblNotApplicable.Font = _lblFontNa;
+		lblNotApplicable.Size = new(352, 166);
+		lblNotApplicable.Location = new(125, 25);
+		lblNotApplicable.Visible = makeVisible;
+		lblNotApplicable.Refresh();
 	}
 
 	private void addTxtboxMsg(string msg) {

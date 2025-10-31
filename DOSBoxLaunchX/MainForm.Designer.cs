@@ -36,6 +36,7 @@
 			txtShortcutFilePath = new TextBox();
 			tabsContainer = new TabControl();
 			tabGeneral = new TabPage();
+			lblNotApplicable = new DOSBoxLaunchX.Controls.TransparentLabel();
 			btnExecutableBrowse = new Button();
 			lblNameDescriptionNote = new Label();
 			comboLimitBaseDirToOneGiB = new ComboBox();
@@ -45,7 +46,7 @@
 			txtExecutable = new TextBox();
 			lblExecutable = new Label();
 			cbBaseDirSet = new CheckBox();
-			label6 = new Label();
+			lblGeneralSet = new Label();
 			txtBaseDir = new TextBox();
 			lblBaseDir = new Label();
 			txtDescription = new TextBox();
@@ -54,7 +55,7 @@
 			lblName = new Label();
 			tabCpu = new TabPage();
 			cbCyclesSet = new CheckBox();
-			label4 = new Label();
+			lblCpuSet = new Label();
 			txtCycles = new TextBox();
 			lblCycles = new Label();
 			tabVideo = new TabPage();
@@ -187,6 +188,7 @@
 			// tabGeneral
 			// 
 			tabGeneral.BackColor = SystemColors.Control;
+			tabGeneral.Controls.Add(lblNotApplicable);
 			tabGeneral.Controls.Add(btnExecutableBrowse);
 			tabGeneral.Controls.Add(lblNameDescriptionNote);
 			tabGeneral.Controls.Add(comboLimitBaseDirToOneGiB);
@@ -196,7 +198,7 @@
 			tabGeneral.Controls.Add(txtExecutable);
 			tabGeneral.Controls.Add(lblExecutable);
 			tabGeneral.Controls.Add(cbBaseDirSet);
-			tabGeneral.Controls.Add(label6);
+			tabGeneral.Controls.Add(lblGeneralSet);
 			tabGeneral.Controls.Add(txtBaseDir);
 			tabGeneral.Controls.Add(lblBaseDir);
 			tabGeneral.Controls.Add(txtDescription);
@@ -208,6 +210,18 @@
 			tabGeneral.Size = new Size(1227, 511);
 			tabGeneral.TabIndex = 6;
 			tabGeneral.Text = "General";
+			// 
+			// lblNotApplicable
+			// 
+			lblNotApplicable.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+			lblNotApplicable.ForeColor = SystemColors.GrayText;
+			lblNotApplicable.Location = new Point(59, 7);
+			lblNotApplicable.Name = "lblNotApplicable";
+			lblNotApplicable.Size = new Size(27, 19);
+			lblNotApplicable.TabIndex = 54;
+			lblNotApplicable.TabStop = false;
+			lblNotApplicable.Text = "N/A";
+			lblNotApplicable.TextAlign = ContentAlignment.TopLeft;
 			// 
 			// btnExecutableBrowse
 			// 
@@ -299,15 +313,15 @@
 			cbBaseDirSet.Tag = "assoc=lblBaseDir,txtBaseDir";
 			cbBaseDirSet.UseVisualStyleBackColor = true;
 			// 
-			// label6
+			// lblGeneralSet
 			// 
-			label6.AutoSize = true;
-			label6.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-			label6.Location = new Point(5, 7);
-			label6.Name = "label6";
-			label6.Size = new Size(26, 15);
-			label6.TabIndex = 6;
-			label6.Text = "Set";
+			lblGeneralSet.AutoSize = true;
+			lblGeneralSet.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+			lblGeneralSet.Location = new Point(5, 7);
+			lblGeneralSet.Name = "lblGeneralSet";
+			lblGeneralSet.Size = new Size(26, 15);
+			lblGeneralSet.TabIndex = 6;
+			lblGeneralSet.Text = "Set";
 			// 
 			// txtBaseDir
 			// 
@@ -369,7 +383,7 @@
 			// 
 			tabCpu.BackColor = SystemColors.Control;
 			tabCpu.Controls.Add(cbCyclesSet);
-			tabCpu.Controls.Add(label4);
+			tabCpu.Controls.Add(lblCpuSet);
 			tabCpu.Controls.Add(txtCycles);
 			tabCpu.Controls.Add(lblCycles);
 			tabCpu.Location = new Point(4, 24);
@@ -389,15 +403,15 @@
 			cbCyclesSet.Tag = "assoc=lblCycles,txtCycles";
 			cbCyclesSet.UseVisualStyleBackColor = true;
 			// 
-			// label4
+			// lblCpuSet
 			// 
-			label4.AutoSize = true;
-			label4.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-			label4.Location = new Point(5, 7);
-			label4.Name = "label4";
-			label4.Size = new Size(26, 15);
-			label4.TabIndex = 35;
-			label4.Text = "Set";
+			lblCpuSet.AutoSize = true;
+			lblCpuSet.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+			lblCpuSet.Location = new Point(5, 7);
+			lblCpuSet.Name = "lblCpuSet";
+			lblCpuSet.Size = new Size(26, 15);
+			lblCpuSet.TabIndex = 35;
+			lblCpuSet.Text = "Set";
 			// 
 			// txtCycles
 			// 
@@ -857,7 +871,7 @@
 		private TextBox txtDescription;
 		private Label lblDescription;
 		private CheckBox cbBaseDirSet;
-		private Label label6;
+		private Label lblGeneralSet;
 		private TextBox txtBaseDir;
 		private Label lblBaseDir;
 		private CheckBox cbExecutableSet;
@@ -868,7 +882,7 @@
 		private Label lblLimitBaseDirToOneGiB;
 		private Label lblNameDescriptionNote;
 		private CheckBox cbCyclesSet;
-		private Label label4;
+		private Label lblCpuSet;
 		private TextBox txtCycles;
 		private Label lblCycles;
 		private RichTextBox txtOutput;
@@ -886,5 +900,6 @@
 		private Label lblHeadingValue;
 		private Label lblHeadingKey;
 		private Label lblHeadingSection;
+		private Controls.TransparentLabel lblNotApplicable;
 	}
 }
