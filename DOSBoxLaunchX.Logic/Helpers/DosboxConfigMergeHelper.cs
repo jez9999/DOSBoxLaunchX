@@ -45,14 +45,18 @@ public static class DosboxConfigMergeHelper {
 		List<string> postAutoexec = [];
 
 		if (generateForGlobals.Value) {
-			preAutoexec.Add("@REM [Global Autoexec Script]");
-			postAutoexec.Add("@REM [Global Autoexec Script]");
+			preAutoexec.Add("@REM [Autoexec Script Start]");
+			postAutoexec.Add("@REM [Autoexec Script End]");
 		}
 		else {
 			if (baseDir != null) {
+				string mountDir = baseDir;
+				if (string.IsNullOrWhiteSpace(baseDir)) {
+					mountDir = "???";
+				}
 				preAutoexec.AddRange([
-					$"MOUNT C {baseDir}{(limitBaseDirToOneGiB ?? false ? " -freesize 1024" : "")}",
-					"C:",
+					$"MOUNT C {mountDir}{(limitBaseDirToOneGiB ?? false ? " -freesize 1024" : "")}",
+					string.IsNullOrWhiteSpace(baseDir) ? "" : "C:",
 				]);
 			}
 			else {
