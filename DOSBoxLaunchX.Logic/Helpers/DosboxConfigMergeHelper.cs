@@ -5,20 +5,8 @@ using DOSBoxLaunchX.Logic.Models;
 namespace DOSBoxLaunchX.Logic.Helpers;
 
 public static class DosboxConfigMergeHelper {
-	public static void Merge(DosboxConfFile config, LaunchSettings sett) {
+	public static void MergeSettings(DosboxConfFile config, LaunchSettings sett) {
 		var settFlat = sett.Settings;
-		var settFlatCustom = sett.GetCustomSettings();
-
-		// Merge generated and user-custom autoexec
-		(var preAutoexec, var postAutoexec) = GeneratePrePostAutoexec(
-			sett.BaseDir,
-			sett.LimitBaseDirToOneGiB,
-			sett.Executable
-		);
-		var mainAutoexec = GetAutoexecLinesFromCustomSettings(settFlatCustom);
-		config.AddAutoexecCommands(preAutoexec, insertAtEnd: false);
-		config.AddAutoexecCommands(mainAutoexec);
-		config.AddAutoexecCommands(postAutoexec);
 
 		// Merge settings
 		foreach (var (sectionKey, val) in settFlat) {
@@ -31,6 +19,24 @@ public static class DosboxConfigMergeHelper {
 
 			config.SetSetting(section, key, value);
 		}
+	}
+
+	public static void MergeAutoexecMain(DosboxConfFile config, LaunchSettings sett) {
+		var settFlatCustom = sett.GetCustomSettings();
+		var mainAutoexec = GetAutoexecLinesFromCustomSettings(settFlatCustom);
+		config.AddAutoexecCommands(mainAutoexec);
+	}
+
+	public static void MergeAutoexecPrePost(DosboxConfFile config, LaunchSettings sett, bool mergingGlobals = false) {
+		// Merge generated and user-custom autoexec
+		(var preAutoexec, var postAutoexec) = GeneratePrePostAutoexec(
+			sett.BaseDir,
+			sett.LimitBaseDirToOneGiB,
+			sett.Executable,
+			mergingGlobals
+		);
+		config.AddAutoexecCommands(preAutoexec, insertAtEnd: false);
+		config.AddAutoexecCommands(postAutoexec);
 	}
 
 	public static (List<string> PreAutoexec, List<string> PostAutoexec) GeneratePrePostAutoexec(string? baseDir, bool? limitBaseDirToOneGiB, string? executable, bool? generateForGlobals = null) {

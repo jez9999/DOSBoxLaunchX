@@ -57,8 +57,14 @@ public partial class LauncherForm : Form {
 
 		// Read config settings file
 		// TODO: impl. later
-		// Read globals DLX file
-		// TODO: impl. later
+
+		addTxtboxMsg("Loading globals...");
+		var globalsPath = LocalAppDataHelper.GetGlobalShortcut(_localAppDataDir);
+		if (!File.Exists(globalsPath)) {
+			addTxtboxMsg($"ERROR: Globals file not found: {globalsPath}");
+			return false;
+		}
+		var globalSettings = _settingsFileService.LoadFromFile(globalsPath);
 
 		addTxtboxMsg("Loading DLX shortcut...");
 		if (!File.Exists(dlxPath)) {
@@ -75,11 +81,13 @@ public partial class LauncherForm : Form {
 		}
 		DosboxConfFile config = DosboxConfFile.FromText(await File.ReadAllTextAsync(baseConfigPath));
 
-		// Merge shortcut DLX into globals DLX
-		// TODO: impl. later
-
-		addTxtboxMsg("Merging shortcut settings into DOSBox config...");
-		DosboxConfigMergeHelper.Merge(config, shortcutSettings);
+		addTxtboxMsg("Merging shortcut & global settings into DOSBox config...");
+		DosboxConfigMergeHelper.MergeAutoexecMain(config, globalSettings);
+		DosboxConfigMergeHelper.MergeAutoexecMain(config, shortcutSettings);
+		DosboxConfigMergeHelper.MergeAutoexecPrePost(config, shortcutSettings);
+		DosboxConfigMergeHelper.MergeAutoexecPrePost(config, globalSettings, true);
+		DosboxConfigMergeHelper.MergeSettings(config, globalSettings);
+		DosboxConfigMergeHelper.MergeSettings(config, shortcutSettings);
 
 		addTxtboxMsg("Writing temp. DOSBox config...");
 		string tempConfigPath = Path.Combine(
