@@ -140,6 +140,7 @@
 			// 
 			// txtShortcutFilePath
 			// 
+			txtShortcutFilePath.BackColor = Color.WhiteSmoke;
 			txtShortcutFilePath.Location = new Point(146, 31);
 			txtShortcutFilePath.Name = "txtShortcutFilePath";
 			txtShortcutFilePath.ReadOnly = true;

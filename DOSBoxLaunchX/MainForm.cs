@@ -217,8 +217,6 @@ public partial class MainForm : Form {
 		else {
 			txtShortcutFilePath.Text = _currentShortcutFilePath ?? "[New shortcut]";
 		}
-		txtShortcutFilePath.Enabled = true;
-		txtShortcutFilePath.BackColor = Color.WhiteSmoke;
 	}
 
 	private void updateUiDirtyState() {
@@ -788,7 +786,8 @@ public partial class MainForm : Form {
 	}
 
 	private void mnuAbout_Click(object sender, EventArgs ea) {
-		MessageBoxHelper.ShowInfoMessage("TODO: Impl. 'About'", "");
+		using var aboutForm = _formFact.CreateAboutForm();
+		aboutForm.ShowDialog();
 	}
 
 	private void lblExecutable_Click(object sender, EventArgs ea) {

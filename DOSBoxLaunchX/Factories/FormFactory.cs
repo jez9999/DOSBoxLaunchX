@@ -59,6 +59,10 @@ public class FormFactory(IServiceProvider sp) {
 		return ActivatorUtilities.CreateInstance<HelpForm>(_sp);
 	}
 
+	public AboutForm CreateAboutForm() {
+		return ActivatorUtilities.CreateInstance<AboutForm>(_sp);
+	}
+
 	public LauncherForm CreateLauncherForm() {
 		return ActivatorUtilities.CreateInstance<LauncherForm>(_sp);
 	}
