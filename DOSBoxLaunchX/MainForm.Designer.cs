@@ -27,9 +27,8 @@
 		///  the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+			components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-			radShortcut = new RadioButton();
-			radGlobal = new RadioButton();
 			label1 = new Label();
 			btnAssoc = new Button();
 			btnRemoveAssoc = new Button();
@@ -37,6 +36,7 @@
 			tabsContainer = new TabControl();
 			tabGeneral = new TabPage();
 			lblNotApplicable = new DOSBoxLaunchX.Controls.TransparentLabel();
+			txtDescription = new TextBox();
 			btnExecutableBrowse = new Button();
 			lblNameDescriptionNote = new Label();
 			comboLimitBaseDirToOneGiB = new ComboBox();
@@ -49,7 +49,6 @@
 			lblGeneralSet = new Label();
 			txtBaseDir = new TextBox();
 			lblBaseDir = new Label();
-			txtDescription = new TextBox();
 			lblDescription = new Label();
 			txtName = new TextBox();
 			lblName = new Label();
@@ -80,23 +79,25 @@
 			mnuFile = new ToolStripMenuItem();
 			mnuNew = new ToolStripMenuItem();
 			mnuOpen = new ToolStripMenuItem();
-			toolStripSeparator = new ToolStripSeparator();
+			toolStripSeparator10 = new ToolStripSeparator();
 			mnuSave = new ToolStripMenuItem();
 			mnuSaveAs = new ToolStripMenuItem();
-			mnuSaveGlobals = new ToolStripMenuItem();
-			toolStripSeparator2 = new ToolStripSeparator();
+			toolStripSeparator11 = new ToolStripSeparator();
+			mnuEditGlobals = new ToolStripMenuItem();
+			toolStripSeparator12 = new ToolStripSeparator();
 			mnuExit = new ToolStripMenuItem();
 			mnuTools = new ToolStripMenuItem();
 			mnuOptions = new ToolStripMenuItem();
 			mnuHelp = new ToolStripMenuItem();
 			mnuInfo = new ToolStripMenuItem();
-			toolStripSeparator5 = new ToolStripSeparator();
+			toolStripSeparator30 = new ToolStripSeparator();
 			mnuAbout = new ToolStripMenuItem();
 			mainMenuStripContainer = new ToolStripContainer();
 			pbBgMainMenuStrip = new PictureBox();
 			txtOutput = new RichTextBox();
 			openFileDialog = new OpenFileDialog();
 			saveFileDialog = new SaveFileDialog();
+			timerRefreshNa = new System.Windows.Forms.Timer(components);
 			tabsContainer.SuspendLayout();
 			tabGeneral.SuspendLayout();
 			tabCpu.SuspendLayout();
@@ -108,34 +109,10 @@
 			((System.ComponentModel.ISupportInitialize)pbBgMainMenuStrip).BeginInit();
 			SuspendLayout();
 			// 
-			// radShortcut
-			// 
-			radShortcut.AutoSize = true;
-			radShortcut.Checked = true;
-			radShortcut.Location = new Point(13, 50);
-			radShortcut.Name = "radShortcut";
-			radShortcut.Size = new Size(70, 19);
-			radShortcut.TabIndex = 1;
-			radShortcut.TabStop = true;
-			radShortcut.Text = "Shortcut";
-			radShortcut.UseVisualStyleBackColor = true;
-			radShortcut.CheckedChanged += radShortcut_CheckedChanged;
-			// 
-			// radGlobal
-			// 
-			radGlobal.AutoSize = true;
-			radGlobal.Location = new Point(96, 50);
-			radGlobal.Name = "radGlobal";
-			radGlobal.Size = new Size(59, 19);
-			radGlobal.TabIndex = 2;
-			radGlobal.Text = "Global";
-			radGlobal.UseVisualStyleBackColor = true;
-			radGlobal.CheckedChanged += radGlobal_CheckedChanged;
-			// 
 			// label1
 			// 
 			label1.AutoSize = true;
-			label1.Location = new Point(18, 32);
+			label1.Location = new Point(12, 34);
 			label1.Name = "label1";
 			label1.Size = new Size(128, 15);
 			label1.TabIndex = 3;
@@ -163,10 +140,10 @@
 			// 
 			// txtShortcutFilePath
 			// 
-			txtShortcutFilePath.Location = new Point(167, 38);
+			txtShortcutFilePath.Location = new Point(146, 31);
 			txtShortcutFilePath.Name = "txtShortcutFilePath";
 			txtShortcutFilePath.ReadOnly = true;
-			txtShortcutFilePath.Size = new Size(1076, 23);
+			txtShortcutFilePath.Size = new Size(1099, 23);
 			txtShortcutFilePath.TabIndex = 10;
 			// 
 			// tabsContainer
@@ -179,16 +156,17 @@
 			tabsContainer.Controls.Add(tabAutoexec);
 			tabsContainer.Controls.Add(tabCustom);
 			tabsContainer.Controls.Add(tabKbMappings);
-			tabsContainer.Location = new Point(12, 76);
+			tabsContainer.Location = new Point(12, 59);
 			tabsContainer.Name = "tabsContainer";
 			tabsContainer.SelectedIndex = 0;
-			tabsContainer.Size = new Size(1235, 539);
+			tabsContainer.Size = new Size(1235, 556);
 			tabsContainer.TabIndex = 100;
 			// 
 			// tabGeneral
 			// 
 			tabGeneral.BackColor = SystemColors.Control;
 			tabGeneral.Controls.Add(lblNotApplicable);
+			tabGeneral.Controls.Add(txtDescription);
 			tabGeneral.Controls.Add(btnExecutableBrowse);
 			tabGeneral.Controls.Add(lblNameDescriptionNote);
 			tabGeneral.Controls.Add(comboLimitBaseDirToOneGiB);
@@ -201,13 +179,12 @@
 			tabGeneral.Controls.Add(lblGeneralSet);
 			tabGeneral.Controls.Add(txtBaseDir);
 			tabGeneral.Controls.Add(lblBaseDir);
-			tabGeneral.Controls.Add(txtDescription);
 			tabGeneral.Controls.Add(lblDescription);
 			tabGeneral.Controls.Add(txtName);
 			tabGeneral.Controls.Add(lblName);
 			tabGeneral.Location = new Point(4, 24);
 			tabGeneral.Name = "tabGeneral";
-			tabGeneral.Size = new Size(1227, 511);
+			tabGeneral.Size = new Size(1227, 528);
 			tabGeneral.TabIndex = 6;
 			tabGeneral.Text = "General";
 			// 
@@ -222,6 +199,16 @@
 			lblNotApplicable.TabStop = false;
 			lblNotApplicable.Text = "N/A";
 			lblNotApplicable.TextAlign = ContentAlignment.TopLeft;
+			// 
+			// txtDescription
+			// 
+			txtDescription.Location = new Point(127, 54);
+			txtDescription.Multiline = true;
+			txtDescription.Name = "txtDescription";
+			txtDescription.ScrollBars = ScrollBars.Vertical;
+			txtDescription.Size = new Size(470, 85);
+			txtDescription.TabIndex = 21;
+			txtDescription.Tag = "allowNewlines=true";
 			// 
 			// btnExecutableBrowse
 			// 
@@ -343,16 +330,6 @@
 			lblBaseDir.Text = "Base Directory:";
 			lblBaseDir.Click += lblBaseDir_Click;
 			// 
-			// txtDescription
-			// 
-			txtDescription.Location = new Point(127, 54);
-			txtDescription.Multiline = true;
-			txtDescription.Name = "txtDescription";
-			txtDescription.ScrollBars = ScrollBars.Vertical;
-			txtDescription.Size = new Size(470, 85);
-			txtDescription.TabIndex = 21;
-			txtDescription.Tag = "allowNewlines=true";
-			// 
 			// lblDescription
 			// 
 			lblDescription.AutoSize = true;
@@ -389,7 +366,7 @@
 			tabCpu.Location = new Point(4, 24);
 			tabCpu.Name = "tabCpu";
 			tabCpu.Padding = new Padding(3);
-			tabCpu.Size = new Size(1227, 511);
+			tabCpu.Size = new Size(1227, 528);
 			tabCpu.TabIndex = 0;
 			tabCpu.Text = "CPU";
 			// 
@@ -436,7 +413,7 @@
 			tabVideo.Location = new Point(4, 24);
 			tabVideo.Name = "tabVideo";
 			tabVideo.Padding = new Padding(3);
-			tabVideo.Size = new Size(1227, 511);
+			tabVideo.Size = new Size(1227, 528);
 			tabVideo.TabIndex = 1;
 			tabVideo.Text = "Video";
 			// 
@@ -445,7 +422,7 @@
 			tabAudio.BackColor = SystemColors.Control;
 			tabAudio.Location = new Point(4, 24);
 			tabAudio.Name = "tabAudio";
-			tabAudio.Size = new Size(1227, 511);
+			tabAudio.Size = new Size(1227, 528);
 			tabAudio.TabIndex = 2;
 			tabAudio.Text = "Audio";
 			// 
@@ -454,7 +431,7 @@
 			tabPeripherals.BackColor = SystemColors.Control;
 			tabPeripherals.Location = new Point(4, 24);
 			tabPeripherals.Name = "tabPeripherals";
-			tabPeripherals.Size = new Size(1227, 511);
+			tabPeripherals.Size = new Size(1227, 528);
 			tabPeripherals.TabIndex = 3;
 			tabPeripherals.Text = "Peripherals";
 			// 
@@ -468,7 +445,7 @@
 			tabAutoexec.Controls.Add(txtPreAutoexec);
 			tabAutoexec.Location = new Point(4, 24);
 			tabAutoexec.Name = "tabAutoexec";
-			tabAutoexec.Size = new Size(1227, 511);
+			tabAutoexec.Size = new Size(1227, 528);
 			tabAutoexec.TabIndex = 7;
 			tabAutoexec.Text = "Autoexec";
 			// 
@@ -541,7 +518,7 @@
 			tabCustom.Controls.Add(btnAddCustomSetting);
 			tabCustom.Location = new Point(4, 24);
 			tabCustom.Name = "tabCustom";
-			tabCustom.Size = new Size(1227, 511);
+			tabCustom.Size = new Size(1227, 528);
 			tabCustom.TabIndex = 4;
 			tabCustom.Text = "Custom settings";
 			// 
@@ -598,7 +575,7 @@
 			tabKbMappings.BackColor = SystemColors.Control;
 			tabKbMappings.Location = new Point(4, 24);
 			tabKbMappings.Name = "tabKbMappings";
-			tabKbMappings.Size = new Size(1227, 511);
+			tabKbMappings.Size = new Size(1227, 528);
 			tabKbMappings.TabIndex = 5;
 			tabKbMappings.Text = "Keyboard mappings";
 			// 
@@ -634,7 +611,7 @@
 			// 
 			// mnuFile
 			// 
-			mnuFile.DropDownItems.AddRange(new ToolStripItem[] { mnuNew, mnuOpen, toolStripSeparator, mnuSave, mnuSaveAs, mnuSaveGlobals, toolStripSeparator2, mnuExit });
+			mnuFile.DropDownItems.AddRange(new ToolStripItem[] { mnuNew, mnuOpen, toolStripSeparator10, mnuSave, mnuSaveAs, toolStripSeparator11, mnuEditGlobals, toolStripSeparator12, mnuExit });
 			mnuFile.Name = "mnuFile";
 			mnuFile.Size = new Size(37, 20);
 			mnuFile.Text = "&File";
@@ -659,10 +636,10 @@
 			mnuOpen.Text = "&Open Shortcut";
 			mnuOpen.Click += mnuOpen_Click;
 			// 
-			// toolStripSeparator
+			// toolStripSeparator10
 			// 
-			toolStripSeparator.Name = "toolStripSeparator";
-			toolStripSeparator.Size = new Size(191, 6);
+			toolStripSeparator10.Name = "toolStripSeparator10";
+			toolStripSeparator10.Size = new Size(191, 6);
 			// 
 			// mnuSave
 			// 
@@ -681,19 +658,23 @@
 			mnuSaveAs.Text = "Save Shortcut &As";
 			mnuSaveAs.Click += mnuSaveAs_Click;
 			// 
-			// mnuSaveGlobals
+			// toolStripSeparator11
 			// 
-			mnuSaveGlobals.Image = (Image)resources.GetObject("mnuSaveGlobals.Image");
-			mnuSaveGlobals.ImageTransparentColor = Color.Magenta;
-			mnuSaveGlobals.Name = "mnuSaveGlobals";
-			mnuSaveGlobals.Size = new Size(194, 22);
-			mnuSaveGlobals.Text = "Save &Globals";
-			mnuSaveGlobals.Click += mnuSaveGlobals_Click;
+			toolStripSeparator11.Name = "toolStripSeparator11";
+			toolStripSeparator11.Size = new Size(191, 6);
 			// 
-			// toolStripSeparator2
+			// mnuEditGlobals
 			// 
-			toolStripSeparator2.Name = "toolStripSeparator2";
-			toolStripSeparator2.Size = new Size(191, 6);
+			mnuEditGlobals.ImageTransparentColor = Color.Magenta;
+			mnuEditGlobals.Name = "mnuEditGlobals";
+			mnuEditGlobals.Size = new Size(194, 22);
+			mnuEditGlobals.Text = "Edit &Globals";
+			mnuEditGlobals.Click += mnuEditGlobals_Click;
+			// 
+			// toolStripSeparator12
+			// 
+			toolStripSeparator12.Name = "toolStripSeparator12";
+			toolStripSeparator12.Size = new Size(191, 6);
 			// 
 			// mnuExit
 			// 
@@ -718,7 +699,7 @@
 			// 
 			// mnuHelp
 			// 
-			mnuHelp.DropDownItems.AddRange(new ToolStripItem[] { mnuInfo, toolStripSeparator5, mnuAbout });
+			mnuHelp.DropDownItems.AddRange(new ToolStripItem[] { mnuInfo, toolStripSeparator30, mnuAbout });
 			mnuHelp.Name = "mnuHelp";
 			mnuHelp.Size = new Size(44, 20);
 			mnuHelp.Text = "&Help";
@@ -730,10 +711,10 @@
 			mnuInfo.Text = "&Info";
 			mnuInfo.Click += mnuInfo_Click;
 			// 
-			// toolStripSeparator5
+			// toolStripSeparator30
 			// 
-			toolStripSeparator5.Name = "toolStripSeparator5";
-			toolStripSeparator5.Size = new Size(113, 6);
+			toolStripSeparator30.Name = "toolStripSeparator30";
+			toolStripSeparator30.Size = new Size(113, 6);
 			// 
 			// mnuAbout
 			// 
@@ -781,6 +762,11 @@
 			txtOutput.TabIndex = 206;
 			txtOutput.Text = "";
 			// 
+			// timerRefreshNa
+			// 
+			timerRefreshNa.Interval = 1000;
+			timerRefreshNa.Tick += timerRefreshNa_Tick;
+			// 
 			// MainForm
 			// 
 			AllowDrop = true;
@@ -796,8 +782,6 @@
 			Controls.Add(btnRemoveAssoc);
 			Controls.Add(btnAssoc);
 			Controls.Add(label1);
-			Controls.Add(radGlobal);
-			Controls.Add(radShortcut);
 			Controls.Add(pbBgMainMenuStrip);
 			FormBorderStyle = FormBorderStyle.FixedSingle;
 			Icon = (Icon)resources.GetObject("$this.Icon");
@@ -832,8 +816,6 @@
 		}
 
 		#endregion
-		private RadioButton radShortcut;
-		private RadioButton radGlobal;
 		private Label label1;
 		private Button btnAssoc;
 		private Button btnRemoveAssoc;
@@ -852,20 +834,20 @@
 		private ToolStripMenuItem mnuFile;
 		private ToolStripMenuItem mnuNew;
 		private ToolStripMenuItem mnuOpen;
-		private ToolStripSeparator toolStripSeparator;
+		private ToolStripSeparator toolStripSeparator10;
 		private ToolStripMenuItem mnuSave;
 		private ToolStripMenuItem mnuSaveAs;
-		private ToolStripSeparator toolStripSeparator2;
+		private ToolStripSeparator toolStripSeparator12;
 		private ToolStripMenuItem mnuExit;
 		private ToolStripMenuItem mnuTools;
 		private ToolStripMenuItem mnuOptions;
 		private ToolStripMenuItem mnuHelp;
 		private ToolStripMenuItem mnuInfo;
-		private ToolStripSeparator toolStripSeparator5;
+		private ToolStripSeparator toolStripSeparator30;
 		private ToolStripMenuItem mnuAbout;
 		private ToolStripContainer mainMenuStripContainer;
 		private PictureBox pbBgMainMenuStrip;
-		private ToolStripMenuItem mnuSaveGlobals;
+		private ToolStripMenuItem mnuEditGlobals;
 		private TextBox txtName;
 		private Label lblName;
 		private TextBox txtDescription;
@@ -901,5 +883,7 @@
 		private Label lblHeadingKey;
 		private Label lblHeadingSection;
 		private Controls.TransparentLabel lblNotApplicable;
+		private ToolStripSeparator toolStripSeparator11;
+		private System.Windows.Forms.Timer timerRefreshNa;
 	}
 }

@@ -22,13 +22,10 @@ public partial class MainForm : Form {
 	private readonly Dictionary<Control, ControlInfo> _controlInfo = [];
 	private readonly HashSet<string> _reservedSectionKeys;
 
-	private readonly Font _radFontRegular;
-	private readonly Font _radFontBold;
 	private readonly Font _lblFontNa;
 	private string _localAppDataDir = null!;
 	private string? _currentShortcutFilePath = null;
 	private bool _shortcutDirty = false;
-	private bool _globalsDirty = false;
 
 	#endregion
 
@@ -43,8 +40,6 @@ public partial class MainForm : Form {
 
 		InitializeComponent();
 
-		_radFontRegular = new Font(radShortcut.Font, FontStyle.Regular);
-		_radFontBold = new Font(radShortcut.Font, FontStyle.Bold);
 		_lblFontNa = new Font("Courier New", 120, FontStyle.Bold);
 		_reservedSectionKeys = getReservedSectionKeys(new LaunchSettings());
 	}
@@ -66,12 +61,11 @@ public partial class MainForm : Form {
 
 	private void initNewShortcut() {
 		// Reset UI first...
+		_currentShortcutFilePath = null;
 		resetControlDefaults();
-		radShortcut.Checked = true;
 		selectFirstControl();
 
 		// ... then underlying model.
-		_currentShortcutFilePath = null;
 		_shortcutDirty = false;
 		updateUiShortcutFilePath();
 		updateUiDirtyState();
@@ -83,10 +77,6 @@ public partial class MainForm : Form {
 			LimitBaseDirToOneGiB = true,
 			Executable = "",
 		});
-
-		// TODO: temp. test overlaying N/A in front of general controls
-		//showGeneralNotApplicable(true);
-		showGeneralNotApplicable(false);
 	}
 
 	private void selectFirstControl() {
@@ -221,65 +211,44 @@ public partial class MainForm : Form {
 	}
 
 	private void updateUiShortcutFilePath() {
-		if (radGlobal.Checked) {
-			txtShortcutFilePath.Text = "";
-			txtShortcutFilePath.Enabled = false;
-			txtShortcutFilePath.BackColor = SystemColors.Window;
+		if (LocalAppDataHelper.IsGlobalShortcut(_localAppDataDir, _currentShortcutFilePath)) {
+			txtShortcutFilePath.Text = "[Editing globals]";
 		}
 		else {
 			txtShortcutFilePath.Text = _currentShortcutFilePath ?? "[New shortcut]";
-			txtShortcutFilePath.Enabled = true;
-			txtShortcutFilePath.BackColor = Color.WhiteSmoke;
 		}
+		txtShortcutFilePath.Enabled = true;
+		txtShortcutFilePath.BackColor = Color.WhiteSmoke;
 	}
 
 	private void updateUiDirtyState() {
 		if (_shortcutDirty) {
-			if (radShortcut.Text[^1] != '*') {
-				radShortcut.Font = _radFontBold;
-				radShortcut.Text += "*";
-
-				//radGlobal.Font = _radFontBold; // TODO: use when implementing global settings
-				//radGlobal.Text += "*";
+			if (Text[0] != '*') {
+				Text = $"*{Text}";
 			}
 		}
 		else {
-			if (radShortcut.Text[^1] == '*') {
-				radShortcut.Font = _radFontRegular;
-				radShortcut.Text = radShortcut.Text[..^1];
-
-				//radGlobal.Font = _radFontRegular; // TODO: use when implementing global settings
-				//radGlobal.Text = radGlobal.Text[..^1];
+			if (Text[0] == '*') {
+				Text = Text[1..];
 			}
 		}
 
 		// Enable/disable menu items based on dirty state
 		mnuSave.Enabled = _shortcutDirty;
-		//mnuSaveGlobals.Enabled = _globalsDirty;
 	}
 
-	private bool promptSaveIfDirty(bool checkShortcutDirty = true, bool checkGlobalsDirty = false) {
+	private bool promptSaveIfDirty() {
 		// If this method returns true, action can continue; otherwise, it should abort.
-		bool shortcutDirty = checkShortcutDirty && _shortcutDirty;
-		bool globalsDirty = checkGlobalsDirty && _globalsDirty;
-
-		if (!shortcutDirty && !globalsDirty) {
+		if (!_shortcutDirty) {
 			return true;
 		}
 
-		string msg;
-		if (shortcutDirty && globalsDirty) {
-			msg = "You have unsaved changes to both the current shortcut and the global settings. Do you want to save them?";
-		}
-		else if (shortcutDirty) {
-			msg = "You have unsaved changes to the current shortcut. Do you want to save them?";
-		}
-		else {
-			msg = "You have unsaved changes to the global settings. Do you want to save them?";
-		}
-
+		var promptMsg =
+			LocalAppDataHelper.IsGlobalShortcut(_localAppDataDir, _currentShortcutFilePath)
+			? "You have unsaved changes to the global settings. Do you want to save them?"
+			: "You have unsaved changes to the current shortcut. Do you want to save them?";
 		var result = MessageBoxHelper.ShowQuestionMessage(
-			msg,
+			promptMsg,
 			"Save changes?",
 			MessageBoxButtons.YesNoCancel,
 			MessageBoxDefaultButton.Button1
@@ -287,9 +256,7 @@ public partial class MainForm : Form {
 
 		switch (result) {
 			case DialogResult.Yes:
-				// TODO: implement (Save Globals menu option code)
-				//if (globalsDirty && !saveGlobals()) { return false; }
-				if (shortcutDirty && !doSave()) { return false; }
+				if (_shortcutDirty && !doSave()) { return false; }
 				return true;
 
 			case DialogResult.No:
@@ -347,6 +314,7 @@ public partial class MainForm : Form {
 
 		try {
 			var sett = _settingsFileService.LoadFromFile(path);
+			_currentShortcutFilePath = path;
 			generateUiFromShortcutLaunchSettings(sett);
 		}
 		catch (Exception ex) {
@@ -361,7 +329,6 @@ public partial class MainForm : Form {
 		}
 
 		// Loaded successfully
-		_currentShortcutFilePath = path;
 		_shortcutDirty = false;
 		updateUiShortcutFilePath();
 		updateUiDirtyState();
@@ -428,9 +395,11 @@ public partial class MainForm : Form {
 
 	private LaunchSettings generateShortcutLaunchSettingsFromUi() {
 		// General and main settings
+		var name = UiHelper.GetTextValue(txtName);
+		var description = UiHelper.GetTextValue(txtDescription);
 		var sett = new LaunchSettings {
-			Name = UiHelper.GetTextValue(txtName),
-			Description = UiHelper.GetTextValue(txtDescription),
+			Name = name == "" ? null : name,
+			Description = description == "" ? null : description,
 		};
 
 		if (cbBaseDirSet.Checked) { sett.BaseDir = UiHelper.GetTextValue(txtBaseDir); }
@@ -487,7 +456,10 @@ public partial class MainForm : Form {
 	}
 
 	private void generateUiFromShortcutLaunchSettings(LaunchSettings sett) {
+		var editingGlobals = LocalAppDataHelper.IsGlobalShortcut(_localAppDataDir, _currentShortcutFilePath);
 		var settFlatCustom = sett.GetCustomSettings();
+
+		if (editingGlobals) { resetGlobalNaSettings(sett); }
 
 		// General and main settings
 		UiHelper.SetTextFromValue(txtName, sett.Name);
@@ -510,6 +482,14 @@ public partial class MainForm : Form {
 
 		// Other custom settings
 		loadCustomSettings(settFlatCustom, flowPnlCustom, addCustomSettingRow);
+
+		// Overlaying N/A in front of general controls when editing globals
+		showGeneralNotApplicable(editingGlobals);
+
+		static void resetGlobalNaSettings(LaunchSettings sett) {
+			sett.Name = sett.Description = sett.BaseDir = sett.Executable = null;
+			sett.LimitBaseDirToOneGiB = null;
+		}
 
 		static void loadAutoexec(IReadOnlyDictionary<string, object> settFlatCustom, TextBox ctrl) {
 			ctrl.Text = string.Join(Environment.NewLine, DosboxConfigMergeHelper.GetAutoexecLinesFromCustomSettings(settFlatCustom));
@@ -550,7 +530,8 @@ public partial class MainForm : Form {
 		(var preAutoexec, var postAutoexec) = DosboxConfigMergeHelper.GeneratePrePostAutoexec(
 			baseDir,
 			limitBaseDirToOneGiB,
-			executable
+			executable,
+			LocalAppDataHelper.IsGlobalShortcut(_localAppDataDir, _currentShortcutFilePath)
 		);
 
 		sb.Clear();
@@ -700,6 +681,8 @@ public partial class MainForm : Form {
 			refreshPrePostAutoexec();
 			initNewShortcut();
 			BeginInvoke(selectFirstControl);
+
+			timerRefreshNa.Start();
 		}
 		catch (Exception ex) {
 			MessageBoxHelper.ShowErrorMessageOk($"FATAL ERROR: {ex.Message}", "Error");
@@ -736,8 +719,8 @@ public partial class MainForm : Form {
 			return;
 		}
 
-		// Prompt for dirty shortcut/globals
-		if (!promptSaveIfDirty(true, true)) {
+		// Prompt for dirty shortcut
+		if (!promptSaveIfDirty()) {
 			ea.Cancel = true;
 			return;
 		}
@@ -768,14 +751,6 @@ public partial class MainForm : Form {
 		);
 	}
 
-	private void radShortcut_CheckedChanged(object sender, EventArgs ea) {
-		updateUiShortcutFilePath();
-	}
-
-	private void radGlobal_CheckedChanged(object sender, EventArgs ea) {
-		updateUiShortcutFilePath();
-	}
-
 	private void mnuNew_Click(object sender, EventArgs ea) {
 		if (!ValidateChildren()) { return; }
 		if (!promptSaveIfDirty()) { return; }
@@ -795,8 +770,8 @@ public partial class MainForm : Form {
 		doSaveAs();
 	}
 
-	private void mnuSaveGlobals_Click(object sender, EventArgs ea) {
-		MessageBoxHelper.ShowInfoMessage("TODO: Impl. 'Save Globals'", "");
+	private void mnuEditGlobals_Click(object sender, EventArgs ea) {
+		doOpen(LocalAppDataHelper.GetGlobalShortcut(_localAppDataDir));
 	}
 
 	private void mnuExit_Click(object sender, EventArgs ea) {
@@ -860,5 +835,13 @@ public partial class MainForm : Form {
 			_shortcutDirty = true;
 			updateUiDirtyState();
 		}
+	}
+
+	private void timerRefreshNa_Tick(object sender, EventArgs ea) {
+		// This is needed because when we go to edit globals, the animation to disable the general controls
+		// can mean that N/A gets drawn behind one of these controls, as it's drawn before the control's
+		// disable "fade" animation completes.  Thus we need to keep refreshing it to force it in front.
+		// Purely a visual thing, and those controls will still be properly disabled at the right time.
+		lblNotApplicable.Refresh();
 	}
 }

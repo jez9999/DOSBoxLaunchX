@@ -1,7 +1,8 @@
 {
   "profiles": {
     "DOSBoxLaunchX": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "-ui \"C:\\games\\ark2\\_Arkanoid 2_.dlx\""
     }
   }
 }

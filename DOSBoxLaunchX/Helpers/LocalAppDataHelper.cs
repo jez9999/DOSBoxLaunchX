@@ -16,4 +16,12 @@ internal static class LocalAppDataHelper {
 			throw new Exception($"Failed to ensure local app data directory: {ex.Message}", ex);
 		}
 	}
+
+	internal static bool IsGlobalShortcut(string localAppDataDir, string? shortcutFilePath) {
+		return (shortcutFilePath ?? "") == GetGlobalShortcut(localAppDataDir);
+	}
+
+	internal static string GetGlobalShortcut(string localAppDataDir) {
+		return Path.Combine(localAppDataDir, "global.dlx");
+	}
 }

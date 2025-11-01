@@ -33,25 +33,32 @@ public static class DosboxConfigMergeHelper {
 		}
 	}
 
-	public static (List<string> PreAutoexec, List<string> PostAutoexec) GeneratePrePostAutoexec(string? baseDir, bool? limitBaseDirToOneGiB, string? executable) {
+	public static (List<string> PreAutoexec, List<string> PostAutoexec) GeneratePrePostAutoexec(string? baseDir, bool? limitBaseDirToOneGiB, string? executable, bool? generateForGlobals = null) {
+		generateForGlobals ??= false;
 		List<string> preAutoexec = [];
 		List<string> postAutoexec = [];
 
-		if (baseDir != null) {
-			preAutoexec.AddRange([
-				$"MOUNT C {baseDir}{(limitBaseDirToOneGiB ?? false ? " -freesize 1024" : "")}",
-				"C:",
-			]);
+		if (generateForGlobals.Value) {
+			preAutoexec.Add("@REM [Global Autoexec Script]");
+			postAutoexec.Add("@REM [Global Autoexec Script]");
 		}
 		else {
-			preAutoexec.Add("@REM [No BaseDir set]");
-		}
+			if (baseDir != null) {
+				preAutoexec.AddRange([
+					$"MOUNT C {baseDir}{(limitBaseDirToOneGiB ?? false ? " -freesize 1024" : "")}",
+					"C:",
+				]);
+			}
+			else {
+				preAutoexec.Add("@REM [No BaseDir set]");
+			}
 
-		if (executable != null) {
-			postAutoexec.Add(executable);
-		}
-		else {
-			postAutoexec.Add("@REM [No Executable set]");
+			if (executable != null) {
+				postAutoexec.Add(executable);
+			}
+			else {
+				postAutoexec.Add("@REM [No Executable set]");
+			}
 		}
 
 		return (preAutoexec, postAutoexec);

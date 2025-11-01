@@ -46,14 +46,14 @@ public partial class LauncherForm : Form {
 		txtOutput.Update();
 	}
 
-	private async Task parseConfigAndLaunch() {
+	private async Task<bool> parseConfigAndLaunch() {
 		// TODO: temp assume the base dir of DOSBox-X...
 		var baseDir = @"C:\games\_DOSBox-X_";
 
-		if (_data.Args.Length < 1) {
+		if ((_data.Args.Length < 2 && _data.Args[0] == "-shortcut") || _data.Args.Length < 1) {
 			throw new Exception("No DLX shortcut specified!");
 		}
-		var dlxPath = txtLaunchShortcut.Text = _data.Args[0];
+		var dlxPath = txtLaunchShortcut.Text = _data.Args[0] == "-shortcut" ? _data.Args[1] : _data.Args[0];
 
 		// Read config settings file
 		// TODO: impl. later
@@ -63,7 +63,7 @@ public partial class LauncherForm : Form {
 		addTxtboxMsg("Loading DLX shortcut...");
 		if (!File.Exists(dlxPath)) {
 			addTxtboxMsg($"ERROR: Shortcut file not found: {dlxPath}");
-			return;
+			return false;
 		}
 		var shortcutSettings = _settingsFileService.LoadFromFile(dlxPath);
 
@@ -71,7 +71,7 @@ public partial class LauncherForm : Form {
 		string baseConfigPath = Path.Combine(baseDir, _data.DosboxConfBaseFilename);
 		if (!File.Exists(baseConfigPath)) {
 			addTxtboxMsg($"ERROR: Base DOSBox config not found: {baseConfigPath}");
-			return;
+			return false;
 		}
 		DosboxConfFile config = DosboxConfFile.FromText(await File.ReadAllTextAsync(baseConfigPath));
 
@@ -94,6 +94,8 @@ public partial class LauncherForm : Form {
 
 		addTxtboxMsg("Launching DOSBox...");
 		await launchDosboxX(Path.Combine(baseDir, "dosbox-x.exe"), tempConfigPath, baseDir);
+
+		return true;
 
 		// TODO: the local app data dir will typically contain:
 		// - dosbox-x._Tyrian_.conf             // per-launch merged DOSBox-X configs for each shortcut; written each time a .dlx is opened
@@ -126,6 +128,8 @@ public partial class LauncherForm : Form {
 #pragma warning disable IDE1006 // Naming Styles
 	private async void LauncherForm_Load(object sender, EventArgs ea) {
 		try {
+			_localAppDataDir = LocalAppDataHelper.EnsureLocalAppDataDir(_data.ProgramName);
+
 			// Windows 10+ pushes the window a bit away from the left of the screen (by design) when you
 			// set the location to 0,0.  As we can't get it flush with the screen edge, let's just purposely
 			// put it a little bit in from the edge.
@@ -143,13 +147,11 @@ public partial class LauncherForm : Form {
 			SizeChanged += new EventHandler(positionFormControls);
 			txtOutput.BackColor = SystemColors.Window;
 
-			_localAppDataDir = LocalAppDataHelper.EnsureLocalAppDataDir(_data.ProgramName);
-
-			await parseConfigAndLaunch();
+			var success = await parseConfigAndLaunch();
 
 			txtOutput.Enabled = true;
 
-			if (cbCloseOnDosboxExit.Checked) { Close(); }
+			if (success && cbCloseOnDosboxExit.Checked) { Close(); }
 			// TODO: cbCloseOnDosboxExit default checked state should be a config setting
 		}
 		catch (Exception ex) {

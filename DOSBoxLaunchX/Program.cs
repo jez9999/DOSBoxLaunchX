@@ -15,9 +15,7 @@ internal static class Program {
 
 	// ====================================================
 	// TODO: Any config setting or section that does not exist in the base configuration when applying
-	// overrides should trigger a warning in the output (may indicate a typo). Additionally, any planned
-	// parsing of dosbox-x.conf should treat blank lines as comment lines, normalize all newlines to LF,
-	// and allow round-trip parsing with exact reconstruction of lines (except for newlines; see above).
+	// overrides should trigger a warning in the output (may indicate a typo).
 	//
 	// TODO: remember that global autoexec should be merged with local autoexec with global autoexec
 	// coming BEFORE shortcut autoexec; not like other settings where shortcut overrides global.
@@ -41,7 +39,11 @@ internal static class Program {
 			MainForm? mainForm = null;
 			LauncherForm? launcherForm = null;
 			try {
-				if (args.Length > 0) {
+				// Args:
+				// -ui: forces interactive UI no matter what
+				// -shortcut "path": runs launcher to open shortcut
+				// "path": same as -shortcut "path"
+				if (args.Length > 0 && args[0] != "-ui") {
 					Application.Run(launcherForm =
 						appHost
 							.Services
