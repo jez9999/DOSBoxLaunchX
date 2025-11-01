@@ -202,9 +202,9 @@
 			lblNameDescriptionNote.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
 			lblNameDescriptionNote.Location = new Point(127, 7);
 			lblNameDescriptionNote.Name = "lblNameDescriptionNote";
-			lblNameDescriptionNote.Size = new Size(463, 15);
+			lblNameDescriptionNote.Size = new Size(451, 15);
 			lblNameDescriptionNote.TabIndex = 19;
-			lblNameDescriptionNote.Text = "(Name/Description are purely descriptive and don't affect the DOSBox-X configuration)";
+			lblNameDescriptionNote.Text = "(Name/Description are purely descriptive and don't affect the DOSBox configuration)";
 			// 
 			// comboLimitBaseDirToOneGiB
 			// 
