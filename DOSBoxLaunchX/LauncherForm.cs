@@ -2,6 +2,7 @@
 using DOSBoxLaunchX.Logic.Services;
 using DOSBoxLaunchX.Logic.DosboxParsing;
 using DOSBoxLaunchX.Logic.Helpers;
+using DOSBoxLaunchX.Logic.Models;
 using DOSBoxLaunchX.Helpers;
 using DOSBoxLaunchX.Models;
 
@@ -11,7 +12,9 @@ public partial class LauncherForm : Form {
 	#region Private vars
 
 	private readonly AppOptionsWithData _data;
-	private readonly LaunchSettingsFileService _settingsFileService;
+	private readonly GeneralSettings _settings;
+	private readonly GeneralSettingsFileService _genSettingsFileService;
+	private readonly LaunchSettingsFileService _launchSettingsFileService;
 
 	private string _localAppDataDir = null!;
 	private int _widthDiffOutput = 0;
@@ -22,9 +25,11 @@ public partial class LauncherForm : Form {
 
 	#region Constructors
 
-	public LauncherForm(AppOptionsWithData data, LaunchSettingsFileService settingsFileService) {
+	public LauncherForm(AppOptionsWithData data, GeneralSettings settings, GeneralSettingsFileService genSettingsFileService, LaunchSettingsFileService launchSettingsFileService) {
 		_data = data;
-		_settingsFileService = settingsFileService;
+		_settings = settings;
+		_genSettingsFileService = genSettingsFileService;
+		_launchSettingsFileService = launchSettingsFileService;
 
 		InitializeComponent();
 	}
@@ -47,16 +52,12 @@ public partial class LauncherForm : Form {
 	}
 
 	private async Task<bool> parseConfigAndLaunch() {
-		// TODO: temp assume the base dir of DOSBox-X...
-		var baseDir = @"C:\games\_DOSBox-X_";
+		var baseDir = _settings.BaseDosboxDir;
 
 		if ((_data.Args.Length < 2 && _data.Args[0] == "-shortcut") || _data.Args.Length < 1) {
 			throw new Exception("No DLX shortcut specified!");
 		}
 		var dlxPath = txtLaunchShortcut.Text = _data.Args[0] == "-shortcut" ? _data.Args[1] : _data.Args[0];
-
-		// Read config settings file
-		// TODO: impl. later
 
 		addTxtboxMsg("Loading globals...");
 		var globalsPath = LocalAppDataHelper.GetGlobalShortcut(_localAppDataDir);
@@ -64,14 +65,14 @@ public partial class LauncherForm : Form {
 			addTxtboxMsg($"ERROR: Globals file not found: {globalsPath}");
 			return false;
 		}
-		var globalSettings = _settingsFileService.LoadFromFile(globalsPath);
+		var globalSettings = _launchSettingsFileService.LoadFromFile(globalsPath);
 
 		addTxtboxMsg("Loading DLX shortcut...");
 		if (!File.Exists(dlxPath)) {
 			addTxtboxMsg($"ERROR: Shortcut file not found: {dlxPath}");
 			return false;
 		}
-		var shortcutSettings = _settingsFileService.LoadFromFile(dlxPath);
+		var shortcutSettings = _launchSettingsFileService.LoadFromFile(dlxPath);
 
 		addTxtboxMsg("Loading base DOSBox config...");
 		string baseConfigPath = Path.Combine(baseDir, _data.DosboxConfBaseFilename);
@@ -91,7 +92,7 @@ public partial class LauncherForm : Form {
 
 		addTxtboxMsg("Writing temp. DOSBox config...");
 		string tempConfigPath = Path.Combine(
-			_localAppDataDir,
+			_settings.WriteConfToBaseDir ? _settings.BaseDosboxDir : _localAppDataDir,
 			_data.DosboxConfTemplateFilename.Replace("[shortcutName]", Path.GetFileNameWithoutExtension(dlxPath))
 		);
 		await File.WriteAllTextAsync(
@@ -104,13 +105,6 @@ public partial class LauncherForm : Form {
 		await launchDosboxX(Path.Combine(baseDir, "dosbox-x.exe"), tempConfigPath, baseDir);
 
 		return true;
-
-		// TODO: the local app data dir will typically contain:
-		// - dosbox-x._Tyrian_.conf             // per-launch merged DOSBox-X configs for each shortcut; written each time a .dlx is opened
-		// - dosbox-x.[shortcutFilename2].conf
-		// - dosbox-x.[shortcutFilename3].conf
-		// - global.dlx                         // global shortcut providing default overrides; other shortcuts merge into it, with the non-global shortcut taking precedence for any conflicting settings
-		// - settings.json                      // app settings/preferences
 	}
 
 	private async Task launchDosboxX(string exePath, string configFilePath, string workingDir) {
@@ -137,6 +131,7 @@ public partial class LauncherForm : Form {
 	private async void LauncherForm_Load(object sender, EventArgs ea) {
 		try {
 			_localAppDataDir = LocalAppDataHelper.EnsureLocalAppDataDir(_data.ProgramName);
+			LocalAppDataHelper.LoadSettingsIfAvailable(_localAppDataDir, _genSettingsFileService, _settings);
 
 			// Windows 10+ pushes the window a bit away from the left of the screen (by design) when you
 			// set the location to 0,0.  As we can't get it flush with the screen edge, let's just purposely
@@ -154,13 +149,13 @@ public partial class LauncherForm : Form {
 			_widthDiffShortcut = Width - txtLaunchShortcut.Width;
 			SizeChanged += new EventHandler(positionFormControls);
 			txtOutput.BackColor = SystemColors.Window;
+			cbCloseOnDosboxExit.Checked = _settings.CloseOnDosboxExit;
 
 			var success = await parseConfigAndLaunch();
 
 			txtOutput.Enabled = true;
 
 			if (success && cbCloseOnDosboxExit.Checked) { Close(); }
-			// TODO: cbCloseOnDosboxExit default checked state should be a config setting
 		}
 		catch (Exception ex) {
 			MessageBoxHelper.ShowErrorMessageOk($"FATAL ERROR: {ex.Message}", "Error");

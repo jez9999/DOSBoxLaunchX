@@ -15,10 +15,12 @@ public partial class MainForm : Form {
 	#region Private vars
 
 	private readonly AppOptionsWithData _data;
+	private readonly GeneralSettings _settings;
 	private readonly FormFactory _formFact;
 	private readonly FormsValidatorHelper _formsValidator;
 	private readonly ControlInfoTagParser _ctrlTagParser;
-	private readonly LaunchSettingsFileService _settingsFileService;
+	private readonly GeneralSettingsFileService _genSettingsFileService;
+	private readonly LaunchSettingsFileService _launchSettingsFileService;
 	private readonly Dictionary<Control, ControlInfo> _controlInfo = [];
 	private readonly HashSet<string> _reservedSectionKeys;
 
@@ -31,12 +33,14 @@ public partial class MainForm : Form {
 
 	#region Constructors
 
-	public MainForm(AppOptionsWithData data, FormFactory formFact, FormsValidatorHelper formsValidator, ControlInfoTagParser ctrlTagParser, LaunchSettingsFileService settingsFileService) {
+	public MainForm(AppOptionsWithData data, GeneralSettings settings, FormFactory formFact, FormsValidatorHelper formsValidator, ControlInfoTagParser ctrlTagParser, GeneralSettingsFileService genSettingsFileService, LaunchSettingsFileService launchSettingsFileService) {
 		_data = data;
+		_settings = settings;
 		_formFact = formFact;
 		_formsValidator = formsValidator;
 		_ctrlTagParser = ctrlTagParser;
-		_settingsFileService = settingsFileService;
+		_genSettingsFileService = genSettingsFileService;
+		_launchSettingsFileService = launchSettingsFileService;
 
 		InitializeComponent();
 
@@ -311,7 +315,7 @@ public partial class MainForm : Form {
 		}
 
 		try {
-			var sett = _settingsFileService.LoadFromFile(path);
+			var sett = _launchSettingsFileService.LoadFromFile(path);
 			_currentShortcutFilePath = path;
 			generateUiFromShortcutLaunchSettings(sett);
 		}
@@ -369,7 +373,7 @@ public partial class MainForm : Form {
 		}
 
 		try {
-			_settingsFileService.SaveToFile(generateShortcutLaunchSettingsFromUi(), path);
+			_launchSettingsFileService.SaveToFile(generateShortcutLaunchSettingsFromUi(), path);
 		}
 		catch (Exception ex) {
 			MessageBoxHelper.ShowErrorMessageOk(
@@ -667,6 +671,7 @@ public partial class MainForm : Form {
 	private void MainForm_Load(object sender, EventArgs ea) {
 		try {
 			_localAppDataDir = LocalAppDataHelper.EnsureLocalAppDataDir(_data.ProgramName);
+			LocalAppDataHelper.LoadSettingsIfAvailable(_localAppDataDir, _genSettingsFileService, _settings);
 
 			if (_data.IsDebugBuild) {
 				Text += " (DEBUG BUILD)";
@@ -777,7 +782,8 @@ public partial class MainForm : Form {
 	}
 
 	private void mnuOptions_Click(object sender, EventArgs ea) {
-		MessageBoxHelper.ShowInfoMessage("TODO: Impl. 'Options'", "");
+		using var optionsForm = _formFact.CreateOptionsForm();
+		optionsForm.ShowDialog();
 	}
 
 	private void mnuInfo_Click(object sender, EventArgs ea) {

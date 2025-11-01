@@ -55,6 +55,10 @@ public class FormFactory(IServiceProvider sp) {
 		return ActivatorUtilities.CreateInstance<MainForm>(_sp);
 	}
 
+	public OptionsForm CreateOptionsForm() {
+		return ActivatorUtilities.CreateInstance<OptionsForm>(_sp);
+	}
+
 	public HelpForm CreateHelpForm() {
 		return ActivatorUtilities.CreateInstance<HelpForm>(_sp);
 	}

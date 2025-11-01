@@ -9,7 +9,7 @@ public interface IJsonSerializerProvider {
 	/// </summary>
 	/// <param name="additionalConfig">If specified, the additional configuration.</param>
 	/// <param name="baseConfiguration">If specified, the base config.</param>
-	/// <returns></returns>
+	/// <returns>The config for JSON serialization.</returns>
 	JsonSerializerSettings ConfigJsonSerializer(
 		Action<JsonSerializerSettings>? additionalConfig = null,
 		JsonSerializerSettings? baseConfiguration = null

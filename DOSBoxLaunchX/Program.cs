@@ -1,9 +1,10 @@
 using DOSBoxLaunchX.Logic.Extensions;
 using DOSBoxLaunchX.Logic.Services;
+using DOSBoxLaunchX.Logic.Models;
 using DOSBoxLaunchX.Factories;
+using DOSBoxLaunchX.Services;
 using DOSBoxLaunchX.Helpers;
 using DOSBoxLaunchX.Models;
-using DOSBoxLaunchX.Services;
 
 namespace DOSBoxLaunchX;
 
@@ -121,6 +122,8 @@ internal static class Program {
 				services.AddTransient(x => Random.Shared);
 				IJsonSerializerProvider jsonProvider = new JsonSerializerProvider();
 				services.AddSingleton(svc => jsonProvider);
+				services.AddSingleton<GeneralSettings>((sp) => new());
+				services.AddTransient<GeneralSettingsFileService>();
 				services.AddTransient<LaunchSettingsFileService>();
 
 				// NOTE: whenever you find yourself tempted to consume IServiceProvider via DI, consider whether
