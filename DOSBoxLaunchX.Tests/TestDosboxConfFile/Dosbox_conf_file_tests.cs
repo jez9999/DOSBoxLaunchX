@@ -51,9 +51,9 @@ public class Dosbox_conf_file_tests {
 			"[cpu]",
 			"cycles=auto",
 		];
-		var file = DosboxConfFile.FromLines(text);
 
 		// Act
+		var file = DosboxConfFile.FromLines(text);
 		var cpuSettings = file.GetSetting("cpu", "cycles").ToList();
 
 		// Assert

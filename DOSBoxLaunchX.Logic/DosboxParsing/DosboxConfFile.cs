@@ -69,8 +69,8 @@ public class DosboxConfFile {
 	}
 
 	public void SetSetting(string section, string key, string value) {
-		section = section.ToLowerInvariant();
-		key = key.ToLowerInvariant();
+		section = section.ToLowerInvariant().Trim();
+		key = key.ToLowerInvariant().Trim();
 		string newRaw = $"{key}={value}";
 
 		if (_settingIndex.TryGetValue((section, key), out var existingList) && existingList.Count > 0) {

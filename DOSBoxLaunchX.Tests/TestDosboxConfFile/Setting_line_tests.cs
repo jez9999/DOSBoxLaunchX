@@ -27,6 +27,32 @@ public class Setting_line_tests {
 	}
 
 	[Test]
+	public void Setting_line_with_multiple_equals_parses_correctly() {
+		// Arrange
+		string text =
+			"""
+			[cpu]
+			cycles=foo=bar=123
+			test=234
+			""";
+
+		// Act
+		var file = DosboxConfFile.FromText(text);
+		var lines = file.Lines.ToList();
+		var firstLine = lines[0];
+		var restLines = lines[1..];
+
+		// Assert
+		firstLine.Should().BeOfType<SectionHeaderLine>().And.BeEquivalentTo(
+			new { SectionName = "cpu", RawText = "[cpu]" }
+		);
+		restLines.Should().AllBeOfType<SettingLine>().And.BeEquivalentTo([
+			new { Section = "cpu", Key = "cycles", Value = "foo=bar=123" },
+			new { Section = "cpu", Key = "test", Value = "234" },
+		], options => options.WithStrictOrdering());
+	}
+
+	[Test]
 	public void Empty_value_is_valid() {
 		// Arrange
 		string text = "cycles=";
@@ -74,9 +100,9 @@ public class Setting_line_tests {
 			first
 			second
 			""";
-		var file = DosboxConfFile.FromText(text);
 
 		// Act
+		var file = DosboxConfFile.FromText(text);
 		var result = file.GetSetting(null, "foo").First();
 
 		// Assert

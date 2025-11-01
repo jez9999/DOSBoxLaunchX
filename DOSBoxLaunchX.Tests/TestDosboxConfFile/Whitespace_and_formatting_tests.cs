@@ -111,7 +111,7 @@ public class Whitespace_and_formatting_tests {
 	}
 
 	[Test]
-	public void Trailing_whitespace_after_closing_bracket_is_ignored_but_preserved_in_raw_text() {
+	public void Trailing_whitespace_after_closing_bracket_is_preserved_in_raw_text() {
 		// Arrange
 		string text = "[cpu]   ";
 
@@ -156,7 +156,7 @@ public class Whitespace_and_formatting_tests {
 	}
 
 	[Test]
-	public void Spaces_in_key_name_are_preserved_in_raw_text_but_trimmed_in_key() {
+	public void Spaces_surrounding_key_name_are_preserved_in_raw_text_but_trimmed_in_key() {
 		// Arrange
 		string text = "[cpu]\ncycles per second = 1000";
 

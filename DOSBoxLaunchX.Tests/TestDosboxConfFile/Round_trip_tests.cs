@@ -104,6 +104,8 @@ public class Round_trip_tests {
 		file.SetSetting("gus", "gus master volume", "1.23");
 		file.SetSetting("gus", "global register read alias", "false");
 		file.SetSetting("gus", "gus", "true");
+		file.SetSetting("render", "aspect_ratio", "1:2");
+		file.SetSetting(" render ", " aspect_ratio ", "3:4"); // Whitespace surrounding key/section needs trimming
 		file.SetSetting("render", "scaler", "scan2x");
 		file.SetSetting("serial", "serial7", "nullmodem");
 		file.SetSetting("ide, sexternary", "enable", "true");

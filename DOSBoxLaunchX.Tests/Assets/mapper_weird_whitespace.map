@@ -1,0 +1,7 @@
+[SDL1]
+hand_reset "key 114 host" 
+hand_reboot "key 98 host" 
+hand_loadmap 
+		
+hand_quickrun "key 113 host" 
+hand_shutdown "key 290 mod1" 

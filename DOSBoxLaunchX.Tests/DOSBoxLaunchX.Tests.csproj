@@ -9,12 +9,19 @@
   <ItemGroup>
     <None Remove="Assets\dosbox-x.large.conf" />
     <None Remove="Assets\dosbox-x.large.expected.conf" />
+    <None Remove="Assets\mapper_large.map" />
+    <None Remove="Assets\mapper_large_expected.map" />
+    <None Remove="Assets\mapper_weird_whitespace_reboot_92.map" />
     <None Remove="Assets\weird_whitespace_vol_100.conf" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Assets\dosbox-x.large.conf" />
     <EmbeddedResource Include="Assets\dosbox-x.large.expected.conf" />
+    <EmbeddedResource Include="Assets\mapper_large.map" />
+    <EmbeddedResource Include="Assets\mapper_large_expected.map" />
+    <EmbeddedResource Include="Assets\mapper_weird_whitespace.map" />
+    <EmbeddedResource Include="Assets\mapper_weird_whitespace_reboot_92.map" />
     <EmbeddedResource Include="Assets\weird_whitespace_vol_100.conf" />
     <EmbeddedResource Include="Assets\weird_whitespace_vol_75.conf" />
   </ItemGroup>
