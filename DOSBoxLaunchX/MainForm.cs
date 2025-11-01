@@ -513,15 +513,6 @@ public partial class MainForm : Form {
 		}
 	}
 
-	private void updateIsRegisteredLabel() {
-		if (WinAppAssociator.IsAppRegistered(_data.ShortcutFiletypeExtension, _data.ShortcutFiletypeProgId)) {
-			lblIsRegistered.Text = "Registered: YES";
-		}
-		else {
-			lblIsRegistered.Text = "Registered: NO";
-		}
-	}
-
 	private void refreshPrePostAutoexec() {
 		StringBuilder sb = new();
 
@@ -658,13 +649,6 @@ public partial class MainForm : Form {
 		lblNotApplicable.Refresh();
 	}
 
-	private void addTxtboxMsg(string msg) {
-		txtOutput.SelectionColor = Color.Black;
-		txtOutput.SelectedText += msg + Environment.NewLine;
-		txtOutput.ScrollToCaret();
-		txtOutput.Update();
-	}
-
 	#endregion
 
 #pragma warning disable IDE1006 // Naming Styles
@@ -687,8 +671,6 @@ public partial class MainForm : Form {
 					"Base DOSBox Directory not set"
 				);
 			}
-
-			updateIsRegisteredLabel();
 
 			initAndProcessControls(tabsContainer);
 			attachPrePostAutoexecHandlers();
@@ -740,30 +722,6 @@ public partial class MainForm : Form {
 		}
 	}
 #pragma warning restore IDE1006 // Naming Styles
-
-	private void btnAssoc_Click(object sender, EventArgs ea) {
-		WinAppAssociator.RegisterApp(_data.ShortcutFiletypeExtension, _data.ShortcutFiletypeProgId, $"{_data.ShortcutFiletypeDescription}{(_data.IsDebugBuild ? " - DEBUG BUILD" : "")}", _data.AppExePath);
-		WinAppAssociator.TriggerExplorerIconsRefresh();
-
-		updateIsRegisteredLabel();
-
-		MessageBoxHelper.ShowInfoMessage(
-			"DOSBoxLaunchX has been registered as a handler for .DLX files.",
-			"Associated app with .DLX files"
-		);
-	}
-
-	private void btnRemoveAssoc_Click(object sender, EventArgs ea) {
-		WinAppAssociator.UnregisterApp(_data.ShortcutFiletypeExtension, _data.ShortcutFiletypeProgId);
-		WinAppAssociator.TriggerExplorerIconsRefresh();
-
-		updateIsRegisteredLabel();
-
-		MessageBoxHelper.ShowInfoMessage(
-			"DOSBoxLaunchX has been unregistered as a handler for .DLX files.",
-			"Removed app's association with .DLX files"
-		);
-	}
 
 	private void mnuNew_Click(object sender, EventArgs ea) {
 		if (!ValidateChildren()) { return; }

@@ -34,6 +34,11 @@
 			cbCloseOnDosboxExit = new CheckBox();
 			cbWriteConfToBaseDir = new CheckBox();
 			lblWriteConfToBaseDirHelp = new Label();
+			grpAssociate = new GroupBox();
+			btnRemoveAssociation = new Button();
+			btnSetAssociation = new Button();
+			lblAssociateStatus = new Label();
+			grpAssociate.SuspendLayout();
 			SuspendLayout();
 			// 
 			// lblBaseDosboxDir
@@ -66,7 +71,7 @@
 			// btnApply
 			// 
 			btnApply.Enabled = false;
-			btnApply.Location = new Point(522, 358);
+			btnApply.Location = new Point(522, 185);
 			btnApply.Name = "btnApply";
 			btnApply.Size = new Size(75, 23);
 			btnApply.TabIndex = 102;
@@ -76,7 +81,7 @@
 			// 
 			// btnCancel
 			// 
-			btnCancel.Location = new Point(441, 358);
+			btnCancel.Location = new Point(441, 185);
 			btnCancel.Name = "btnCancel";
 			btnCancel.Size = new Size(75, 23);
 			btnCancel.TabIndex = 101;
@@ -86,7 +91,7 @@
 			// 
 			// btnOk
 			// 
-			btnOk.Location = new Point(360, 358);
+			btnOk.Location = new Point(360, 185);
 			btnOk.Name = "btnOk";
 			btnOk.Size = new Size(75, 23);
 			btnOk.TabIndex = 100;
@@ -132,11 +137,53 @@
 			lblWriteConfToBaseDirHelp.Text = "?";
 			lblWriteConfToBaseDirHelp.Click += lblWriteConfToBaseDirHelp_Click;
 			// 
+			// grpAssociate
+			// 
+			grpAssociate.Controls.Add(btnRemoveAssociation);
+			grpAssociate.Controls.Add(btnSetAssociation);
+			grpAssociate.Controls.Add(lblAssociateStatus);
+			grpAssociate.Location = new Point(12, 106);
+			grpAssociate.Name = "grpAssociate";
+			grpAssociate.Size = new Size(585, 70);
+			grpAssociate.TabIndex = 40;
+			grpAssociate.TabStop = false;
+			grpAssociate.Text = "Associate with .DLX files";
+			// 
+			// btnRemoveAssociation
+			// 
+			btnRemoveAssociation.Location = new Point(294, 39);
+			btnRemoveAssociation.Name = "btnRemoveAssociation";
+			btnRemoveAssociation.Size = new Size(285, 23);
+			btnRemoveAssociation.TabIndex = 2;
+			btnRemoveAssociation.Text = "Remove file type association";
+			btnRemoveAssociation.UseVisualStyleBackColor = true;
+			btnRemoveAssociation.Click += btnRemoveAssociation_Click;
+			// 
+			// btnSetAssociation
+			// 
+			btnSetAssociation.Location = new Point(6, 39);
+			btnSetAssociation.Name = "btnSetAssociation";
+			btnSetAssociation.Size = new Size(285, 23);
+			btnSetAssociation.TabIndex = 1;
+			btnSetAssociation.Text = "Set file type association";
+			btnSetAssociation.UseVisualStyleBackColor = true;
+			btnSetAssociation.Click += btnSetAssociation_Click;
+			// 
+			// lblAssociateStatus
+			// 
+			lblAssociateStatus.AutoSize = true;
+			lblAssociateStatus.Location = new Point(6, 19);
+			lblAssociateStatus.Name = "lblAssociateStatus";
+			lblAssociateStatus.Size = new Size(46, 15);
+			lblAssociateStatus.TabIndex = 0;
+			lblAssociateStatus.Text = "[status]";
+			// 
 			// OptionsForm
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(609, 393);
+			ClientSize = new Size(609, 219);
+			Controls.Add(grpAssociate);
 			Controls.Add(lblWriteConfToBaseDirHelp);
 			Controls.Add(cbWriteConfToBaseDir);
 			Controls.Add(cbCloseOnDosboxExit);
@@ -154,6 +201,8 @@
 			StartPosition = FormStartPosition.CenterScreen;
 			Text = "DOSBoxLaunchX - Options";
 			Load += OptionsForm_Load;
+			grpAssociate.ResumeLayout(false);
+			grpAssociate.PerformLayout();
 			ResumeLayout(false);
 			PerformLayout();
 		}
@@ -170,5 +219,9 @@
 		private CheckBox cbCloseOnDosboxExit;
 		private CheckBox cbWriteConfToBaseDir;
 		private Label lblWriteConfToBaseDirHelp;
+		private GroupBox grpAssociate;
+		private Label lblAssociateStatus;
+		private Button btnRemoveAssociation;
+		private Button btnSetAssociation;
 	}
 }

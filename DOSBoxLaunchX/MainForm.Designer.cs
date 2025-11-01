@@ -30,8 +30,6 @@
 			components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			label1 = new Label();
-			btnAssoc = new Button();
-			btnRemoveAssoc = new Button();
 			txtShortcutFilePath = new TextBox();
 			tabsContainer = new TabControl();
 			tabGeneral = new TabPage();
@@ -73,8 +71,6 @@
 			flowPnlCustom = new FlowLayoutPanel();
 			btnAddCustomSetting = new Button();
 			tabKbMappings = new TabPage();
-			label2 = new Label();
-			lblIsRegistered = new Label();
 			mainMenuStrip = new MenuStrip();
 			mnuFile = new ToolStripMenuItem();
 			mnuNew = new ToolStripMenuItem();
@@ -94,7 +90,6 @@
 			mnuAbout = new ToolStripMenuItem();
 			mainMenuStripContainer = new ToolStripContainer();
 			pbBgMainMenuStrip = new PictureBox();
-			txtOutput = new RichTextBox();
 			openFileDialog = new OpenFileDialog();
 			saveFileDialog = new SaveFileDialog();
 			timerRefreshNa = new System.Windows.Forms.Timer(components);
@@ -117,26 +112,6 @@
 			label1.Size = new Size(128, 15);
 			label1.TabIndex = 3;
 			label1.Text = "Editing config settings:";
-			// 
-			// btnAssoc
-			// 
-			btnAssoc.Location = new Point(814, 621);
-			btnAssoc.Name = "btnAssoc";
-			btnAssoc.Size = new Size(183, 23);
-			btnAssoc.TabIndex = 200;
-			btnAssoc.Text = "Associate app with .DLX files";
-			btnAssoc.UseVisualStyleBackColor = true;
-			btnAssoc.Click += btnAssoc_Click;
-			// 
-			// btnRemoveAssoc
-			// 
-			btnRemoveAssoc.Location = new Point(1003, 621);
-			btnRemoveAssoc.Name = "btnRemoveAssoc";
-			btnRemoveAssoc.Size = new Size(245, 23);
-			btnRemoveAssoc.TabIndex = 201;
-			btnRemoveAssoc.Text = "Remove app's association with .DLX files";
-			btnRemoveAssoc.UseVisualStyleBackColor = true;
-			btnRemoveAssoc.Click += btnRemoveAssoc_Click;
 			// 
 			// txtShortcutFilePath
 			// 
@@ -457,7 +432,7 @@
 			txtAutoexec.Multiline = true;
 			txtAutoexec.Name = "txtAutoexec";
 			txtAutoexec.ScrollBars = ScrollBars.Vertical;
-			txtAutoexec.Size = new Size(1211, 367);
+			txtAutoexec.Size = new Size(1211, 383);
 			txtAutoexec.TabIndex = 20;
 			txtAutoexec.Tag = "allowNewlines=true";
 			// 
@@ -487,7 +462,7 @@
 			// 
 			txtPostAutoexec.BackColor = SystemColors.Info;
 			txtPostAutoexec.Font = new Font("Courier New", 9.75F);
-			txtPostAutoexec.Location = new Point(8, 465);
+			txtPostAutoexec.Location = new Point(8, 481);
 			txtPostAutoexec.Multiline = true;
 			txtPostAutoexec.Name = "txtPostAutoexec";
 			txtPostAutoexec.ReadOnly = true;
@@ -558,12 +533,12 @@
 			flowPnlCustom.AutoScroll = true;
 			flowPnlCustom.Location = new Point(0, 25);
 			flowPnlCustom.Name = "flowPnlCustom";
-			flowPnlCustom.Size = new Size(1227, 452);
+			flowPnlCustom.Size = new Size(1227, 471);
 			flowPnlCustom.TabIndex = 101;
 			// 
 			// btnAddCustomSetting
 			// 
-			btnAddCustomSetting.Location = new Point(5, 483);
+			btnAddCustomSetting.Location = new Point(5, 502);
 			btnAddCustomSetting.Name = "btnAddCustomSetting";
 			btnAddCustomSetting.Size = new Size(212, 23);
 			btnAddCustomSetting.TabIndex = 100;
@@ -579,25 +554,6 @@
 			tabKbMappings.Size = new Size(1227, 528);
 			tabKbMappings.TabIndex = 5;
 			tabKbMappings.Text = "Keyboard mappings";
-			// 
-			// label2
-			// 
-			label2.AutoSize = true;
-			label2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-			label2.Location = new Point(12, 629);
-			label2.Name = "label2";
-			label2.Size = new Size(47, 15);
-			label2.TabIndex = 8;
-			label2.Text = "Output";
-			// 
-			// lblIsRegistered
-			// 
-			lblIsRegistered.AutoSize = true;
-			lblIsRegistered.Location = new Point(629, 622);
-			lblIsRegistered.Name = "lblIsRegistered";
-			lblIsRegistered.Size = new Size(83, 15);
-			lblIsRegistered.TabIndex = 202;
-			lblIsRegistered.Text = "Registered: ???";
 			// 
 			// mainMenuStrip
 			// 
@@ -753,16 +709,6 @@
 			pbBgMainMenuStrip.TabIndex = 205;
 			pbBgMainMenuStrip.TabStop = false;
 			// 
-			// txtOutput
-			// 
-			txtOutput.BackColor = SystemColors.Window;
-			txtOutput.Location = new Point(12, 647);
-			txtOutput.Name = "txtOutput";
-			txtOutput.ReadOnly = true;
-			txtOutput.Size = new Size(1231, 201);
-			txtOutput.TabIndex = 206;
-			txtOutput.Text = "";
-			// 
 			// timerRefreshNa
 			// 
 			timerRefreshNa.Interval = 1000;
@@ -773,15 +719,10 @@
 			AllowDrop = true;
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(1259, 860);
-			Controls.Add(txtOutput);
+			ClientSize = new Size(1259, 625);
 			Controls.Add(mainMenuStripContainer);
-			Controls.Add(lblIsRegistered);
-			Controls.Add(label2);
 			Controls.Add(tabsContainer);
 			Controls.Add(txtShortcutFilePath);
-			Controls.Add(btnRemoveAssoc);
-			Controls.Add(btnAssoc);
 			Controls.Add(label1);
 			Controls.Add(pbBgMainMenuStrip);
 			FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -818,8 +759,6 @@
 
 		#endregion
 		private Label label1;
-		private Button btnAssoc;
-		private Button btnRemoveAssoc;
 		private TextBox txtShortcutFilePath;
 		private TabControl tabsContainer;
 		private TabPage tabCpu;
@@ -828,8 +767,6 @@
 		private TabPage tabPeripherals;
 		private TabPage tabCustom;
 		private TabPage tabKbMappings;
-		private Label label2;
-		private Label lblIsRegistered;
 		private TabPage tabGeneral;
 		private MenuStrip mainMenuStrip;
 		private ToolStripMenuItem mnuFile;
@@ -868,7 +805,6 @@
 		private Label lblCpuSet;
 		private TextBox txtCycles;
 		private Label lblCycles;
-		private RichTextBox txtOutput;
 		private OpenFileDialog openFileDialog;
 		private SaveFileDialog saveFileDialog;
 		private Button btnExecutableBrowse;

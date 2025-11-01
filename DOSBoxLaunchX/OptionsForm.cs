@@ -51,6 +51,15 @@ public partial class OptionsForm : Form {
 		_ => null
 	};
 
+	private void updateAssociationStatus() {
+		if (WinAppAssociator.IsAppRegistered(_data.ShortcutFiletypeExtension, _data.ShortcutFiletypeProgId)) {
+			lblAssociateStatus.Text = "DOSBoxLaunchX is currently registered to handle .DLX files.";
+		}
+		else {
+			lblAssociateStatus.Text = "DOSBoxLaunchX is NOT currently registered to handle .DLX files.";
+		}
+	}
+
 	#endregion
 
 #pragma warning disable IDE1006 // Naming Styles
@@ -65,6 +74,8 @@ public partial class OptionsForm : Form {
 			_originalValues[txtBaseDosboxDir] = getCtrlValue(txtBaseDosboxDir);
 			_originalValues[cbCloseOnDosboxExit] = getCtrlValue(cbCloseOnDosboxExit);
 			_originalValues[cbWriteConfToBaseDir] = getCtrlValue(cbWriteConfToBaseDir);
+
+			updateAssociationStatus();
 		}
 		catch (Exception ex) {
 			MessageBoxHelper.ShowErrorMessageOk($"FATAL ERROR: {ex.Message}", "Error");
@@ -118,6 +129,30 @@ public partial class OptionsForm : Form {
 			Otherwise, they will be written to this app's local app data directory.
 			""",
 			"Write Temp. Config Files to Base DOSBox Dir setting"
+		);
+	}
+
+	private void btnSetAssociation_Click(object sender, EventArgs ea) {
+		WinAppAssociator.RegisterApp(_data.ShortcutFiletypeExtension, _data.ShortcutFiletypeProgId, $"{_data.ShortcutFiletypeDescription}{(_data.IsDebugBuild ? " - DEBUG BUILD" : "")}", _data.AppExePath);
+		WinAppAssociator.TriggerExplorerIconsRefresh();
+
+		updateAssociationStatus();
+
+		MessageBoxHelper.ShowInfoMessage(
+			"DOSBoxLaunchX has been registered as a handler for .DLX files.",
+			"Associated app with .DLX files"
+		);
+	}
+
+	private void btnRemoveAssociation_Click(object sender, EventArgs ea) {
+		WinAppAssociator.UnregisterApp(_data.ShortcutFiletypeExtension, _data.ShortcutFiletypeProgId);
+		WinAppAssociator.TriggerExplorerIconsRefresh();
+
+		updateAssociationStatus();
+
+		MessageBoxHelper.ShowInfoMessage(
+			"DOSBoxLaunchX has been unregistered as a handler for .DLX files.",
+			"Removed app's association with .DLX files"
 		);
 	}
 }
