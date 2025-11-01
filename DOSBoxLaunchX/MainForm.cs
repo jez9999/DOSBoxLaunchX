@@ -677,6 +677,17 @@ public partial class MainForm : Form {
 				Text += " (DEBUG BUILD)";
 			}
 
+			if (string.IsNullOrWhiteSpace(_settings.BaseDosboxDir)) {
+				MessageBoxHelper.ShowInfoMessage(
+					"""
+					The base DOSBox directory is not set.  It must be set in order for the launcher to work.
+
+					Please go to "Tools | Options" and set the base DOSBox directory.
+					""",
+					"Base DOSBox Directory not set"
+				);
+			}
+
 			updateIsRegisteredLabel();
 
 			initAndProcessControls(tabsContainer);

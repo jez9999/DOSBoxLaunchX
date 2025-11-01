@@ -151,6 +151,18 @@ public partial class LauncherForm : Form {
 			txtOutput.BackColor = SystemColors.Window;
 			cbCloseOnDosboxExit.Checked = _settings.CloseOnDosboxExit;
 
+			if (string.IsNullOrWhiteSpace(_settings.BaseDosboxDir)) {
+				MessageBoxHelper.ShowErrorMessageOk(
+					"""
+					The base DOSBox directory is not set.  It must be set in order for the launcher to work.
+
+					Please go to "Tools | Options" and set the base DOSBox directory in the main DOSBoxLaunchX UI.  Unable to continue with launch of DOSBox.
+					""",
+					"Base DOSBox Directory not set"
+				);
+				Environment.Exit(1);
+			}
+
 			var success = await parseConfigAndLaunch();
 
 			txtOutput.Enabled = true;
