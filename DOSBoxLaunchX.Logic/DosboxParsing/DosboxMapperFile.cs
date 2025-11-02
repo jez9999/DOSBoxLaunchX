@@ -68,6 +68,30 @@ public class DosboxMapperFile {
 		return [];
 	}
 
+	public IEnumerable<MapperMappingLine> GetAllMappings() {
+		// Returns one mapping per line; dupes are collapsed to the last entry because "last one wins"
+		var seen = new Dictionary<(string? Section, string Key), int>();
+		var result = new List<MapperMappingLine>();
+
+		for (int i = 0; i < _lines.Count; i++) {
+			if (_lines[i] is not MapperMappingLine mapping) {
+				continue;
+			}
+
+			var key = (mapping.Section?.ToLowerInvariant(), mapping.Key.ToLowerInvariant());
+
+			if (!seen.ContainsKey(key)) {
+				seen[key] = result.Count;
+				result.Add(mapping);
+			}
+			else {
+				result[seen[key]] = mapping;
+			}
+		}
+
+		return result;
+	}
+
 	public void SetMapping(string section, string key, string value) {
 		section = section.ToLowerInvariant().Trim();
 		key = key.ToLowerInvariant().Trim();

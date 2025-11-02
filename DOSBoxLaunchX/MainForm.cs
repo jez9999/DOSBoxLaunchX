@@ -4,6 +4,7 @@ using System.ComponentModel;
 using DOSBoxLaunchX.Logic.Models;
 using DOSBoxLaunchX.Logic.Services;
 using DOSBoxLaunchX.Logic.Helpers;
+using DOSBoxLaunchX.Logic.DosboxParsing;
 using DOSBoxLaunchX.Factories;
 using DOSBoxLaunchX.Helpers;
 using DOSBoxLaunchX.Models;
@@ -457,9 +458,40 @@ public partial class MainForm : Form {
 		}
 	}
 
-	private void generateUiFromShortcutLaunchSettings(LaunchSettings sett) {
+	private bool generateUiFromShortcutLaunchSettings(LaunchSettings sett, bool justRefreshMappingsFromUi = false) {
+		bool success = true;
+
 		var editingGlobals = LocalAppDataHelper.IsGlobalShortcut(_localAppDataDir, _currentShortcutFilePath);
 		var settFlatCustom = sett.GetCustomSettings();
+
+		// TODO: policy is that if we're finding the mapper file and hence populating the UI with the mappings
+		// from that file potentially overridden, you CAN'T add new mappings to it; mappings in the shortcut
+		// file that don't exist in the base mappings will be ignored and discarded on save.  after all, we're
+		// not doing an "add new mapping" button.
+
+		// Keyboard mappings
+		DosboxMapperFile? mapFile = null;
+		try {
+			mapFile = DosboxMapperFile.FromText(File.ReadAllText(
+				Path.Combine(_settings.BaseDosboxDir, _data.DosboxMapperBaseFilename)
+			));
+		}
+		catch (FileNotFoundException) {
+			success = false;
+		}
+		var keyboardMappings = sett.KeyboardMappings;
+		// TODO: grab existing mappings UI state (once we've implemented normal saving of some overrides) with:
+		// List<KeyboardMapping> collectCurrentUiMappings...
+		// TODO: if justRefreshMappingsFromUi, keyboardMappings = collectCurrentUiMappings()
+		loadKeyboardMappings(mapFile?.GetAllMappings(), keyboardMappings, flowPnlMappings, addMappingRow);
+
+		if (mapFile == null) {
+			disableMappingSettings();
+		}
+		else {
+			enableMappingSettings();
+		}
+		if (justRefreshMappingsFromUi) { return success; }
 
 		if (editingGlobals) { resetGlobalNaSettings(sett); }
 
@@ -488,6 +520,8 @@ public partial class MainForm : Form {
 		// Overlaying N/A in front of general controls when editing globals
 		showGeneralNotApplicable(editingGlobals);
 
+		return success;
+
 		static void resetGlobalNaSettings(LaunchSettings sett) {
 			sett.Name = sett.Description = sett.BaseDir = sett.Executable = null;
 			sett.LimitBaseDirToOneGiB = null;
@@ -497,7 +531,7 @@ public partial class MainForm : Form {
 			ctrl.Text = string.Join(Environment.NewLine, DosboxConfigMergeHelper.GetAutoexecLinesFromCustomSettings(settFlatCustom));
 		}
 
-		static void loadCustomSettings(IReadOnlyDictionary<string, object> settFlat, FlowLayoutPanel ctrl, Action<string, string, string> addCustomSettingRow) {
+		static void loadCustomSettings(IReadOnlyDictionary<string, object> settFlat, FlowLayoutPanel ctrl, Action<FlowLayoutPanel, string, string, string> addCustomSettingRow) {
 			ctrl.Controls.Clear();
 
 			foreach (var (sectionKey, val) in settFlat) {
@@ -508,8 +542,46 @@ public partial class MainForm : Form {
 				var value = val?.ToString() ?? "";
 				if (section == "autoexec") { continue; }
 
-				addCustomSettingRow(section, key, value);
+				addCustomSettingRow(ctrl, section, key, value);
 			}
+		}
+
+		static void loadKeyboardMappings(IEnumerable<MapperMappingLine>? baseMappings, List<KeyboardMapping> overrides, FlowLayoutPanel ctrl, Action<FlowLayoutPanel, string, string, string, string, bool> addMappingRow) {
+			ctrl.Controls.Clear();
+
+			ctrl.SuspendLayout();
+			if (baseMappings != null) {
+				// Show base mappings with overrides merged in
+				foreach (var line in baseMappings) {
+					var section = (line.Section ?? "").ToLowerInvariant();
+					var key = line.Key.ToLowerInvariant();
+					var existing = line.Value;
+
+					// Look for an override, if present
+					var overrideMapping = overrides.FirstOrDefault(entry =>
+						entry.Section.ToLowerInvariant() == section &&
+						entry.Key.ToLowerInvariant() == key
+					);
+
+					var newMapping = overrideMapping?.Mapping ?? "";
+					var isSet = overrideMapping != null;
+
+					addMappingRow(ctrl, section, key, existing, newMapping, isSet);
+				}
+			}
+			else {
+				// Base missing: just show overrides
+				foreach (var entry in overrides) {
+					var section = entry.Section;
+					var key = entry.Key;
+					var existing = ""; // (no base value applies)
+					var newMapping = entry.Mapping;
+					var isSet = true;
+
+					addMappingRow(ctrl, section, key, existing, newMapping, isSet);
+				}
+			}
+			ctrl.ResumeLayout();
 		}
 	}
 
@@ -540,7 +612,7 @@ public partial class MainForm : Form {
 		txtPostAutoexec.Text = $"{sb}";
 	}
 
-	private void addCustomSettingRow(string section, string key, string value) {
+	private void addCustomSettingRow(FlowLayoutPanel ctrl, string section, string key, string value) {
 		// Create the container panel for this row
 		var rowPanel = new FlowLayoutPanel {
 			AutoSize = true,
@@ -615,7 +687,7 @@ public partial class MainForm : Form {
 			Margin = new Padding(2),
 		};
 		btnDelete.Click += (sender, ea) => {
-			flowPnlCustom.Controls.Remove(rowPanel);
+			ctrl.Controls.Remove(rowPanel);
 			rowPanel.Dispose();
 			_shortcutDirty = true;
 			updateUiDirtyState();
@@ -623,13 +695,91 @@ public partial class MainForm : Form {
 		rowPanel.Controls.Add(btnDelete);
 
 		// Add the row to the FlowLayoutPanel and scroll
-		flowPnlCustom.Controls.Add(rowPanel);
-		flowPnlCustom.ScrollControlIntoView(rowPanel);
+		ctrl.Controls.Add(rowPanel);
+		ctrl.ScrollControlIntoView(rowPanel);
 
 		// Attach handlers for controls
 		attachControlHandlers(txtSection);
 		attachControlHandlers(txtKey);
 		attachControlHandlers(txtValue);
+	}
+
+	private void addMappingRow(FlowLayoutPanel ctrl, string section, string key, string mapping, string newMapping, bool isSet) {
+		// Create the container panel for this row
+		var rowPanel = new FlowLayoutPanel {
+			AutoSize = true,
+			AutoSizeMode = AutoSizeMode.GrowAndShrink,
+			Dock = DockStyle.Top,
+			FlowDirection = FlowDirection.LeftToRight,
+			WrapContents = false,
+			Margin = new Padding(3, 0, 3, 0),
+		};
+
+		// Section textbox
+		var txtSection = new TextBox {
+			Name = "txtSection",
+			Text = section,
+			Width = 180,
+			BackColor = Color.WhiteSmoke,
+			Margin = new Padding(3),
+			ReadOnly = true,
+		};
+		rowPanel.Controls.Add(txtSection);
+
+		// Key textbox
+		var txtKey = new TextBox {
+			Name = "txtKey",
+			Text = key,
+			Width = 280,
+			BackColor = Color.WhiteSmoke,
+			Margin = new Padding(3),
+			ReadOnly = true,
+		};
+		rowPanel.Controls.Add(txtKey);
+
+		// Existing mapping textbox
+		var txtMapping = new TextBox {
+			Name = "txtMapping",
+			Text = mapping,
+			Width = 300,
+			BackColor = Color.WhiteSmoke,
+			Margin = new Padding(3),
+			ReadOnly = true,
+		};
+		rowPanel.Controls.Add(txtMapping);
+
+		// New mapping textbox
+		var txtNewMapping = new TextBox {
+			Name = "txtNewMapping",
+			Text = newMapping,
+			Width = 300,
+			Margin = new Padding(3),
+			Enabled = isSet,
+		};
+		rowPanel.Controls.Add(txtNewMapping);
+
+		// 'Is set' checkbox
+		var cbSet = new CheckBox {
+			Name = "cbSet",
+			Checked = isSet,
+			Width = 20,
+			Margin = new Padding(3),
+		};
+		rowPanel.Controls.Add(cbSet);
+
+		cbSet.CheckedChanged += (sender, ea) => {
+			txtNewMapping.Enabled = cbSet.Checked;
+		};
+
+		// Validations (these were copied from addCustomSettingRow)
+		txtNewMapping.Validated += (sender, ea) => { txtNewMapping.Text = txtNewMapping.Text.Trim().ToLower(); };
+
+		// Add the row to the FlowLayoutPanel and scroll
+		ctrl.Controls.Add(rowPanel);
+
+		// Attach handlers for controls
+		attachControlHandlers(txtNewMapping);
+		attachControlHandlers(cbSet);
 	}
 
 	private void showGeneralNotApplicable(bool makeVisible) {
@@ -648,6 +798,16 @@ public partial class MainForm : Form {
 		lblNotApplicable.Visible = makeVisible;
 		lblNotApplicable.Refresh();
 	}
+
+	private void enableMappingSettings(bool doDisable = false) {
+		lblHeadingMappingSection.Enabled = lblHeadingMappingKey.Enabled = lblHeadingMappingExisting.Enabled =
+			lblHeadingMappingNew.Enabled = lblHeadingMappingSet.Enabled = flowPnlMappings.Enabled =
+			!doDisable;
+
+		grpMapperNotFound.Visible = doDisable;
+	}
+
+	private void disableMappingSettings() => enableMappingSettings(true);
 
 	#endregion
 
@@ -803,7 +963,7 @@ public partial class MainForm : Form {
 	}
 
 	private void btnAddCustomSetting_Click(object sender, EventArgs ea) {
-		addCustomSettingRow("", "", "");
+		addCustomSettingRow(flowPnlCustom, "", "", "");
 
 		if (!_shortcutDirty) {
 			_shortcutDirty = true;
@@ -817,5 +977,14 @@ public partial class MainForm : Form {
 		// disable "fade" animation completes.  Thus we need to keep refreshing it to force it in front.
 		// Purely a visual thing, and those controls will still be properly disabled at the right time.
 		lblNotApplicable.Refresh();
+	}
+
+	private void btnMapperRescan_Click(object sender, EventArgs ea) {
+		if (!generateUiFromShortcutLaunchSettings(new(), true)) {
+			MessageBoxHelper.ShowErrorMessageOk(
+				$"The mapper file {_data.DosboxMapperBaseFilename} wasn't found in the base DOSBox directory.",
+				"Mapper file not found"
+			);
+		}
 	}
 }

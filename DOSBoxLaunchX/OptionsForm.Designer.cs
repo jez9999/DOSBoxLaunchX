@@ -44,11 +44,14 @@
 			// lblBaseDosboxDir
 			// 
 			lblBaseDosboxDir.AutoSize = true;
+			lblBaseDosboxDir.Cursor = Cursors.Help;
+			lblBaseDosboxDir.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point, 0);
 			lblBaseDosboxDir.Location = new Point(12, 9);
 			lblBaseDosboxDir.Name = "lblBaseDosboxDir";
 			lblBaseDosboxDir.Size = new Size(131, 15);
 			lblBaseDosboxDir.TabIndex = 0;
 			lblBaseDosboxDir.Text = "Base DOSBox Directory:";
+			lblBaseDosboxDir.Click += lblBaseDosboxDir_Click;
 			// 
 			// txtBaseDosboxDir
 			// 

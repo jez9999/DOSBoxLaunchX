@@ -15,6 +15,8 @@ public class AppOptionsWithData {
 	public string ShortcutFiletypeProgId => "DOSBoxLaunchX.Shortcut";
 	public string ShortcutFiletypeDescription => "DOSBoxLaunchX Shortcut File";
 
+	public string DosboxExeBaseFilename => "dosbox-x.exe";
 	public string DosboxConfBaseFilename => "dosbox-x.conf";
 	public string DosboxConfTemplateFilename => "dosbox-x.[shortcutName].conf";
+	public string DosboxMapperBaseFilename => "mapper-dosbox-x.map";
 }

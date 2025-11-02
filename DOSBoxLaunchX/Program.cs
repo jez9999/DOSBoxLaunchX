@@ -20,6 +20,9 @@ internal static class Program {
 	//
 	// TODO: remember that global autoexec should be merged with local autoexec with global autoexec
 	// coming BEFORE shortcut autoexec; not like other settings where shortcut overrides global.
+	//
+	// TODO: go thru and replace all "File.Exists ... OpenFile" patterns with a "try OpenFile, catch
+	// FileNotFoundException" one everywhere you find File.Exists, to about subtle race condition.
 	// ====================================================
 
 	[STAThread]

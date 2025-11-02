@@ -143,4 +143,17 @@ public class Mapping_line_tests {
 			RawText = @"hand_mapper """""
 		});
 	}
+
+	[Test]
+	public void Setting_empty_mapping_value_outputs_key_only() {
+		// Arrange
+		var file = DosboxMapperFile.FromEmpty();
+
+		// Act
+		file.SetMapping("sdl1", "hand_mapper", "");
+		var output = file.ToText();
+
+		// Assert
+		output.Should().Be("\n[sdl1]\nhand_mapper");
+	}
 }

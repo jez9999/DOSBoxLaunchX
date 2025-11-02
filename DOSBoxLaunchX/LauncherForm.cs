@@ -102,7 +102,7 @@ public partial class LauncherForm : Form {
 		addTxtboxMsg($"Temporary config written to: {tempConfigPath}");
 
 		addTxtboxMsg("Launching DOSBox...");
-		await launchDosboxX(Path.Combine(baseDir, "dosbox-x.exe"), tempConfigPath, baseDir);
+		await launchDosboxX(Path.Combine(baseDir, _data.DosboxExeBaseFilename), tempConfigPath, baseDir);
 
 		return true;
 	}

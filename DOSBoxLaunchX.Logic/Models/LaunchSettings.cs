@@ -49,6 +49,16 @@ public class LaunchSettings {
 
 	#endregion
 
+	#region Keyboard mappings
+
+	/// <summary>
+	/// Optional keyboard mapping overrides.
+	/// These entries represent replacement mappings to be merged into the base mapper file at launch.
+	/// </summary>
+	public List<KeyboardMapping> KeyboardMappings { get; set; } = [];
+
+	#endregion
+
 	#region Custom settings
 
 	[JsonIgnore]
