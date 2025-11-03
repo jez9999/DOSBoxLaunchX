@@ -425,7 +425,7 @@ public partial class MainForm : Form {
 		if (cbExecutableSet.Checked) { sett.Executable = UiHelper.GetTextValue(txtExecutable); }
 
 		// Grouped settings
-		if (cbCyclesSet.Checked) { sett.CPU.Cycles = UiHelper.GetTextValue(txtCycles); }
+		SettingsUiBinder.SetGroupedSettingsFromUi(sett, _controlInfo);
 
 		// Autoexec script
 		saveAutoexec(sett, txtAutoexec);
@@ -521,8 +521,7 @@ public partial class MainForm : Form {
 		UiHelper.SetTextFromValue(txtExecutable, sett.Executable);
 
 		// Grouped settings
-		UiHelper.SetCheckboxFromValue(cbCyclesSet, sett.CPU.Cycles != null);
-		UiHelper.SetTextFromValue(txtCycles, sett.CPU.Cycles);
+		SettingsUiBinder.SetUiFromGroupedSettings(sett, _controlInfo);
 
 		// Autoexec script
 		loadAutoexec(settFlatCustom, txtAutoexec);
@@ -751,6 +750,7 @@ public partial class MainForm : Form {
 
 			DataGridHelper.InitMappingsDataGrid(dataGridMappings, validateTextCtrlContent, controlValueChanged);
 			initAndProcessControls(tabsContainer);
+			// TODO: validate integrity; all UI settings match launch settings and vice versa
 			attachPrePostAutoexecHandlers();
 			refreshPrePostAutoexec();
 			initNewShortcut();

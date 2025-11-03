@@ -27,10 +27,10 @@ internal static class UiHelper {
 
 	internal static T GetComboValue<T>(ComboBox ctrl) {
 		if (typeof(T) == typeof(string)) {
-			return (T)(object)(ctrl.SelectedItem as string ?? "");
+			return (T)(object)(ctrl.Text ?? "");
 		}
 		else if (typeof(T) == typeof(bool)) {
-			return (T)(object)(ctrl.SelectedItem as string == "Yes");
+			return (T)(object)(ctrl.Text == "Yes");
 		}
 		else {
 			throw new NotSupportedException($"Unsupported type: {typeof(T).Name}");
