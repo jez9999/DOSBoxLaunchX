@@ -51,12 +51,12 @@
 			txtName = new TextBox();
 			lblName = new Label();
 			tabCpu = new TabPage();
+			comboCycles = new ComboBox();
 			cbCyclesSet = new CheckBox();
 			lblCycles = new Label();
-			txtCore = new ComboBox();
+			comboCore = new ComboBox();
 			cbCoreSet = new CheckBox();
 			lblCpuSet = new Label();
-			txtCycles = new TextBox();
 			lblCore = new Label();
 			tabVideo = new TabPage();
 			tabAudio = new TabPage();
@@ -345,12 +345,12 @@
 			// tabCpu
 			// 
 			tabCpu.BackColor = SystemColors.Control;
+			tabCpu.Controls.Add(comboCycles);
 			tabCpu.Controls.Add(cbCyclesSet);
 			tabCpu.Controls.Add(lblCycles);
-			tabCpu.Controls.Add(txtCore);
+			tabCpu.Controls.Add(comboCore);
 			tabCpu.Controls.Add(cbCoreSet);
 			tabCpu.Controls.Add(lblCpuSet);
-			tabCpu.Controls.Add(txtCycles);
 			tabCpu.Controls.Add(lblCore);
 			tabCpu.Location = new Point(4, 24);
 			tabCpu.Name = "tabCpu";
@@ -358,6 +358,16 @@
 			tabCpu.Size = new Size(1227, 528);
 			tabCpu.TabIndex = 0;
 			tabCpu.Text = "CPU";
+			// 
+			// comboCycles
+			// 
+			comboCycles.FormattingEnabled = true;
+			comboCycles.Items.AddRange(new object[] { "auto", "max" });
+			comboCycles.Location = new Point(127, 54);
+			comboCycles.Name = "comboCycles";
+			comboCycles.Size = new Size(470, 23);
+			comboCycles.TabIndex = 21;
+			comboCycles.Tag = "cb=cbCyclesSet|assoc=lblCycles|setting=cpu.cycles";
 			// 
 			// cbCyclesSet
 			// 
@@ -378,15 +388,15 @@
 			lblCycles.TabIndex = 37;
 			lblCycles.Text = "Cycles:";
 			// 
-			// txtCore
+			// comboCore
 			// 
-			txtCore.FormattingEnabled = true;
-			txtCore.Items.AddRange(new object[] { "auto", "normal", "full", "dynamic", "simple" });
-			txtCore.Location = new Point(127, 25);
-			txtCore.Name = "txtCore";
-			txtCore.Size = new Size(470, 23);
-			txtCore.TabIndex = 11;
-			txtCore.Tag = "cb=cbCoreSet|assoc=lblCore|setting=cpu.core";
+			comboCore.FormattingEnabled = true;
+			comboCore.Items.AddRange(new object[] { "auto", "normal", "full", "dynamic", "simple" });
+			comboCore.Location = new Point(127, 25);
+			comboCore.Name = "comboCore";
+			comboCore.Size = new Size(470, 23);
+			comboCore.TabIndex = 11;
+			comboCore.Tag = "cb=cbCoreSet|assoc=lblCore|setting=cpu.core";
 			// 
 			// cbCoreSet
 			// 
@@ -407,14 +417,6 @@
 			lblCpuSet.Size = new Size(26, 15);
 			lblCpuSet.TabIndex = 35;
 			lblCpuSet.Text = "Set";
-			// 
-			// txtCycles
-			// 
-			txtCycles.Location = new Point(127, 54);
-			txtCycles.Name = "txtCycles";
-			txtCycles.Size = new Size(470, 23);
-			txtCycles.TabIndex = 21;
-			txtCycles.Tag = "cb=cbCyclesSet|assoc=lblCycles|setting=cpu.cycles";
 			// 
 			// lblCore
 			// 
@@ -890,7 +892,6 @@
 		private Label lblNameDescriptionNote;
 		private CheckBox cbCoreSet;
 		private Label lblCpuSet;
-		private TextBox txtCycles;
 		private Label lblCore;
 		private OpenFileDialog openFileDialog;
 		private SaveFileDialog saveFileDialog;
@@ -913,8 +914,9 @@
 		private Label lblMapperNotFound;
 		private Button btnMapperRescan;
 		private DataGridView dataGridMappings;
-		private ComboBox txtCore;
+		private ComboBox comboCore;
 		private Label lblCycles;
 		private CheckBox cbCyclesSet;
+		private ComboBox comboCycles;
 	}
 }
