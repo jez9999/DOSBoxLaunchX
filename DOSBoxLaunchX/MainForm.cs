@@ -483,7 +483,7 @@ public partial class MainForm : Form {
 				Path.Combine(_settings.BaseDosboxDir, _data.DosboxMapperBaseFilename)
 			));
 		}
-		catch (Exception ex) when (ex is DirectoryNotFoundException || ex is FileNotFoundException) {
+		catch (Exception) {
 			success = false;
 		}
 		var keyboardMappings = sett.KeyboardMappings;
@@ -892,8 +892,8 @@ public partial class MainForm : Form {
 	private void btnMapperRescan_Click(object sender, EventArgs ea) {
 		if (!generateUiFromShortcutLaunchSettings(new(), true)) {
 			MessageBoxHelper.ShowErrorMessageOk(
-				$"The mapper file {_data.DosboxMapperBaseFilename} wasn't found in the base DOSBox directory.",
-				"Mapper file not found"
+				$"Couldn't read mapper file {_data.DosboxMapperBaseFilename} in the base DOSBox directory.",
+				"Couldn't read mapper"
 			);
 		}
 	}

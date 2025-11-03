@@ -82,6 +82,44 @@ public partial class LauncherForm : Form {
 		}
 		DosboxConfFile config = DosboxConfFile.FromText(await File.ReadAllTextAsync(baseConfigPath));
 
+		if (globalSettings.KeyboardMappings.Count > 0 || shortcutSettings.KeyboardMappings.Count > 0) {
+			addTxtboxMsg("Loading keyboard mappings...");
+			var baseMapperPath = Path.Combine(_settings.BaseDosboxDir, _data.DosboxMapperBaseFilename);
+			DosboxMapperFile mapFile = null!;
+			try {
+				mapFile = DosboxMapperFile.FromText(File.ReadAllText(
+					baseMapperPath
+				));
+			}
+			catch (Exception) {
+				addTxtboxMsg($"ERROR: Keyboard mappings are configured, but couldn't read base mapper file: {baseMapperPath}");
+				return false;
+			}
+
+			if (
+				globalSettings.GetCustomSetting<string>("sdl.mapperfile") != null ||
+				shortcutSettings.GetCustomSetting<string>("sdl.mapperfile") != null
+			) {
+				addTxtboxMsg($"ERROR: Keyboard mappings are configured, but setting sdl.mapperfile is also set in config.  Can't have both at the same time.");
+				return false;
+			}
+
+			// Setup mappings
+			DosboxConfigMergeHelper.MergeMappings(mapFile, globalSettings, addTxtboxMsg);
+			DosboxConfigMergeHelper.MergeMappings(mapFile, shortcutSettings, addTxtboxMsg);
+
+			// Write and point to temp mapperfile in config
+			string tempMapPath = Path.Combine(
+				_localAppDataDir,
+				_data.DosboxMapperTemplateFilename.Replace("[shortcutName]", Path.GetFileNameWithoutExtension(dlxPath))
+			);
+			await File.WriteAllTextAsync(
+				tempMapPath,
+				mapFile.ToText()
+			);
+			config.SetSetting("sdl", "mapperfile", tempMapPath);
+		}
+
 		addTxtboxMsg("Merging shortcut & global settings into DOSBox config...");
 		DosboxConfigMergeHelper.MergeAutoexecMain(config, globalSettings);
 		DosboxConfigMergeHelper.MergeAutoexecMain(config, shortcutSettings);

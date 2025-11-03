@@ -5,6 +5,21 @@ using DOSBoxLaunchX.Logic.Models;
 namespace DOSBoxLaunchX.Logic.Helpers;
 
 public static class DosboxConfigMergeHelper {
+	public static void MergeMappings(DosboxMapperFile map, LaunchSettings sett, Action<string> fnWarn) {
+		var mappings = map.GetAllMappings().ToDictionary(m => (m.Section, m.Key));
+
+		foreach (var entry in sett.KeyboardMappings) {
+			if (mappings.ContainsKey((entry.Section, entry.Key))) {
+				// Override base mapping
+				map.SetMapping(entry.Section, entry.Key, entry.Mapping);
+			}
+			else {
+				// Mapping not in base file - warn
+				fnWarn.Invoke($"Warning: section/key '{entry.Section}/{entry.Key}' for keyboard mapping does not exist in base mapper file.");
+			}
+		}
+	}
+
 	public static void MergeSettings(DosboxConfFile config, LaunchSettings sett) {
 		var settFlat = sett.Settings;
 
