@@ -4,7 +4,7 @@ public class ControlInfo {
 	/// <summary>
 	/// Original Tag string from the designer that was parsed.
 	/// </summary>
-	public required string Tag { get; set; }
+	public string Tag { get; set; } = "";
 
 	/// <summary>
 	/// Whether this control should be ignored for processing by the event handlers, etc.

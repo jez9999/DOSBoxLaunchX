@@ -74,12 +74,7 @@
 			grpMapperNotFound = new GroupBox();
 			lblMapperNotFound = new Label();
 			btnMapperRescan = new Button();
-			lblHeadingMappingSet = new Label();
-			lblHeadingMappingNew = new Label();
-			lblHeadingMappingExisting = new Label();
-			lblHeadingMappingKey = new Label();
-			lblHeadingMappingSection = new Label();
-			flowPnlMappings = new FlowLayoutPanel();
+			dataGridMappings = new DataGridView();
 			mainMenuStrip = new MenuStrip();
 			mnuFile = new ToolStripMenuItem();
 			mnuNew = new ToolStripMenuItem();
@@ -109,6 +104,7 @@
 			tabCustom.SuspendLayout();
 			tabKbMappings.SuspendLayout();
 			grpMapperNotFound.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)dataGridMappings).BeginInit();
 			mainMenuStrip.SuspendLayout();
 			mainMenuStripContainer.TopToolStripPanel.SuspendLayout();
 			mainMenuStripContainer.SuspendLayout();
@@ -561,12 +557,7 @@
 			// 
 			tabKbMappings.BackColor = SystemColors.Control;
 			tabKbMappings.Controls.Add(grpMapperNotFound);
-			tabKbMappings.Controls.Add(lblHeadingMappingSet);
-			tabKbMappings.Controls.Add(lblHeadingMappingNew);
-			tabKbMappings.Controls.Add(lblHeadingMappingExisting);
-			tabKbMappings.Controls.Add(lblHeadingMappingKey);
-			tabKbMappings.Controls.Add(lblHeadingMappingSection);
-			tabKbMappings.Controls.Add(flowPnlMappings);
+			tabKbMappings.Controls.Add(dataGridMappings);
 			tabKbMappings.Location = new Point(4, 24);
 			tabKbMappings.Name = "tabKbMappings";
 			tabKbMappings.Size = new Size(1227, 528);
@@ -577,7 +568,7 @@
 			// 
 			grpMapperNotFound.Controls.Add(lblMapperNotFound);
 			grpMapperNotFound.Controls.Add(btnMapperRescan);
-			grpMapperNotFound.Location = new Point(452, 210);
+			grpMapperNotFound.Location = new Point(440, 2);
 			grpMapperNotFound.Name = "grpMapperNotFound";
 			grpMapperNotFound.Size = new Size(274, 78);
 			grpMapperNotFound.TabIndex = 100;
@@ -601,64 +592,16 @@
 			btnMapperRescan.TabIndex = 113;
 			btnMapperRescan.Text = "Rescan";
 			btnMapperRescan.UseVisualStyleBackColor = true;
+			btnMapperRescan.Click += btnMapperRescan_Click;
 			// 
-			// lblHeadingMappingSet
+			// dataGridMappings
 			// 
-			lblHeadingMappingSet.AutoSize = true;
-			lblHeadingMappingSet.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-			lblHeadingMappingSet.Location = new Point(1172, 7);
-			lblHeadingMappingSet.Name = "lblHeadingMappingSet";
-			lblHeadingMappingSet.Size = new Size(26, 15);
-			lblHeadingMappingSet.TabIndex = 110;
-			lblHeadingMappingSet.Text = "Set";
-			// 
-			// lblHeadingMappingNew
-			// 
-			lblHeadingMappingNew.AutoSize = true;
-			lblHeadingMappingNew.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-			lblHeadingMappingNew.Location = new Point(794, 7);
-			lblHeadingMappingNew.Name = "lblHeadingMappingNew";
-			lblHeadingMappingNew.Size = new Size(84, 15);
-			lblHeadingMappingNew.TabIndex = 109;
-			lblHeadingMappingNew.Text = "New Mapping";
-			// 
-			// lblHeadingMappingExisting
-			// 
-			lblHeadingMappingExisting.AutoSize = true;
-			lblHeadingMappingExisting.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-			lblHeadingMappingExisting.Location = new Point(496, 7);
-			lblHeadingMappingExisting.Name = "lblHeadingMappingExisting";
-			lblHeadingMappingExisting.Size = new Size(101, 15);
-			lblHeadingMappingExisting.TabIndex = 108;
-			lblHeadingMappingExisting.Text = "Existing Mapping";
-			// 
-			// lblHeadingMappingKey
-			// 
-			lblHeadingMappingKey.AutoSize = true;
-			lblHeadingMappingKey.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-			lblHeadingMappingKey.Location = new Point(190, 7);
-			lblHeadingMappingKey.Name = "lblHeadingMappingKey";
-			lblHeadingMappingKey.Size = new Size(28, 15);
-			lblHeadingMappingKey.TabIndex = 107;
-			lblHeadingMappingKey.Text = "Key";
-			// 
-			// lblHeadingMappingSection
-			// 
-			lblHeadingMappingSection.AutoSize = true;
-			lblHeadingMappingSection.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-			lblHeadingMappingSection.Location = new Point(5, 7);
-			lblHeadingMappingSection.Name = "lblHeadingMappingSection";
-			lblHeadingMappingSection.Size = new Size(49, 15);
-			lblHeadingMappingSection.TabIndex = 106;
-			lblHeadingMappingSection.Text = "Section";
-			// 
-			// flowPnlMappings
-			// 
-			flowPnlMappings.AutoScroll = true;
-			flowPnlMappings.Location = new Point(0, 25);
-			flowPnlMappings.Name = "flowPnlMappings";
-			flowPnlMappings.Size = new Size(1227, 503);
-			flowPnlMappings.TabIndex = 105;
+			dataGridMappings.BackgroundColor = SystemColors.Control;
+			dataGridMappings.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			dataGridMappings.Location = new Point(0, 0);
+			dataGridMappings.Name = "dataGridMappings";
+			dataGridMappings.Size = new Size(1227, 528);
+			dataGridMappings.TabIndex = 111;
 			// 
 			// mainMenuStrip
 			// 
@@ -852,9 +795,9 @@
 			tabCustom.ResumeLayout(false);
 			tabCustom.PerformLayout();
 			tabKbMappings.ResumeLayout(false);
-			tabKbMappings.PerformLayout();
 			grpMapperNotFound.ResumeLayout(false);
 			grpMapperNotFound.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)dataGridMappings).EndInit();
 			mainMenuStrip.ResumeLayout(false);
 			mainMenuStrip.PerformLayout();
 			mainMenuStripContainer.TopToolStripPanel.ResumeLayout(false);
@@ -931,14 +874,9 @@
 		private Controls.TransparentLabel lblNotApplicable;
 		private ToolStripSeparator toolStripSeparator11;
 		private System.Windows.Forms.Timer timerRefreshNa;
-		private Label lblHeadingMappingExisting;
-		private Label lblHeadingMappingKey;
-		private Label lblHeadingMappingSection;
-		private FlowLayoutPanel flowPnlMappings;
-		private Label lblHeadingMappingSet;
-		private Label lblHeadingMappingNew;
 		private GroupBox grpMapperNotFound;
 		private Label lblMapperNotFound;
 		private Button btnMapperRescan;
+		private DataGridView dataGridMappings;
 	}
 }

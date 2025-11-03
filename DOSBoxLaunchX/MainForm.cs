@@ -138,18 +138,15 @@ public partial class MainForm : Form {
 				updateAssociatedControlsState(cb, info);
 
 				// Always mark as dirty when checkbox changes
-				controlValueChanged(sender, ea);
+				controlValueChangedEvent(sender, ea);
 			};
 		}
 		else if (ctl is TextBox tb) {
 			// Mark dirty on change
-			tb.TextChanged += controlValueChanged;
+			tb.TextChanged += controlValueChangedEvent;
 
 			tb.Validating += (sender, ea) => {
-				if (!info.AllowNewlines && (tb.Text.Contains('\r') || tb.Text.Contains('\n'))) {
-					MessageBoxHelper.ShowErrorMessageOk("Control text contains invalid newline characters.", "Control text invalid");
-					ea.Cancel = true;
-				}
+				if (!validateTextboxContent(tb.Text, info)) { ea.Cancel = true; }
 			};
 
 			tb.Validated += (sender, ea) => {
@@ -169,7 +166,7 @@ public partial class MainForm : Form {
 		}
 		else if (ctl is ComboBox combo) {
 			// Mark dirty on change
-			combo.SelectedIndexChanged += controlValueChanged;
+			combo.SelectedIndexChanged += controlValueChangedEvent;
 		}
 	}
 
@@ -187,11 +184,23 @@ public partial class MainForm : Form {
 		}
 	}
 
-	private void controlValueChanged(object? sender, EventArgs ea) {
+	private void controlValueChangedEvent(object? sender, EventArgs ea) {
+		controlValueChanged();
+	}
+
+	private void controlValueChanged() {
 		if (!_shortcutDirty) {
 			_shortcutDirty = true;
 			updateUiDirtyState();
 		}
+	}
+
+	private bool validateTextboxContent(string text, ControlInfo info) {
+		if (!info.AllowNewlines && (text.Contains('\r') || text.Contains('\n'))) {
+			MessageBoxHelper.ShowErrorMessageOk("Control text contains invalid newline characters.", "Control text invalid");
+			return false;
+		}
+		return true;
 	}
 
 	private void attachPrePostAutoexecHandlers() {
@@ -411,6 +420,9 @@ public partial class MainForm : Form {
 
 		if (cbCyclesSet.Checked) { sett.CPU.Cycles = UiHelper.GetTextValue(txtCycles); }
 
+		// Keyboard mappings
+		sett.KeyboardMappings = collectCurrentUiMappings();
+
 		// Autoexec script
 		saveAutoexec(sett, txtAutoexec);
 
@@ -464,11 +476,6 @@ public partial class MainForm : Form {
 		var editingGlobals = LocalAppDataHelper.IsGlobalShortcut(_localAppDataDir, _currentShortcutFilePath);
 		var settFlatCustom = sett.GetCustomSettings();
 
-		// TODO: policy is that if we're finding the mapper file and hence populating the UI with the mappings
-		// from that file potentially overridden, you CAN'T add new mappings to it; mappings in the shortcut
-		// file that don't exist in the base mappings will be ignored and discarded on save.  after all, we're
-		// not doing an "add new mapping" button.
-
 		// Keyboard mappings
 		DosboxMapperFile? mapFile = null;
 		try {
@@ -480,10 +487,8 @@ public partial class MainForm : Form {
 			success = false;
 		}
 		var keyboardMappings = sett.KeyboardMappings;
-		// TODO: grab existing mappings UI state (once we've implemented normal saving of some overrides) with:
-		// List<KeyboardMapping> collectCurrentUiMappings...
-		// TODO: if justRefreshMappingsFromUi, keyboardMappings = collectCurrentUiMappings()
-		loadKeyboardMappings(mapFile?.GetAllMappings(), keyboardMappings, flowPnlMappings, addMappingRow);
+		if (justRefreshMappingsFromUi) { keyboardMappings = collectCurrentUiMappings(); }
+		DataGridHelper.LoadKeyboardMappingsToGrid(mapFile?.GetAllMappings(), keyboardMappings, dataGridMappings);
 
 		if (mapFile == null) {
 			disableMappingSettings();
@@ -545,44 +550,29 @@ public partial class MainForm : Form {
 				addCustomSettingRow(ctrl, section, key, value);
 			}
 		}
+	}
 
-		static void loadKeyboardMappings(IEnumerable<MapperMappingLine>? baseMappings, List<KeyboardMapping> overrides, FlowLayoutPanel ctrl, Action<FlowLayoutPanel, string, string, string, string, bool> addMappingRow) {
-			ctrl.Controls.Clear();
+	private List<KeyboardMapping> collectCurrentUiMappings() {
+		var mappings = new List<KeyboardMapping>();
 
-			ctrl.SuspendLayout();
-			if (baseMappings != null) {
-				// Show base mappings with overrides merged in
-				foreach (var line in baseMappings) {
-					var section = (line.Section ?? "").ToLowerInvariant();
-					var key = line.Key.ToLowerInvariant();
-					var existing = line.Value;
+		foreach (DataGridViewRow row in dataGridMappings.Rows) {
+			if (row.IsNewRow) { continue; }
 
-					// Look for an override, if present
-					var overrideMapping = overrides.FirstOrDefault(entry =>
-						entry.Section.ToLowerInvariant() == section &&
-						entry.Key.ToLowerInvariant() == key
-					);
+			var isSet = row.Cells["IsSet"].Value as bool? ?? false;
+			if (!isSet) { continue; }
 
-					var newMapping = overrideMapping?.Mapping ?? "";
-					var isSet = overrideMapping != null;
+			var section = row.Cells["Section"].Value?.ToString() ?? "";
+			var key = row.Cells["Key"].Value?.ToString() ?? "";
+			var newMapping = row.Cells["NewMapping"].Value?.ToString() ?? "";
 
-					addMappingRow(ctrl, section, key, existing, newMapping, isSet);
-				}
-			}
-			else {
-				// Base missing: just show overrides
-				foreach (var entry in overrides) {
-					var section = entry.Section;
-					var key = entry.Key;
-					var existing = ""; // (no base value applies)
-					var newMapping = entry.Mapping;
-					var isSet = true;
-
-					addMappingRow(ctrl, section, key, existing, newMapping, isSet);
-				}
-			}
-			ctrl.ResumeLayout();
+			mappings.Add(new KeyboardMapping {
+				Section = section,
+				Key = key,
+				Mapping = newMapping.Trim()
+			});
 		}
+
+		return mappings;
 	}
 
 	private void refreshPrePostAutoexec() {
@@ -704,84 +694,6 @@ public partial class MainForm : Form {
 		attachControlHandlers(txtValue);
 	}
 
-	private void addMappingRow(FlowLayoutPanel ctrl, string section, string key, string mapping, string newMapping, bool isSet) {
-		// Create the container panel for this row
-		var rowPanel = new FlowLayoutPanel {
-			AutoSize = true,
-			AutoSizeMode = AutoSizeMode.GrowAndShrink,
-			Dock = DockStyle.Top,
-			FlowDirection = FlowDirection.LeftToRight,
-			WrapContents = false,
-			Margin = new Padding(3, 0, 3, 0),
-		};
-
-		// Section textbox
-		var txtSection = new TextBox {
-			Name = "txtSection",
-			Text = section,
-			Width = 180,
-			BackColor = Color.WhiteSmoke,
-			Margin = new Padding(3),
-			ReadOnly = true,
-		};
-		rowPanel.Controls.Add(txtSection);
-
-		// Key textbox
-		var txtKey = new TextBox {
-			Name = "txtKey",
-			Text = key,
-			Width = 280,
-			BackColor = Color.WhiteSmoke,
-			Margin = new Padding(3),
-			ReadOnly = true,
-		};
-		rowPanel.Controls.Add(txtKey);
-
-		// Existing mapping textbox
-		var txtMapping = new TextBox {
-			Name = "txtMapping",
-			Text = mapping,
-			Width = 300,
-			BackColor = Color.WhiteSmoke,
-			Margin = new Padding(3),
-			ReadOnly = true,
-		};
-		rowPanel.Controls.Add(txtMapping);
-
-		// New mapping textbox
-		var txtNewMapping = new TextBox {
-			Name = "txtNewMapping",
-			Text = newMapping,
-			Width = 300,
-			Margin = new Padding(3),
-			Enabled = isSet,
-		};
-		rowPanel.Controls.Add(txtNewMapping);
-
-		// 'Is set' checkbox
-		var cbSet = new CheckBox {
-			Name = "cbSet",
-			Checked = isSet,
-			Width = 20,
-			Margin = new Padding(3),
-		};
-		rowPanel.Controls.Add(cbSet);
-
-		cbSet.CheckedChanged += (sender, ea) => {
-			txtNewMapping.Enabled = cbSet.Checked;
-		};
-
-		// Validations (these were copied from addCustomSettingRow)
-		txtNewMapping.Validated += (sender, ea) => { txtNewMapping.Text = txtNewMapping.Text.Trim().ToLower(); };
-
-		// Add the row to the FlowLayoutPanel and scroll
-		ctrl.Controls.Add(rowPanel);
-
-		// Attach handlers for controls
-		attachControlHandlers(txtNewMapping);
-		attachControlHandlers(cbSet);
-	}
-
 	private void showGeneralNotApplicable(bool makeVisible) {
 		// When showing N/A, general controls must be disabled; otherwise, enabled.
 		lblGeneralSet.Enabled =
@@ -800,10 +712,7 @@ public partial class MainForm : Form {
 	}
 
 	private void enableMappingSettings(bool doDisable = false) {
-		lblHeadingMappingSection.Enabled = lblHeadingMappingKey.Enabled = lblHeadingMappingExisting.Enabled =
-			lblHeadingMappingNew.Enabled = lblHeadingMappingSet.Enabled = flowPnlMappings.Enabled =
-			!doDisable;
-
+		dataGridMappings.Enabled = !doDisable;
 		grpMapperNotFound.Visible = doDisable;
 	}
 
@@ -832,6 +741,7 @@ public partial class MainForm : Form {
 				);
 			}
 
+			DataGridHelper.InitMappingsDataGrid(dataGridMappings, validateTextboxContent, controlValueChanged);
 			initAndProcessControls(tabsContainer);
 			attachPrePostAutoexecHandlers();
 			refreshPrePostAutoexec();
