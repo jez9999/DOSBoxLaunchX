@@ -51,11 +51,13 @@
 			txtName = new TextBox();
 			lblName = new Label();
 			tabCpu = new TabPage();
-			txtCore = new ComboBox();
 			cbCyclesSet = new CheckBox();
+			lblCycles = new Label();
+			txtCore = new ComboBox();
+			cbCoreSet = new CheckBox();
 			lblCpuSet = new Label();
 			txtCycles = new TextBox();
-			lblCycles = new Label();
+			lblCore = new Label();
 			tabVideo = new TabPage();
 			tabAudio = new TabPage();
 			tabPeripherals = new TabPage();
@@ -343,11 +345,13 @@
 			// tabCpu
 			// 
 			tabCpu.BackColor = SystemColors.Control;
-			tabCpu.Controls.Add(txtCore);
 			tabCpu.Controls.Add(cbCyclesSet);
+			tabCpu.Controls.Add(lblCycles);
+			tabCpu.Controls.Add(txtCore);
+			tabCpu.Controls.Add(cbCoreSet);
 			tabCpu.Controls.Add(lblCpuSet);
 			tabCpu.Controls.Add(txtCycles);
-			tabCpu.Controls.Add(lblCycles);
+			tabCpu.Controls.Add(lblCore);
 			tabCpu.Location = new Point(4, 24);
 			tabCpu.Name = "tabCpu";
 			tabCpu.Padding = new Padding(3);
@@ -355,25 +359,44 @@
 			tabCpu.TabIndex = 0;
 			tabCpu.Text = "CPU";
 			// 
-			// txtCore
-			// 
-			txtCore.FormattingEnabled = true;
-			txtCore.Items.AddRange(new object[] { "auto", "max" });
-			txtCore.Location = new Point(127, 54);
-			txtCore.Name = "txtCore";
-			txtCore.Size = new Size(470, 23);
-			txtCore.TabIndex = 36;
-			txtCore.Tag = "setting=cpu.core";
-			// 
 			// cbCyclesSet
 			// 
 			cbCyclesSet.AutoSize = true;
-			cbCyclesSet.Location = new Point(11, 29);
+			cbCyclesSet.Location = new Point(11, 58);
 			cbCyclesSet.Name = "cbCyclesSet";
 			cbCyclesSet.Size = new Size(15, 14);
-			cbCyclesSet.TabIndex = 10;
+			cbCyclesSet.TabIndex = 20;
 			cbCyclesSet.Tag = "";
 			cbCyclesSet.UseVisualStyleBackColor = true;
+			// 
+			// lblCycles
+			// 
+			lblCycles.AutoSize = true;
+			lblCycles.Location = new Point(36, 57);
+			lblCycles.Name = "lblCycles";
+			lblCycles.Size = new Size(44, 15);
+			lblCycles.TabIndex = 37;
+			lblCycles.Text = "Cycles:";
+			// 
+			// txtCore
+			// 
+			txtCore.FormattingEnabled = true;
+			txtCore.Items.AddRange(new object[] { "auto", "normal", "full", "dynamic", "simple" });
+			txtCore.Location = new Point(127, 25);
+			txtCore.Name = "txtCore";
+			txtCore.Size = new Size(470, 23);
+			txtCore.TabIndex = 11;
+			txtCore.Tag = "cb=cbCoreSet|assoc=lblCore|setting=cpu.core";
+			// 
+			// cbCoreSet
+			// 
+			cbCoreSet.AutoSize = true;
+			cbCoreSet.Location = new Point(11, 29);
+			cbCoreSet.Name = "cbCoreSet";
+			cbCoreSet.Size = new Size(15, 14);
+			cbCoreSet.TabIndex = 10;
+			cbCoreSet.Tag = "";
+			cbCoreSet.UseVisualStyleBackColor = true;
 			// 
 			// lblCpuSet
 			// 
@@ -387,20 +410,20 @@
 			// 
 			// txtCycles
 			// 
-			txtCycles.Location = new Point(127, 25);
+			txtCycles.Location = new Point(127, 54);
 			txtCycles.Name = "txtCycles";
 			txtCycles.Size = new Size(470, 23);
-			txtCycles.TabIndex = 11;
+			txtCycles.TabIndex = 21;
 			txtCycles.Tag = "cb=cbCyclesSet|assoc=lblCycles|setting=cpu.cycles";
 			// 
-			// lblCycles
+			// lblCore
 			// 
-			lblCycles.AutoSize = true;
-			lblCycles.Location = new Point(36, 28);
-			lblCycles.Name = "lblCycles";
-			lblCycles.Size = new Size(44, 15);
-			lblCycles.TabIndex = 34;
-			lblCycles.Text = "Cycles:";
+			lblCore.AutoSize = true;
+			lblCore.Location = new Point(36, 28);
+			lblCore.Name = "lblCore";
+			lblCore.Size = new Size(35, 15);
+			lblCore.TabIndex = 34;
+			lblCore.Text = "Core:";
 			// 
 			// tabVideo
 			// 
@@ -865,10 +888,10 @@
 		private CheckBox cbLimitBaseDirToOneGiBSet;
 		private Label lblLimitBaseDirToOneGiB;
 		private Label lblNameDescriptionNote;
-		private CheckBox cbCyclesSet;
+		private CheckBox cbCoreSet;
 		private Label lblCpuSet;
 		private TextBox txtCycles;
-		private Label lblCycles;
+		private Label lblCore;
 		private OpenFileDialog openFileDialog;
 		private SaveFileDialog saveFileDialog;
 		private Button btnExecutableBrowse;
@@ -891,5 +914,7 @@
 		private Button btnMapperRescan;
 		private DataGridView dataGridMappings;
 		private ComboBox txtCore;
+		private Label lblCycles;
+		private CheckBox cbCyclesSet;
 	}
 }
