@@ -130,8 +130,8 @@ public partial class LauncherForm : Form {
 		DosboxConfigMergeHelper.MergeAutoexecMain(config, shortcutSettings);
 		DosboxConfigMergeHelper.MergeAutoexecPrePost(config, shortcutSettings);
 		DosboxConfigMergeHelper.MergeAutoexecPrePost(config, globalSettings, true);
-		DosboxConfigMergeHelper.MergeSettings(config, globalSettings);
-		DosboxConfigMergeHelper.MergeSettings(config, shortcutSettings);
+		DosboxConfigMergeHelper.MergeSettings(config, globalSettings, addTxtboxMsg);
+		DosboxConfigMergeHelper.MergeSettings(config, shortcutSettings, addTxtboxMsg);
 
 		addTxtboxMsg("Writing temp. DOSBox config...");
 		string tempConfigPath = Path.Combine(

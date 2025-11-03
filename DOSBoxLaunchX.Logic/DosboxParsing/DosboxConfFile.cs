@@ -68,7 +68,14 @@ public class DosboxConfFile {
 		return [];
 	}
 
-	public void SetSetting(string section, string key, string value) {
+	/// <summary>
+	/// Sets a setting in the config file.
+	/// </summary>
+	/// <param name="section">The section in which the setting is located.</param>
+	/// <param name="key">The key of the setting.</param>
+	/// <param name="value">The value of the setting.</param>
+	/// <returns>If setting already existed and was replaced, true; otherwise false.</returns>
+	public bool SetSetting(string section, string key, string value) {
 		section = section.ToLowerInvariant().Trim();
 		key = key.ToLowerInvariant().Trim();
 		string newRaw = $"{key}={value}";
@@ -84,8 +91,11 @@ public class DosboxConfFile {
 				_lines[index] = newLine;
 				existingList[i] = newLine; // Update cache reference
 			}
+
+			return true;
 		}
 		else {
+			// Add new instance
 			int insertIndex = _lines.FindLastIndex(
 				l => l is SettingLine s && s.Section == section
 			);
@@ -108,6 +118,8 @@ public class DosboxConfFile {
 				_settingIndex[(section, key)] = list;
 			}
 			list.Add(newLine);
+
+			return false;
 		}
 	}
 

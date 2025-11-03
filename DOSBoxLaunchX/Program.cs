@@ -15,12 +15,6 @@ internal static class Program {
 	// TODO: If Linux support is ever needed, refactor this app's Form logic into an MVVM pattern for Uno.
 
 	// ====================================================
-	// TODO: Any config setting or section that does not exist in the base configuration when applying
-	// overrides should trigger a warning in the output (may indicate a typo).
-	//
-	// TODO: remember that global autoexec should be merged with local autoexec with global autoexec
-	// coming BEFORE shortcut autoexec; not like other settings where shortcut overrides global.
-	//
 	// TODO: go thru and replace all "File.Exists ... OpenFile" patterns with a "try OpenFile, catch
 	// FileNotFoundException" one everywhere you find File.Exists, to about subtle race condition.
 	// ====================================================

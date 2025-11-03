@@ -20,7 +20,7 @@ public static class DosboxConfigMergeHelper {
 		}
 	}
 
-	public static void MergeSettings(DosboxConfFile config, LaunchSettings sett) {
+	public static void MergeSettings(DosboxConfFile config, LaunchSettings sett, Action<string> fnWarn) {
 		var settFlat = sett.Settings;
 
 		// Merge settings
@@ -32,7 +32,9 @@ public static class DosboxConfigMergeHelper {
 			var value = val?.ToString() ?? "";
 			if (section == "autoexec") { continue; }
 
-			config.SetSetting(section, key, value);
+			if (!config.SetSetting(section, key, value)) {
+				fnWarn.Invoke($"WARNING: section/key '{section ?? "[null]"}/{key}' for setting does not exist in base config file.");
+			}
 		}
 	}
 
