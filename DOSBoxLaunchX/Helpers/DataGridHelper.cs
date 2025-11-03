@@ -20,7 +20,7 @@ internal static class DataGridHelper {
 
 	#endregion
 
-	internal static void InitMappingsDataGrid(DataGridView grid, Func<string, ControlInfo, bool> validateTextboxContent, Action controlValueChanged) {
+	internal static void InitMappingsDataGrid(DataGridView grid, Func<string, ControlInfo, bool> validateTextCtrlContent, Action controlValueChanged) {
 		grid.Columns.Clear();
 
 		grid.Columns.Add(makeTextCol("Section", "Section", true, "Section", 150));
@@ -86,7 +86,7 @@ internal static class DataGridHelper {
 			if (colName != "NewMapping") { return; }
 
 			var text = ea.FormattedValue?.ToString() ?? "";
-			if (!validateTextboxContent(text, new())) { ea.Cancel = true; }
+			if (!validateTextCtrlContent(text, new())) { ea.Cancel = true; }
 		};
 
 		// Ensure the CellValueChanged fires when user clicks checkbox

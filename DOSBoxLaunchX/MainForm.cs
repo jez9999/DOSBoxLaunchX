@@ -90,95 +90,101 @@ public partial class MainForm : Form {
 	}
 
 	private void initAndProcessControls(Control parent) {
-		foreach (Control ctl in parent.Controls) {
-			// Recurse first so children are processed
-			if (ctl.HasChildren) {
-				initAndProcessControls(ctl);
+		// Recursively discover value controls and parse tags
+		foreach (Control ctrl in parent.Controls) {
+			// Recurse first to process children
+			if (ctrl.HasChildren) {
+				initAndProcessControls(ctrl);
 			}
 
-			// Only process relevant control types
-			if (!(ctl is CheckBox || ctl is TextBox || ctl is ComboBox)) {
+			// Only process value controls
+			if (!(ctrl is TextBox || ctrl is ComboBox)) {
 				continue;
 			}
 
-			string? tagStr = ctl.Tag as string;
-
+			string? tagStr = ctrl.Tag as string;
 			if (string.IsNullOrWhiteSpace(tagStr)) {
 				MessageBoxHelper.ShowErrorMessageOk(
-					$"Control '{ctl.Name}' is missing a Tag and should have one.",
+					$"Control '{ctrl.Name}' is missing a Tag and should have one.",
 					"Missing Tag"
 				);
 				continue;
 			}
 
-			var info = _ctrlTagParser.ParseTag(tagStr, ctl);
+			var info = _ctrlTagParser.ParseTag(tagStr, ctrl);
 			if (info == null || info.Ignore) { continue; }
 
-			// Store in dictionary
-			_controlInfo[ctl] = info;
+			// Store in dictionary keyed by the value control
+			_controlInfo[ctrl] = info;
+		}
 
-			// Attach appropriate handlers
-			attachControlHandlers(ctl, info);
+		// Now attach event handlers and initialize associated controls
+		foreach (var kvp in _controlInfo) {
+			var ctrl = kvp.Key;
+			var info = kvp.Value;
 
-			if (ctl is CheckBox cb && info.AssociatedControls.Count > 0) {
-				// Enable/disable associated controls if any
-				updateAssociatedControlsState(cb, info);
-			}
+			// Attach handlers for the value control and associated
+			attachControlHandlers(ctrl, info);
+
+			// Initialize enabled/disabled state
+			updateAssociatedControlsState(ctrl, info);
 		}
 	}
 
-	private void attachControlHandlers(Control ctl) {
-		attachControlHandlers(ctl, new ControlInfo { Tag = "" });
+	private void attachControlHandlers(Control ctrl) {
+		attachControlHandlers(ctrl, new ControlInfo());
 	}
 
-	private void attachControlHandlers(Control ctl, ControlInfo info) {
-		if (ctl is CheckBox cb) {
-			cb.CheckedChanged += (sender, ea) => {
+	private void attachControlHandlers(Control ctrl, ControlInfo info) {
+		// Attach handlers for the value control itself
+		ctrl.TextChanged += controlValueChangedEvent;
+
+		ctrl.Validating += (sender, ea) => {
+			if (!validateTextCtrlContent(ctrl.Text, info)) { ea.Cancel = true; }
+		};
+
+		ctrl.Validated += (sender, ea) => {
+			if (info.AllowNewlines) {
+				var newlineStyle = Environment.NewLine switch {
+					"\n" => NewlinesHelper.NewlineStyle.Unix,
+					"\r\n" => NewlinesHelper.NewlineStyle.Windows,
+					"\r" => NewlinesHelper.NewlineStyle.OldMac,
+					_ => throw new InvalidOperationException($"Unrecognized environment newline format: {BitConverter.ToString(Encoding.ASCII.GetBytes(Environment.NewLine))}")
+				};
+				var normalized = NewlinesHelper.NormalizeNewlines(ctrl.Text, newlineStyle);
+				if (ctrl.Text != normalized) {
+					ctrl.Text = normalized;
+				}
+			}
+		};
+
+		// Attach the checkbox CheckedChanged once, if there is a checkbox
+		if (info.CheckboxControl != null) {
+			info.CheckboxControl.CheckedChanged += (sender, ea) => {
 				// Enable/disable associated controls if any
-				updateAssociatedControlsState(cb, info);
+				updateAssociatedControlsState(ctrl, info);
 
 				// Always mark as dirty when checkbox changes
 				controlValueChangedEvent(sender, ea);
 			};
 		}
-		else if (ctl is TextBox tb) {
-			// Mark dirty on change
-			tb.TextChanged += controlValueChangedEvent;
-
-			tb.Validating += (sender, ea) => {
-				if (!validateTextboxContent(tb.Text, info)) { ea.Cancel = true; }
-			};
-
-			tb.Validated += (sender, ea) => {
-				if (info.AllowNewlines) {
-					var newlineStyle = Environment.NewLine switch {
-						"\n" => NewlinesHelper.NewlineStyle.Unix,
-						"\r\n" => NewlinesHelper.NewlineStyle.Windows,
-						"\r" => NewlinesHelper.NewlineStyle.OldMac,
-						_ => throw new InvalidOperationException($"Unrecognized environment newline format: {BitConverter.ToString(System.Text.Encoding.ASCII.GetBytes(Environment.NewLine))}")
-					};
-					var normalized = NewlinesHelper.NormalizeNewlines(tb.Text, newlineStyle);
-					if (tb.Text != normalized) {
-						tb.Text = normalized;
-					}
-				}
-			};
-		}
-		else if (ctl is ComboBox combo) {
-			// Mark dirty on change
-			combo.SelectedIndexChanged += controlValueChangedEvent;
-		}
 	}
 
-	private void updateAssociatedControlsState(CheckBox cb, ControlInfo info) {
-		foreach (var ctrl in info.AssociatedControls) {
-			switch (ctrl) {
+	private void updateAssociatedControlsState(Control ctrl, ControlInfo info) {
+		bool enabled = info.CheckboxControl?.Checked ?? true;
+
+		// Update the value control itself
+		ctrl.Enabled = enabled;
+
+		// Update associated controls (labels, etc.)
+		foreach (var assoc in info.AssociatedControls) {
+			switch (assoc) {
 				case Label lbl:
-					lbl.ForeColor = cb.Checked ? SystemColors.ControlText : ControlPaint.LightLight(SystemColors.ControlText);
+					lbl.ForeColor = enabled ? SystemColors.ControlText : ControlPaint.LightLight(SystemColors.ControlText);
 					break;
 
 				default:
-					ctrl.Enabled = cb.Checked;
+					assoc.Enabled = enabled;
 					break;
 			}
 		}
@@ -195,7 +201,7 @@ public partial class MainForm : Form {
 		}
 	}
 
-	private bool validateTextboxContent(string text, ControlInfo info) {
+	private bool validateTextCtrlContent(string text, ControlInfo info) {
 		if (!info.AllowNewlines && (text.Contains('\r') || text.Contains('\n'))) {
 			MessageBoxHelper.ShowErrorMessageOk("Control text contains invalid newline characters.", "Control text invalid");
 			return false;
@@ -406,7 +412,7 @@ public partial class MainForm : Form {
 	}
 
 	private LaunchSettings generateShortcutLaunchSettingsFromUi() {
-		// General and main settings
+		// General settings
 		var name = UiHelper.GetTextValue(txtName);
 		var description = UiHelper.GetTextValue(txtDescription);
 		var sett = new LaunchSettings {
@@ -418,16 +424,17 @@ public partial class MainForm : Form {
 		if (cbLimitBaseDirToOneGiBSet.Checked) { sett.LimitBaseDirToOneGiB = UiHelper.GetComboValue<bool>(comboLimitBaseDirToOneGiB); }
 		if (cbExecutableSet.Checked) { sett.Executable = UiHelper.GetTextValue(txtExecutable); }
 
+		// Grouped settings
 		if (cbCyclesSet.Checked) { sett.CPU.Cycles = UiHelper.GetTextValue(txtCycles); }
-
-		// Keyboard mappings
-		sett.KeyboardMappings = collectCurrentUiMappings();
 
 		// Autoexec script
 		saveAutoexec(sett, txtAutoexec);
 
 		// Other custom settings
 		saveCustomSettings(sett, flowPnlCustom);
+
+		// Keyboard mappings
+		sett.KeyboardMappings = collectCurrentUiMappings();
 
 		return sett;
 
@@ -500,7 +507,7 @@ public partial class MainForm : Form {
 
 		if (editingGlobals) { resetGlobalNaSettings(sett); }
 
-		// General and main settings
+		// General settings
 		UiHelper.SetTextFromValue(txtName, sett.Name);
 		UiHelper.SetTextFromValue(txtDescription, sett.Description);
 
@@ -513,6 +520,7 @@ public partial class MainForm : Form {
 		UiHelper.SetCheckboxFromValue(cbExecutableSet, sett.Executable != null);
 		UiHelper.SetTextFromValue(txtExecutable, sett.Executable);
 
+		// Grouped settings
 		UiHelper.SetCheckboxFromValue(cbCyclesSet, sett.CPU.Cycles != null);
 		UiHelper.SetTextFromValue(txtCycles, sett.CPU.Cycles);
 
@@ -741,7 +749,7 @@ public partial class MainForm : Form {
 				);
 			}
 
-			DataGridHelper.InitMappingsDataGrid(dataGridMappings, validateTextboxContent, controlValueChanged);
+			DataGridHelper.InitMappingsDataGrid(dataGridMappings, validateTextCtrlContent, controlValueChanged);
 			initAndProcessControls(tabsContainer);
 			attachPrePostAutoexecHandlers();
 			refreshPrePostAutoexec();

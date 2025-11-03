@@ -4,12 +4,12 @@ using DOSBoxLaunchX.Models;
 namespace DOSBoxLaunchX.Services;
 
 public class ControlInfoTagParser {
-	public ControlInfo? ParseTag(string tagStr, Control ctl) {
+	public ControlInfo? ParseTag(string tagStr, Control ctrl) {
 		if (string.IsNullOrWhiteSpace(tagStr)) {
 			MessageBoxHelper.ShowErrorMessageOk(
-				$"Control '{ctl.Name}' is missing a Tag and should have one.",
-				"Missing Tag"
-			);
+					$"Control '{ctrl.Name}' is missing a Tag and should have one.",
+					"Missing Tag"
+				);
 			return null;
 		}
 
@@ -17,20 +17,14 @@ public class ControlInfoTagParser {
 			Tag = tagStr
 		};
 
-		if (tagStr == "ignore" || tagStr == "defaults") {
-			if (tagStr == "ignore") {
-				info.Ignore = true;
-			}
-			return info;
-		}
-
 		// Parse key=value pairs separated by '|'
 		string[] parts = tagStr.Split('|', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+
 		foreach (string part in parts) {
 			int eqIndex = part.IndexOf('=');
 			if (eqIndex <= 0) {
 				MessageBoxHelper.ShowErrorMessageOk(
-					$"Malformed Tag for control '{ctl.Name}': '{part}'",
+					$"Malformed Tag for control '{ctrl.Name}': '{part}'",
 					"Tag Parse Error"
 				);
 				return null;
@@ -40,44 +34,80 @@ public class ControlInfoTagParser {
 			string value = part[(eqIndex + 1)..].Trim();
 
 			switch (key.ToLowerInvariant()) {
-				case "assoc":
-					if (ctl is not CheckBox) {
+				case "ignore":
+					if (!bool.TryParse(value, out bool ignore)) {
 						MessageBoxHelper.ShowErrorMessageOk(
-							$"Control '{ctl.Name}' specifies 'assoc' but is not a CheckBox.",
-							"Tag Warning"
+							$"Invalid boolean value for 'ignore' in control '{ctrl.Name}': '{value}'",
+							"Tag Parse Error"
+						);
+						return null;
+					}
+					info.Ignore = ignore;
+
+					if (info.Ignore && parts.Length > 1) {
+						MessageBoxHelper.ShowErrorMessageOk(
+							$"Control '{ctrl.Name}' has 'ignore=true' but other keys are present in the Tag.",
+							"Tag Parse Error"
 						);
 						return null;
 					}
 
+					if (info.Ignore) {
+						return info; // Short-circuit if ignored
+					}
+					break;
+
+				case "setting":
+					info.Setting = value;
+					break;
+
+				case "cb":
+					var cbCtrl = ctrl.FindForm()?.Controls.Find(value, true)
+						.OfType<CheckBox>()
+						.FirstOrDefault();
+					if (cbCtrl == null) {
+						MessageBoxHelper.ShowErrorMessageOk(
+							$"Checkbox control '{value}' not found for '{ctrl.Name}'.",
+							"Tag Warning"
+						);
+						return null;
+					}
+					info.CheckboxControl = cbCtrl;
+					break;
+
+				case "assoc":
 					string[] assocNames = value.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 					foreach (string name in assocNames) {
-						Control[] found = ctl.FindForm()?.Controls.Find(name, true) ?? [];
-						if (found.Length > 0) { info.AssociatedControls.Add(found[0]); }
+						var found = ctrl.FindForm()?.Controls.Find(name, true) ?? [];
+						if (found.Length > 0) {
+							info.AssociatedControls.Add(found[0]);
+						}
 						else {
 							MessageBoxHelper.ShowErrorMessageOk(
-								$"Associated control '{name}' not found for '{ctl.Name}'.",
+								$"Associated control '{name}' not found for '{ctrl.Name}'.",
 								"Tag Warning"
 							);
 						}
 					}
 					break;
 
-				case "allownewlines":
-					if (bool.TryParse(value, out bool allow)) { info.AllowNewlines = allow; }
-					else {
+				case "nl":
+					if (!bool.TryParse(value, out bool allowNl)) {
 						MessageBoxHelper.ShowErrorMessageOk(
-							$"Invalid boolean value for 'allowNewlines' in control '{ctl.Name}': '{value}'",
+							$"Invalid boolean value for 'nl' in control '{ctrl.Name}': '{value}'",
 							"Tag Parse Error"
 						);
+						return null;
 					}
+					info.AllowNewlines = allowNl;
 					break;
 
 				default:
 					MessageBoxHelper.ShowErrorMessageOk(
-						$"Unknown key '{key}' in Tag for control '{ctl.Name}'",
+						$"Unknown key '{key}' in Tag for control '{ctrl.Name}'",
 						"Tag Parse Error"
 					);
-					break;
+					return null;
 			}
 		}
 

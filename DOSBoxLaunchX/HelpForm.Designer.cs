@@ -36,13 +36,13 @@
 			txtHelp.Multiline = true;
 			txtHelp.Name = "txtHelp";
 			txtHelp.ReadOnly = true;
-			txtHelp.Size = new Size(776, 428);
+			txtHelp.Size = new Size(895, 424);
 			txtHelp.TabIndex = 0;
 			txtHelp.TabStop = false;
 			// 
 			// btnOk
 			// 
-			btnOk.Location = new Point(354, 449);
+			btnOk.Location = new Point(413, 445);
 			btnOk.Name = "btnOk";
 			btnOk.Size = new Size(95, 23);
 			btnOk.TabIndex = 1;
@@ -54,7 +54,7 @@
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(800, 481);
+			ClientSize = new Size(919, 477);
 			Controls.Add(btnOk);
 			Controls.Add(txtHelp);
 			FormBorderStyle = FormBorderStyle.FixedSingle;

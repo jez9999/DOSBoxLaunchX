@@ -51,6 +51,7 @@
 			txtName = new TextBox();
 			lblName = new Label();
 			tabCpu = new TabPage();
+			comboBox1 = new ComboBox();
 			cbCyclesSet = new CheckBox();
 			lblCpuSet = new Label();
 			txtCycles = new TextBox();
@@ -191,7 +192,7 @@
 			txtDescription.ScrollBars = ScrollBars.Vertical;
 			txtDescription.Size = new Size(470, 85);
 			txtDescription.TabIndex = 21;
-			txtDescription.Tag = "allowNewlines=true";
+			txtDescription.Tag = "nl=true";
 			// 
 			// btnExecutableBrowse
 			// 
@@ -222,7 +223,7 @@
 			comboLimitBaseDirToOneGiB.Name = "comboLimitBaseDirToOneGiB";
 			comboLimitBaseDirToOneGiB.Size = new Size(64, 23);
 			comboLimitBaseDirToOneGiB.TabIndex = 41;
-			comboLimitBaseDirToOneGiB.Tag = "defaults";
+			comboLimitBaseDirToOneGiB.Tag = "cb=cbLimitBaseDirToOneGiBSet|assoc=lblLimitBaseDirToOneGiB";
 			// 
 			// cbLimitBaseDirToOneGiBSet
 			// 
@@ -231,7 +232,7 @@
 			cbLimitBaseDirToOneGiBSet.Name = "cbLimitBaseDirToOneGiBSet";
 			cbLimitBaseDirToOneGiBSet.Size = new Size(15, 14);
 			cbLimitBaseDirToOneGiBSet.TabIndex = 40;
-			cbLimitBaseDirToOneGiBSet.Tag = "assoc=lblLimitBaseDirToOneGiB,comboLimitBaseDirToOneGiB";
+			cbLimitBaseDirToOneGiBSet.Tag = "";
 			cbLimitBaseDirToOneGiBSet.UseVisualStyleBackColor = true;
 			// 
 			// lblLimitBaseDirToOneGiB
@@ -250,7 +251,7 @@
 			cbExecutableSet.Name = "cbExecutableSet";
 			cbExecutableSet.Size = new Size(15, 14);
 			cbExecutableSet.TabIndex = 50;
-			cbExecutableSet.Tag = "assoc=lblExecutable,txtExecutable,btnExecutableBrowse";
+			cbExecutableSet.Tag = "";
 			cbExecutableSet.UseVisualStyleBackColor = true;
 			// 
 			// txtExecutable
@@ -259,7 +260,7 @@
 			txtExecutable.Name = "txtExecutable";
 			txtExecutable.Size = new Size(389, 23);
 			txtExecutable.TabIndex = 51;
-			txtExecutable.Tag = "defaults";
+			txtExecutable.Tag = "cb=cbExecutableSet|assoc=lblExecutable,btnExecutableBrowse";
 			// 
 			// lblExecutable
 			// 
@@ -280,7 +281,7 @@
 			cbBaseDirSet.Name = "cbBaseDirSet";
 			cbBaseDirSet.Size = new Size(15, 14);
 			cbBaseDirSet.TabIndex = 30;
-			cbBaseDirSet.Tag = "assoc=lblBaseDir,txtBaseDir";
+			cbBaseDirSet.Tag = "";
 			cbBaseDirSet.UseVisualStyleBackColor = true;
 			// 
 			// lblGeneralSet
@@ -299,7 +300,7 @@
 			txtBaseDir.Name = "txtBaseDir";
 			txtBaseDir.Size = new Size(470, 23);
 			txtBaseDir.TabIndex = 31;
-			txtBaseDir.Tag = "defaults";
+			txtBaseDir.Tag = "cb=cbBaseDirSet|assoc=lblBaseDir";
 			// 
 			// lblBaseDir
 			// 
@@ -328,7 +329,7 @@
 			txtName.Name = "txtName";
 			txtName.Size = new Size(470, 23);
 			txtName.TabIndex = 11;
-			txtName.Tag = "defaults";
+			txtName.Tag = "nl=false";
 			// 
 			// lblName
 			// 
@@ -342,6 +343,7 @@
 			// tabCpu
 			// 
 			tabCpu.BackColor = SystemColors.Control;
+			tabCpu.Controls.Add(comboBox1);
 			tabCpu.Controls.Add(cbCyclesSet);
 			tabCpu.Controls.Add(lblCpuSet);
 			tabCpu.Controls.Add(txtCycles);
@@ -353,6 +355,16 @@
 			tabCpu.TabIndex = 0;
 			tabCpu.Text = "CPU";
 			// 
+			// comboBox1
+			// 
+			comboBox1.FormattingEnabled = true;
+			comboBox1.Items.AddRange(new object[] { "auto", "max" });
+			comboBox1.Location = new Point(127, 54);
+			comboBox1.Name = "comboBox1";
+			comboBox1.Size = new Size(470, 23);
+			comboBox1.TabIndex = 36;
+			comboBox1.Tag = "ignore=true";
+			// 
 			// cbCyclesSet
 			// 
 			cbCyclesSet.AutoSize = true;
@@ -360,7 +372,7 @@
 			cbCyclesSet.Name = "cbCyclesSet";
 			cbCyclesSet.Size = new Size(15, 14);
 			cbCyclesSet.TabIndex = 10;
-			cbCyclesSet.Tag = "assoc=lblCycles,txtCycles";
+			cbCyclesSet.Tag = "";
 			cbCyclesSet.UseVisualStyleBackColor = true;
 			// 
 			// lblCpuSet
@@ -379,7 +391,7 @@
 			txtCycles.Name = "txtCycles";
 			txtCycles.Size = new Size(470, 23);
 			txtCycles.TabIndex = 11;
-			txtCycles.Tag = "defaults";
+			txtCycles.Tag = "cb=cbCyclesSet|assoc=lblCycles|setting=cpu.cycles";
 			// 
 			// lblCycles
 			// 
@@ -441,7 +453,7 @@
 			txtAutoexec.ScrollBars = ScrollBars.Vertical;
 			txtAutoexec.Size = new Size(1211, 383);
 			txtAutoexec.TabIndex = 20;
-			txtAutoexec.Tag = "allowNewlines=true";
+			txtAutoexec.Tag = "nl=true";
 			// 
 			// lblAutoexecScript
 			// 
@@ -476,7 +488,7 @@
 			txtPostAutoexec.ScrollBars = ScrollBars.Vertical;
 			txtPostAutoexec.Size = new Size(1211, 39);
 			txtPostAutoexec.TabIndex = 100;
-			txtPostAutoexec.Tag = "ignore";
+			txtPostAutoexec.Tag = "ignore=true";
 			// 
 			// txtPreAutoexec
 			// 
@@ -489,7 +501,7 @@
 			txtPreAutoexec.ScrollBars = ScrollBars.Vertical;
 			txtPreAutoexec.Size = new Size(1211, 39);
 			txtPreAutoexec.TabIndex = 10;
-			txtPreAutoexec.Tag = "ignore";
+			txtPreAutoexec.Tag = "ignore=true";
 			// 
 			// tabCustom
 			// 
@@ -541,14 +553,14 @@
 			flowPnlCustom.Location = new Point(0, 25);
 			flowPnlCustom.Name = "flowPnlCustom";
 			flowPnlCustom.Size = new Size(1227, 471);
-			flowPnlCustom.TabIndex = 101;
+			flowPnlCustom.TabIndex = 50;
 			// 
 			// btnAddCustomSetting
 			// 
 			btnAddCustomSetting.Location = new Point(5, 502);
 			btnAddCustomSetting.Name = "btnAddCustomSetting";
 			btnAddCustomSetting.Size = new Size(212, 23);
-			btnAddCustomSetting.TabIndex = 100;
+			btnAddCustomSetting.TabIndex = 1;
 			btnAddCustomSetting.Text = "Add new custom setting";
 			btnAddCustomSetting.UseVisualStyleBackColor = true;
 			btnAddCustomSetting.Click += btnAddCustomSetting_Click;
@@ -571,7 +583,7 @@
 			grpMapperNotFound.Location = new Point(440, 2);
 			grpMapperNotFound.Name = "grpMapperNotFound";
 			grpMapperNotFound.Size = new Size(274, 78);
-			grpMapperNotFound.TabIndex = 100;
+			grpMapperNotFound.TabIndex = 200;
 			grpMapperNotFound.TabStop = false;
 			// 
 			// lblMapperNotFound
@@ -581,7 +593,7 @@
 			lblMapperNotFound.Location = new Point(6, 21);
 			lblMapperNotFound.Name = "lblMapperNotFound";
 			lblMapperNotFound.Size = new Size(264, 15);
-			lblMapperNotFound.TabIndex = 114;
+			lblMapperNotFound.TabIndex = 101;
 			lblMapperNotFound.Text = "Mapper file not found in base DOSBox directory...";
 			// 
 			// btnMapperRescan
@@ -589,7 +601,7 @@
 			btnMapperRescan.Location = new Point(97, 43);
 			btnMapperRescan.Name = "btnMapperRescan";
 			btnMapperRescan.Size = new Size(75, 23);
-			btnMapperRescan.TabIndex = 113;
+			btnMapperRescan.TabIndex = 102;
 			btnMapperRescan.Text = "Rescan";
 			btnMapperRescan.UseVisualStyleBackColor = true;
 			btnMapperRescan.Click += btnMapperRescan_Click;
@@ -878,5 +890,6 @@
 		private Label lblMapperNotFound;
 		private Button btnMapperRescan;
 		private DataGridView dataGridMappings;
+		private ComboBox comboBox1;
 	}
 }
