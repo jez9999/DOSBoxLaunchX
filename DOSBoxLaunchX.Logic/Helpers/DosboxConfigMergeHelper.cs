@@ -15,7 +15,7 @@ public static class DosboxConfigMergeHelper {
 			}
 			else {
 				// Mapping not in base file - warn
-				fnWarn.Invoke($"Warning: section/key '{entry.Section}/{entry.Key}' for keyboard mapping does not exist in base mapper file.");
+				fnWarn.Invoke($"WARNING: section/key '{entry.Section}/{entry.Key}' for keyboard mapping does not exist in base mapper file.");
 			}
 		}
 	}
