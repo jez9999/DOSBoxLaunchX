@@ -155,6 +155,9 @@ public class LaunchSettings {
 	#region Classes
 
 	public class CPUSettings {
+		[GroupedSetting("cpu", "core")]
+		public string? Core { get; set; }
+
 		[GroupedSetting("cpu", "cycles")]
 		public string? Cycles { get; set; }
 	}

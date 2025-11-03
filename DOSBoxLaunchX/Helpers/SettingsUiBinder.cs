@@ -73,4 +73,27 @@ internal static class SettingsUiBinder {
 			ctrl.Text = value ?? "";
 		}
 	}
+
+	/// <summary>
+	/// Validates that every value control with a Setting defined corresponds to an actual GroupedSetting
+	/// property in LaunchSettings.  Displays modal errors if any controls are invalid.
+	/// </summary>
+	public static void ValidateUiControlsForGroupedSettings(LaunchSettings sett, Dictionary<Control, ControlInfo> controlInfo) {
+		// Build a map of all GroupedSetting keys in LaunchSettings
+		var groupedSettingsMap = new Dictionary<string, (PropertyInfo, object)>();
+		LaunchSettingsMetaHelper.AddGroupedPropertiesToMap(groupedSettingsMap, sett);
+
+		// Iterate all controls with a Setting defined
+		foreach (var kvp in controlInfo) {
+			var info = kvp.Value;
+			if (string.IsNullOrEmpty(info.Setting)) { continue; }
+
+			if (!groupedSettingsMap.ContainsKey(info.Setting)) {
+				MessageBoxHelper.ShowErrorMessageOk(
+					$"UI control '{kvp.Key.Name}' has Setting='{info.Setting}', but no corresponding grouped setting exists in LaunchSettings.",
+					"UI Validation Error"
+				);
+			}
+		}
+	}
 }

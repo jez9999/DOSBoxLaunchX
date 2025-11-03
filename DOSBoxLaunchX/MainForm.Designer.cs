@@ -51,7 +51,7 @@
 			txtName = new TextBox();
 			lblName = new Label();
 			tabCpu = new TabPage();
-			comboBox1 = new ComboBox();
+			txtCore = new ComboBox();
 			cbCyclesSet = new CheckBox();
 			lblCpuSet = new Label();
 			txtCycles = new TextBox();
@@ -343,7 +343,7 @@
 			// tabCpu
 			// 
 			tabCpu.BackColor = SystemColors.Control;
-			tabCpu.Controls.Add(comboBox1);
+			tabCpu.Controls.Add(txtCore);
 			tabCpu.Controls.Add(cbCyclesSet);
 			tabCpu.Controls.Add(lblCpuSet);
 			tabCpu.Controls.Add(txtCycles);
@@ -355,15 +355,15 @@
 			tabCpu.TabIndex = 0;
 			tabCpu.Text = "CPU";
 			// 
-			// comboBox1
+			// txtCore
 			// 
-			comboBox1.FormattingEnabled = true;
-			comboBox1.Items.AddRange(new object[] { "auto", "max" });
-			comboBox1.Location = new Point(127, 54);
-			comboBox1.Name = "comboBox1";
-			comboBox1.Size = new Size(470, 23);
-			comboBox1.TabIndex = 36;
-			comboBox1.Tag = "ignore=true";
+			txtCore.FormattingEnabled = true;
+			txtCore.Items.AddRange(new object[] { "auto", "max" });
+			txtCore.Location = new Point(127, 54);
+			txtCore.Name = "txtCore";
+			txtCore.Size = new Size(470, 23);
+			txtCore.TabIndex = 36;
+			txtCore.Tag = "setting=cpu.core";
 			// 
 			// cbCyclesSet
 			// 
@@ -890,6 +890,6 @@
 		private Label lblMapperNotFound;
 		private Button btnMapperRescan;
 		private DataGridView dataGridMappings;
-		private ComboBox comboBox1;
+		private ComboBox txtCore;
 	}
 }

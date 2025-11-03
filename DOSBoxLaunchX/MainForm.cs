@@ -750,7 +750,7 @@ public partial class MainForm : Form {
 
 			DataGridHelper.InitMappingsDataGrid(dataGridMappings, validateTextCtrlContent, controlValueChanged);
 			initAndProcessControls(tabsContainer);
-			// TODO: validate integrity; all UI settings match launch settings and vice versa
+			SettingsUiBinder.ValidateUiControlsForGroupedSettings(new(), _controlInfo);
 			attachPrePostAutoexecHandlers();
 			refreshPrePostAutoexec();
 			initNewShortcut();
