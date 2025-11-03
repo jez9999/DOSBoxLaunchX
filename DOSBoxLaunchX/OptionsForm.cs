@@ -1,4 +1,5 @@
-﻿using DOSBoxLaunchX.Logic.Models;
+﻿using System.Text;
+using DOSBoxLaunchX.Logic.Models;
 using DOSBoxLaunchX.Logic.Services;
 using DOSBoxLaunchX.Helpers;
 using DOSBoxLaunchX.Models;
@@ -31,12 +32,49 @@ public partial class OptionsForm : Form {
 
 	#region Non-event helper methods
 
-	private void applyChanges() {
+	private void applyChanges(bool doCheck = true) {
 		_settings.BaseDosboxDir = txtBaseDosboxDir.Text;
 		_settings.CloseOnDosboxExit = cbCloseOnDosboxExit.Checked;
 		_settings.WriteConfToBaseDir = cbWriteConfToBaseDir.Checked;
 
 		LocalAppDataHelper.SaveSettings(_localAppDataDir, _genSettingsFileService, _settings);
+
+		if (doCheck) { checkRequiredFiles(_settings.BaseDosboxDir); }
+	}
+
+	private void checkRequiredFiles(string baseDosboxDir) {
+		StringBuilder sb = new();
+
+		if (!Directory.Exists(baseDosboxDir)) {
+			sb.AppendLine("Warning: the specified DOSBox base directory was not found.");
+			sb.AppendLine();
+			sb.AppendLine(baseDosboxDir);
+			MessageBoxHelper.ShowInfoMessage(
+				$"{sb}".Trim(),
+				"Required directory not found"
+			);
+			return;
+		}
+
+		bool notFound = false;
+		sb.AppendLine("Warning: the following required files were not found in the specified DOSBox base directory:");
+		sb.AppendLine();
+
+		if (!File.Exists(Path.Combine(baseDosboxDir, _data.DosboxExeBaseFilename))) {
+			notFound = true;
+			sb.AppendLine($"- {_data.DosboxExeBaseFilename}");
+		}
+		if (!File.Exists(Path.Combine(baseDosboxDir, _data.DosboxConfBaseFilename))) {
+			notFound = true;
+			sb.AppendLine($"- {_data.DosboxConfBaseFilename}");
+		}
+
+		if (notFound) {
+			MessageBoxHelper.ShowInfoMessage(
+				$"{sb}".Trim(),
+				"Required files not found"
+			);
+		}
 	}
 
 	private void checkForChanges() {
@@ -91,7 +129,8 @@ public partial class OptionsForm : Form {
 	}
 
 	private void btnOk_Click(object sender, EventArgs ea) {
-		if (btnApply.Enabled) { applyChanges(); }
+		if (btnApply.Enabled) { applyChanges(false); }
+		checkRequiredFiles(_settings.BaseDosboxDir);
 		Close();
 	}
 

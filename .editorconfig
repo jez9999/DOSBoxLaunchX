@@ -124,6 +124,9 @@ dotnet_diagnostic.CA1806.severity = warning
 #         *may* be occasionally worth doing, but there are times when we actually want to keep stuff non-static.)
 dotnet_diagnostic.CA1822.severity = silent
 
+# CA1859: Use concrete types when possible for improved performance
+dotnet_diagnostic.CA1859.severity = silent
+
 # CA1862: Use the 'StringComparison' method overloads to perform case-insensitive string comparisons 
 dotnet_diagnostic.CA1862.severity = silent
 

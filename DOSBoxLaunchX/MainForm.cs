@@ -483,7 +483,7 @@ public partial class MainForm : Form {
 				Path.Combine(_settings.BaseDosboxDir, _data.DosboxMapperBaseFilename)
 			));
 		}
-		catch (FileNotFoundException) {
+		catch (Exception ex) when (ex is DirectoryNotFoundException || ex is FileNotFoundException) {
 			success = false;
 		}
 		var keyboardMappings = sett.KeyboardMappings;
