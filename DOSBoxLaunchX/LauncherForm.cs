@@ -59,14 +59,6 @@ public partial class LauncherForm : Form {
 		}
 		var dlxPath = txtLaunchShortcut.Text = _data.Args[0] == "-shortcut" ? _data.Args[1] : _data.Args[0];
 
-		addTxtboxMsg("Loading globals...");
-		var globalsPath = LocalAppDataHelper.GetGlobalShortcut(_localAppDataDir);
-		if (!File.Exists(globalsPath)) {
-			addTxtboxMsg($"ERROR: Globals file not found: {globalsPath}");
-			return false;
-		}
-		var globalSettings = _launchSettingsFileService.LoadFromFile(globalsPath);
-
 		addTxtboxMsg("Loading DLX shortcut...");
 		if (!File.Exists(dlxPath)) {
 			addTxtboxMsg($"ERROR: Shortcut file not found: {dlxPath}");
@@ -79,6 +71,14 @@ public partial class LauncherForm : Form {
 			addTxtboxMsg(heading);
 			addTxtboxMsg("\\" + new string('=', heading.Length - 2) + "/");
 		}
+
+		addTxtboxMsg("Loading globals...");
+		var globalsPath = LocalAppDataHelper.GetGlobalShortcut(_localAppDataDir);
+		if (!File.Exists(globalsPath)) {
+			addTxtboxMsg($"ERROR: Globals file not found: {globalsPath}");
+			return false;
+		}
+		var globalSettings = _launchSettingsFileService.LoadFromFile(globalsPath);
 
 		addTxtboxMsg("Loading base DOSBox config...");
 		string baseConfigPath = Path.Combine(baseDir, _data.DosboxConfBaseFilename);
