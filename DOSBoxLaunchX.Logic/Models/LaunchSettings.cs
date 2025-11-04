@@ -49,6 +49,9 @@ public class LaunchSettings {
 	[JsonIgnore]
 	public VideoSettings Video { get; set; } = new();
 
+	[JsonIgnore]
+	public PeripheralsSettings Peripherals { get; set; } = new();
+
 	#endregion
 
 	#region Keyboard mappings
@@ -176,6 +179,11 @@ public class LaunchSettings {
 
 		[GroupedSetting("sdl", "output")]
 		public string? Output { get; set; }
+	}
+
+	public class PeripheralsSettings {
+		[GroupedSetting("sdl", "middle_unlock")]
+		public string? MouseMiddleUnlock { get; set; }
 	}
 
 	#endregion

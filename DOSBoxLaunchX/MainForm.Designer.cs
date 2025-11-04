@@ -65,6 +65,9 @@
 			lblCpuSet = new Label();
 			lblCore = new Label();
 			tabVideo = new TabPage();
+			comboVideoOutput = new ComboBox();
+			cbVideoOutputSet = new CheckBox();
+			lblVideoOutput = new Label();
 			lblVideoSet = new Label();
 			comboFrameskip = new ComboBox();
 			cbFrameskipSet = new CheckBox();
@@ -110,13 +113,14 @@
 			openFileDialog = new OpenFileDialog();
 			saveFileDialog = new SaveFileDialog();
 			timerRefreshNa = new System.Windows.Forms.Timer(components);
-			comboVideoOutput = new ComboBox();
-			cbVideoOutputSet = new CheckBox();
-			lblVideoOutput = new Label();
+			comboMouseMiddleUnlock = new ComboBox();
+			cbMouseMiddleUnlockSet = new CheckBox();
+			lblMouseMiddleUnlock = new Label();
 			tabsContainer.SuspendLayout();
 			tabGeneral.SuspendLayout();
 			tabCpu.SuspendLayout();
 			tabVideo.SuspendLayout();
+			tabPeripherals.SuspendLayout();
 			tabAutoexec.SuspendLayout();
 			tabCustom.SuspendLayout();
 			tabKbMappings.SuspendLayout();
@@ -522,6 +526,35 @@
 			tabVideo.TabIndex = 1;
 			tabVideo.Text = "Video";
 			// 
+			// comboVideoOutput
+			// 
+			comboVideoOutput.FormattingEnabled = true;
+			comboVideoOutput.Items.AddRange(new object[] { "default", "ttf", "surface", "overlay", "opengl", "openglpp", "openglnb", "openglhq", "ddraw", "direct3d" });
+			comboVideoOutput.Location = new Point(127, 54);
+			comboVideoOutput.Name = "comboVideoOutput";
+			comboVideoOutput.Size = new Size(470, 23);
+			comboVideoOutput.TabIndex = 21;
+			comboVideoOutput.Tag = "cb=cbVideoOutputSet|assoc=lblVideoOutput|setting=sdl.output";
+			// 
+			// cbVideoOutputSet
+			// 
+			cbVideoOutputSet.AutoSize = true;
+			cbVideoOutputSet.Location = new Point(11, 58);
+			cbVideoOutputSet.Name = "cbVideoOutputSet";
+			cbVideoOutputSet.Size = new Size(15, 14);
+			cbVideoOutputSet.TabIndex = 20;
+			cbVideoOutputSet.Tag = "";
+			cbVideoOutputSet.UseVisualStyleBackColor = true;
+			// 
+			// lblVideoOutput
+			// 
+			lblVideoOutput.AutoSize = true;
+			lblVideoOutput.Location = new Point(36, 57);
+			lblVideoOutput.Name = "lblVideoOutput";
+			lblVideoOutput.Size = new Size(48, 15);
+			lblVideoOutput.TabIndex = 50;
+			lblVideoOutput.Text = "Output:";
+			// 
 			// lblVideoSet
 			// 
 			lblVideoSet.AutoSize = true;
@@ -539,7 +572,7 @@
 			comboFrameskip.Location = new Point(127, 25);
 			comboFrameskip.Name = "comboFrameskip";
 			comboFrameskip.Size = new Size(470, 23);
-			comboFrameskip.TabIndex = 45;
+			comboFrameskip.TabIndex = 11;
 			comboFrameskip.Tag = "cb=cbFrameskipSet|assoc=lblFrameskip|setting=render.frameskip";
 			// 
 			// cbFrameskipSet
@@ -548,7 +581,7 @@
 			cbFrameskipSet.Location = new Point(11, 29);
 			cbFrameskipSet.Name = "cbFrameskipSet";
 			cbFrameskipSet.Size = new Size(15, 14);
-			cbFrameskipSet.TabIndex = 44;
+			cbFrameskipSet.TabIndex = 10;
 			cbFrameskipSet.Tag = "";
 			cbFrameskipSet.UseVisualStyleBackColor = true;
 			// 
@@ -573,6 +606,9 @@
 			// tabPeripherals
 			// 
 			tabPeripherals.BackColor = SystemColors.Control;
+			tabPeripherals.Controls.Add(comboMouseMiddleUnlock);
+			tabPeripherals.Controls.Add(cbMouseMiddleUnlockSet);
+			tabPeripherals.Controls.Add(lblMouseMiddleUnlock);
 			tabPeripherals.Location = new Point(4, 24);
 			tabPeripherals.Name = "tabPeripherals";
 			tabPeripherals.Size = new Size(1227, 528);
@@ -923,34 +959,34 @@
 			timerRefreshNa.Interval = 1000;
 			timerRefreshNa.Tick += timerRefreshNa_Tick;
 			// 
-			// comboVideoOutput
+			// comboMouseMiddleUnlock
 			// 
-			comboVideoOutput.FormattingEnabled = true;
-			comboVideoOutput.Items.AddRange(new object[] { "default", "ttf", "surface", "overlay", "opengl", "openglpp", "openglnb", "openglhq", "ddraw", "direct3d" });
-			comboVideoOutput.Location = new Point(127, 54);
-			comboVideoOutput.Name = "comboVideoOutput";
-			comboVideoOutput.Size = new Size(470, 23);
-			comboVideoOutput.TabIndex = 49;
-			comboVideoOutput.Tag = "cb=cbVideoOutputSet|assoc=lblVideoOutput|setting=sdl.output";
+			comboMouseMiddleUnlock.FormattingEnabled = true;
+			comboMouseMiddleUnlock.Items.AddRange(new object[] { "none", "auto", "manual", "both" });
+			comboMouseMiddleUnlock.Location = new Point(188, 25);
+			comboMouseMiddleUnlock.Name = "comboMouseMiddleUnlock";
+			comboMouseMiddleUnlock.Size = new Size(409, 23);
+			comboMouseMiddleUnlock.TabIndex = 11;
+			comboMouseMiddleUnlock.Tag = "cb=cbMouseMiddleUnlockSet|assoc=lblMouseMiddleUnlock|setting=sdl.middle_unlock";
 			// 
-			// cbVideoOutputSet
+			// cbMouseMiddleUnlockSet
 			// 
-			cbVideoOutputSet.AutoSize = true;
-			cbVideoOutputSet.Location = new Point(11, 58);
-			cbVideoOutputSet.Name = "cbVideoOutputSet";
-			cbVideoOutputSet.Size = new Size(15, 14);
-			cbVideoOutputSet.TabIndex = 48;
-			cbVideoOutputSet.Tag = "";
-			cbVideoOutputSet.UseVisualStyleBackColor = true;
+			cbMouseMiddleUnlockSet.AutoSize = true;
+			cbMouseMiddleUnlockSet.Location = new Point(11, 29);
+			cbMouseMiddleUnlockSet.Name = "cbMouseMiddleUnlockSet";
+			cbMouseMiddleUnlockSet.Size = new Size(15, 14);
+			cbMouseMiddleUnlockSet.TabIndex = 10;
+			cbMouseMiddleUnlockSet.Tag = "";
+			cbMouseMiddleUnlockSet.UseVisualStyleBackColor = true;
 			// 
-			// lblVideoOutput
+			// lblMouseMiddleUnlock
 			// 
-			lblVideoOutput.AutoSize = true;
-			lblVideoOutput.Location = new Point(36, 57);
-			lblVideoOutput.Name = "lblVideoOutput";
-			lblVideoOutput.Size = new Size(48, 15);
-			lblVideoOutput.TabIndex = 50;
-			lblVideoOutput.Text = "Output:";
+			lblMouseMiddleUnlock.AutoSize = true;
+			lblMouseMiddleUnlock.Location = new Point(36, 28);
+			lblMouseMiddleUnlock.Name = "lblMouseMiddleUnlock";
+			lblMouseMiddleUnlock.Size = new Size(146, 15);
+			lblMouseMiddleUnlock.TabIndex = 53;
+			lblMouseMiddleUnlock.Text = "Middle mouse btn unlock:";
 			// 
 			// MainForm
 			// 
@@ -982,6 +1018,8 @@
 			tabCpu.PerformLayout();
 			tabVideo.ResumeLayout(false);
 			tabVideo.PerformLayout();
+			tabPeripherals.ResumeLayout(false);
+			tabPeripherals.PerformLayout();
 			tabAutoexec.ResumeLayout(false);
 			tabAutoexec.PerformLayout();
 			tabCustom.ResumeLayout(false);
@@ -1086,5 +1124,8 @@
 		private ComboBox comboVideoOutput;
 		private CheckBox cbVideoOutputSet;
 		private Label lblVideoOutput;
+		private ComboBox comboMouseMiddleUnlock;
+		private CheckBox cbMouseMiddleUnlockSet;
+		private Label lblMouseMiddleUnlock;
 	}
 }
