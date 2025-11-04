@@ -31,6 +31,13 @@ public class LaunchSettings {
 	/// to max. 1GiB).
 	/// When used for storing global settings, this field is ignored.
 	/// TODO: maybe this should be a long and determine the freesize MB value?  "LimitBaseDirFreeSpace"
+	/// Values to present in UI:
+	/// 10MiB
+	/// 64MiB
+	/// 128MiB
+	/// 512MiB
+	/// 1GiB (1024MiB)
+	/// ^ the latter being default.
 	/// </summary>
 	public bool? LimitBaseDirToOneGiB { get; set; }
 

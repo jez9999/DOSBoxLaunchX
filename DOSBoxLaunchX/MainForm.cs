@@ -292,7 +292,7 @@ public partial class MainForm : Form {
 		// is desired behaviour.
 		openFileDialog.Title = "Browse To Executable";
 		openFileDialog.FileName = "";
-		openFileDialog.Filter = "DOS Executables (*.exe;*.com;*.bat)|*.exe;*.com;*.bat";
+		openFileDialog.Filter = "DOS Executables (*.exe;*.com;*.bat)|*.exe;*.com;*.bat|All files (*.*)|*.*";
 		openFileDialog.FilterIndex = 1;
 
 		if (openFileDialog.ShowDialog() != DialogResult.OK) { return false; }
