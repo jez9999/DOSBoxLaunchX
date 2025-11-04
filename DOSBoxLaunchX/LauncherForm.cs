@@ -73,10 +73,11 @@ public partial class LauncherForm : Form {
 			return false;
 		}
 		var shortcutSettings = _launchSettingsFileService.LoadFromFile(dlxPath);
-		addTxtboxMsg("");
 		if (!string.IsNullOrWhiteSpace(shortcutSettings.Name)) {
-			addTxtboxMsg(shortcutSettings.Name);
-			addTxtboxMsg(new string('=', shortcutSettings.Name.Length));
+			var heading = $"| {shortcutSettings.Name} |";
+			addTxtboxMsg("/" + new string('=', heading.Length - 2) + "\\");
+			addTxtboxMsg(heading);
+			addTxtboxMsg("\\" + new string('=', heading.Length - 2) + "/");
 		}
 
 		addTxtboxMsg("Loading base DOSBox config...");
