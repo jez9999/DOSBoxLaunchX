@@ -159,6 +159,12 @@ public class LaunchSettings {
 
 		[GroupedSetting("cpu", "cycles")]
 		public string? Cycles { get; set; }
+
+		[GroupedSetting("cpu", "cycleup")]
+		public string? CycleUp { get; set; }
+
+		[GroupedSetting("cpu", "cycledown")]
+		public string? CycleDown { get; set; }
 	}
 
 	#endregion
