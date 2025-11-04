@@ -25,7 +25,7 @@ public class Launch_settings_tests {
 		string json = JsonConvert.SerializeObject(settings, _jsonSettings);
 
 		// Assert
-		json.Should().Be(@"{""Settings"":{}}");
+		json.Should().Be(@"{""KeyboardMappings"":[],""Settings"":{}}");
 	}
 
 	[Test]
@@ -215,7 +215,7 @@ public class Launch_settings_tests {
 	[Test]
 	public void Roundtrip_strong_and_custom_settings_preserve_ok() {
 		// Arrange
-		var originalJson = @"{""Settings"":{""cpu.cycles"":""3123"",""speed"":""fast"",""volume"":75}}";
+		var originalJson = @"{""KeyboardMappings"":[],""Settings"":{""cpu.cycles"":""3123"",""speed"":""fast"",""volume"":75}}";
 
 		// Act
 		var settings = JsonConvert.DeserializeObject<LaunchSettings>(originalJson, _jsonSettings)!;
