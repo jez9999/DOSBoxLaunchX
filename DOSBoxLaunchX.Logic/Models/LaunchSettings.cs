@@ -46,6 +46,9 @@ public class LaunchSettings {
 	[JsonIgnore]
 	public CPUSettings CPU { get; set; } = new();
 
+	[JsonIgnore]
+	public VideoSettings Video { get; set; } = new();
+
 	#endregion
 
 	#region Keyboard mappings
@@ -165,6 +168,11 @@ public class LaunchSettings {
 
 		[GroupedSetting("cpu", "cycledown")]
 		public string? CycleDown { get; set; }
+	}
+
+	public class VideoSettings {
+		[GroupedSetting("render", "frameskip")]
+		public string? Frameskip { get; set; }
 	}
 
 	#endregion

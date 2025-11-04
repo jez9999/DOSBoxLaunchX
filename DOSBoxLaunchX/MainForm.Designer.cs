@@ -65,6 +65,10 @@
 			lblCpuSet = new Label();
 			lblCore = new Label();
 			tabVideo = new TabPage();
+			lblVideoSet = new Label();
+			comboFrameskip = new ComboBox();
+			cbFrameskipSet = new CheckBox();
+			lblFrameskip = new Label();
 			tabAudio = new TabPage();
 			tabPeripherals = new TabPage();
 			tabAutoexec = new TabPage();
@@ -109,6 +113,7 @@
 			tabsContainer.SuspendLayout();
 			tabGeneral.SuspendLayout();
 			tabCpu.SuspendLayout();
+			tabVideo.SuspendLayout();
 			tabAutoexec.SuspendLayout();
 			tabCustom.SuspendLayout();
 			tabKbMappings.SuspendLayout();
@@ -500,12 +505,55 @@
 			// tabVideo
 			// 
 			tabVideo.BackColor = SystemColors.Control;
+			tabVideo.Controls.Add(lblVideoSet);
+			tabVideo.Controls.Add(comboFrameskip);
+			tabVideo.Controls.Add(cbFrameskipSet);
+			tabVideo.Controls.Add(lblFrameskip);
 			tabVideo.Location = new Point(4, 24);
 			tabVideo.Name = "tabVideo";
 			tabVideo.Padding = new Padding(3);
 			tabVideo.Size = new Size(1227, 528);
 			tabVideo.TabIndex = 1;
 			tabVideo.Text = "Video";
+			// 
+			// lblVideoSet
+			// 
+			lblVideoSet.AutoSize = true;
+			lblVideoSet.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+			lblVideoSet.Location = new Point(5, 7);
+			lblVideoSet.Name = "lblVideoSet";
+			lblVideoSet.Size = new Size(26, 15);
+			lblVideoSet.TabIndex = 47;
+			lblVideoSet.Text = "Set";
+			// 
+			// comboFrameskip
+			// 
+			comboFrameskip.FormattingEnabled = true;
+			comboFrameskip.Items.AddRange(new object[] { "0", "5", "10", "20" });
+			comboFrameskip.Location = new Point(127, 25);
+			comboFrameskip.Name = "comboFrameskip";
+			comboFrameskip.Size = new Size(470, 23);
+			comboFrameskip.TabIndex = 45;
+			comboFrameskip.Tag = "cb=cbFrameskipSet|assoc=lblFrameskip|setting=render.frameskip";
+			// 
+			// cbFrameskipSet
+			// 
+			cbFrameskipSet.AutoSize = true;
+			cbFrameskipSet.Location = new Point(11, 29);
+			cbFrameskipSet.Name = "cbFrameskipSet";
+			cbFrameskipSet.Size = new Size(15, 14);
+			cbFrameskipSet.TabIndex = 44;
+			cbFrameskipSet.Tag = "";
+			cbFrameskipSet.UseVisualStyleBackColor = true;
+			// 
+			// lblFrameskip
+			// 
+			lblFrameskip.AutoSize = true;
+			lblFrameskip.Location = new Point(36, 28);
+			lblFrameskip.Name = "lblFrameskip";
+			lblFrameskip.Size = new Size(64, 15);
+			lblFrameskip.TabIndex = 46;
+			lblFrameskip.Text = "Frameskip:";
 			// 
 			// tabAudio
 			// 
@@ -897,6 +945,8 @@
 			tabGeneral.PerformLayout();
 			tabCpu.ResumeLayout(false);
 			tabCpu.PerformLayout();
+			tabVideo.ResumeLayout(false);
+			tabVideo.PerformLayout();
 			tabAutoexec.ResumeLayout(false);
 			tabAutoexec.PerformLayout();
 			tabCustom.ResumeLayout(false);
@@ -994,5 +1044,9 @@
 		private ComboBox comboCycleUp;
 		private CheckBox cbCycleUp;
 		private Label lblCycleUp;
+		private Label lblVideoSet;
+		private ComboBox comboFrameskip;
+		private CheckBox cbFrameskipSet;
+		private Label lblFrameskip;
 	}
 }
