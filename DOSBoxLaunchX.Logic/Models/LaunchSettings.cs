@@ -173,6 +173,9 @@ public class LaunchSettings {
 	public class VideoSettings {
 		[GroupedSetting("render", "frameskip")]
 		public string? Frameskip { get; set; }
+
+		[GroupedSetting("sdl", "output")]
+		public string? Output { get; set; }
 	}
 
 	#endregion

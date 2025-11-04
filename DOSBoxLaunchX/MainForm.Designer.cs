@@ -110,6 +110,9 @@
 			openFileDialog = new OpenFileDialog();
 			saveFileDialog = new SaveFileDialog();
 			timerRefreshNa = new System.Windows.Forms.Timer(components);
+			comboVideoOutput = new ComboBox();
+			cbVideoOutputSet = new CheckBox();
+			lblVideoOutput = new Label();
 			tabsContainer.SuspendLayout();
 			tabGeneral.SuspendLayout();
 			tabCpu.SuspendLayout();
@@ -505,6 +508,9 @@
 			// tabVideo
 			// 
 			tabVideo.BackColor = SystemColors.Control;
+			tabVideo.Controls.Add(comboVideoOutput);
+			tabVideo.Controls.Add(cbVideoOutputSet);
+			tabVideo.Controls.Add(lblVideoOutput);
 			tabVideo.Controls.Add(lblVideoSet);
 			tabVideo.Controls.Add(comboFrameskip);
 			tabVideo.Controls.Add(cbFrameskipSet);
@@ -917,6 +923,35 @@
 			timerRefreshNa.Interval = 1000;
 			timerRefreshNa.Tick += timerRefreshNa_Tick;
 			// 
+			// comboVideoOutput
+			// 
+			comboVideoOutput.FormattingEnabled = true;
+			comboVideoOutput.Items.AddRange(new object[] { "default", "ttf", "surface", "overlay", "opengl", "openglpp", "openglnb", "openglhq", "ddraw", "direct3d" });
+			comboVideoOutput.Location = new Point(127, 54);
+			comboVideoOutput.Name = "comboVideoOutput";
+			comboVideoOutput.Size = new Size(470, 23);
+			comboVideoOutput.TabIndex = 49;
+			comboVideoOutput.Tag = "cb=cbVideoOutputSet|assoc=lblVideoOutput|setting=sdl.output";
+			// 
+			// cbVideoOutputSet
+			// 
+			cbVideoOutputSet.AutoSize = true;
+			cbVideoOutputSet.Location = new Point(11, 58);
+			cbVideoOutputSet.Name = "cbVideoOutputSet";
+			cbVideoOutputSet.Size = new Size(15, 14);
+			cbVideoOutputSet.TabIndex = 48;
+			cbVideoOutputSet.Tag = "";
+			cbVideoOutputSet.UseVisualStyleBackColor = true;
+			// 
+			// lblVideoOutput
+			// 
+			lblVideoOutput.AutoSize = true;
+			lblVideoOutput.Location = new Point(36, 57);
+			lblVideoOutput.Name = "lblVideoOutput";
+			lblVideoOutput.Size = new Size(48, 15);
+			lblVideoOutput.TabIndex = 50;
+			lblVideoOutput.Text = "Output:";
+			// 
 			// MainForm
 			// 
 			AllowDrop = true;
@@ -1048,5 +1083,8 @@
 		private ComboBox comboFrameskip;
 		private CheckBox cbFrameskipSet;
 		private Label lblFrameskip;
+		private ComboBox comboVideoOutput;
+		private CheckBox cbVideoOutputSet;
+		private Label lblVideoOutput;
 	}
 }
