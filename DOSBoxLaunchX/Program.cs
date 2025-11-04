@@ -14,8 +14,6 @@ internal static class Program {
 
 	// TODO: If Linux support is ever needed, refactor this app's Form logic into an MVVM pattern for Uno.
 
-	// TODO: try starting the program and then editing globals when no files exist in local appdata dir
-
 	// TODO: for setting "cycles up" and "cycles down", have dropdown vals of 10, 20, 500, 1000.
 
 	[STAThread]

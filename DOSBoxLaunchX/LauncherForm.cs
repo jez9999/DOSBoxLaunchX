@@ -75,8 +75,9 @@ public partial class LauncherForm : Form {
 		addTxtboxMsg("Loading globals...");
 		var globalsPath = LocalAppDataHelper.GetGlobalShortcut(_localAppDataDir);
 		if (!File.Exists(globalsPath)) {
-			addTxtboxMsg($"ERROR: Globals file not found: {globalsPath}");
-			return false;
+			// Create blank globals on demand if it doesn't exist
+			addTxtboxMsg("Globals file does not exist; creating...");
+			_launchSettingsFileService.SaveToFile(new(), globalsPath);
 		}
 		var globalSettings = _launchSettingsFileService.LoadFromFile(globalsPath);
 

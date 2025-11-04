@@ -855,7 +855,11 @@ public partial class MainForm : Form {
 	}
 
 	private void mnuEditGlobals_Click(object sender, EventArgs ea) {
-		doOpen(LocalAppDataHelper.GetGlobalShortcut(_localAppDataDir));
+		var globalsPath = LocalAppDataHelper.GetGlobalShortcut(_localAppDataDir);
+		if (!File.Exists(globalsPath)) {
+			_launchSettingsFileService.SaveToFile(new(), globalsPath);
+		}
+		doOpen(globalsPath);
 	}
 
 	private void mnuExit_Click(object sender, EventArgs ea) {
