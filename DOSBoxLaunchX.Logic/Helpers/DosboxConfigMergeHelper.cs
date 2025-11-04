@@ -48,7 +48,7 @@ public static class DosboxConfigMergeHelper {
 		// Merge generated and user-custom autoexec
 		(var preAutoexec, var postAutoexec) = GeneratePrePostAutoexec(
 			sett.BaseDir,
-			sett.LimitBaseDirToOneGiB,
+			sett.LimitBaseDirFreeSpace,
 			sett.Executable,
 			mergingGlobals
 		);
@@ -56,7 +56,7 @@ public static class DosboxConfigMergeHelper {
 		config.AddAutoexecCommands(postAutoexec);
 	}
 
-	public static (List<string> PreAutoexec, List<string> PostAutoexec) GeneratePrePostAutoexec(string? baseDir, bool? limitBaseDirToOneGiB, string? executable, bool? generateForGlobals = null) {
+	public static (List<string> PreAutoexec, List<string> PostAutoexec) GeneratePrePostAutoexec(string? baseDir, int? limitBaseDirFreeSpace, string? executable, bool? generateForGlobals = null) {
 		generateForGlobals ??= false;
 		List<string> preAutoexec = [];
 		List<string> postAutoexec = [];
@@ -72,7 +72,7 @@ public static class DosboxConfigMergeHelper {
 					mountDir = "???";
 				}
 				preAutoexec.AddRange([
-					$"MOUNT C {mountDir}{(limitBaseDirToOneGiB ?? false ? " -freesize 1024" : "")}",
+					$"MOUNT C {mountDir}{(limitBaseDirFreeSpace == null ? "" : $" -freesize {limitBaseDirFreeSpace}")}",
 					string.IsNullOrWhiteSpace(baseDir) ? "" : "C:",
 				]);
 			}

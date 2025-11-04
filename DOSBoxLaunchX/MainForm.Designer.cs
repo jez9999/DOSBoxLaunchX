@@ -37,9 +37,9 @@
 			txtDescription = new TextBox();
 			btnExecutableBrowse = new Button();
 			lblNameDescriptionNote = new Label();
-			comboLimitBaseDirToOneGiB = new ComboBox();
-			cbLimitBaseDirToOneGiBSet = new CheckBox();
-			lblLimitBaseDirToOneGiB = new Label();
+			comboLimitBaseDirFreeSpace = new ComboBox();
+			cbLimitBaseDirFreeSpaceSet = new CheckBox();
+			lblLimitBaseDirFreeSpace = new Label();
 			cbExecutableSet = new CheckBox();
 			txtExecutable = new TextBox();
 			lblExecutable = new Label();
@@ -155,9 +155,9 @@
 			tabGeneral.Controls.Add(txtDescription);
 			tabGeneral.Controls.Add(btnExecutableBrowse);
 			tabGeneral.Controls.Add(lblNameDescriptionNote);
-			tabGeneral.Controls.Add(comboLimitBaseDirToOneGiB);
-			tabGeneral.Controls.Add(cbLimitBaseDirToOneGiBSet);
-			tabGeneral.Controls.Add(lblLimitBaseDirToOneGiB);
+			tabGeneral.Controls.Add(comboLimitBaseDirFreeSpace);
+			tabGeneral.Controls.Add(cbLimitBaseDirFreeSpaceSet);
+			tabGeneral.Controls.Add(lblLimitBaseDirFreeSpace);
 			tabGeneral.Controls.Add(cbExecutableSet);
 			tabGeneral.Controls.Add(txtExecutable);
 			tabGeneral.Controls.Add(lblExecutable);
@@ -216,35 +216,35 @@
 			lblNameDescriptionNote.TabIndex = 19;
 			lblNameDescriptionNote.Text = "(Name/Description are purely descriptive and don't affect the DOSBox configuration)";
 			// 
-			// comboLimitBaseDirToOneGiB
+			// comboLimitBaseDirFreeSpace
 			// 
-			comboLimitBaseDirToOneGiB.DropDownStyle = ComboBoxStyle.DropDownList;
-			comboLimitBaseDirToOneGiB.FormattingEnabled = true;
-			comboLimitBaseDirToOneGiB.Items.AddRange(new object[] { "Yes", "No" });
-			comboLimitBaseDirToOneGiB.Location = new Point(288, 174);
-			comboLimitBaseDirToOneGiB.Name = "comboLimitBaseDirToOneGiB";
-			comboLimitBaseDirToOneGiB.Size = new Size(64, 23);
-			comboLimitBaseDirToOneGiB.TabIndex = 41;
-			comboLimitBaseDirToOneGiB.Tag = "cb=cbLimitBaseDirToOneGiBSet|assoc=lblLimitBaseDirToOneGiB";
+			comboLimitBaseDirFreeSpace.DropDownStyle = ComboBoxStyle.DropDownList;
+			comboLimitBaseDirFreeSpace.FormattingEnabled = true;
+			comboLimitBaseDirFreeSpace.Items.AddRange(new object[] { "10MiB", "64MiB", "128MiB", "512MiB", "1GiB (1024MiB)" });
+			comboLimitBaseDirFreeSpace.Location = new Point(258, 174);
+			comboLimitBaseDirFreeSpace.Name = "comboLimitBaseDirFreeSpace";
+			comboLimitBaseDirFreeSpace.Size = new Size(110, 23);
+			comboLimitBaseDirFreeSpace.TabIndex = 41;
+			comboLimitBaseDirFreeSpace.Tag = "cb=cbLimitBaseDirFreeSpaceSet|assoc=lblLimitBaseDirFreeSpace";
 			// 
-			// cbLimitBaseDirToOneGiBSet
+			// cbLimitBaseDirFreeSpaceSet
 			// 
-			cbLimitBaseDirToOneGiBSet.AutoSize = true;
-			cbLimitBaseDirToOneGiBSet.Location = new Point(11, 178);
-			cbLimitBaseDirToOneGiBSet.Name = "cbLimitBaseDirToOneGiBSet";
-			cbLimitBaseDirToOneGiBSet.Size = new Size(15, 14);
-			cbLimitBaseDirToOneGiBSet.TabIndex = 40;
-			cbLimitBaseDirToOneGiBSet.Tag = "";
-			cbLimitBaseDirToOneGiBSet.UseVisualStyleBackColor = true;
+			cbLimitBaseDirFreeSpaceSet.AutoSize = true;
+			cbLimitBaseDirFreeSpaceSet.Location = new Point(11, 178);
+			cbLimitBaseDirFreeSpaceSet.Name = "cbLimitBaseDirFreeSpaceSet";
+			cbLimitBaseDirFreeSpaceSet.Size = new Size(15, 14);
+			cbLimitBaseDirFreeSpaceSet.TabIndex = 40;
+			cbLimitBaseDirFreeSpaceSet.Tag = "";
+			cbLimitBaseDirFreeSpaceSet.UseVisualStyleBackColor = true;
 			// 
-			// lblLimitBaseDirToOneGiB
+			// lblLimitBaseDirFreeSpace
 			// 
-			lblLimitBaseDirToOneGiB.AutoSize = true;
-			lblLimitBaseDirToOneGiB.Location = new Point(36, 177);
-			lblLimitBaseDirToOneGiB.Name = "lblLimitBaseDirToOneGiB";
-			lblLimitBaseDirToOneGiB.Size = new Size(246, 15);
-			lblLimitBaseDirToOneGiB.TabIndex = 15;
-			lblLimitBaseDirToOneGiB.Text = "^ Limit reported free hard disk space at 1 GiB:";
+			lblLimitBaseDirFreeSpace.AutoSize = true;
+			lblLimitBaseDirFreeSpace.Location = new Point(36, 177);
+			lblLimitBaseDirFreeSpace.Name = "lblLimitBaseDirFreeSpace";
+			lblLimitBaseDirFreeSpace.Size = new Size(216, 15);
+			lblLimitBaseDirFreeSpace.TabIndex = 15;
+			lblLimitBaseDirFreeSpace.Text = "^ Limit reported free hard disk space at:";
 			// 
 			// cbExecutableSet
 			// 
@@ -362,7 +362,7 @@
 			// comboCycles
 			// 
 			comboCycles.FormattingEnabled = true;
-			comboCycles.Items.AddRange(new object[] { "auto", "max" });
+			comboCycles.Items.AddRange(new object[] { "auto", "max", "30000", "60000", "100000", "150000" });
 			comboCycles.Location = new Point(127, 54);
 			comboCycles.Name = "comboCycles";
 			comboCycles.Size = new Size(470, 23);
@@ -886,9 +886,9 @@
 		private CheckBox cbExecutableSet;
 		private TextBox txtExecutable;
 		private Label lblExecutable;
-		private ComboBox comboLimitBaseDirToOneGiB;
-		private CheckBox cbLimitBaseDirToOneGiBSet;
-		private Label lblLimitBaseDirToOneGiB;
+		private ComboBox comboLimitBaseDirFreeSpace;
+		private CheckBox cbLimitBaseDirFreeSpaceSet;
+		private Label lblLimitBaseDirFreeSpace;
 		private Label lblNameDescriptionNote;
 		private CheckBox cbCoreSet;
 		private Label lblCpuSet;

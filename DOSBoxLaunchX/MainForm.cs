@@ -76,10 +76,13 @@ public partial class MainForm : Form {
 		updateUiDirtyState();
 	}
 
+	private int getDefaultFreeSpaceLimit() => 1024;
+
 	private void resetControlDefaults() {
+		// Reset UI with defaults; default settings for new shortcuts are hardcoded here
 		generateUiFromShortcutLaunchSettings(new LaunchSettings {
 			BaseDir = "",
-			LimitBaseDirToOneGiB = true,
+			LimitBaseDirFreeSpace = getDefaultFreeSpaceLimit(),
 			Executable = "",
 		});
 	}
@@ -89,12 +92,11 @@ public partial class MainForm : Form {
 		txtName.Focus();
 	}
 
-	private void initAndProcessControls(Control parent) {
-		// Recursively discover value controls and parse tags
+	private void discoverValueControls(Control parent) {
 		foreach (Control ctrl in parent.Controls) {
 			// Recurse first to process children
 			if (ctrl.HasChildren) {
-				initAndProcessControls(ctrl);
+				discoverValueControls(ctrl);
 			}
 
 			// Only process value controls
@@ -117,6 +119,11 @@ public partial class MainForm : Form {
 			// Store in dictionary keyed by the value control
 			_controlInfo[ctrl] = info;
 		}
+	}
+
+	private void initAndProcessControls(Control parent) {
+		// Recursively discover value controls and parse tags
+		discoverValueControls(parent);
 
 		// Now attach event handlers and initialize associated controls
 		foreach (var kvp in _controlInfo) {
@@ -216,10 +223,10 @@ public partial class MainForm : Form {
 		txtBaseDir.TextChanged += (sender, ea) => {
 			refreshPrePostAutoexec();
 		};
-		cbLimitBaseDirToOneGiBSet.CheckedChanged += (sender, ea) => {
+		cbLimitBaseDirFreeSpaceSet.CheckedChanged += (sender, ea) => {
 			refreshPrePostAutoexec();
 		};
-		comboLimitBaseDirToOneGiB.SelectedIndexChanged += (sender, ea) => {
+		comboLimitBaseDirFreeSpace.SelectedIndexChanged += (sender, ea) => {
 			refreshPrePostAutoexec();
 		};
 		cbExecutableSet.CheckedChanged += (sender, ea) => {
@@ -450,7 +457,7 @@ public partial class MainForm : Form {
 		};
 
 		if (cbBaseDirSet.Checked) { sett.BaseDir = UiHelper.GetTextValue(txtBaseDir); }
-		if (cbLimitBaseDirToOneGiBSet.Checked) { sett.LimitBaseDirToOneGiB = UiHelper.GetComboValue<bool>(comboLimitBaseDirToOneGiB); }
+		if (cbLimitBaseDirFreeSpaceSet.Checked) { sett.LimitBaseDirFreeSpace = UiHelper.GetLimitFreeSpaceValue(comboLimitBaseDirFreeSpace); }
 		if (cbExecutableSet.Checked) { sett.Executable = UiHelper.GetTextValue(txtExecutable); }
 
 		// Grouped settings
@@ -534,14 +541,14 @@ public partial class MainForm : Form {
 		UiHelper.SetTextFromValue(txtName, sett.Name);
 		UiHelper.SetTextFromValue(txtDescription, sett.Description);
 
-		UiHelper.SetCheckboxFromValue(cbBaseDirSet, sett.BaseDir != null);
 		UiHelper.SetTextFromValue(txtBaseDir, sett.BaseDir);
+		UiHelper.SetCheckboxFromValue(cbBaseDirSet, sett.BaseDir != null);
 
-		UiHelper.SetCheckboxFromValue(cbLimitBaseDirToOneGiBSet, sett.LimitBaseDirToOneGiB != null);
-		UiHelper.SetComboFromValue(comboLimitBaseDirToOneGiB, sett.LimitBaseDirToOneGiB);
+		UiHelper.SetLimitFreeSpaceFromValue(comboLimitBaseDirFreeSpace, sett.LimitBaseDirFreeSpace, getDefaultFreeSpaceLimit());
+		UiHelper.SetCheckboxFromValue(cbLimitBaseDirFreeSpaceSet, sett.LimitBaseDirFreeSpace != null);
 
-		UiHelper.SetCheckboxFromValue(cbExecutableSet, sett.Executable != null);
 		UiHelper.SetTextFromValue(txtExecutable, sett.Executable);
+		UiHelper.SetCheckboxFromValue(cbExecutableSet, sett.Executable != null);
 
 		// Grouped settings
 		SettingsUiBinder.SetUiFromGroupedSettings(sett, _controlInfo);
@@ -556,11 +563,6 @@ public partial class MainForm : Form {
 		showGeneralNotApplicable(editingGlobals);
 
 		return success;
-
-		static void resetGlobalNaSettings(LaunchSettings sett) {
-			sett.Name = sett.Description = sett.BaseDir = sett.Executable = null;
-			sett.LimitBaseDirToOneGiB = null;
-		}
 
 		static void loadAutoexec(IReadOnlyDictionary<string, object> settFlatCustom, TextBox ctrl) {
 			ctrl.Text = string.Join(Environment.NewLine, DosboxConfigMergeHelper.GetAutoexecLinesFromCustomSettings(settFlatCustom));
@@ -579,6 +581,26 @@ public partial class MainForm : Form {
 
 				addCustomSettingRow(ctrl, section, key, value);
 			}
+		}
+
+		static void resetGlobalNaSettings(LaunchSettings sett) {
+			sett.Name = sett.Description = sett.BaseDir = sett.Executable = null;
+			sett.LimitBaseDirFreeSpace = null;
+		}
+
+		void showGeneralNotApplicable(bool makeVisible) {
+			// When showing N/A, general controls must be disabled; otherwise, enabled.
+			lblGeneralSet.Enabled =
+				lblNameDescriptionNote.Enabled =
+				lblName.Enabled = txtName.Enabled =
+				lblDescription.Enabled = txtDescription.Enabled =
+				cbBaseDirSet.Enabled = cbLimitBaseDirFreeSpaceSet.Enabled = cbExecutableSet.Enabled =
+				!makeVisible;
+			lblNotApplicable.Font = _lblFontNa;
+			lblNotApplicable.Size = new(352, 166);
+			lblNotApplicable.Location = new(125, 25);
+			lblNotApplicable.Visible = makeVisible;
+			lblNotApplicable.Refresh();
 		}
 	}
 
@@ -609,12 +631,12 @@ public partial class MainForm : Form {
 		StringBuilder sb = new();
 
 		string? baseDir = cbBaseDirSet.Checked ? UiHelper.GetTextValue(txtBaseDir) : null;
-		bool? limitBaseDirToOneGiB = cbLimitBaseDirToOneGiBSet.Checked ? UiHelper.GetComboValue<bool>(comboLimitBaseDirToOneGiB) : null;
+		int? limitBaseDirFreeSpace = cbLimitBaseDirFreeSpaceSet.Checked ? UiHelper.GetLimitFreeSpaceValue(comboLimitBaseDirFreeSpace) : null;
 		string? executable = cbExecutableSet.Checked ? UiHelper.GetTextValue(txtExecutable) : null;
 
 		(var preAutoexec, var postAutoexec) = DosboxConfigMergeHelper.GeneratePrePostAutoexec(
 			baseDir,
-			limitBaseDirToOneGiB,
+			limitBaseDirFreeSpace,
 			executable,
 			LocalAppDataHelper.IsGlobalShortcut(_localAppDataDir, _currentShortcutFilePath)
 		);
@@ -728,23 +750,6 @@ public partial class MainForm : Form {
 		attachControlHandlers(txtSection);
 		attachControlHandlers(txtKey);
 		attachControlHandlers(txtValue);
-	}
-
-	private void showGeneralNotApplicable(bool makeVisible) {
-		// When showing N/A, general controls must be disabled; otherwise, enabled.
-		lblGeneralSet.Enabled =
-			lblNameDescriptionNote.Enabled =
-			lblName.Enabled = txtName.Enabled =
-			lblDescription.Enabled = txtDescription.Enabled =
-			cbBaseDirSet.Enabled = lblBaseDir.Enabled = txtBaseDir.Enabled =
-			cbLimitBaseDirToOneGiBSet.Enabled = lblLimitBaseDirToOneGiB.Enabled = comboLimitBaseDirToOneGiB.Enabled =
-			cbExecutableSet.Enabled = lblExecutable.Enabled = txtExecutable.Enabled = btnExecutableBrowse.Enabled =
-			!makeVisible;
-		lblNotApplicable.Font = _lblFontNa;
-		lblNotApplicable.Size = new(352, 166);
-		lblNotApplicable.Location = new(125, 25);
-		lblNotApplicable.Visible = makeVisible;
-		lblNotApplicable.Refresh();
 	}
 
 	private void enableMappingSettings(bool doDisable = false) {

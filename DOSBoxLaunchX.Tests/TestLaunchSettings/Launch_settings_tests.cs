@@ -64,7 +64,7 @@ public class Launch_settings_tests {
 			Name = "Shortcut Name",
 			Description = "Some description",
 			BaseDir = @"C:\Games",
-			LimitBaseDirToOneGiB = true,
+			LimitBaseDirFreeSpace = 64,
 			Executable = "game.exe"
 		};
 		settings.CPU.Cycles = "3123";
@@ -76,7 +76,7 @@ public class Launch_settings_tests {
 		json.Should().Contain(@"""Name"":""Shortcut Name""");
 		json.Should().Contain(@"""Description"":""Some description""");
 		json.Should().Contain(@"""BaseDir"":""C:\\Games""");
-		json.Should().Contain(@"""LimitBaseDirToOneGiB"":true");
+		json.Should().Contain(@"""LimitBaseDirFreeSpace"":64");
 		json.Should().Contain(@"""Executable"":""game.exe""");
 		json.Should().Contain(@"""Settings"":{""cpu.cycles"":""3123""}");
 	}
@@ -142,7 +142,7 @@ public class Launch_settings_tests {
 				"Name":"Shortcut Name",
 				"Description":"Some description",
 				"BaseDir":"C:\\Games",
-				"LimitBaseDirToOneGiB":true,
+				"LimitBaseDirFreeSpace":64,
 				"Executable":"game.exe",
 				"Settings":{"cpu.cycles":"3123"}
 			}
@@ -156,7 +156,7 @@ public class Launch_settings_tests {
 			Name = "Shortcut Name",
 			Description = "Some description",
 			BaseDir = @"C:\Games",
-			LimitBaseDirToOneGiB = true,
+			LimitBaseDirFreeSpace = 64,
 			Executable = "game.exe",
 			CPU = new LaunchSettings.CPUSettings { Cycles = "3123" }
 		});

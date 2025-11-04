@@ -66,11 +66,11 @@ internal static class SettingsUiBinder {
 			var info = controlInfo[ctrl];
 			var value = prop.GetValue(instance) as string;
 
+			ctrl.Text = value ?? "";
 			if (info.CheckboxControl != null) {
 				// If the property is null, checkbox is unchecked; otherwise checked
 				info.CheckboxControl.Checked = value != null;
 			}
-			ctrl.Text = value ?? "";
 		}
 	}
 
