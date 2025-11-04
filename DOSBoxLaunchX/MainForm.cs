@@ -411,6 +411,35 @@ public partial class MainForm : Form {
 		return true;
 	}
 
+	private Dictionary<(string Section, string? Key), List<string>> getCustomSettingsFromUi() {
+		// Value is List<string> because a setting with a certain section/key can be duped
+		var dict = new Dictionary<(string Section, string? Key), List<string>>();
+
+		foreach (var row in flowPnlCustom.Controls.OfType<FlowLayoutPanel>()) {
+			var txtSection = row.Controls.OfType<TextBox>().FirstOrDefault(c => c.Name == "txtSection");
+			var txtKey = row.Controls.OfType<TextBox>().FirstOrDefault(c => c.Name == "txtKey");
+			var txtValue = row.Controls.OfType<TextBox>().FirstOrDefault(c => c.Name == "txtValue");
+
+			if (txtSection == null || txtKey == null || txtValue == null) { continue; }
+
+			string section = txtSection.Text.ToLowerInvariant().Trim();
+			string key = txtKey.Text.ToLowerInvariant().Trim();
+			string value = txtValue.Text.ToLowerInvariant().Trim();
+
+			if (string.IsNullOrEmpty(section)) { continue; } // Skip entries with no section (mandatory)
+
+			string? keyOrNull = string.IsNullOrWhiteSpace(key) ? null : key;
+			var dictKey = (Section: section, Key: keyOrNull);
+			if (!dict.TryGetValue(dictKey, out var list)) {
+				list = [];
+				dict[dictKey] = list;
+			}
+			list.Add(value);
+		}
+
+		return dict;
+	}
+
 	private LaunchSettings generateShortcutLaunchSettingsFromUi() {
 		// General settings
 		var name = UiHelper.GetTextValue(txtName);
@@ -431,7 +460,7 @@ public partial class MainForm : Form {
 		saveAutoexec(sett, txtAutoexec);
 
 		// Other custom settings
-		saveCustomSettings(sett, flowPnlCustom);
+		saveCustomSettings(sett);
 
 		// Keyboard mappings
 		sett.KeyboardMappings = collectCurrentUiMappings();
@@ -452,19 +481,13 @@ public partial class MainForm : Form {
 			for (int i = 0; i < lines.Count; i++) { sett.SetCustomSetting($"autoexec.{i}", lines[i]); }
 		}
 
-		static void saveCustomSettings(LaunchSettings sett, FlowLayoutPanel ctrl) {
-			foreach (var row in ctrl.Controls.OfType<FlowLayoutPanel>()) {
-				var txtSection = row.Controls.OfType<TextBox>().FirstOrDefault(c => c.Name == "txtSection");
-				var txtKey = row.Controls.OfType<TextBox>().FirstOrDefault(c => c.Name == "txtKey");
-				var txtValue = row.Controls.OfType<TextBox>().FirstOrDefault(c => c.Name == "txtValue");
+		void saveCustomSettings(LaunchSettings launchSett) {
+			var uiSetts = getCustomSettingsFromUi();
 
-				if (txtSection == null || txtKey == null || txtValue == null) { continue; }
+			foreach (var uiSett in uiSetts) {
+				(var section, var key) = uiSett.Key;
+				var value = uiSett.Value.First();
 
-				string section = txtSection.Text.Trim();
-				string key = txtKey.Text.Trim();
-				string value = txtValue.Text.Trim();
-
-				if (string.IsNullOrEmpty(section)) { continue; } // Skip entries with no section (mandatory)
 				if (section.Equals("autoexec", StringComparison.OrdinalIgnoreCase)) { continue; }
 				// ^ reserved name
 
@@ -472,7 +495,7 @@ public partial class MainForm : Form {
 					? section
 					: $"{section}.{key}";
 
-				sett.SetCustomSetting(fullKey, value);
+				launchSett.SetCustomSetting(fullKey, value);
 			}
 		}
 	}
@@ -651,6 +674,7 @@ public partial class MainForm : Form {
 		void validateSectionAndKey(string section, string key, CancelEventArgs ea) {
 			section = section.Trim().ToLower();
 			key = key.Trim().ToLower();
+			string fullKey = string.IsNullOrEmpty(key) ? section : $"{section}.{key}";
 
 			if (section.Contains('.')) {
 				MessageBoxHelper.ShowErrorMessageOk(@"A section name may not contain a dot.", "Invalid Section Name");
@@ -669,8 +693,13 @@ public partial class MainForm : Form {
 				MessageBoxHelper.ShowErrorMessageOk($@"The section/key ""{reserved}"" is already managed by the main settings and can't be overridden by a custom setting.", "Invalid Section/Key Name");
 				ea.Cancel = true;
 			}
+
+			var uiSetts = getCustomSettingsFromUi();
+			if (uiSetts.TryGetValue((section, string.IsNullOrWhiteSpace(key) ? null : key), out var values) && values.Count > 1) {
+				MessageBoxHelper.ShowErrorMessageOk($@"The section/key ""{fullKey}"" already exists in custom settings.", "Duplicate Custom Setting");
+				ea.Cancel = true;
+			}
 		}
-		// TODO: ^ handle section/key dupes where multiple custom settings have the same one
 
 		txtSection.Validating += (sender, ea) => validateSectionAndKey(txtSection.Text, txtKey.Text, ea);
 		txtKey.Validating += (sender, ea) => validateSectionAndKey(txtSection.Text, txtKey.Text, ea);

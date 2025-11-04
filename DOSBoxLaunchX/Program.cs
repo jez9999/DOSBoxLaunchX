@@ -14,11 +14,6 @@ internal static class Program {
 
 	// TODO: If Linux support is ever needed, refactor this app's Form logic into an MVVM pattern for Uno.
 
-	// ====================================================
-	// TODO: go thru and replace all "File.Exists ... OpenFile" patterns with a "try OpenFile, catch
-	// FileNotFoundException" one everywhere you find File.Exists, to about subtle race condition.
-	// ====================================================
-
 	[STAThread]
 	private static void Main(string[] args) {
 		try {
