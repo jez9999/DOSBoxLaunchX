@@ -374,7 +374,7 @@
 			// comboCycleDown
 			// 
 			comboCycleDown.FormattingEnabled = true;
-			comboCycleDown.Items.AddRange(new object[] { "10", "20", "500", "1000" });
+			comboCycleDown.Items.AddRange(new object[] { "10", "20", "500", "1000", "5000" });
 			comboCycleDown.Location = new Point(127, 112);
 			comboCycleDown.Name = "comboCycleDown";
 			comboCycleDown.Size = new Size(470, 23);
@@ -403,7 +403,7 @@
 			// comboCycleUp
 			// 
 			comboCycleUp.FormattingEnabled = true;
-			comboCycleUp.Items.AddRange(new object[] { "10", "20", "500", "1000" });
+			comboCycleUp.Items.AddRange(new object[] { "10", "20", "500", "1000", "5000" });
 			comboCycleUp.Location = new Point(127, 83);
 			comboCycleUp.Name = "comboCycleUp";
 			comboCycleUp.Size = new Size(470, 23);
