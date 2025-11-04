@@ -74,6 +74,16 @@
 			lblFrameskip = new Label();
 			tabAudio = new TabPage();
 			tabPeripherals = new TabPage();
+			comboMouseSensitivity = new ComboBox();
+			cbMouseSensitivitySet = new CheckBox();
+			lblMouseSensitivity = new Label();
+			comboMouseEmulation = new ComboBox();
+			cbMouseEmulationSet = new CheckBox();
+			lblMouseEmulation = new Label();
+			lblPeripheralsSet = new Label();
+			comboMouseMiddleUnlock = new ComboBox();
+			cbMouseMiddleUnlockSet = new CheckBox();
+			lblMouseMiddleUnlock = new Label();
 			tabAutoexec = new TabPage();
 			txtAutoexec = new TextBox();
 			lblAutoexecScript = new Label();
@@ -113,9 +123,6 @@
 			openFileDialog = new OpenFileDialog();
 			saveFileDialog = new SaveFileDialog();
 			timerRefreshNa = new System.Windows.Forms.Timer(components);
-			comboMouseMiddleUnlock = new ComboBox();
-			cbMouseMiddleUnlockSet = new CheckBox();
-			lblMouseMiddleUnlock = new Label();
 			tabsContainer.SuspendLayout();
 			tabGeneral.SuspendLayout();
 			tabCpu.SuspendLayout();
@@ -606,6 +613,13 @@
 			// tabPeripherals
 			// 
 			tabPeripherals.BackColor = SystemColors.Control;
+			tabPeripherals.Controls.Add(comboMouseSensitivity);
+			tabPeripherals.Controls.Add(cbMouseSensitivitySet);
+			tabPeripherals.Controls.Add(lblMouseSensitivity);
+			tabPeripherals.Controls.Add(comboMouseEmulation);
+			tabPeripherals.Controls.Add(cbMouseEmulationSet);
+			tabPeripherals.Controls.Add(lblMouseEmulation);
+			tabPeripherals.Controls.Add(lblPeripheralsSet);
 			tabPeripherals.Controls.Add(comboMouseMiddleUnlock);
 			tabPeripherals.Controls.Add(cbMouseMiddleUnlockSet);
 			tabPeripherals.Controls.Add(lblMouseMiddleUnlock);
@@ -614,6 +628,103 @@
 			tabPeripherals.Size = new Size(1227, 528);
 			tabPeripherals.TabIndex = 3;
 			tabPeripherals.Text = "Peripherals";
+			// 
+			// comboMouseSensitivity
+			// 
+			comboMouseSensitivity.FormattingEnabled = true;
+			comboMouseSensitivity.Items.AddRange(new object[] { "none", "auto", "manual", "both" });
+			comboMouseSensitivity.Location = new Point(188, 83);
+			comboMouseSensitivity.Name = "comboMouseSensitivity";
+			comboMouseSensitivity.Size = new Size(409, 23);
+			comboMouseSensitivity.TabIndex = 64;
+			comboMouseSensitivity.Tag = "cb=cbMouseSensitivitySet|assoc=lblMouseSensitivity|setting=sdl.sensitivity";
+			// 
+			// cbMouseSensitivitySet
+			// 
+			cbMouseSensitivitySet.AutoSize = true;
+			cbMouseSensitivitySet.Location = new Point(11, 87);
+			cbMouseSensitivitySet.Name = "cbMouseSensitivitySet";
+			cbMouseSensitivitySet.Size = new Size(15, 14);
+			cbMouseSensitivitySet.TabIndex = 63;
+			cbMouseSensitivitySet.Tag = "";
+			cbMouseSensitivitySet.UseVisualStyleBackColor = true;
+			// 
+			// lblMouseSensitivity
+			// 
+			lblMouseSensitivity.AutoSize = true;
+			lblMouseSensitivity.Location = new Point(36, 86);
+			lblMouseSensitivity.Name = "lblMouseSensitivity";
+			lblMouseSensitivity.Size = new Size(101, 15);
+			lblMouseSensitivity.TabIndex = 65;
+			lblMouseSensitivity.Text = "Mouse sensitivity:";
+			// 
+			// comboMouseEmulation
+			// 
+			comboMouseEmulation.FormattingEnabled = true;
+			comboMouseEmulation.Items.AddRange(new object[] { "integration", "locked", "always", "never" });
+			comboMouseEmulation.Location = new Point(188, 25);
+			comboMouseEmulation.Name = "comboMouseEmulation";
+			comboMouseEmulation.Size = new Size(409, 23);
+			comboMouseEmulation.TabIndex = 11;
+			comboMouseEmulation.Tag = "cb=cbMouseEmulationSet|assoc=lblMouseEmulation|setting=sdl.mouse_emulation";
+			// 
+			// cbMouseEmulationSet
+			// 
+			cbMouseEmulationSet.AutoSize = true;
+			cbMouseEmulationSet.Location = new Point(11, 29);
+			cbMouseEmulationSet.Name = "cbMouseEmulationSet";
+			cbMouseEmulationSet.Size = new Size(15, 14);
+			cbMouseEmulationSet.TabIndex = 10;
+			cbMouseEmulationSet.Tag = "";
+			cbMouseEmulationSet.UseVisualStyleBackColor = true;
+			// 
+			// lblMouseEmulation
+			// 
+			lblMouseEmulation.AutoSize = true;
+			lblMouseEmulation.Location = new Point(36, 28);
+			lblMouseEmulation.Name = "lblMouseEmulation";
+			lblMouseEmulation.Size = new Size(103, 15);
+			lblMouseEmulation.TabIndex = 62;
+			lblMouseEmulation.Text = "Mouse emulation:";
+			// 
+			// lblPeripheralsSet
+			// 
+			lblPeripheralsSet.AutoSize = true;
+			lblPeripheralsSet.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+			lblPeripheralsSet.Location = new Point(5, 7);
+			lblPeripheralsSet.Name = "lblPeripheralsSet";
+			lblPeripheralsSet.Size = new Size(26, 15);
+			lblPeripheralsSet.TabIndex = 54;
+			lblPeripheralsSet.Text = "Set";
+			// 
+			// comboMouseMiddleUnlock
+			// 
+			comboMouseMiddleUnlock.FormattingEnabled = true;
+			comboMouseMiddleUnlock.Items.AddRange(new object[] { "none", "auto", "manual", "both" });
+			comboMouseMiddleUnlock.Location = new Point(188, 54);
+			comboMouseMiddleUnlock.Name = "comboMouseMiddleUnlock";
+			comboMouseMiddleUnlock.Size = new Size(409, 23);
+			comboMouseMiddleUnlock.TabIndex = 21;
+			comboMouseMiddleUnlock.Tag = "cb=cbMouseMiddleUnlockSet|assoc=lblMouseMiddleUnlock|setting=sdl.middle_unlock";
+			// 
+			// cbMouseMiddleUnlockSet
+			// 
+			cbMouseMiddleUnlockSet.AutoSize = true;
+			cbMouseMiddleUnlockSet.Location = new Point(11, 58);
+			cbMouseMiddleUnlockSet.Name = "cbMouseMiddleUnlockSet";
+			cbMouseMiddleUnlockSet.Size = new Size(15, 14);
+			cbMouseMiddleUnlockSet.TabIndex = 20;
+			cbMouseMiddleUnlockSet.Tag = "";
+			cbMouseMiddleUnlockSet.UseVisualStyleBackColor = true;
+			// 
+			// lblMouseMiddleUnlock
+			// 
+			lblMouseMiddleUnlock.AutoSize = true;
+			lblMouseMiddleUnlock.Location = new Point(36, 57);
+			lblMouseMiddleUnlock.Name = "lblMouseMiddleUnlock";
+			lblMouseMiddleUnlock.Size = new Size(146, 15);
+			lblMouseMiddleUnlock.TabIndex = 53;
+			lblMouseMiddleUnlock.Text = "Middle mouse btn unlock:";
 			// 
 			// tabAutoexec
 			// 
@@ -959,35 +1070,6 @@
 			timerRefreshNa.Interval = 1000;
 			timerRefreshNa.Tick += timerRefreshNa_Tick;
 			// 
-			// comboMouseMiddleUnlock
-			// 
-			comboMouseMiddleUnlock.FormattingEnabled = true;
-			comboMouseMiddleUnlock.Items.AddRange(new object[] { "none", "auto", "manual", "both" });
-			comboMouseMiddleUnlock.Location = new Point(188, 25);
-			comboMouseMiddleUnlock.Name = "comboMouseMiddleUnlock";
-			comboMouseMiddleUnlock.Size = new Size(409, 23);
-			comboMouseMiddleUnlock.TabIndex = 11;
-			comboMouseMiddleUnlock.Tag = "cb=cbMouseMiddleUnlockSet|assoc=lblMouseMiddleUnlock|setting=sdl.middle_unlock";
-			// 
-			// cbMouseMiddleUnlockSet
-			// 
-			cbMouseMiddleUnlockSet.AutoSize = true;
-			cbMouseMiddleUnlockSet.Location = new Point(11, 29);
-			cbMouseMiddleUnlockSet.Name = "cbMouseMiddleUnlockSet";
-			cbMouseMiddleUnlockSet.Size = new Size(15, 14);
-			cbMouseMiddleUnlockSet.TabIndex = 10;
-			cbMouseMiddleUnlockSet.Tag = "";
-			cbMouseMiddleUnlockSet.UseVisualStyleBackColor = true;
-			// 
-			// lblMouseMiddleUnlock
-			// 
-			lblMouseMiddleUnlock.AutoSize = true;
-			lblMouseMiddleUnlock.Location = new Point(36, 28);
-			lblMouseMiddleUnlock.Name = "lblMouseMiddleUnlock";
-			lblMouseMiddleUnlock.Size = new Size(146, 15);
-			lblMouseMiddleUnlock.TabIndex = 53;
-			lblMouseMiddleUnlock.Text = "Middle mouse btn unlock:";
-			// 
 			// MainForm
 			// 
 			AllowDrop = true;
@@ -1127,5 +1209,12 @@
 		private ComboBox comboMouseMiddleUnlock;
 		private CheckBox cbMouseMiddleUnlockSet;
 		private Label lblMouseMiddleUnlock;
+		private Label lblPeripheralsSet;
+		private ComboBox comboMouseEmulation;
+		private CheckBox cbMouseEmulationSet;
+		private Label lblMouseEmulation;
+		private ComboBox comboMouseSensitivity;
+		private CheckBox cbMouseSensitivitySet;
+		private Label lblMouseSensitivity;
 	}
 }

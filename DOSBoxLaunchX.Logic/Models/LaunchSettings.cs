@@ -182,8 +182,14 @@ public class LaunchSettings {
 	}
 
 	public class PeripheralsSettings {
+		[GroupedSetting("sdl", "mouse_emulation")]
+		public string? MouseEmulation { get; set; }
+
 		[GroupedSetting("sdl", "middle_unlock")]
 		public string? MouseMiddleUnlock { get; set; }
+
+		[GroupedSetting("sdl", "sensitivity")]
+		public string? MouseSensitivity { get; set; }
 	}
 
 	#endregion
