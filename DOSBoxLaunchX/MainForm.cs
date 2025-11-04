@@ -381,10 +381,15 @@ public partial class MainForm : Form {
 
 			// Pre-fill filename if one exists
 			try {
-				saveFileDialog.FileName =
-					!string.IsNullOrEmpty(_currentShortcutFilePath)
-					? Path.GetFileName(_currentShortcutFilePath)
-					: string.Empty;
+				if (!string.IsNullOrEmpty(_currentShortcutFilePath)) {
+					saveFileDialog.FileName = Path.GetFileName(_currentShortcutFilePath);
+				}
+				else if (!string.IsNullOrWhiteSpace(txtName.Text)) {
+					saveFileDialog.FileName = $"_{txtName.Text}_";
+				}
+				else {
+					saveFileDialog.FileName = string.Empty;
+				}
 			}
 			catch {
 				saveFileDialog.FileName = string.Empty;
