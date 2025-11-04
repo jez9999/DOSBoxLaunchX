@@ -171,6 +171,9 @@ public class LaunchSettings {
 
 		[GroupedSetting("cpu", "cycledown")]
 		public string? CycleDown { get; set; }
+
+		[GroupedSetting("dosbox", "machine")]
+		public string? Machine { get; set; }
 	}
 
 	public class VideoSettings {

@@ -51,11 +51,14 @@
 			txtName = new TextBox();
 			lblName = new Label();
 			tabCpu = new TabPage();
+			comboMachine = new ComboBox();
+			cbMachineSet = new CheckBox();
+			lblMachine = new Label();
 			comboCycleDown = new ComboBox();
-			cbCycleDown = new CheckBox();
+			cbCycleDownSet = new CheckBox();
 			lblCycleDown = new Label();
 			comboCycleUp = new ComboBox();
-			cbCycleUp = new CheckBox();
+			cbCycleUpSet = new CheckBox();
 			lblCycleUp = new Label();
 			comboCycles = new ComboBox();
 			cbCyclesSet = new CheckBox();
@@ -370,11 +373,14 @@
 			// tabCpu
 			// 
 			tabCpu.BackColor = SystemColors.Control;
+			tabCpu.Controls.Add(comboMachine);
+			tabCpu.Controls.Add(cbMachineSet);
+			tabCpu.Controls.Add(lblMachine);
 			tabCpu.Controls.Add(comboCycleDown);
-			tabCpu.Controls.Add(cbCycleDown);
+			tabCpu.Controls.Add(cbCycleDownSet);
 			tabCpu.Controls.Add(lblCycleDown);
 			tabCpu.Controls.Add(comboCycleUp);
-			tabCpu.Controls.Add(cbCycleUp);
+			tabCpu.Controls.Add(cbCycleUpSet);
 			tabCpu.Controls.Add(lblCycleUp);
 			tabCpu.Controls.Add(comboCycles);
 			tabCpu.Controls.Add(cbCyclesSet);
@@ -390,25 +396,54 @@
 			tabCpu.TabIndex = 0;
 			tabCpu.Text = "CPU";
 			// 
+			// comboMachine
+			// 
+			comboMachine.FormattingEnabled = true;
+			comboMachine.Items.AddRange(new object[] { "svga_s3", "ega", "mcga", "cga", "cga_mono", "cga_rgb", "mda", "tandy", "hercules", "pcjr", "amstrad", "vgaonly" });
+			comboMachine.Location = new Point(158, 141);
+			comboMachine.Name = "comboMachine";
+			comboMachine.Size = new Size(439, 23);
+			comboMachine.TabIndex = 51;
+			comboMachine.Tag = "cb=cbMachineSet|assoc=lblMachine|setting=dosbox.machine";
+			// 
+			// cbMachineSet
+			// 
+			cbMachineSet.AutoSize = true;
+			cbMachineSet.Location = new Point(11, 145);
+			cbMachineSet.Name = "cbMachineSet";
+			cbMachineSet.Size = new Size(15, 14);
+			cbMachineSet.TabIndex = 50;
+			cbMachineSet.Tag = "";
+			cbMachineSet.UseVisualStyleBackColor = true;
+			// 
+			// lblMachine
+			// 
+			lblMachine.AutoSize = true;
+			lblMachine.Location = new Point(36, 144);
+			lblMachine.Name = "lblMachine";
+			lblMachine.Size = new Size(116, 15);
+			lblMachine.TabIndex = 46;
+			lblMachine.Text = "Machine to emulate:";
+			// 
 			// comboCycleDown
 			// 
 			comboCycleDown.FormattingEnabled = true;
 			comboCycleDown.Items.AddRange(new object[] { "10", "20", "500", "1000", "5000" });
-			comboCycleDown.Location = new Point(127, 112);
+			comboCycleDown.Location = new Point(158, 112);
 			comboCycleDown.Name = "comboCycleDown";
-			comboCycleDown.Size = new Size(470, 23);
+			comboCycleDown.Size = new Size(439, 23);
 			comboCycleDown.TabIndex = 41;
-			comboCycleDown.Tag = "cb=cbCycleDown|assoc=lblCycleDown|setting=cpu.cycledown";
+			comboCycleDown.Tag = "cb=cbCycleDownSet|assoc=lblCycleDown|setting=cpu.cycledown";
 			// 
-			// cbCycleDown
+			// cbCycleDownSet
 			// 
-			cbCycleDown.AutoSize = true;
-			cbCycleDown.Location = new Point(11, 116);
-			cbCycleDown.Name = "cbCycleDown";
-			cbCycleDown.Size = new Size(15, 14);
-			cbCycleDown.TabIndex = 40;
-			cbCycleDown.Tag = "";
-			cbCycleDown.UseVisualStyleBackColor = true;
+			cbCycleDownSet.AutoSize = true;
+			cbCycleDownSet.Location = new Point(11, 116);
+			cbCycleDownSet.Name = "cbCycleDownSet";
+			cbCycleDownSet.Size = new Size(15, 14);
+			cbCycleDownSet.TabIndex = 40;
+			cbCycleDownSet.Tag = "";
+			cbCycleDownSet.UseVisualStyleBackColor = true;
 			// 
 			// lblCycleDown
 			// 
@@ -423,21 +458,21 @@
 			// 
 			comboCycleUp.FormattingEnabled = true;
 			comboCycleUp.Items.AddRange(new object[] { "10", "20", "500", "1000", "5000" });
-			comboCycleUp.Location = new Point(127, 83);
+			comboCycleUp.Location = new Point(158, 83);
 			comboCycleUp.Name = "comboCycleUp";
-			comboCycleUp.Size = new Size(470, 23);
+			comboCycleUp.Size = new Size(439, 23);
 			comboCycleUp.TabIndex = 31;
-			comboCycleUp.Tag = "cb=cbCycleUp|assoc=lblCycleUp|setting=cpu.cycleup";
+			comboCycleUp.Tag = "cb=cbCycleUpSet|assoc=lblCycleUp|setting=cpu.cycleup";
 			// 
-			// cbCycleUp
+			// cbCycleUpSet
 			// 
-			cbCycleUp.AutoSize = true;
-			cbCycleUp.Location = new Point(11, 87);
-			cbCycleUp.Name = "cbCycleUp";
-			cbCycleUp.Size = new Size(15, 14);
-			cbCycleUp.TabIndex = 30;
-			cbCycleUp.Tag = "";
-			cbCycleUp.UseVisualStyleBackColor = true;
+			cbCycleUpSet.AutoSize = true;
+			cbCycleUpSet.Location = new Point(11, 87);
+			cbCycleUpSet.Name = "cbCycleUpSet";
+			cbCycleUpSet.Size = new Size(15, 14);
+			cbCycleUpSet.TabIndex = 30;
+			cbCycleUpSet.Tag = "";
+			cbCycleUpSet.UseVisualStyleBackColor = true;
 			// 
 			// lblCycleUp
 			// 
@@ -452,9 +487,9 @@
 			// 
 			comboCycles.FormattingEnabled = true;
 			comboCycles.Items.AddRange(new object[] { "auto", "max", "30000", "60000", "100000", "150000" });
-			comboCycles.Location = new Point(127, 54);
+			comboCycles.Location = new Point(158, 54);
 			comboCycles.Name = "comboCycles";
-			comboCycles.Size = new Size(470, 23);
+			comboCycles.Size = new Size(439, 23);
 			comboCycles.TabIndex = 21;
 			comboCycles.Tag = "cb=cbCyclesSet|assoc=lblCycles|setting=cpu.cycles";
 			// 
@@ -481,9 +516,9 @@
 			// 
 			comboCore.FormattingEnabled = true;
 			comboCore.Items.AddRange(new object[] { "auto", "normal", "full", "dynamic", "simple" });
-			comboCore.Location = new Point(127, 25);
+			comboCore.Location = new Point(158, 25);
 			comboCore.Name = "comboCore";
-			comboCore.Size = new Size(470, 23);
+			comboCore.Size = new Size(439, 23);
 			comboCore.TabIndex = 11;
 			comboCore.Tag = "cb=cbCoreSet|assoc=lblCore|setting=cpu.core";
 			// 
@@ -632,11 +667,11 @@
 			// comboMouseSensitivity
 			// 
 			comboMouseSensitivity.FormattingEnabled = true;
-			comboMouseSensitivity.Items.AddRange(new object[] { "none", "auto", "manual", "both" });
+			comboMouseSensitivity.Items.AddRange(new object[] { "100", "50,100", "35,75", "100,-50" });
 			comboMouseSensitivity.Location = new Point(188, 83);
 			comboMouseSensitivity.Name = "comboMouseSensitivity";
 			comboMouseSensitivity.Size = new Size(409, 23);
-			comboMouseSensitivity.TabIndex = 64;
+			comboMouseSensitivity.TabIndex = 31;
 			comboMouseSensitivity.Tag = "cb=cbMouseSensitivitySet|assoc=lblMouseSensitivity|setting=sdl.sensitivity";
 			// 
 			// cbMouseSensitivitySet
@@ -645,7 +680,7 @@
 			cbMouseSensitivitySet.Location = new Point(11, 87);
 			cbMouseSensitivitySet.Name = "cbMouseSensitivitySet";
 			cbMouseSensitivitySet.Size = new Size(15, 14);
-			cbMouseSensitivitySet.TabIndex = 63;
+			cbMouseSensitivitySet.TabIndex = 30;
 			cbMouseSensitivitySet.Tag = "";
 			cbMouseSensitivitySet.UseVisualStyleBackColor = true;
 			// 
@@ -1194,10 +1229,10 @@
 		private CheckBox cbCyclesSet;
 		private ComboBox comboCycles;
 		private ComboBox comboCycleDown;
-		private CheckBox cbCycleDown;
+		private CheckBox cbCycleDownSet;
 		private Label lblCycleDown;
 		private ComboBox comboCycleUp;
-		private CheckBox cbCycleUp;
+		private CheckBox cbCycleUpSet;
 		private Label lblCycleUp;
 		private Label lblVideoSet;
 		private ComboBox comboFrameskip;
@@ -1216,5 +1251,8 @@
 		private ComboBox comboMouseSensitivity;
 		private CheckBox cbMouseSensitivitySet;
 		private Label lblMouseSensitivity;
+		private ComboBox comboMachine;
+		private CheckBox cbMachineSet;
+		private Label lblMachine;
 	}
 }

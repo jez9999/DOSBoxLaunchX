@@ -47,6 +47,8 @@ internal static class SettingsUiBinder {
 		var map = new Dictionary<string, (PropertyInfo, object)>();
 		LaunchSettingsMetaHelper.AddGroupedPropertiesToMap(map, sett);
 
+		// Convert controls by setting to dictionary; this also conveniently captures if we inadvertantly
+		// add two controls whose Tag refers to the same setting key.
 		var controlsBySetting = controlInfo
 			.Where(kvp => kvp.Value.Setting != null)
 			.ToDictionary(kvp => kvp.Value.Setting!, kvp => kvp.Key);
