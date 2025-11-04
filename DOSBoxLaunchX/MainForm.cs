@@ -948,4 +948,13 @@ public partial class MainForm : Form {
 			);
 		}
 	}
+
+	private void lblScaler_Click(object sender, EventArgs ea) {
+		MessageBoxHelper.ShowInfoMessage(
+			"""
+			Note that for most scalers to actually work, you need to set the 'doublescan' setting to false.
+			""",
+			"Scaler setting"
+		);
+	}
 }

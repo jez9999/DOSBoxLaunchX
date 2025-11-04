@@ -68,6 +68,12 @@
 			lblCpuSet = new Label();
 			lblCore = new Label();
 			tabVideo = new TabPage();
+			comboDoublescan = new ComboBox();
+			cbDoublescanSet = new CheckBox();
+			lblDoublescan = new Label();
+			comboScaler = new ComboBox();
+			cbScalerSet = new CheckBox();
+			lblScaler = new Label();
 			comboVideoOutput = new ComboBox();
 			cbVideoOutputSet = new CheckBox();
 			lblVideoOutput = new Label();
@@ -554,6 +560,12 @@
 			// tabVideo
 			// 
 			tabVideo.BackColor = SystemColors.Control;
+			tabVideo.Controls.Add(comboDoublescan);
+			tabVideo.Controls.Add(cbDoublescanSet);
+			tabVideo.Controls.Add(lblDoublescan);
+			tabVideo.Controls.Add(comboScaler);
+			tabVideo.Controls.Add(cbScalerSet);
+			tabVideo.Controls.Add(lblScaler);
 			tabVideo.Controls.Add(comboVideoOutput);
 			tabVideo.Controls.Add(cbVideoOutputSet);
 			tabVideo.Controls.Add(lblVideoOutput);
@@ -567,6 +579,67 @@
 			tabVideo.Size = new Size(1227, 528);
 			tabVideo.TabIndex = 1;
 			tabVideo.Text = "Video";
+			// 
+			// comboDoublescan
+			// 
+			comboDoublescan.FormattingEnabled = true;
+			comboDoublescan.Items.AddRange(new object[] { "true", "false" });
+			comboDoublescan.Location = new Point(127, 112);
+			comboDoublescan.Name = "comboDoublescan";
+			comboDoublescan.Size = new Size(470, 23);
+			comboDoublescan.TabIndex = 41;
+			comboDoublescan.Tag = "cb=cbDoublescanSet|assoc=lblDoublescan|setting=render.doublescan";
+			// 
+			// cbDoublescanSet
+			// 
+			cbDoublescanSet.AutoSize = true;
+			cbDoublescanSet.Location = new Point(11, 116);
+			cbDoublescanSet.Name = "cbDoublescanSet";
+			cbDoublescanSet.Size = new Size(15, 14);
+			cbDoublescanSet.TabIndex = 40;
+			cbDoublescanSet.Tag = "";
+			cbDoublescanSet.UseVisualStyleBackColor = true;
+			// 
+			// lblDoublescan
+			// 
+			lblDoublescan.AutoSize = true;
+			lblDoublescan.Location = new Point(36, 115);
+			lblDoublescan.Name = "lblDoublescan";
+			lblDoublescan.Size = new Size(72, 15);
+			lblDoublescan.TabIndex = 56;
+			lblDoublescan.Text = "Doublescan:";
+			// 
+			// comboScaler
+			// 
+			comboScaler.FormattingEnabled = true;
+			comboScaler.Items.AddRange(new object[] { "normal2x", "normal3x", "normal4x", "normal5x", "hq2x", "hq3x", "advmame2x", "advmame3x", "advinterp2x", "advinterp3x", "2xsai", "super2xsai", "supereagle", "tv2x", "tv3x", "rgb2x", "rgb3x", "scan2x", "scan3x", "gray2x", "xbrz", "xbrz_bilinear", "none" });
+			comboScaler.Location = new Point(127, 83);
+			comboScaler.Name = "comboScaler";
+			comboScaler.Size = new Size(470, 23);
+			comboScaler.TabIndex = 31;
+			comboScaler.Tag = "cb=cbScalerSet|assoc=lblScaler|setting=render.scaler";
+			// 
+			// cbScalerSet
+			// 
+			cbScalerSet.AutoSize = true;
+			cbScalerSet.Location = new Point(11, 87);
+			cbScalerSet.Name = "cbScalerSet";
+			cbScalerSet.Size = new Size(15, 14);
+			cbScalerSet.TabIndex = 30;
+			cbScalerSet.Tag = "";
+			cbScalerSet.UseVisualStyleBackColor = true;
+			// 
+			// lblScaler
+			// 
+			lblScaler.AutoSize = true;
+			lblScaler.Cursor = Cursors.Help;
+			lblScaler.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point, 0);
+			lblScaler.Location = new Point(36, 86);
+			lblScaler.Name = "lblScaler";
+			lblScaler.Size = new Size(41, 15);
+			lblScaler.TabIndex = 53;
+			lblScaler.Text = "Scaler:";
+			lblScaler.Click += lblScaler_Click;
 			// 
 			// comboVideoOutput
 			// 
@@ -1254,5 +1327,11 @@
 		private ComboBox comboMachine;
 		private CheckBox cbMachineSet;
 		private Label lblMachine;
+		private ComboBox comboScaler;
+		private CheckBox cbScalerSet;
+		private Label lblScaler;
+		private ComboBox comboDoublescan;
+		private CheckBox cbDoublescanSet;
+		private Label lblDoublescan;
 	}
 }

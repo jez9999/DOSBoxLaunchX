@@ -182,6 +182,12 @@ public class LaunchSettings {
 
 		[GroupedSetting("sdl", "output")]
 		public string? Output { get; set; }
+
+		[GroupedSetting("render", "scaler")]
+		public string? Scaler { get; set; }
+
+		[GroupedSetting("render", "doublescan")]
+		public string? Doublescan { get; set; }
 	}
 
 	public class PeripheralsSettings {
