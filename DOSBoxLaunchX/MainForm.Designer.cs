@@ -182,6 +182,9 @@
 			saveFileDialog = new SaveFileDialog();
 			timerRefreshNa = new System.Windows.Forms.Timer(components);
 			folderBrowserDialog = new FolderBrowserDialog();
+			comboMemSize = new ComboBox();
+			cbMemSizeSet = new CheckBox();
+			lblMemSize = new Label();
 			tabsContainer.SuspendLayout();
 			tabGeneral.SuspendLayout();
 			tabCpu.SuspendLayout();
@@ -432,6 +435,9 @@
 			// tabCpu
 			// 
 			tabCpu.BackColor = SystemColors.Control;
+			tabCpu.Controls.Add(comboMemSize);
+			tabCpu.Controls.Add(cbMemSizeSet);
+			tabCpu.Controls.Add(lblMemSize);
 			tabCpu.Controls.Add(comboMachine);
 			tabCpu.Controls.Add(cbMachineSet);
 			tabCpu.Controls.Add(lblMachine);
@@ -1755,6 +1761,35 @@
 			// 
 			folderBrowserDialog.RootFolder = Environment.SpecialFolder.MyComputer;
 			// 
+			// comboMemSize
+			// 
+			comboMemSize.FormattingEnabled = true;
+			comboMemSize.Items.AddRange(new object[] { "16", "32", "64", "128", "8", "4", "2", "1" });
+			comboMemSize.Location = new Point(158, 170);
+			comboMemSize.Name = "comboMemSize";
+			comboMemSize.Size = new Size(439, 23);
+			comboMemSize.TabIndex = 61;
+			comboMemSize.Tag = "cb=cbMemSizeSet|assoc=lblMemSize|setting=dosbox.memsize";
+			// 
+			// cbMemSizeSet
+			// 
+			cbMemSizeSet.AutoSize = true;
+			cbMemSizeSet.Location = new Point(11, 174);
+			cbMemSizeSet.Name = "cbMemSizeSet";
+			cbMemSizeSet.Size = new Size(15, 14);
+			cbMemSizeSet.TabIndex = 60;
+			cbMemSizeSet.Tag = "";
+			cbMemSizeSet.UseVisualStyleBackColor = true;
+			// 
+			// lblMemSize
+			// 
+			lblMemSize.AutoSize = true;
+			lblMemSize.Location = new Point(36, 173);
+			lblMemSize.Name = "lblMemSize";
+			lblMemSize.Size = new Size(106, 15);
+			lblMemSize.TabIndex = 52;
+			lblMemSize.Text = "Memory size (MB):";
+			// 
 			// MainForm
 			// 
 			AllowDrop = true;
@@ -1966,5 +2001,8 @@
 		private ComboBox comboKbLayout;
 		private CheckBox cbKbLayoutSet;
 		private Label lblKbLayout;
+		private ComboBox comboMemSize;
+		private CheckBox cbMemSizeSet;
+		private Label lblMemSize;
 	}
 }

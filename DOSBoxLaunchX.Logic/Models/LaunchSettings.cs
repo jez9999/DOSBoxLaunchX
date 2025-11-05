@@ -177,6 +177,9 @@ public class LaunchSettings {
 
 		[GroupedSetting("dosbox", "machine")]
 		public string? Machine { get; set; }
+
+		[GroupedSetting("dosbox", "memsize")]
+		public string? MemSize { get; set; }
 	}
 
 	public class VideoSettings {
