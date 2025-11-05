@@ -86,6 +86,7 @@
 			lblFrameskip = new Label();
 			tabAudio = new TabPage();
 			grpMidi = new GroupBox();
+			btnMt32RomDirBrowse = new Button();
 			comboMt32Model = new ComboBox();
 			cbMt32ModelSet = new CheckBox();
 			lblMt32Model = new Label();
@@ -155,6 +156,7 @@
 			openFileDialog = new OpenFileDialog();
 			saveFileDialog = new SaveFileDialog();
 			timerRefreshNa = new System.Windows.Forms.Timer(components);
+			folderBrowserDialog = new FolderBrowserDialog();
 			tabsContainer.SuspendLayout();
 			tabGeneral.SuspendLayout();
 			tabCpu.SuspendLayout();
@@ -785,6 +787,7 @@
 			// 
 			// grpMidi
 			// 
+			grpMidi.Controls.Add(btnMt32RomDirBrowse);
 			grpMidi.Controls.Add(comboMt32Model);
 			grpMidi.Controls.Add(cbMt32ModelSet);
 			grpMidi.Controls.Add(lblMt32Model);
@@ -803,6 +806,16 @@
 			grpMidi.TabIndex = 30;
 			grpMidi.TabStop = false;
 			grpMidi.Text = "MIDI";
+			// 
+			// btnMt32RomDirBrowse
+			// 
+			btnMt32RomDirBrowse.Location = new Point(518, 74);
+			btnMt32RomDirBrowse.Name = "btnMt32RomDirBrowse";
+			btnMt32RomDirBrowse.Size = new Size(75, 23);
+			btnMt32RomDirBrowse.TabIndex = 71;
+			btnMt32RomDirBrowse.Text = "&Browse...";
+			btnMt32RomDirBrowse.UseVisualStyleBackColor = true;
+			btnMt32RomDirBrowse.Click += btnMt32RomDirBrowse_Click;
 			// 
 			// comboMt32Model
 			// 
@@ -837,9 +850,9 @@
 			// 
 			txtMt32RomDir.Location = new Point(135, 74);
 			txtMt32RomDir.Name = "txtMt32RomDir";
-			txtMt32RomDir.Size = new Size(458, 23);
+			txtMt32RomDir.Size = new Size(377, 23);
 			txtMt32RomDir.TabIndex = 51;
-			txtMt32RomDir.Tag = "cb=cbMt32RomDirSet|assoc=lblMt32RomDir|setting=midi.mt32.romdir";
+			txtMt32RomDir.Tag = "cb=cbMt32RomDirSet|assoc=lblMt32RomDir,btnMt32RomDirBrowse|setting=midi.mt32.romdir";
 			// 
 			// cbMt32RomDirSet
 			// 
@@ -1446,6 +1459,10 @@
 			timerRefreshNa.Interval = 1000;
 			timerRefreshNa.Tick += timerRefreshNa_Tick;
 			// 
+			// folderBrowserDialog
+			// 
+			folderBrowserDialog.RootFolder = Environment.SpecialFolder.MyComputer;
+			// 
 			// MainForm
 			// 
 			AllowDrop = true;
@@ -1628,5 +1645,7 @@
 		private ComboBox comboMt32Model;
 		private CheckBox cbMt32ModelSet;
 		private Label lblMt32Model;
+		private Button btnMt32RomDirBrowse;
+		private FolderBrowserDialog folderBrowserDialog;
 	}
 }

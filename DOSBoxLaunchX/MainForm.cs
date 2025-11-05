@@ -314,6 +314,13 @@ public partial class MainForm : Form {
 		return true;
 	}
 
+	private bool doBrowseMt32Romdir() {
+		if (folderBrowserDialog.ShowDialog() != DialogResult.OK) { return false; }
+		txtMt32RomDir.Text = folderBrowserDialog.SelectedPath;
+
+		return true;
+	}
+
 	private bool doOpen() {
 		return doOpen(null);
 	}
@@ -956,5 +963,9 @@ public partial class MainForm : Form {
 			""",
 			"Scaler setting"
 		);
+	}
+
+	private void btnMt32RomDirBrowse_Click(object sender, EventArgs ea) {
+		doBrowseMt32Romdir();
 	}
 }
