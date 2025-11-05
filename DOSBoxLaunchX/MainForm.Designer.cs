@@ -85,6 +85,22 @@
 			cbFrameskipSet = new CheckBox();
 			lblFrameskip = new Label();
 			tabAudio = new TabPage();
+			grpMidi = new GroupBox();
+			comboMt32Model = new ComboBox();
+			cbMt32ModelSet = new CheckBox();
+			lblMt32Model = new Label();
+			txtMt32RomDir = new TextBox();
+			cbMt32RomDirSet = new CheckBox();
+			lblMt32RomDir = new Label();
+			comboMidiDevice = new ComboBox();
+			cbMidiDeviceSet = new CheckBox();
+			lblMidiDevice = new Label();
+			comboMpu401 = new ComboBox();
+			cbMpu401Set = new CheckBox();
+			lblMpu401 = new Label();
+			comboSampleRate = new ComboBox();
+			cbSampleRateSet = new CheckBox();
+			lblSampleRate = new Label();
 			lblAudioSet = new Label();
 			comboSilenced = new ComboBox();
 			cbSilencedSet = new CheckBox();
@@ -139,14 +155,12 @@
 			openFileDialog = new OpenFileDialog();
 			saveFileDialog = new SaveFileDialog();
 			timerRefreshNa = new System.Windows.Forms.Timer(components);
-			comboSampleRate = new ComboBox();
-			cbSampleRateSet = new CheckBox();
-			lblSampleRate = new Label();
 			tabsContainer.SuspendLayout();
 			tabGeneral.SuspendLayout();
 			tabCpu.SuspendLayout();
 			tabVideo.SuspendLayout();
 			tabAudio.SuspendLayout();
+			grpMidi.SuspendLayout();
 			tabPeripherals.SuspendLayout();
 			tabAutoexec.SuspendLayout();
 			tabCustom.SuspendLayout();
@@ -755,6 +769,7 @@
 			// tabAudio
 			// 
 			tabAudio.BackColor = SystemColors.Control;
+			tabAudio.Controls.Add(grpMidi);
 			tabAudio.Controls.Add(comboSampleRate);
 			tabAudio.Controls.Add(cbSampleRateSet);
 			tabAudio.Controls.Add(lblSampleRate);
@@ -767,6 +782,170 @@
 			tabAudio.Size = new Size(1227, 528);
 			tabAudio.TabIndex = 2;
 			tabAudio.Text = "Audio";
+			// 
+			// grpMidi
+			// 
+			grpMidi.Controls.Add(comboMt32Model);
+			grpMidi.Controls.Add(cbMt32ModelSet);
+			grpMidi.Controls.Add(lblMt32Model);
+			grpMidi.Controls.Add(txtMt32RomDir);
+			grpMidi.Controls.Add(cbMt32RomDirSet);
+			grpMidi.Controls.Add(lblMt32RomDir);
+			grpMidi.Controls.Add(comboMidiDevice);
+			grpMidi.Controls.Add(cbMidiDeviceSet);
+			grpMidi.Controls.Add(lblMidiDevice);
+			grpMidi.Controls.Add(comboMpu401);
+			grpMidi.Controls.Add(cbMpu401Set);
+			grpMidi.Controls.Add(lblMpu401);
+			grpMidi.Location = new Point(4, 83);
+			grpMidi.Name = "grpMidi";
+			grpMidi.Size = new Size(603, 135);
+			grpMidi.TabIndex = 30;
+			grpMidi.TabStop = false;
+			grpMidi.Text = "MIDI";
+			// 
+			// comboMt32Model
+			// 
+			comboMt32Model.FormattingEnabled = true;
+			comboMt32Model.Items.AddRange(new object[] { "auto", "cm32l", "mt32" });
+			comboMt32Model.Location = new Point(135, 103);
+			comboMt32Model.Name = "comboMt32Model";
+			comboMt32Model.Size = new Size(458, 23);
+			comboMt32Model.TabIndex = 61;
+			comboMt32Model.Tag = "cb=cbMt32ModelSet|assoc=lblMt32Model|setting=midi.mt32.model";
+			// 
+			// cbMt32ModelSet
+			// 
+			cbMt32ModelSet.AutoSize = true;
+			cbMt32ModelSet.Location = new Point(7, 107);
+			cbMt32ModelSet.Name = "cbMt32ModelSet";
+			cbMt32ModelSet.Size = new Size(15, 14);
+			cbMt32ModelSet.TabIndex = 60;
+			cbMt32ModelSet.Tag = "";
+			cbMt32ModelSet.UseVisualStyleBackColor = true;
+			// 
+			// lblMt32Model
+			// 
+			lblMt32Model.AutoSize = true;
+			lblMt32Model.Location = new Point(32, 106);
+			lblMt32Model.Name = "lblMt32Model";
+			lblMt32Model.Size = new Size(81, 15);
+			lblMt32Model.TabIndex = 70;
+			lblMt32Model.Text = "MT-32 model:";
+			// 
+			// txtMt32RomDir
+			// 
+			txtMt32RomDir.Location = new Point(135, 74);
+			txtMt32RomDir.Name = "txtMt32RomDir";
+			txtMt32RomDir.Size = new Size(458, 23);
+			txtMt32RomDir.TabIndex = 51;
+			txtMt32RomDir.Tag = "cb=cbMt32RomDirSet|assoc=lblMt32RomDir|setting=midi.mt32.romdir";
+			// 
+			// cbMt32RomDirSet
+			// 
+			cbMt32RomDirSet.AutoSize = true;
+			cbMt32RomDirSet.Location = new Point(7, 78);
+			cbMt32RomDirSet.Name = "cbMt32RomDirSet";
+			cbMt32RomDirSet.Size = new Size(15, 14);
+			cbMt32RomDirSet.TabIndex = 50;
+			cbMt32RomDirSet.Tag = "";
+			cbMt32RomDirSet.UseVisualStyleBackColor = true;
+			// 
+			// lblMt32RomDir
+			// 
+			lblMt32RomDir.AutoSize = true;
+			lblMt32RomDir.Location = new Point(32, 77);
+			lblMt32RomDir.Name = "lblMt32RomDir";
+			lblMt32RomDir.Size = new Size(91, 15);
+			lblMt32RomDir.TabIndex = 66;
+			lblMt32RomDir.Text = "MT-32 ROM dir:";
+			// 
+			// comboMidiDevice
+			// 
+			comboMidiDevice.FormattingEnabled = true;
+			comboMidiDevice.Items.AddRange(new object[] { "mt32", "win32", "alsa", "oss", "coreaudio", "coremidi", "synth", "fluidsynth", "timidity", "default", "none" });
+			comboMidiDevice.Location = new Point(135, 45);
+			comboMidiDevice.Name = "comboMidiDevice";
+			comboMidiDevice.Size = new Size(458, 23);
+			comboMidiDevice.TabIndex = 41;
+			comboMidiDevice.Tag = "cb=cbMidiDeviceSet|assoc=lblMidiDevice|setting=midi.mididevice";
+			// 
+			// cbMidiDeviceSet
+			// 
+			cbMidiDeviceSet.AutoSize = true;
+			cbMidiDeviceSet.Location = new Point(7, 49);
+			cbMidiDeviceSet.Name = "cbMidiDeviceSet";
+			cbMidiDeviceSet.Size = new Size(15, 14);
+			cbMidiDeviceSet.TabIndex = 40;
+			cbMidiDeviceSet.Tag = "";
+			cbMidiDeviceSet.UseVisualStyleBackColor = true;
+			// 
+			// lblMidiDevice
+			// 
+			lblMidiDevice.AutoSize = true;
+			lblMidiDevice.Location = new Point(32, 48);
+			lblMidiDevice.Name = "lblMidiDevice";
+			lblMidiDevice.Size = new Size(45, 15);
+			lblMidiDevice.TabIndex = 63;
+			lblMidiDevice.Text = "Device:";
+			// 
+			// comboMpu401
+			// 
+			comboMpu401.FormattingEnabled = true;
+			comboMpu401.Items.AddRange(new object[] { "intelligent", "uart", "none" });
+			comboMpu401.Location = new Point(135, 16);
+			comboMpu401.Name = "comboMpu401";
+			comboMpu401.Size = new Size(458, 23);
+			comboMpu401.TabIndex = 31;
+			comboMpu401.Tag = "cb=cbMpu401Set|assoc=lblMpu401|setting=midi.mpu401";
+			// 
+			// cbMpu401Set
+			// 
+			cbMpu401Set.AutoSize = true;
+			cbMpu401Set.Location = new Point(7, 20);
+			cbMpu401Set.Name = "cbMpu401Set";
+			cbMpu401Set.Size = new Size(15, 14);
+			cbMpu401Set.TabIndex = 30;
+			cbMpu401Set.Tag = "";
+			cbMpu401Set.UseVisualStyleBackColor = true;
+			// 
+			// lblMpu401
+			// 
+			lblMpu401.AutoSize = true;
+			lblMpu401.Location = new Point(32, 19);
+			lblMpu401.Name = "lblMpu401";
+			lblMpu401.Size = new Size(85, 15);
+			lblMpu401.TabIndex = 60;
+			lblMpu401.Text = "MPU-401 type:";
+			// 
+			// comboSampleRate
+			// 
+			comboSampleRate.FormattingEnabled = true;
+			comboSampleRate.Items.AddRange(new object[] { "44100", "48000" });
+			comboSampleRate.Location = new Point(139, 54);
+			comboSampleRate.Name = "comboSampleRate";
+			comboSampleRate.Size = new Size(458, 23);
+			comboSampleRate.TabIndex = 21;
+			comboSampleRate.Tag = "cb=cbSampleRateSet|assoc=lblSampleRate|setting=mixer.rate";
+			// 
+			// cbSampleRateSet
+			// 
+			cbSampleRateSet.AutoSize = true;
+			cbSampleRateSet.Location = new Point(11, 58);
+			cbSampleRateSet.Name = "cbSampleRateSet";
+			cbSampleRateSet.Size = new Size(15, 14);
+			cbSampleRateSet.TabIndex = 20;
+			cbSampleRateSet.Tag = "";
+			cbSampleRateSet.UseVisualStyleBackColor = true;
+			// 
+			// lblSampleRate
+			// 
+			lblSampleRate.AutoSize = true;
+			lblSampleRate.Location = new Point(36, 57);
+			lblSampleRate.Name = "lblSampleRate";
+			lblSampleRate.Size = new Size(97, 15);
+			lblSampleRate.TabIndex = 54;
+			lblSampleRate.Text = "Sample rate (Hz):";
 			// 
 			// lblAudioSet
 			// 
@@ -1267,35 +1446,6 @@
 			timerRefreshNa.Interval = 1000;
 			timerRefreshNa.Tick += timerRefreshNa_Tick;
 			// 
-			// comboSampleRate
-			// 
-			comboSampleRate.FormattingEnabled = true;
-			comboSampleRate.Items.AddRange(new object[] { "44100", "48000" });
-			comboSampleRate.Location = new Point(139, 54);
-			comboSampleRate.Name = "comboSampleRate";
-			comboSampleRate.Size = new Size(458, 23);
-			comboSampleRate.TabIndex = 21;
-			comboSampleRate.Tag = "cb=cbSampleRateSet|assoc=lblSampleRate|setting=mixer.rate";
-			// 
-			// cbSampleRateSet
-			// 
-			cbSampleRateSet.AutoSize = true;
-			cbSampleRateSet.Location = new Point(11, 58);
-			cbSampleRateSet.Name = "cbSampleRateSet";
-			cbSampleRateSet.Size = new Size(15, 14);
-			cbSampleRateSet.TabIndex = 20;
-			cbSampleRateSet.Tag = "";
-			cbSampleRateSet.UseVisualStyleBackColor = true;
-			// 
-			// lblSampleRate
-			// 
-			lblSampleRate.AutoSize = true;
-			lblSampleRate.Location = new Point(36, 57);
-			lblSampleRate.Name = "lblSampleRate";
-			lblSampleRate.Size = new Size(97, 15);
-			lblSampleRate.TabIndex = 54;
-			lblSampleRate.Text = "Sample rate (Hz):";
-			// 
 			// MainForm
 			// 
 			AllowDrop = true;
@@ -1328,6 +1478,8 @@
 			tabVideo.PerformLayout();
 			tabAudio.ResumeLayout(false);
 			tabAudio.PerformLayout();
+			grpMidi.ResumeLayout(false);
+			grpMidi.PerformLayout();
 			tabPeripherals.ResumeLayout(false);
 			tabPeripherals.PerformLayout();
 			tabAutoexec.ResumeLayout(false);
@@ -1463,5 +1615,18 @@
 		private ComboBox comboSampleRate;
 		private CheckBox cbSampleRateSet;
 		private Label lblSampleRate;
+		private GroupBox grpMidi;
+		private ComboBox comboMpu401;
+		private CheckBox cbMpu401Set;
+		private Label lblMpu401;
+		private ComboBox comboMidiDevice;
+		private CheckBox cbMidiDeviceSet;
+		private Label lblMidiDevice;
+		private CheckBox cbMt32RomDirSet;
+		private Label lblMt32RomDir;
+		private TextBox txtMt32RomDir;
+		private ComboBox comboMt32Model;
+		private CheckBox cbMt32ModelSet;
+		private Label lblMt32Model;
 	}
 }

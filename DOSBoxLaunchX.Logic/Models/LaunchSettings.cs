@@ -202,6 +202,18 @@ public class LaunchSettings {
 
 		[GroupedSetting("mixer", "rate")]
 		public string? SampleRate { get; set; }
+
+		[GroupedSetting("midi", "mpu401")]
+		public string? Mpu401Type { get; set; }
+
+		[GroupedSetting("midi", "mididevice")]
+		public string? MidiDevice { get; set; }
+
+		[GroupedSetting("midi", "mt32.romdir")]
+		public string? Mt32RomDir { get; set; }
+
+		[GroupedSetting("midi", "mt32.model")]
+		public string? Mt32Model { get; set; }
 	}
 
 	public class PeripheralsSettings {
