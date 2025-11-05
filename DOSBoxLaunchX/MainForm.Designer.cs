@@ -85,6 +85,9 @@
 			cbFrameskipSet = new CheckBox();
 			lblFrameskip = new Label();
 			tabAudio = new TabPage();
+			comboPcSpeaker = new ComboBox();
+			cbPcSpeakerSet = new CheckBox();
+			lblPcSpeaker = new Label();
 			groupBox1 = new GroupBox();
 			comboSbHighDma = new ComboBox();
 			cbSbHighDmaSet = new CheckBox();
@@ -173,6 +176,9 @@
 			saveFileDialog = new SaveFileDialog();
 			timerRefreshNa = new System.Windows.Forms.Timer(components);
 			folderBrowserDialog = new FolderBrowserDialog();
+			comboTandySound = new ComboBox();
+			cbTandySoundSet = new CheckBox();
+			lblTandySound = new Label();
 			tabsContainer.SuspendLayout();
 			tabGeneral.SuspendLayout();
 			tabCpu.SuspendLayout();
@@ -788,6 +794,12 @@
 			// tabAudio
 			// 
 			tabAudio.BackColor = SystemColors.Control;
+			tabAudio.Controls.Add(comboTandySound);
+			tabAudio.Controls.Add(cbTandySoundSet);
+			tabAudio.Controls.Add(lblTandySound);
+			tabAudio.Controls.Add(comboPcSpeaker);
+			tabAudio.Controls.Add(cbPcSpeakerSet);
+			tabAudio.Controls.Add(lblPcSpeaker);
 			tabAudio.Controls.Add(groupBox1);
 			tabAudio.Controls.Add(grpMidi);
 			tabAudio.Controls.Add(comboSampleRate);
@@ -802,6 +814,35 @@
 			tabAudio.Size = new Size(1227, 528);
 			tabAudio.TabIndex = 2;
 			tabAudio.Text = "Audio";
+			// 
+			// comboPcSpeaker
+			// 
+			comboPcSpeaker.FormattingEnabled = true;
+			comboPcSpeaker.Items.AddRange(new object[] { "true", "false" });
+			comboPcSpeaker.Location = new Point(139, 388);
+			comboPcSpeaker.Name = "comboPcSpeaker";
+			comboPcSpeaker.Size = new Size(458, 23);
+			comboPcSpeaker.TabIndex = 121;
+			comboPcSpeaker.Tag = "cb=cbPcSpeakerSet|assoc=lblPcSpeaker|setting=speaker.pcspeaker";
+			// 
+			// cbPcSpeakerSet
+			// 
+			cbPcSpeakerSet.AutoSize = true;
+			cbPcSpeakerSet.Location = new Point(11, 392);
+			cbPcSpeakerSet.Name = "cbPcSpeakerSet";
+			cbPcSpeakerSet.Size = new Size(15, 14);
+			cbPcSpeakerSet.TabIndex = 120;
+			cbPcSpeakerSet.Tag = "";
+			cbPcSpeakerSet.UseVisualStyleBackColor = true;
+			// 
+			// lblPcSpeaker
+			// 
+			lblPcSpeaker.AutoSize = true;
+			lblPcSpeaker.Location = new Point(36, 391);
+			lblPcSpeaker.Name = "lblPcSpeaker";
+			lblPcSpeaker.Size = new Size(85, 15);
+			lblPcSpeaker.TabIndex = 73;
+			lblPcSpeaker.Text = "PC speaker on:";
 			// 
 			// groupBox1
 			// 
@@ -820,7 +861,7 @@
 			groupBox1.Controls.Add(comboSbType);
 			groupBox1.Controls.Add(cbSbTypeSet);
 			groupBox1.Controls.Add(lblSbType);
-			groupBox1.Location = new Point(4, 224);
+			groupBox1.Location = new Point(4, 218);
 			groupBox1.Name = "groupBox1";
 			groupBox1.Size = new Size(603, 164);
 			groupBox1.TabIndex = 70;
@@ -987,7 +1028,7 @@
 			grpMidi.Controls.Add(comboMpu401);
 			grpMidi.Controls.Add(cbMpu401Set);
 			grpMidi.Controls.Add(lblMpu401);
-			grpMidi.Location = new Point(4, 83);
+			grpMidi.Location = new Point(4, 77);
 			grpMidi.Name = "grpMidi";
 			grpMidi.Size = new Size(603, 135);
 			grpMidi.TabIndex = 30;
@@ -1650,6 +1691,35 @@
 			// 
 			folderBrowserDialog.RootFolder = Environment.SpecialFolder.MyComputer;
 			// 
+			// comboTandySound
+			// 
+			comboTandySound.FormattingEnabled = true;
+			comboTandySound.Items.AddRange(new object[] { "auto", "on", "off" });
+			comboTandySound.Location = new Point(139, 417);
+			comboTandySound.Name = "comboTandySound";
+			comboTandySound.Size = new Size(458, 23);
+			comboTandySound.TabIndex = 131;
+			comboTandySound.Tag = "cb=cbTandySoundSet|assoc=lblTandySound|setting=speaker.tandy";
+			// 
+			// cbTandySoundSet
+			// 
+			cbTandySoundSet.AutoSize = true;
+			cbTandySoundSet.Location = new Point(11, 421);
+			cbTandySoundSet.Name = "cbTandySoundSet";
+			cbTandySoundSet.Size = new Size(15, 14);
+			cbTandySoundSet.TabIndex = 130;
+			cbTandySoundSet.Tag = "";
+			cbTandySoundSet.UseVisualStyleBackColor = true;
+			// 
+			// lblTandySound
+			// 
+			lblTandySound.AutoSize = true;
+			lblTandySound.Location = new Point(36, 420);
+			lblTandySound.Name = "lblTandySound";
+			lblTandySound.Size = new Size(77, 15);
+			lblTandySound.TabIndex = 122;
+			lblTandySound.Text = "Tandy sound:";
+			// 
 			// MainForm
 			// 
 			AllowDrop = true;
@@ -1852,5 +1922,11 @@
 		private ComboBox comboSbHighDma;
 		private CheckBox cbSbHighDmaSet;
 		private Label lblSbHighDma;
+		private ComboBox comboPcSpeaker;
+		private CheckBox cbPcSpeakerSet;
+		private Label lblPcSpeaker;
+		private ComboBox comboTandySound;
+		private CheckBox cbTandySoundSet;
+		private Label lblTandySound;
 	}
 }

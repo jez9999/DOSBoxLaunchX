@@ -229,6 +229,12 @@ public class LaunchSettings {
 
 		[GroupedSetting("sblaster", "hdma")]
 		public string? HighDMA { get; set; }
+
+		[GroupedSetting("speaker", "pcspeaker")]
+		public string? PcSpeaker { get; set; }
+
+		[GroupedSetting("speaker", "tandy")]
+		public string? TandySound { get; set; }
 	}
 
 	public class PeripheralsSettings {
