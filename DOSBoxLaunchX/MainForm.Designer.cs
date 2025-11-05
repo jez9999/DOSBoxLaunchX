@@ -132,6 +132,9 @@
 			openFileDialog = new OpenFileDialog();
 			saveFileDialog = new SaveFileDialog();
 			timerRefreshNa = new System.Windows.Forms.Timer(components);
+			comboRefreshRate = new ComboBox();
+			cbRefreshRateSet = new CheckBox();
+			lblRefreshRate = new Label();
 			tabsContainer.SuspendLayout();
 			tabGeneral.SuspendLayout();
 			tabCpu.SuspendLayout();
@@ -560,6 +563,9 @@
 			// tabVideo
 			// 
 			tabVideo.BackColor = SystemColors.Control;
+			tabVideo.Controls.Add(comboRefreshRate);
+			tabVideo.Controls.Add(cbRefreshRateSet);
+			tabVideo.Controls.Add(lblRefreshRate);
 			tabVideo.Controls.Add(comboDoublescan);
 			tabVideo.Controls.Add(cbDoublescanSet);
 			tabVideo.Controls.Add(lblDoublescan);
@@ -584,9 +590,9 @@
 			// 
 			comboDoublescan.FormattingEnabled = true;
 			comboDoublescan.Items.AddRange(new object[] { "true", "false" });
-			comboDoublescan.Location = new Point(127, 112);
+			comboDoublescan.Location = new Point(139, 112);
 			comboDoublescan.Name = "comboDoublescan";
-			comboDoublescan.Size = new Size(470, 23);
+			comboDoublescan.Size = new Size(458, 23);
 			comboDoublescan.TabIndex = 41;
 			comboDoublescan.Tag = "cb=cbDoublescanSet|assoc=lblDoublescan|setting=render.doublescan";
 			// 
@@ -613,9 +619,9 @@
 			// 
 			comboScaler.FormattingEnabled = true;
 			comboScaler.Items.AddRange(new object[] { "normal2x", "normal3x", "normal4x", "normal5x", "hq2x", "hq3x", "advmame2x", "advmame3x", "advinterp2x", "advinterp3x", "2xsai", "super2xsai", "supereagle", "tv2x", "tv3x", "rgb2x", "rgb3x", "scan2x", "scan3x", "gray2x", "xbrz", "xbrz_bilinear", "none" });
-			comboScaler.Location = new Point(127, 83);
+			comboScaler.Location = new Point(139, 83);
 			comboScaler.Name = "comboScaler";
-			comboScaler.Size = new Size(470, 23);
+			comboScaler.Size = new Size(458, 23);
 			comboScaler.TabIndex = 31;
 			comboScaler.Tag = "cb=cbScalerSet|assoc=lblScaler|setting=render.scaler";
 			// 
@@ -645,9 +651,9 @@
 			// 
 			comboVideoOutput.FormattingEnabled = true;
 			comboVideoOutput.Items.AddRange(new object[] { "default", "ttf", "surface", "overlay", "opengl", "openglpp", "openglnb", "openglhq", "ddraw", "direct3d" });
-			comboVideoOutput.Location = new Point(127, 54);
+			comboVideoOutput.Location = new Point(139, 54);
 			comboVideoOutput.Name = "comboVideoOutput";
-			comboVideoOutput.Size = new Size(470, 23);
+			comboVideoOutput.Size = new Size(458, 23);
 			comboVideoOutput.TabIndex = 21;
 			comboVideoOutput.Tag = "cb=cbVideoOutputSet|assoc=lblVideoOutput|setting=sdl.output";
 			// 
@@ -684,9 +690,9 @@
 			// 
 			comboFrameskip.FormattingEnabled = true;
 			comboFrameskip.Items.AddRange(new object[] { "0", "5", "10", "20" });
-			comboFrameskip.Location = new Point(127, 25);
+			comboFrameskip.Location = new Point(139, 25);
 			comboFrameskip.Name = "comboFrameskip";
-			comboFrameskip.Size = new Size(470, 23);
+			comboFrameskip.Size = new Size(458, 23);
 			comboFrameskip.TabIndex = 11;
 			comboFrameskip.Tag = "cb=cbFrameskipSet|assoc=lblFrameskip|setting=render.frameskip";
 			// 
@@ -1178,6 +1184,35 @@
 			timerRefreshNa.Interval = 1000;
 			timerRefreshNa.Tick += timerRefreshNa_Tick;
 			// 
+			// comboRefreshRate
+			// 
+			comboRefreshRate.FormattingEnabled = true;
+			comboRefreshRate.Items.AddRange(new object[] { "50", "60" });
+			comboRefreshRate.Location = new Point(139, 141);
+			comboRefreshRate.Name = "comboRefreshRate";
+			comboRefreshRate.Size = new Size(458, 23);
+			comboRefreshRate.TabIndex = 58;
+			comboRefreshRate.Tag = "cb=cbRefreshRateSet|assoc=lblRefreshRate|setting=video.forcerate";
+			// 
+			// cbRefreshRateSet
+			// 
+			cbRefreshRateSet.AutoSize = true;
+			cbRefreshRateSet.Location = new Point(11, 145);
+			cbRefreshRateSet.Name = "cbRefreshRateSet";
+			cbRefreshRateSet.Size = new Size(15, 14);
+			cbRefreshRateSet.TabIndex = 50;
+			cbRefreshRateSet.Tag = "";
+			cbRefreshRateSet.UseVisualStyleBackColor = true;
+			// 
+			// lblRefreshRate
+			// 
+			lblRefreshRate.AutoSize = true;
+			lblRefreshRate.Location = new Point(36, 144);
+			lblRefreshRate.Name = "lblRefreshRate";
+			lblRefreshRate.Size = new Size(97, 15);
+			lblRefreshRate.TabIndex = 59;
+			lblRefreshRate.Text = "Refresh rate (Hz):";
+			// 
 			// MainForm
 			// 
 			AllowDrop = true;
@@ -1333,5 +1368,8 @@
 		private ComboBox comboDoublescan;
 		private CheckBox cbDoublescanSet;
 		private Label lblDoublescan;
+		private ComboBox comboRefreshRate;
+		private CheckBox cbRefreshRateSet;
+		private Label lblRefreshRate;
 	}
 }

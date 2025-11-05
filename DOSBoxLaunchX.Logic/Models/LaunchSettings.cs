@@ -188,6 +188,9 @@ public class LaunchSettings {
 
 		[GroupedSetting("render", "doublescan")]
 		public string? Doublescan { get; set; }
+
+		[GroupedSetting("video", "forcerate")]
+		public string? RefreshRate { get; set; }
 	}
 
 	public class PeripheralsSettings {
