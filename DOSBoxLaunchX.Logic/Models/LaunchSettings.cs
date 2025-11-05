@@ -50,6 +50,9 @@ public class LaunchSettings {
 	public VideoSettings Video { get; set; } = new();
 
 	[JsonIgnore]
+	public AudioSettings Audio { get; set; } = new();
+
+	[JsonIgnore]
 	public PeripheralsSettings Peripherals { get; set; } = new();
 
 	#endregion
@@ -191,6 +194,11 @@ public class LaunchSettings {
 
 		[GroupedSetting("video", "forcerate")]
 		public string? RefreshRate { get; set; }
+	}
+
+	public class AudioSettings {
+		[GroupedSetting("mixer", "nosound")]
+		public string? Silenced { get; set; }
 	}
 
 	public class PeripheralsSettings {

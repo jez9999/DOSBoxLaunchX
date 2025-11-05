@@ -68,6 +68,9 @@
 			lblCpuSet = new Label();
 			lblCore = new Label();
 			tabVideo = new TabPage();
+			comboRefreshRate = new ComboBox();
+			cbRefreshRateSet = new CheckBox();
+			lblRefreshRate = new Label();
 			comboDoublescan = new ComboBox();
 			cbDoublescanSet = new CheckBox();
 			lblDoublescan = new Label();
@@ -82,6 +85,10 @@
 			cbFrameskipSet = new CheckBox();
 			lblFrameskip = new Label();
 			tabAudio = new TabPage();
+			lblAudioSet = new Label();
+			comboSilenced = new ComboBox();
+			cbSilencedSet = new CheckBox();
+			lblSilenced = new Label();
 			tabPeripherals = new TabPage();
 			comboMouseSensitivity = new ComboBox();
 			cbMouseSensitivitySet = new CheckBox();
@@ -132,13 +139,11 @@
 			openFileDialog = new OpenFileDialog();
 			saveFileDialog = new SaveFileDialog();
 			timerRefreshNa = new System.Windows.Forms.Timer(components);
-			comboRefreshRate = new ComboBox();
-			cbRefreshRateSet = new CheckBox();
-			lblRefreshRate = new Label();
 			tabsContainer.SuspendLayout();
 			tabGeneral.SuspendLayout();
 			tabCpu.SuspendLayout();
 			tabVideo.SuspendLayout();
+			tabAudio.SuspendLayout();
 			tabPeripherals.SuspendLayout();
 			tabAutoexec.SuspendLayout();
 			tabCustom.SuspendLayout();
@@ -586,6 +591,35 @@
 			tabVideo.TabIndex = 1;
 			tabVideo.Text = "Video";
 			// 
+			// comboRefreshRate
+			// 
+			comboRefreshRate.FormattingEnabled = true;
+			comboRefreshRate.Items.AddRange(new object[] { "50", "60" });
+			comboRefreshRate.Location = new Point(139, 141);
+			comboRefreshRate.Name = "comboRefreshRate";
+			comboRefreshRate.Size = new Size(458, 23);
+			comboRefreshRate.TabIndex = 51;
+			comboRefreshRate.Tag = "cb=cbRefreshRateSet|assoc=lblRefreshRate|setting=video.forcerate";
+			// 
+			// cbRefreshRateSet
+			// 
+			cbRefreshRateSet.AutoSize = true;
+			cbRefreshRateSet.Location = new Point(11, 145);
+			cbRefreshRateSet.Name = "cbRefreshRateSet";
+			cbRefreshRateSet.Size = new Size(15, 14);
+			cbRefreshRateSet.TabIndex = 50;
+			cbRefreshRateSet.Tag = "";
+			cbRefreshRateSet.UseVisualStyleBackColor = true;
+			// 
+			// lblRefreshRate
+			// 
+			lblRefreshRate.AutoSize = true;
+			lblRefreshRate.Location = new Point(36, 144);
+			lblRefreshRate.Name = "lblRefreshRate";
+			lblRefreshRate.Size = new Size(97, 15);
+			lblRefreshRate.TabIndex = 59;
+			lblRefreshRate.Text = "Refresh rate (Hz):";
+			// 
 			// comboDoublescan
 			// 
 			comboDoublescan.FormattingEnabled = true;
@@ -718,11 +752,54 @@
 			// tabAudio
 			// 
 			tabAudio.BackColor = SystemColors.Control;
+			tabAudio.Controls.Add(lblAudioSet);
+			tabAudio.Controls.Add(comboSilenced);
+			tabAudio.Controls.Add(cbSilencedSet);
+			tabAudio.Controls.Add(lblSilenced);
 			tabAudio.Location = new Point(4, 24);
 			tabAudio.Name = "tabAudio";
 			tabAudio.Size = new Size(1227, 528);
 			tabAudio.TabIndex = 2;
 			tabAudio.Text = "Audio";
+			// 
+			// lblAudioSet
+			// 
+			lblAudioSet.AutoSize = true;
+			lblAudioSet.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+			lblAudioSet.Location = new Point(5, 7);
+			lblAudioSet.Name = "lblAudioSet";
+			lblAudioSet.Size = new Size(26, 15);
+			lblAudioSet.TabIndex = 51;
+			lblAudioSet.Text = "Set";
+			// 
+			// comboSilenced
+			// 
+			comboSilenced.FormattingEnabled = true;
+			comboSilenced.Items.AddRange(new object[] { "true", "false" });
+			comboSilenced.Location = new Point(139, 25);
+			comboSilenced.Name = "comboSilenced";
+			comboSilenced.Size = new Size(458, 23);
+			comboSilenced.TabIndex = 11;
+			comboSilenced.Tag = "cb=cbSilencedSet|assoc=lblSilenced|setting=mixer.nosound";
+			// 
+			// cbSilencedSet
+			// 
+			cbSilencedSet.AutoSize = true;
+			cbSilencedSet.Location = new Point(11, 29);
+			cbSilencedSet.Name = "cbSilencedSet";
+			cbSilencedSet.Size = new Size(15, 14);
+			cbSilencedSet.TabIndex = 10;
+			cbSilencedSet.Tag = "";
+			cbSilencedSet.UseVisualStyleBackColor = true;
+			// 
+			// lblSilenced
+			// 
+			lblSilenced.AutoSize = true;
+			lblSilenced.Location = new Point(36, 28);
+			lblSilenced.Name = "lblSilenced";
+			lblSilenced.Size = new Size(90, 15);
+			lblSilenced.TabIndex = 50;
+			lblSilenced.Text = "Sound silenced:";
 			// 
 			// tabPeripherals
 			// 
@@ -1184,35 +1261,6 @@
 			timerRefreshNa.Interval = 1000;
 			timerRefreshNa.Tick += timerRefreshNa_Tick;
 			// 
-			// comboRefreshRate
-			// 
-			comboRefreshRate.FormattingEnabled = true;
-			comboRefreshRate.Items.AddRange(new object[] { "50", "60" });
-			comboRefreshRate.Location = new Point(139, 141);
-			comboRefreshRate.Name = "comboRefreshRate";
-			comboRefreshRate.Size = new Size(458, 23);
-			comboRefreshRate.TabIndex = 58;
-			comboRefreshRate.Tag = "cb=cbRefreshRateSet|assoc=lblRefreshRate|setting=video.forcerate";
-			// 
-			// cbRefreshRateSet
-			// 
-			cbRefreshRateSet.AutoSize = true;
-			cbRefreshRateSet.Location = new Point(11, 145);
-			cbRefreshRateSet.Name = "cbRefreshRateSet";
-			cbRefreshRateSet.Size = new Size(15, 14);
-			cbRefreshRateSet.TabIndex = 50;
-			cbRefreshRateSet.Tag = "";
-			cbRefreshRateSet.UseVisualStyleBackColor = true;
-			// 
-			// lblRefreshRate
-			// 
-			lblRefreshRate.AutoSize = true;
-			lblRefreshRate.Location = new Point(36, 144);
-			lblRefreshRate.Name = "lblRefreshRate";
-			lblRefreshRate.Size = new Size(97, 15);
-			lblRefreshRate.TabIndex = 59;
-			lblRefreshRate.Text = "Refresh rate (Hz):";
-			// 
 			// MainForm
 			// 
 			AllowDrop = true;
@@ -1243,6 +1291,8 @@
 			tabCpu.PerformLayout();
 			tabVideo.ResumeLayout(false);
 			tabVideo.PerformLayout();
+			tabAudio.ResumeLayout(false);
+			tabAudio.PerformLayout();
 			tabPeripherals.ResumeLayout(false);
 			tabPeripherals.PerformLayout();
 			tabAutoexec.ResumeLayout(false);
@@ -1371,5 +1421,9 @@
 		private ComboBox comboRefreshRate;
 		private CheckBox cbRefreshRateSet;
 		private Label lblRefreshRate;
+		private Label lblAudioSet;
+		private ComboBox comboSilenced;
+		private CheckBox cbSilencedSet;
+		private Label lblSilenced;
 	}
 }
