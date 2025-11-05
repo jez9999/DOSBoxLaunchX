@@ -214,6 +214,21 @@ public class LaunchSettings {
 
 		[GroupedSetting("midi", "mt32.model")]
 		public string? Mt32Model { get; set; }
+
+		[GroupedSetting("sblaster", "sbtype")]
+		public string? SbType { get; set; }
+
+		[GroupedSetting("sblaster", "sbbase")]
+		public string? SbBase { get; set; }
+
+		[GroupedSetting("sblaster", "irq")]
+		public string? IRQ { get; set; }
+
+		[GroupedSetting("sblaster", "dma")]
+		public string? DMA { get; set; }
+
+		[GroupedSetting("sblaster", "hdma")]
+		public string? HighDMA { get; set; }
 	}
 
 	public class PeripheralsSettings {
