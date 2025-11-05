@@ -85,6 +85,9 @@
 			cbFrameskipSet = new CheckBox();
 			lblFrameskip = new Label();
 			tabAudio = new TabPage();
+			comboTandySound = new ComboBox();
+			cbTandySoundSet = new CheckBox();
+			lblTandySound = new Label();
 			comboPcSpeaker = new ComboBox();
 			cbPcSpeakerSet = new CheckBox();
 			lblPcSpeaker = new Label();
@@ -126,6 +129,9 @@
 			cbSilencedSet = new CheckBox();
 			lblSilenced = new Label();
 			tabPeripherals = new TabPage();
+			comboKbLayout = new ComboBox();
+			cbKbLayoutSet = new CheckBox();
+			lblKbLayout = new Label();
 			comboMouseSensitivity = new ComboBox();
 			cbMouseSensitivitySet = new CheckBox();
 			lblMouseSensitivity = new Label();
@@ -176,9 +182,6 @@
 			saveFileDialog = new SaveFileDialog();
 			timerRefreshNa = new System.Windows.Forms.Timer(components);
 			folderBrowserDialog = new FolderBrowserDialog();
-			comboTandySound = new ComboBox();
-			cbTandySoundSet = new CheckBox();
-			lblTandySound = new Label();
 			tabsContainer.SuspendLayout();
 			tabGeneral.SuspendLayout();
 			tabCpu.SuspendLayout();
@@ -815,6 +818,35 @@
 			tabAudio.TabIndex = 2;
 			tabAudio.Text = "Audio";
 			// 
+			// comboTandySound
+			// 
+			comboTandySound.FormattingEnabled = true;
+			comboTandySound.Items.AddRange(new object[] { "auto", "on", "off" });
+			comboTandySound.Location = new Point(139, 417);
+			comboTandySound.Name = "comboTandySound";
+			comboTandySound.Size = new Size(458, 23);
+			comboTandySound.TabIndex = 131;
+			comboTandySound.Tag = "cb=cbTandySoundSet|assoc=lblTandySound|setting=speaker.tandy";
+			// 
+			// cbTandySoundSet
+			// 
+			cbTandySoundSet.AutoSize = true;
+			cbTandySoundSet.Location = new Point(11, 421);
+			cbTandySoundSet.Name = "cbTandySoundSet";
+			cbTandySoundSet.Size = new Size(15, 14);
+			cbTandySoundSet.TabIndex = 130;
+			cbTandySoundSet.Tag = "";
+			cbTandySoundSet.UseVisualStyleBackColor = true;
+			// 
+			// lblTandySound
+			// 
+			lblTandySound.AutoSize = true;
+			lblTandySound.Location = new Point(36, 420);
+			lblTandySound.Name = "lblTandySound";
+			lblTandySound.Size = new Size(77, 15);
+			lblTandySound.TabIndex = 122;
+			lblTandySound.Text = "Tandy sound:";
+			// 
 			// comboPcSpeaker
 			// 
 			comboPcSpeaker.FormattingEnabled = true;
@@ -1230,6 +1262,9 @@
 			// tabPeripherals
 			// 
 			tabPeripherals.BackColor = SystemColors.Control;
+			tabPeripherals.Controls.Add(comboKbLayout);
+			tabPeripherals.Controls.Add(cbKbLayoutSet);
+			tabPeripherals.Controls.Add(lblKbLayout);
 			tabPeripherals.Controls.Add(comboMouseSensitivity);
 			tabPeripherals.Controls.Add(cbMouseSensitivitySet);
 			tabPeripherals.Controls.Add(lblMouseSensitivity);
@@ -1245,6 +1280,35 @@
 			tabPeripherals.Size = new Size(1227, 528);
 			tabPeripherals.TabIndex = 3;
 			tabPeripherals.Text = "Peripherals";
+			// 
+			// comboKbLayout
+			// 
+			comboKbLayout.FormattingEnabled = true;
+			comboKbLayout.Items.AddRange(new object[] { "auto", "us", "cf", "uk", "fr", "gr", "sv", "no", "ru", "sp", "dk", "it", "nl", "pl", "su", "po", "br", "be", "hu", "sf", "sg", "dv103" });
+			comboKbLayout.Location = new Point(188, 112);
+			comboKbLayout.Name = "comboKbLayout";
+			comboKbLayout.Size = new Size(409, 23);
+			comboKbLayout.TabIndex = 41;
+			comboKbLayout.Tag = "cb=cbKbLayoutSet|assoc=lblKbLayout|setting=dos.keyboardlayout";
+			// 
+			// cbKbLayoutSet
+			// 
+			cbKbLayoutSet.AutoSize = true;
+			cbKbLayoutSet.Location = new Point(11, 116);
+			cbKbLayoutSet.Name = "cbKbLayoutSet";
+			cbKbLayoutSet.Size = new Size(15, 14);
+			cbKbLayoutSet.TabIndex = 40;
+			cbKbLayoutSet.Tag = "";
+			cbKbLayoutSet.UseVisualStyleBackColor = true;
+			// 
+			// lblKbLayout
+			// 
+			lblKbLayout.AutoSize = true;
+			lblKbLayout.Location = new Point(36, 115);
+			lblKbLayout.Name = "lblKbLayout";
+			lblKbLayout.Size = new Size(96, 15);
+			lblKbLayout.TabIndex = 68;
+			lblKbLayout.Text = "Keyboard layout:";
 			// 
 			// comboMouseSensitivity
 			// 
@@ -1691,35 +1755,6 @@
 			// 
 			folderBrowserDialog.RootFolder = Environment.SpecialFolder.MyComputer;
 			// 
-			// comboTandySound
-			// 
-			comboTandySound.FormattingEnabled = true;
-			comboTandySound.Items.AddRange(new object[] { "auto", "on", "off" });
-			comboTandySound.Location = new Point(139, 417);
-			comboTandySound.Name = "comboTandySound";
-			comboTandySound.Size = new Size(458, 23);
-			comboTandySound.TabIndex = 131;
-			comboTandySound.Tag = "cb=cbTandySoundSet|assoc=lblTandySound|setting=speaker.tandy";
-			// 
-			// cbTandySoundSet
-			// 
-			cbTandySoundSet.AutoSize = true;
-			cbTandySoundSet.Location = new Point(11, 421);
-			cbTandySoundSet.Name = "cbTandySoundSet";
-			cbTandySoundSet.Size = new Size(15, 14);
-			cbTandySoundSet.TabIndex = 130;
-			cbTandySoundSet.Tag = "";
-			cbTandySoundSet.UseVisualStyleBackColor = true;
-			// 
-			// lblTandySound
-			// 
-			lblTandySound.AutoSize = true;
-			lblTandySound.Location = new Point(36, 420);
-			lblTandySound.Name = "lblTandySound";
-			lblTandySound.Size = new Size(77, 15);
-			lblTandySound.TabIndex = 122;
-			lblTandySound.Text = "Tandy sound:";
-			// 
 			// MainForm
 			// 
 			AllowDrop = true;
@@ -1928,5 +1963,8 @@
 		private ComboBox comboTandySound;
 		private CheckBox cbTandySoundSet;
 		private Label lblTandySound;
+		private ComboBox comboKbLayout;
+		private CheckBox cbKbLayoutSet;
+		private Label lblKbLayout;
 	}
 }

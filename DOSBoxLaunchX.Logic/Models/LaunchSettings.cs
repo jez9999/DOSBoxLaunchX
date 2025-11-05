@@ -246,6 +246,9 @@ public class LaunchSettings {
 
 		[GroupedSetting("sdl", "sensitivity")]
 		public string? MouseSensitivity { get; set; }
+
+		[GroupedSetting("dos", "keyboardlayout")]
+		public string? KbLayout { get; set; }
 	}
 
 	#endregion
