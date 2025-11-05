@@ -139,6 +139,9 @@
 			openFileDialog = new OpenFileDialog();
 			saveFileDialog = new SaveFileDialog();
 			timerRefreshNa = new System.Windows.Forms.Timer(components);
+			comboSampleRate = new ComboBox();
+			cbSampleRateSet = new CheckBox();
+			lblSampleRate = new Label();
 			tabsContainer.SuspendLayout();
 			tabGeneral.SuspendLayout();
 			tabCpu.SuspendLayout();
@@ -752,6 +755,9 @@
 			// tabAudio
 			// 
 			tabAudio.BackColor = SystemColors.Control;
+			tabAudio.Controls.Add(comboSampleRate);
+			tabAudio.Controls.Add(cbSampleRateSet);
+			tabAudio.Controls.Add(lblSampleRate);
 			tabAudio.Controls.Add(lblAudioSet);
 			tabAudio.Controls.Add(comboSilenced);
 			tabAudio.Controls.Add(cbSilencedSet);
@@ -1261,6 +1267,35 @@
 			timerRefreshNa.Interval = 1000;
 			timerRefreshNa.Tick += timerRefreshNa_Tick;
 			// 
+			// comboSampleRate
+			// 
+			comboSampleRate.FormattingEnabled = true;
+			comboSampleRate.Items.AddRange(new object[] { "44100", "48000" });
+			comboSampleRate.Location = new Point(139, 54);
+			comboSampleRate.Name = "comboSampleRate";
+			comboSampleRate.Size = new Size(458, 23);
+			comboSampleRate.TabIndex = 21;
+			comboSampleRate.Tag = "cb=cbSampleRateSet|assoc=lblSampleRate|setting=mixer.rate";
+			// 
+			// cbSampleRateSet
+			// 
+			cbSampleRateSet.AutoSize = true;
+			cbSampleRateSet.Location = new Point(11, 58);
+			cbSampleRateSet.Name = "cbSampleRateSet";
+			cbSampleRateSet.Size = new Size(15, 14);
+			cbSampleRateSet.TabIndex = 20;
+			cbSampleRateSet.Tag = "";
+			cbSampleRateSet.UseVisualStyleBackColor = true;
+			// 
+			// lblSampleRate
+			// 
+			lblSampleRate.AutoSize = true;
+			lblSampleRate.Location = new Point(36, 57);
+			lblSampleRate.Name = "lblSampleRate";
+			lblSampleRate.Size = new Size(97, 15);
+			lblSampleRate.TabIndex = 54;
+			lblSampleRate.Text = "Sample rate (Hz):";
+			// 
 			// MainForm
 			// 
 			AllowDrop = true;
@@ -1425,5 +1460,8 @@
 		private ComboBox comboSilenced;
 		private CheckBox cbSilencedSet;
 		private Label lblSilenced;
+		private ComboBox comboSampleRate;
+		private CheckBox cbSampleRateSet;
+		private Label lblSampleRate;
 	}
 }

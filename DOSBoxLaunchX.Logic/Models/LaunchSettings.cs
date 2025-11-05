@@ -199,6 +199,9 @@ public class LaunchSettings {
 	public class AudioSettings {
 		[GroupedSetting("mixer", "nosound")]
 		public string? Silenced { get; set; }
+
+		[GroupedSetting("mixer", "rate")]
+		public string? SampleRate { get; set; }
 	}
 
 	public class PeripheralsSettings {
