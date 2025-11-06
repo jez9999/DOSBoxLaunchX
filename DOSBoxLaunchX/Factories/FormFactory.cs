@@ -70,4 +70,8 @@ public class FormFactory(IServiceProvider sp) {
 	public LauncherForm CreateLauncherForm() {
 		return ActivatorUtilities.CreateInstance<LauncherForm>(_sp);
 	}
+
+	public LoggingSettingForm CreateLoggingSettingForm(LoggingSettingFormDynamicParams dynamicParams) {
+		return ActivatorUtilities.CreateInstance<LoggingSettingForm>(_sp, dynamicParams);
+	}
 }

@@ -207,6 +207,7 @@
 			txtPostAutoexec = new TextBox();
 			txtPreAutoexec = new TextBox();
 			tabCustom = new TabPage();
+			btnAddCustomLoggingSetting = new Button();
 			lblHeadingValue = new Label();
 			lblHeadingKey = new Label();
 			lblHeadingSection = new Label();
@@ -362,11 +363,14 @@
 			// lblLogOutputFile
 			// 
 			lblLogOutputFile.AutoSize = true;
+			lblLogOutputFile.Cursor = Cursors.Help;
+			lblLogOutputFile.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point, 0);
 			lblLogOutputFile.Location = new Point(36, 309);
 			lblLogOutputFile.Name = "lblLogOutputFile";
 			lblLogOutputFile.Size = new Size(126, 15);
 			lblLogOutputFile.TabIndex = 62;
 			lblLogOutputFile.Text = "Logging output to file:";
+			lblLogOutputFile.Click += lblLogOutputFile_Click;
 			// 
 			// cbOpenLoggingConsoleSet
 			// 
@@ -2166,6 +2170,7 @@
 			// tabCustom
 			// 
 			tabCustom.BackColor = SystemColors.Control;
+			tabCustom.Controls.Add(btnAddCustomLoggingSetting);
 			tabCustom.Controls.Add(lblHeadingValue);
 			tabCustom.Controls.Add(lblHeadingKey);
 			tabCustom.Controls.Add(lblHeadingSection);
@@ -2176,6 +2181,16 @@
 			tabCustom.Size = new Size(1227, 528);
 			tabCustom.TabIndex = 4;
 			tabCustom.Text = "Custom settings";
+			// 
+			// btnAddCustomLoggingSetting
+			// 
+			btnAddCustomLoggingSetting.Location = new Point(223, 502);
+			btnAddCustomLoggingSetting.Name = "btnAddCustomLoggingSetting";
+			btnAddCustomLoggingSetting.Size = new Size(212, 23);
+			btnAddCustomLoggingSetting.TabIndex = 2;
+			btnAddCustomLoggingSetting.Text = "Add custom logging setting";
+			btnAddCustomLoggingSetting.UseVisualStyleBackColor = true;
+			btnAddCustomLoggingSetting.Click += btnAddCustomLoggingSetting_Click;
 			// 
 			// lblHeadingValue
 			// 
@@ -2725,5 +2740,6 @@
 		private CheckBox cbLogOutputFileSet;
 		private TextBox txtLogOutputFile;
 		private Label lblLogOutputFile;
+		private Button btnAddCustomLoggingSetting;
 	}
 }

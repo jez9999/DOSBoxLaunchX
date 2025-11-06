@@ -991,6 +991,39 @@ public partial class MainForm : Form {
 		}
 	}
 
+	private void btnAddCustomLoggingSetting_Click(object sender, EventArgs ea) {
+		var loggingSection = "log";
+
+		using var logForm = _formFact.CreateLoggingSettingForm(new LoggingSettingFormDynamicParams {
+			LoggingTypeVerbosityValidator = (formVals) => {
+				formVals.LoggingType = formVals.LoggingType.Trim().ToLower();
+				formVals.Verbosity = formVals.Verbosity.Trim().ToLower();
+				string fullKey = string.IsNullOrEmpty(formVals.LoggingType) ? loggingSection : $"{loggingSection}.{formVals.LoggingType}";
+
+				var reserved = sectionKeyReserved(loggingSection, formVals.LoggingType);
+				if (reserved != null) {
+					return $@"The section/key ""{reserved}"" is already managed by the main settings and can't be overridden by a custom setting.";
+				}
+
+				var uiSetts = getCustomSettingsFromUi();
+				if (uiSetts.TryGetValue((loggingSection, string.IsNullOrWhiteSpace(formVals.LoggingType) ? null : formVals.LoggingType), out var values) && values.Count > 0) {
+					return $@"The section/key ""{fullKey}"" already exists in custom settings.";
+				}
+
+				return null; // Indicates no error
+			}
+		});
+		logForm.ShowDialog();
+		if (logForm.LoggingType == null || logForm.Verbosity == null) { return; }
+
+		addCustomSettingRow(flowPnlCustom, loggingSection, logForm.LoggingType, logForm.Verbosity);
+
+		if (!_shortcutDirty) {
+			_shortcutDirty = true;
+			updateUiDirtyState();
+		}
+	}
+
 	private void timerRefreshNa_Tick(object sender, EventArgs ea) {
 		// This is needed because when we go to edit globals, the animation to disable the general controls
 		// can mean that N/A gets drawn behind one of these controls, as it's drawn before the control's
@@ -1086,5 +1119,14 @@ public partial class MainForm : Form {
 
 	private void btnLogOutputFileBrowse_Click(object sender, EventArgs ea) {
 		doBrowseLogOutputFile();
+	}
+
+	private void lblLogOutputFile_Click(object sender, EventArgs ea) {
+		MessageBoxHelper.ShowInfoMessage(
+			"""
+			Note that although you can specify a file to which DOSBox logging will be output, you can still just view the logs in the logging console too. It's not necessary to go through an actual file.
+			""",
+			"Logging Output to File setting"
+		);
 	}
 }
