@@ -51,6 +51,9 @@
 			txtName = new TextBox();
 			lblName = new Label();
 			tabCpu = new TabPage();
+			comboMemSize = new ComboBox();
+			cbMemSizeSet = new CheckBox();
+			lblMemSize = new Label();
 			comboMachine = new ComboBox();
 			cbMachineSet = new CheckBox();
 			lblMachine = new Label();
@@ -129,6 +132,12 @@
 			cbSilencedSet = new CheckBox();
 			lblSilenced = new Label();
 			tabPeripherals = new TabPage();
+			comboMouseAutolockFeedback = new ComboBox();
+			cbMouseAutolockFeedbackSet = new CheckBox();
+			lblMouseAutolockFeedback = new Label();
+			comboMouseAutolock = new ComboBox();
+			cbMouseAutolockSet = new CheckBox();
+			lblMouseAutolock = new Label();
 			comboKbLayout = new ComboBox();
 			cbKbLayoutSet = new CheckBox();
 			lblKbLayout = new Label();
@@ -182,9 +191,6 @@
 			saveFileDialog = new SaveFileDialog();
 			timerRefreshNa = new System.Windows.Forms.Timer(components);
 			folderBrowserDialog = new FolderBrowserDialog();
-			comboMemSize = new ComboBox();
-			cbMemSizeSet = new CheckBox();
-			lblMemSize = new Label();
 			tabsContainer.SuspendLayout();
 			tabGeneral.SuspendLayout();
 			tabCpu.SuspendLayout();
@@ -460,6 +466,35 @@
 			tabCpu.Size = new Size(1227, 528);
 			tabCpu.TabIndex = 0;
 			tabCpu.Text = "CPU";
+			// 
+			// comboMemSize
+			// 
+			comboMemSize.FormattingEnabled = true;
+			comboMemSize.Items.AddRange(new object[] { "16", "32", "64", "128", "8", "4", "2", "1" });
+			comboMemSize.Location = new Point(158, 170);
+			comboMemSize.Name = "comboMemSize";
+			comboMemSize.Size = new Size(439, 23);
+			comboMemSize.TabIndex = 61;
+			comboMemSize.Tag = "cb=cbMemSizeSet|assoc=lblMemSize|setting=dosbox.memsize";
+			// 
+			// cbMemSizeSet
+			// 
+			cbMemSizeSet.AutoSize = true;
+			cbMemSizeSet.Location = new Point(11, 174);
+			cbMemSizeSet.Name = "cbMemSizeSet";
+			cbMemSizeSet.Size = new Size(15, 14);
+			cbMemSizeSet.TabIndex = 60;
+			cbMemSizeSet.Tag = "";
+			cbMemSizeSet.UseVisualStyleBackColor = true;
+			// 
+			// lblMemSize
+			// 
+			lblMemSize.AutoSize = true;
+			lblMemSize.Location = new Point(36, 173);
+			lblMemSize.Name = "lblMemSize";
+			lblMemSize.Size = new Size(106, 15);
+			lblMemSize.TabIndex = 52;
+			lblMemSize.Text = "Memory size (MB):";
 			// 
 			// comboMachine
 			// 
@@ -1268,6 +1303,12 @@
 			// tabPeripherals
 			// 
 			tabPeripherals.BackColor = SystemColors.Control;
+			tabPeripherals.Controls.Add(comboMouseAutolockFeedback);
+			tabPeripherals.Controls.Add(cbMouseAutolockFeedbackSet);
+			tabPeripherals.Controls.Add(lblMouseAutolockFeedback);
+			tabPeripherals.Controls.Add(comboMouseAutolock);
+			tabPeripherals.Controls.Add(cbMouseAutolockSet);
+			tabPeripherals.Controls.Add(lblMouseAutolock);
 			tabPeripherals.Controls.Add(comboKbLayout);
 			tabPeripherals.Controls.Add(cbKbLayoutSet);
 			tabPeripherals.Controls.Add(lblKbLayout);
@@ -1287,30 +1328,88 @@
 			tabPeripherals.TabIndex = 3;
 			tabPeripherals.Text = "Peripherals";
 			// 
+			// comboMouseAutolockFeedback
+			// 
+			comboMouseAutolockFeedback.FormattingEnabled = true;
+			comboMouseAutolockFeedback.Items.AddRange(new object[] { "beep", "flash", "none" });
+			comboMouseAutolockFeedback.Location = new Point(188, 170);
+			comboMouseAutolockFeedback.Name = "comboMouseAutolockFeedback";
+			comboMouseAutolockFeedback.Size = new Size(409, 23);
+			comboMouseAutolockFeedback.TabIndex = 61;
+			comboMouseAutolockFeedback.Tag = "cb=cbMouseAutolockFeedbackSet|assoc=lblMouseAutolockFeedback|setting=sdl.autolock_feedback";
+			// 
+			// cbMouseAutolockFeedbackSet
+			// 
+			cbMouseAutolockFeedbackSet.AutoSize = true;
+			cbMouseAutolockFeedbackSet.Location = new Point(11, 174);
+			cbMouseAutolockFeedbackSet.Name = "cbMouseAutolockFeedbackSet";
+			cbMouseAutolockFeedbackSet.Size = new Size(15, 14);
+			cbMouseAutolockFeedbackSet.TabIndex = 60;
+			cbMouseAutolockFeedbackSet.Tag = "";
+			cbMouseAutolockFeedbackSet.UseVisualStyleBackColor = true;
+			// 
+			// lblMouseAutolockFeedback
+			// 
+			lblMouseAutolockFeedback.AutoSize = true;
+			lblMouseAutolockFeedback.Location = new Point(36, 173);
+			lblMouseAutolockFeedback.Name = "lblMouseAutolockFeedback";
+			lblMouseAutolockFeedback.Size = new Size(135, 15);
+			lblMouseAutolockFeedback.TabIndex = 74;
+			lblMouseAutolockFeedback.Text = "Autolock feedback type:";
+			// 
+			// comboMouseAutolock
+			// 
+			comboMouseAutolock.FormattingEnabled = true;
+			comboMouseAutolock.Items.AddRange(new object[] { "true", "false" });
+			comboMouseAutolock.Location = new Point(188, 141);
+			comboMouseAutolock.Name = "comboMouseAutolock";
+			comboMouseAutolock.Size = new Size(409, 23);
+			comboMouseAutolock.TabIndex = 51;
+			comboMouseAutolock.Tag = "cb=cbMouseAutolockSet|assoc=lblMouseAutolock|setting=sdl.autolock";
+			// 
+			// cbMouseAutolockSet
+			// 
+			cbMouseAutolockSet.AutoSize = true;
+			cbMouseAutolockSet.Location = new Point(11, 145);
+			cbMouseAutolockSet.Name = "cbMouseAutolockSet";
+			cbMouseAutolockSet.Size = new Size(15, 14);
+			cbMouseAutolockSet.TabIndex = 50;
+			cbMouseAutolockSet.Tag = "";
+			cbMouseAutolockSet.UseVisualStyleBackColor = true;
+			// 
+			// lblMouseAutolock
+			// 
+			lblMouseAutolock.AutoSize = true;
+			lblMouseAutolock.Location = new Point(36, 144);
+			lblMouseAutolock.Name = "lblMouseAutolock";
+			lblMouseAutolock.Size = new Size(95, 15);
+			lblMouseAutolock.TabIndex = 71;
+			lblMouseAutolock.Text = "Mouse autolock:";
+			// 
 			// comboKbLayout
 			// 
 			comboKbLayout.FormattingEnabled = true;
 			comboKbLayout.Items.AddRange(new object[] { "auto", "us", "cf", "uk", "fr", "gr", "sv", "no", "ru", "sp", "dk", "it", "nl", "pl", "su", "po", "br", "be", "hu", "sf", "sg", "dv103" });
-			comboKbLayout.Location = new Point(188, 112);
+			comboKbLayout.Location = new Point(188, 25);
 			comboKbLayout.Name = "comboKbLayout";
 			comboKbLayout.Size = new Size(409, 23);
-			comboKbLayout.TabIndex = 41;
+			comboKbLayout.TabIndex = 11;
 			comboKbLayout.Tag = "cb=cbKbLayoutSet|assoc=lblKbLayout|setting=dos.keyboardlayout";
 			// 
 			// cbKbLayoutSet
 			// 
 			cbKbLayoutSet.AutoSize = true;
-			cbKbLayoutSet.Location = new Point(11, 116);
+			cbKbLayoutSet.Location = new Point(11, 29);
 			cbKbLayoutSet.Name = "cbKbLayoutSet";
 			cbKbLayoutSet.Size = new Size(15, 14);
-			cbKbLayoutSet.TabIndex = 40;
+			cbKbLayoutSet.TabIndex = 10;
 			cbKbLayoutSet.Tag = "";
 			cbKbLayoutSet.UseVisualStyleBackColor = true;
 			// 
 			// lblKbLayout
 			// 
 			lblKbLayout.AutoSize = true;
-			lblKbLayout.Location = new Point(36, 115);
+			lblKbLayout.Location = new Point(36, 28);
 			lblKbLayout.Name = "lblKbLayout";
 			lblKbLayout.Size = new Size(96, 15);
 			lblKbLayout.TabIndex = 68;
@@ -1320,26 +1419,26 @@
 			// 
 			comboMouseSensitivity.FormattingEnabled = true;
 			comboMouseSensitivity.Items.AddRange(new object[] { "100", "50,100", "35,75", "100,-50" });
-			comboMouseSensitivity.Location = new Point(188, 83);
+			comboMouseSensitivity.Location = new Point(188, 112);
 			comboMouseSensitivity.Name = "comboMouseSensitivity";
 			comboMouseSensitivity.Size = new Size(409, 23);
-			comboMouseSensitivity.TabIndex = 31;
+			comboMouseSensitivity.TabIndex = 41;
 			comboMouseSensitivity.Tag = "cb=cbMouseSensitivitySet|assoc=lblMouseSensitivity|setting=sdl.sensitivity";
 			// 
 			// cbMouseSensitivitySet
 			// 
 			cbMouseSensitivitySet.AutoSize = true;
-			cbMouseSensitivitySet.Location = new Point(11, 87);
+			cbMouseSensitivitySet.Location = new Point(11, 116);
 			cbMouseSensitivitySet.Name = "cbMouseSensitivitySet";
 			cbMouseSensitivitySet.Size = new Size(15, 14);
-			cbMouseSensitivitySet.TabIndex = 30;
+			cbMouseSensitivitySet.TabIndex = 40;
 			cbMouseSensitivitySet.Tag = "";
 			cbMouseSensitivitySet.UseVisualStyleBackColor = true;
 			// 
 			// lblMouseSensitivity
 			// 
 			lblMouseSensitivity.AutoSize = true;
-			lblMouseSensitivity.Location = new Point(36, 86);
+			lblMouseSensitivity.Location = new Point(36, 115);
 			lblMouseSensitivity.Name = "lblMouseSensitivity";
 			lblMouseSensitivity.Size = new Size(101, 15);
 			lblMouseSensitivity.TabIndex = 65;
@@ -1349,26 +1448,26 @@
 			// 
 			comboMouseEmulation.FormattingEnabled = true;
 			comboMouseEmulation.Items.AddRange(new object[] { "integration", "locked", "always", "never" });
-			comboMouseEmulation.Location = new Point(188, 25);
+			comboMouseEmulation.Location = new Point(188, 54);
 			comboMouseEmulation.Name = "comboMouseEmulation";
 			comboMouseEmulation.Size = new Size(409, 23);
-			comboMouseEmulation.TabIndex = 11;
+			comboMouseEmulation.TabIndex = 21;
 			comboMouseEmulation.Tag = "cb=cbMouseEmulationSet|assoc=lblMouseEmulation|setting=sdl.mouse_emulation";
 			// 
 			// cbMouseEmulationSet
 			// 
 			cbMouseEmulationSet.AutoSize = true;
-			cbMouseEmulationSet.Location = new Point(11, 29);
+			cbMouseEmulationSet.Location = new Point(11, 58);
 			cbMouseEmulationSet.Name = "cbMouseEmulationSet";
 			cbMouseEmulationSet.Size = new Size(15, 14);
-			cbMouseEmulationSet.TabIndex = 10;
+			cbMouseEmulationSet.TabIndex = 20;
 			cbMouseEmulationSet.Tag = "";
 			cbMouseEmulationSet.UseVisualStyleBackColor = true;
 			// 
 			// lblMouseEmulation
 			// 
 			lblMouseEmulation.AutoSize = true;
-			lblMouseEmulation.Location = new Point(36, 28);
+			lblMouseEmulation.Location = new Point(36, 57);
 			lblMouseEmulation.Name = "lblMouseEmulation";
 			lblMouseEmulation.Size = new Size(103, 15);
 			lblMouseEmulation.TabIndex = 62;
@@ -1388,30 +1487,33 @@
 			// 
 			comboMouseMiddleUnlock.FormattingEnabled = true;
 			comboMouseMiddleUnlock.Items.AddRange(new object[] { "none", "auto", "manual", "both" });
-			comboMouseMiddleUnlock.Location = new Point(188, 54);
+			comboMouseMiddleUnlock.Location = new Point(188, 83);
 			comboMouseMiddleUnlock.Name = "comboMouseMiddleUnlock";
 			comboMouseMiddleUnlock.Size = new Size(409, 23);
-			comboMouseMiddleUnlock.TabIndex = 21;
+			comboMouseMiddleUnlock.TabIndex = 31;
 			comboMouseMiddleUnlock.Tag = "cb=cbMouseMiddleUnlockSet|assoc=lblMouseMiddleUnlock|setting=sdl.middle_unlock";
 			// 
 			// cbMouseMiddleUnlockSet
 			// 
 			cbMouseMiddleUnlockSet.AutoSize = true;
-			cbMouseMiddleUnlockSet.Location = new Point(11, 58);
+			cbMouseMiddleUnlockSet.Location = new Point(11, 87);
 			cbMouseMiddleUnlockSet.Name = "cbMouseMiddleUnlockSet";
 			cbMouseMiddleUnlockSet.Size = new Size(15, 14);
-			cbMouseMiddleUnlockSet.TabIndex = 20;
+			cbMouseMiddleUnlockSet.TabIndex = 30;
 			cbMouseMiddleUnlockSet.Tag = "";
 			cbMouseMiddleUnlockSet.UseVisualStyleBackColor = true;
 			// 
 			// lblMouseMiddleUnlock
 			// 
 			lblMouseMiddleUnlock.AutoSize = true;
-			lblMouseMiddleUnlock.Location = new Point(36, 57);
+			lblMouseMiddleUnlock.Cursor = Cursors.Help;
+			lblMouseMiddleUnlock.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point, 0);
+			lblMouseMiddleUnlock.Location = new Point(36, 86);
 			lblMouseMiddleUnlock.Name = "lblMouseMiddleUnlock";
 			lblMouseMiddleUnlock.Size = new Size(146, 15);
 			lblMouseMiddleUnlock.TabIndex = 53;
 			lblMouseMiddleUnlock.Text = "Middle mouse btn unlock:";
+			lblMouseMiddleUnlock.Click += lblMouseMiddleUnlock_Click;
 			// 
 			// tabAutoexec
 			// 
@@ -1761,35 +1863,6 @@
 			// 
 			folderBrowserDialog.RootFolder = Environment.SpecialFolder.MyComputer;
 			// 
-			// comboMemSize
-			// 
-			comboMemSize.FormattingEnabled = true;
-			comboMemSize.Items.AddRange(new object[] { "16", "32", "64", "128", "8", "4", "2", "1" });
-			comboMemSize.Location = new Point(158, 170);
-			comboMemSize.Name = "comboMemSize";
-			comboMemSize.Size = new Size(439, 23);
-			comboMemSize.TabIndex = 61;
-			comboMemSize.Tag = "cb=cbMemSizeSet|assoc=lblMemSize|setting=dosbox.memsize";
-			// 
-			// cbMemSizeSet
-			// 
-			cbMemSizeSet.AutoSize = true;
-			cbMemSizeSet.Location = new Point(11, 174);
-			cbMemSizeSet.Name = "cbMemSizeSet";
-			cbMemSizeSet.Size = new Size(15, 14);
-			cbMemSizeSet.TabIndex = 60;
-			cbMemSizeSet.Tag = "";
-			cbMemSizeSet.UseVisualStyleBackColor = true;
-			// 
-			// lblMemSize
-			// 
-			lblMemSize.AutoSize = true;
-			lblMemSize.Location = new Point(36, 173);
-			lblMemSize.Name = "lblMemSize";
-			lblMemSize.Size = new Size(106, 15);
-			lblMemSize.TabIndex = 52;
-			lblMemSize.Text = "Memory size (MB):";
-			// 
 			// MainForm
 			// 
 			AllowDrop = true;
@@ -2004,5 +2077,11 @@
 		private ComboBox comboMemSize;
 		private CheckBox cbMemSizeSet;
 		private Label lblMemSize;
+		private ComboBox comboMouseAutolock;
+		private CheckBox cbMouseAutolockSet;
+		private Label lblMouseAutolock;
+		private ComboBox comboMouseAutolockFeedback;
+		private CheckBox cbMouseAutolockFeedbackSet;
+		private Label lblMouseAutolockFeedback;
 	}
 }

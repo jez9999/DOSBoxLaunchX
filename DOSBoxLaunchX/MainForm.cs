@@ -968,4 +968,17 @@ public partial class MainForm : Form {
 	private void btnMt32RomDirBrowse_Click(object sender, EventArgs ea) {
 		doBrowseMt32Romdir();
 	}
+
+	private void lblMouseMiddleUnlock_Click(object sender, EventArgs ea) {
+		MessageBoxHelper.ShowInfoMessage(
+			"""
+			When this is set to 'manual', middle-click unlock works only with 'autolock' at false.
+
+			When this is set to 'auto', middle-click unlock works only with 'autolock' at true.
+
+			When this is set to 'both', middle-click unlock works with either setting.
+			""",
+			"Middle Mouse Btn Unlock setting"
+		);
+	}
 }

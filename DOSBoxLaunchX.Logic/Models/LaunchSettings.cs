@@ -241,6 +241,9 @@ public class LaunchSettings {
 	}
 
 	public class PeripheralsSettings {
+		[GroupedSetting("dos", "keyboardlayout")]
+		public string? KbLayout { get; set; }
+
 		[GroupedSetting("sdl", "mouse_emulation")]
 		public string? MouseEmulation { get; set; }
 
@@ -250,8 +253,11 @@ public class LaunchSettings {
 		[GroupedSetting("sdl", "sensitivity")]
 		public string? MouseSensitivity { get; set; }
 
-		[GroupedSetting("dos", "keyboardlayout")]
-		public string? KbLayout { get; set; }
+		[GroupedSetting("sdl", "autolock")]
+		public string? MouseAutolock { get; set; }
+
+		[GroupedSetting("sdl", "autolock_feedback")]
+		public string? MouseAutolockFeedback { get; set; }
 	}
 
 	#endregion
