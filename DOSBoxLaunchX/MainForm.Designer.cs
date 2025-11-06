@@ -692,7 +692,7 @@
 			// comboCycles
 			// 
 			comboCycles.FormattingEnabled = true;
-			comboCycles.Items.AddRange(new object[] { "auto", "max", "30000", "60000", "100000", "150000" });
+			comboCycles.Items.AddRange(new object[] { "auto", "max", "30000", "60000", "100000", "150000", "180000", "200000" });
 			comboCycles.Location = new Point(158, 54);
 			comboCycles.Name = "comboCycles";
 			comboCycles.Size = new Size(439, 23);
@@ -790,9 +790,9 @@
 			// 
 			comboRefreshRate.FormattingEnabled = true;
 			comboRefreshRate.Items.AddRange(new object[] { "50", "60" });
-			comboRefreshRate.Location = new Point(139, 141);
+			comboRefreshRate.Location = new Point(168, 141);
 			comboRefreshRate.Name = "comboRefreshRate";
-			comboRefreshRate.Size = new Size(458, 23);
+			comboRefreshRate.Size = new Size(429, 23);
 			comboRefreshRate.TabIndex = 51;
 			comboRefreshRate.Tag = "cb=cbRefreshRateSet|assoc=lblRefreshRate|setting=video.forcerate";
 			// 
@@ -811,17 +811,17 @@
 			lblRefreshRate.AutoSize = true;
 			lblRefreshRate.Location = new Point(36, 144);
 			lblRefreshRate.Name = "lblRefreshRate";
-			lblRefreshRate.Size = new Size(97, 15);
+			lblRefreshRate.Size = new Size(126, 15);
 			lblRefreshRate.TabIndex = 59;
-			lblRefreshRate.Text = "Refresh rate (Hz):";
+			lblRefreshRate.Text = "Force refresh rate (Hz):";
 			// 
 			// comboDoublescan
 			// 
 			comboDoublescan.FormattingEnabled = true;
 			comboDoublescan.Items.AddRange(new object[] { "true", "false" });
-			comboDoublescan.Location = new Point(139, 112);
+			comboDoublescan.Location = new Point(168, 112);
 			comboDoublescan.Name = "comboDoublescan";
-			comboDoublescan.Size = new Size(458, 23);
+			comboDoublescan.Size = new Size(429, 23);
 			comboDoublescan.TabIndex = 41;
 			comboDoublescan.Tag = "cb=cbDoublescanSet|assoc=lblDoublescan|setting=render.doublescan";
 			// 
@@ -848,9 +848,9 @@
 			// 
 			comboScaler.FormattingEnabled = true;
 			comboScaler.Items.AddRange(new object[] { "normal2x", "normal3x", "normal4x", "normal5x", "hq2x", "hq3x", "advmame2x", "advmame3x", "advinterp2x", "advinterp3x", "2xsai", "super2xsai", "supereagle", "tv2x", "tv3x", "rgb2x", "rgb3x", "scan2x", "scan3x", "gray2x", "xbrz", "xbrz_bilinear", "none" });
-			comboScaler.Location = new Point(139, 83);
+			comboScaler.Location = new Point(168, 83);
 			comboScaler.Name = "comboScaler";
-			comboScaler.Size = new Size(458, 23);
+			comboScaler.Size = new Size(429, 23);
 			comboScaler.TabIndex = 31;
 			comboScaler.Tag = "cb=cbScalerSet|assoc=lblScaler|setting=render.scaler";
 			// 
@@ -880,9 +880,9 @@
 			// 
 			comboVideoOutput.FormattingEnabled = true;
 			comboVideoOutput.Items.AddRange(new object[] { "default", "ttf", "surface", "overlay", "opengl", "openglpp", "openglnb", "openglhq", "ddraw", "direct3d" });
-			comboVideoOutput.Location = new Point(139, 54);
+			comboVideoOutput.Location = new Point(168, 54);
 			comboVideoOutput.Name = "comboVideoOutput";
-			comboVideoOutput.Size = new Size(458, 23);
+			comboVideoOutput.Size = new Size(429, 23);
 			comboVideoOutput.TabIndex = 21;
 			comboVideoOutput.Tag = "cb=cbVideoOutputSet|assoc=lblVideoOutput|setting=sdl.output";
 			// 
@@ -919,9 +919,9 @@
 			// 
 			comboFrameskip.FormattingEnabled = true;
 			comboFrameskip.Items.AddRange(new object[] { "0", "5", "10", "20" });
-			comboFrameskip.Location = new Point(139, 25);
+			comboFrameskip.Location = new Point(168, 25);
 			comboFrameskip.Name = "comboFrameskip";
-			comboFrameskip.Size = new Size(458, 23);
+			comboFrameskip.Size = new Size(429, 23);
 			comboFrameskip.TabIndex = 11;
 			comboFrameskip.Tag = "cb=cbFrameskipSet|assoc=lblFrameskip|setting=render.frameskip";
 			// 
