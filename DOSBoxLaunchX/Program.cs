@@ -14,8 +14,6 @@ internal static class Program {
 
 	// TODO: If Linux support is ever needed, refactor this app's Form logic into an MVVM pattern for Uno.
 
-	// TODO: Add GUS settings to Audio section.
-
 	[STAThread]
 	private static void Main(string[] args) {
 		try {

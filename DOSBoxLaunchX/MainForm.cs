@@ -1,6 +1,7 @@
 using System.Text;
 using System.Reflection;
 using System.ComponentModel;
+using System.Diagnostics;
 using DOSBoxLaunchX.Logic.Models;
 using DOSBoxLaunchX.Logic.Services;
 using DOSBoxLaunchX.Logic.Helpers;
@@ -240,9 +241,11 @@ public partial class MainForm : Form {
 	private void updateUiShortcutFilePath() {
 		if (LocalAppDataHelper.IsGlobalShortcut(_localAppDataDir, _currentShortcutFilePath)) {
 			txtShortcutFilePath.Text = "[Editing globals]";
+			btnTestLaunch.Enabled = false;
 		}
 		else {
 			txtShortcutFilePath.Text = _currentShortcutFilePath ?? "[New shortcut]";
+			btnTestLaunch.Enabled = _currentShortcutFilePath != null;
 		}
 	}
 
@@ -430,6 +433,26 @@ public partial class MainForm : Form {
 		return true;
 	}
 
+	private void doTestLaunch() {
+		// Get path to this executable
+		var module = Process.GetCurrentProcess().MainModule
+			?? throw new InvalidOperationException("Couldn't find main process module for this executable.");
+		string exePath = module.FileName;
+
+		if (string.IsNullOrWhiteSpace(_currentShortcutFilePath)) {
+			throw new InvalidOperationException("Current shortcut path is empty.");
+		}
+
+		var psi = new ProcessStartInfo {
+			FileName = exePath,
+			Arguments = $@"""{_currentShortcutFilePath}""",
+			UseShellExecute = false
+		};
+
+		using var proc = Process.Start(psi)
+			?? throw new InvalidOperationException("Failed to start launcher process!");
+	}
+
 	private Dictionary<(string Section, string? Key), List<string>> getCustomSettingsFromUi() {
 		// Value is List<string> because a setting with a certain section/key can be duped
 		var dict = new Dictionary<(string Section, string? Key), List<string>>();
@@ -471,6 +494,7 @@ public partial class MainForm : Form {
 		if (cbBaseDirSet.Checked) { sett.BaseDir = UiHelper.GetTextValue(txtBaseDir); }
 		if (cbLimitBaseDirFreeSpaceSet.Checked) { sett.LimitBaseDirFreeSpace = UiHelper.GetLimitFreeSpaceValue(comboLimitBaseDirFreeSpace); }
 		if (cbExecutableSet.Checked) { sett.Executable = UiHelper.GetTextValue(txtExecutable); }
+		if (cbOpenLoggingConsoleSet.Checked) { sett.ConsoleOnLaunch = UiHelper.GetComboValue<bool>(comboOpenLoggingConsole); }
 
 		// Grouped settings
 		SettingsUiBinder.SetGroupedSettingsFromUi(sett, _controlInfo);
@@ -562,6 +586,9 @@ public partial class MainForm : Form {
 		UiHelper.SetTextFromValue(txtExecutable, sett.Executable);
 		UiHelper.SetCheckboxFromValue(cbExecutableSet, sett.Executable != null);
 
+		UiHelper.SetComboFromValue(comboOpenLoggingConsole, sett.ConsoleOnLaunch);
+		UiHelper.SetCheckboxFromValue(cbOpenLoggingConsoleSet, sett.ConsoleOnLaunch != null);
+
 		// Grouped settings
 		SettingsUiBinder.SetUiFromGroupedSettings(sett, _controlInfo);
 
@@ -610,7 +637,7 @@ public partial class MainForm : Form {
 				!makeVisible;
 			lblNotApplicable.Font = _lblFontNa;
 			lblNotApplicable.Size = new(352, 166);
-			lblNotApplicable.Location = new(125, 25);
+			lblNotApplicable.Location = new(145, 23);
 			lblNotApplicable.Visible = makeVisible;
 			lblNotApplicable.Refresh();
 		}
@@ -786,7 +813,7 @@ public partial class MainForm : Form {
 			if (string.IsNullOrWhiteSpace(_settings.BaseDosboxDir)) {
 				MessageBoxHelper.ShowInfoMessage(
 					"""
-					The base DOSBox directory is not set.  It must be set in order for the launcher to work.
+					The base DOSBox directory is not set. It must be set in order for the launcher to work.
 
 					Please go to "Tools | Options" and set the base DOSBox directory.
 					""",
@@ -980,5 +1007,45 @@ public partial class MainForm : Form {
 			""",
 			"Middle Mouse Btn Unlock setting"
 		);
+	}
+
+	private void lblCore_Click(object sender, EventArgs ea) {
+		MessageBoxHelper.ShowInfoMessage(
+			"""
+			Note that in order to avoid instructions being skipped or breakpoints being missed whilst stepping through instructions in the debugger, the core most be set to 'normal'. If not using the debugger, though, this usually isn't needed and may cause slightly lower performance.
+			""",
+			"CPU Core setting"
+		);
+	}
+
+	private void lblGusDir_Click(object sender, EventArgs ea) {
+		MessageBoxHelper.ShowInfoMessage(
+			"""
+			TODO: write this...
+			""",
+			"Gravis Ultrasound Dir setting"
+		);
+	}
+
+	private void lblMt32Model_Click(object sender, EventArgs ea) {
+		MessageBoxHelper.ShowInfoMessage(
+			"""
+			NOTE: The MT-32 synthesizer could display short LCD messages on its screen. Sometimes games or apps would use this to display interesting information. If you want to be able to see these messages while running DOSBox you might want to enable the 'Open the DOSBox logging console on launch' option in the General tab. Any messages that would be displayed by the MT-32 will be displayed in the console.
+			""",
+			"MT-32 messages"
+		);
+	}
+
+	private void btnTestLaunch_Click(object sender, EventArgs ea) {
+		try {
+			if (!doSave()) { return; }
+			doTestLaunch();
+		}
+		catch (Exception ex) {
+			MessageBoxHelper.ShowErrorMessageOk(
+				$"Unable to save & test launch: {ex.Message}",
+				"Error with save & test launch"
+			);
+		}
 	}
 }

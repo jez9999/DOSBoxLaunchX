@@ -19,9 +19,9 @@ public partial class HelpForm : Form {
 
 			Because DOSBoxLaunchX allows you to store both sets of global and shortcut-specific config changes, there should be no need to change the default dosbox-x.conf file after installation. Simply point DOSBoxLaunchX to the DOSBox-X base dir (which should contain both dosbox-x.conf and dosbox-x.exe) and start setting up global config, and saving config shortcut files with DOSBoxLaunchX. When one of these shortcut files is opened, DOSBoxLaunchX will generate a temporary dosbox-x.conf file based on 1) the original dosbox-x.conf file it finds in the base dir, 2) the global config settings, and 3) the shortcut's config settings, all merged together. DOSBox-X will then be launched with this generated configuration.
 
-			All of the DOSBoxLaunchX settings, global config, and temporary dosbox-x.conf files are stored in its app settings dir so nothing will be written to the DOSBox-X base dir.
+			All of the DOSBoxLaunchX settings, global config, and temporary dosbox-x.conf files are stored in its app settings dir by default so nothing will be written to the DOSBox-X base dir.
 
-			Note that for non-custom settings, they will have dropdowns that may suggest various values that can be used for the setting, but these are by no means exhaustive.  Different values can be typed in for the setting too.
+			Note that for non-custom settings, they will have dropdowns that may suggest various values that can be used for the setting, but these are by no means exhaustive. Different values can be typed in for the setting too.
 			""";
 	}
 #pragma warning restore IDE1006 // Naming Styles

@@ -200,7 +200,7 @@ public partial class OptionsForm : Form {
 			$"""
 			The base DOSBox directory must contain the main executable {_data.DosboxExeBaseFilename} and config file {_data.DosboxConfBaseFilename} for the launcher to work correctly.
 
-			In addition, if custom keyboard mappings are being used, this directory must also contain a {_data.DosboxMapperBaseFilename} file.  If this file doesn't already exist in the base DOSBox-X dir you can generate it by running DOSBox-X, going into the mapper editor, and saving.
+			In addition, if custom keyboard mappings are being used, this directory must also contain a {_data.DosboxMapperBaseFilename} file. If this file doesn't already exist in the base DOSBox-X dir you can generate it by running DOSBox-X, going into the mapper editor, and saving.
 			""",
 			"Base DOSBox Directory setting"
 		);

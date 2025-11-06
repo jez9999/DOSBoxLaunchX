@@ -107,7 +107,7 @@ public partial class LauncherForm : Form {
 				globalSettings.GetCustomSetting<string>("sdl.mapperfile") != null ||
 				shortcutSettings.GetCustomSetting<string>("sdl.mapperfile") != null
 			) {
-				addTxtboxMsg($"ERROR: Keyboard mappings are configured, but setting sdl.mapperfile is also set in config.  Can't have both at the same time.");
+				addTxtboxMsg($"ERROR: Keyboard mappings are configured, but setting sdl.mapperfile is also set in config. Can't have both at the same time.");
 				return false;
 			}
 
@@ -147,13 +147,19 @@ public partial class LauncherForm : Form {
 		addTxtboxMsg($"Temporary config written to: {tempConfigPath}");
 
 		addTxtboxMsg("Launching DOSBox...");
-		await launchDosboxX(Path.Combine(baseDir, _data.DosboxExeBaseFilename), tempConfigPath, baseDir);
+		await launchDosboxX(
+			Path.Combine(baseDir, _data.DosboxExeBaseFilename),
+			tempConfigPath,
+			baseDir,
+			shortcutSettings.ConsoleOnLaunch ?? globalSettings.ConsoleOnLaunch ?? false
+		);
 
 		return true;
 	}
 
-	private async Task launchDosboxX(string exePath, string configFilePath, string workingDir) {
-		var cmdArgs = $@"-conf ""{configFilePath}""";
+	private async Task launchDosboxX(string exePath, string configFilePath, string workingDir, bool doLoggingConsole) {
+		var consoleArg = doLoggingConsole ? " -console" : "";
+		var cmdArgs = $@"-conf ""{configFilePath}""{consoleArg}";
 		addTxtboxMsg($@"{exePath} {cmdArgs}");
 
 		var psi = new ProcessStartInfo {
@@ -199,9 +205,9 @@ public partial class LauncherForm : Form {
 			if (string.IsNullOrWhiteSpace(_settings.BaseDosboxDir)) {
 				MessageBoxHelper.ShowErrorMessageOk(
 					"""
-					The base DOSBox directory is not set.  It must be set in order for the launcher to work.
+					The base DOSBox directory is not set. It must be set in order for the launcher to work.
 
-					Please go to "Tools | Options" and set the base DOSBox directory in the main DOSBoxLaunchX UI.  Unable to continue with launch of DOSBox.
+					Please go to "Tools | Options" and set the base DOSBox directory in the main DOSBoxLaunchX UI. Unable to continue with launch of DOSBox.
 					""",
 					"Base DOSBox Directory not set"
 				);

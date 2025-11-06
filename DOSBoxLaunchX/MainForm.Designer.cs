@@ -33,6 +33,10 @@
 			txtShortcutFilePath = new TextBox();
 			tabsContainer = new TabControl();
 			tabGeneral = new TabPage();
+			cbOpenLoggingConsoleSet = new CheckBox();
+			groupBox1 = new GroupBox();
+			comboOpenLoggingConsole = new ComboBox();
+			lblOpenLoggingConsole = new Label();
 			lblNotApplicable = new DOSBoxLaunchX.Controls.TransparentLabel();
 			txtDescription = new TextBox();
 			btnExecutableBrowse = new Button();
@@ -51,6 +55,9 @@
 			txtName = new TextBox();
 			lblName = new Label();
 			tabCpu = new TabPage();
+			comboCpuType = new ComboBox();
+			cbCpuTypeSet = new CheckBox();
+			lblCpuType = new Label();
 			comboMemSize = new ComboBox();
 			cbMemSizeSet = new CheckBox();
 			lblMemSize = new Label();
@@ -88,13 +95,36 @@
 			cbFrameskipSet = new CheckBox();
 			lblFrameskip = new Label();
 			tabAudio = new TabPage();
+			lblAudioSet2 = new Label();
+			grpGus = new GroupBox();
+			comboGusSampleRate = new ComboBox();
+			cbGusSampleRateSet = new CheckBox();
+			lblGusSampleRate = new Label();
+			comboGusType = new ComboBox();
+			cbGusTypeSet = new CheckBox();
+			lblGusType = new Label();
+			txtGusDir = new TextBox();
+			cbGusDirSet = new CheckBox();
+			lblGusDir = new Label();
+			comboGusDma = new ComboBox();
+			cbGusDmaSet = new CheckBox();
+			lblGusDma = new Label();
+			comboGusIrq = new ComboBox();
+			cbGusIrqSet = new CheckBox();
+			lblGusIrq = new Label();
+			comboGusBase = new ComboBox();
+			cbGusBaseSet = new CheckBox();
+			lblGusBase = new Label();
+			comboGusEnable = new ComboBox();
+			cbGusEnableSet = new CheckBox();
+			lblGusEnable = new Label();
 			comboTandySound = new ComboBox();
 			cbTandySoundSet = new CheckBox();
 			lblTandySound = new Label();
 			comboPcSpeaker = new ComboBox();
 			cbPcSpeakerSet = new CheckBox();
 			lblPcSpeaker = new Label();
-			groupBox1 = new GroupBox();
+			grpSb = new GroupBox();
 			comboSbHighDma = new ComboBox();
 			cbSbHighDmaSet = new CheckBox();
 			lblSbHighDma = new Label();
@@ -127,7 +157,7 @@
 			comboSampleRate = new ComboBox();
 			cbSampleRateSet = new CheckBox();
 			lblSampleRate = new Label();
-			lblAudioSet = new Label();
+			lblAudioSet1 = new Label();
 			comboSilenced = new ComboBox();
 			cbSilencedSet = new CheckBox();
 			lblSilenced = new Label();
@@ -191,12 +221,14 @@
 			saveFileDialog = new SaveFileDialog();
 			timerRefreshNa = new System.Windows.Forms.Timer(components);
 			folderBrowserDialog = new FolderBrowserDialog();
+			btnTestLaunch = new Button();
 			tabsContainer.SuspendLayout();
 			tabGeneral.SuspendLayout();
 			tabCpu.SuspendLayout();
 			tabVideo.SuspendLayout();
 			tabAudio.SuspendLayout();
-			groupBox1.SuspendLayout();
+			grpGus.SuspendLayout();
+			grpSb.SuspendLayout();
 			grpMidi.SuspendLayout();
 			tabPeripherals.SuspendLayout();
 			tabAutoexec.SuspendLayout();
@@ -225,7 +257,7 @@
 			txtShortcutFilePath.Location = new Point(146, 31);
 			txtShortcutFilePath.Name = "txtShortcutFilePath";
 			txtShortcutFilePath.ReadOnly = true;
-			txtShortcutFilePath.Size = new Size(1099, 23);
+			txtShortcutFilePath.Size = new Size(976, 23);
 			txtShortcutFilePath.TabIndex = 10;
 			// 
 			// tabsContainer
@@ -247,6 +279,10 @@
 			// tabGeneral
 			// 
 			tabGeneral.BackColor = SystemColors.Control;
+			tabGeneral.Controls.Add(cbOpenLoggingConsoleSet);
+			tabGeneral.Controls.Add(groupBox1);
+			tabGeneral.Controls.Add(comboOpenLoggingConsole);
+			tabGeneral.Controls.Add(lblOpenLoggingConsole);
 			tabGeneral.Controls.Add(lblNotApplicable);
 			tabGeneral.Controls.Add(txtDescription);
 			tabGeneral.Controls.Add(btnExecutableBrowse);
@@ -269,6 +305,44 @@
 			tabGeneral.Size = new Size(1227, 528);
 			tabGeneral.TabIndex = 6;
 			tabGeneral.Text = "General";
+			// 
+			// cbOpenLoggingConsoleSet
+			// 
+			cbOpenLoggingConsoleSet.AutoSize = true;
+			cbOpenLoggingConsoleSet.Location = new Point(11, 281);
+			cbOpenLoggingConsoleSet.Name = "cbOpenLoggingConsoleSet";
+			cbOpenLoggingConsoleSet.Size = new Size(15, 14);
+			cbOpenLoggingConsoleSet.TabIndex = 60;
+			cbOpenLoggingConsoleSet.Tag = "";
+			cbOpenLoggingConsoleSet.UseVisualStyleBackColor = true;
+			// 
+			// groupBox1
+			// 
+			groupBox1.Location = new Point(11, 242);
+			groupBox1.Name = "groupBox1";
+			groupBox1.Size = new Size(586, 12);
+			groupBox1.TabIndex = 58;
+			groupBox1.TabStop = false;
+			// 
+			// comboOpenLoggingConsole
+			// 
+			comboOpenLoggingConsole.DropDownStyle = ComboBoxStyle.DropDownList;
+			comboOpenLoggingConsole.FormattingEnabled = true;
+			comboOpenLoggingConsole.Items.AddRange(new object[] { "No", "Yes" });
+			comboOpenLoggingConsole.Location = new Point(291, 277);
+			comboOpenLoggingConsole.Name = "comboOpenLoggingConsole";
+			comboOpenLoggingConsole.Size = new Size(77, 23);
+			comboOpenLoggingConsole.TabIndex = 61;
+			comboOpenLoggingConsole.Tag = "cb=cbOpenLoggingConsoleSet|assoc=lblOpenLoggingConsole";
+			// 
+			// lblOpenLoggingConsole
+			// 
+			lblOpenLoggingConsole.AutoSize = true;
+			lblOpenLoggingConsole.Location = new Point(36, 280);
+			lblOpenLoggingConsole.Name = "lblOpenLoggingConsole";
+			lblOpenLoggingConsole.Size = new Size(249, 15);
+			lblOpenLoggingConsole.TabIndex = 55;
+			lblOpenLoggingConsole.Text = "Open the DOSBox logging console on launch:";
 			// 
 			// lblNotApplicable
 			// 
@@ -441,6 +515,9 @@
 			// tabCpu
 			// 
 			tabCpu.BackColor = SystemColors.Control;
+			tabCpu.Controls.Add(comboCpuType);
+			tabCpu.Controls.Add(cbCpuTypeSet);
+			tabCpu.Controls.Add(lblCpuType);
 			tabCpu.Controls.Add(comboMemSize);
 			tabCpu.Controls.Add(cbMemSizeSet);
 			tabCpu.Controls.Add(lblMemSize);
@@ -467,30 +544,59 @@
 			tabCpu.TabIndex = 0;
 			tabCpu.Text = "CPU";
 			// 
+			// comboCpuType
+			// 
+			comboCpuType.FormattingEnabled = true;
+			comboCpuType.Items.AddRange(new object[] { "auto", "8086", "80186", "286", "386", "486", "486_prefetch", "pentium", "pentium_mmx", "ppro_slow", "pentium_ii", "pentium_iii" });
+			comboCpuType.Location = new Point(158, 141);
+			comboCpuType.Name = "comboCpuType";
+			comboCpuType.Size = new Size(439, 23);
+			comboCpuType.TabIndex = 51;
+			comboCpuType.Tag = "cb=cbCpuTypeSet|assoc=lblCpuType|setting=cpu.cputype";
+			// 
+			// cbCpuTypeSet
+			// 
+			cbCpuTypeSet.AutoSize = true;
+			cbCpuTypeSet.Location = new Point(11, 145);
+			cbCpuTypeSet.Name = "cbCpuTypeSet";
+			cbCpuTypeSet.Size = new Size(15, 14);
+			cbCpuTypeSet.TabIndex = 50;
+			cbCpuTypeSet.Tag = "";
+			cbCpuTypeSet.UseVisualStyleBackColor = true;
+			// 
+			// lblCpuType
+			// 
+			lblCpuType.AutoSize = true;
+			lblCpuType.Location = new Point(36, 144);
+			lblCpuType.Name = "lblCpuType";
+			lblCpuType.Size = new Size(59, 15);
+			lblCpuType.TabIndex = 65;
+			lblCpuType.Text = "CPU type:";
+			// 
 			// comboMemSize
 			// 
 			comboMemSize.FormattingEnabled = true;
 			comboMemSize.Items.AddRange(new object[] { "16", "32", "64", "128", "8", "4", "2", "1" });
-			comboMemSize.Location = new Point(158, 170);
+			comboMemSize.Location = new Point(158, 199);
 			comboMemSize.Name = "comboMemSize";
 			comboMemSize.Size = new Size(439, 23);
-			comboMemSize.TabIndex = 61;
+			comboMemSize.TabIndex = 71;
 			comboMemSize.Tag = "cb=cbMemSizeSet|assoc=lblMemSize|setting=dosbox.memsize";
 			// 
 			// cbMemSizeSet
 			// 
 			cbMemSizeSet.AutoSize = true;
-			cbMemSizeSet.Location = new Point(11, 174);
+			cbMemSizeSet.Location = new Point(11, 203);
 			cbMemSizeSet.Name = "cbMemSizeSet";
 			cbMemSizeSet.Size = new Size(15, 14);
-			cbMemSizeSet.TabIndex = 60;
+			cbMemSizeSet.TabIndex = 70;
 			cbMemSizeSet.Tag = "";
 			cbMemSizeSet.UseVisualStyleBackColor = true;
 			// 
 			// lblMemSize
 			// 
 			lblMemSize.AutoSize = true;
-			lblMemSize.Location = new Point(36, 173);
+			lblMemSize.Location = new Point(36, 202);
 			lblMemSize.Name = "lblMemSize";
 			lblMemSize.Size = new Size(106, 15);
 			lblMemSize.TabIndex = 52;
@@ -500,26 +606,26 @@
 			// 
 			comboMachine.FormattingEnabled = true;
 			comboMachine.Items.AddRange(new object[] { "svga_s3", "ega", "mcga", "cga", "cga_mono", "cga_rgb", "mda", "tandy", "hercules", "pcjr", "amstrad", "vgaonly" });
-			comboMachine.Location = new Point(158, 141);
+			comboMachine.Location = new Point(158, 170);
 			comboMachine.Name = "comboMachine";
 			comboMachine.Size = new Size(439, 23);
-			comboMachine.TabIndex = 51;
+			comboMachine.TabIndex = 61;
 			comboMachine.Tag = "cb=cbMachineSet|assoc=lblMachine|setting=dosbox.machine";
 			// 
 			// cbMachineSet
 			// 
 			cbMachineSet.AutoSize = true;
-			cbMachineSet.Location = new Point(11, 145);
+			cbMachineSet.Location = new Point(11, 174);
 			cbMachineSet.Name = "cbMachineSet";
 			cbMachineSet.Size = new Size(15, 14);
-			cbMachineSet.TabIndex = 50;
+			cbMachineSet.TabIndex = 60;
 			cbMachineSet.Tag = "";
 			cbMachineSet.UseVisualStyleBackColor = true;
 			// 
 			// lblMachine
 			// 
 			lblMachine.AutoSize = true;
-			lblMachine.Location = new Point(36, 144);
+			lblMachine.Location = new Point(36, 173);
 			lblMachine.Name = "lblMachine";
 			lblMachine.Size = new Size(116, 15);
 			lblMachine.TabIndex = 46;
@@ -645,11 +751,14 @@
 			// lblCore
 			// 
 			lblCore.AutoSize = true;
+			lblCore.Cursor = Cursors.Help;
+			lblCore.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point, 0);
 			lblCore.Location = new Point(36, 28);
 			lblCore.Name = "lblCore";
 			lblCore.Size = new Size(35, 15);
 			lblCore.TabIndex = 34;
 			lblCore.Text = "Core:";
+			lblCore.Click += lblCore_Click;
 			// 
 			// tabVideo
 			// 
@@ -838,18 +947,20 @@
 			// tabAudio
 			// 
 			tabAudio.BackColor = SystemColors.Control;
+			tabAudio.Controls.Add(lblAudioSet2);
+			tabAudio.Controls.Add(grpGus);
 			tabAudio.Controls.Add(comboTandySound);
 			tabAudio.Controls.Add(cbTandySoundSet);
 			tabAudio.Controls.Add(lblTandySound);
 			tabAudio.Controls.Add(comboPcSpeaker);
 			tabAudio.Controls.Add(cbPcSpeakerSet);
 			tabAudio.Controls.Add(lblPcSpeaker);
-			tabAudio.Controls.Add(groupBox1);
+			tabAudio.Controls.Add(grpSb);
 			tabAudio.Controls.Add(grpMidi);
 			tabAudio.Controls.Add(comboSampleRate);
 			tabAudio.Controls.Add(cbSampleRateSet);
 			tabAudio.Controls.Add(lblSampleRate);
-			tabAudio.Controls.Add(lblAudioSet);
+			tabAudio.Controls.Add(lblAudioSet1);
 			tabAudio.Controls.Add(comboSilenced);
 			tabAudio.Controls.Add(cbSilencedSet);
 			tabAudio.Controls.Add(lblSilenced);
@@ -858,6 +969,250 @@
 			tabAudio.Size = new Size(1227, 528);
 			tabAudio.TabIndex = 2;
 			tabAudio.Text = "Audio";
+			// 
+			// lblAudioSet2
+			// 
+			lblAudioSet2.AutoSize = true;
+			lblAudioSet2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+			lblAudioSet2.Location = new Point(617, 7);
+			lblAudioSet2.Name = "lblAudioSet2";
+			lblAudioSet2.Size = new Size(26, 15);
+			lblAudioSet2.TabIndex = 133;
+			lblAudioSet2.Text = "Set";
+			// 
+			// grpGus
+			// 
+			grpGus.Controls.Add(comboGusSampleRate);
+			grpGus.Controls.Add(cbGusSampleRateSet);
+			grpGus.Controls.Add(lblGusSampleRate);
+			grpGus.Controls.Add(comboGusType);
+			grpGus.Controls.Add(cbGusTypeSet);
+			grpGus.Controls.Add(lblGusType);
+			grpGus.Controls.Add(txtGusDir);
+			grpGus.Controls.Add(cbGusDirSet);
+			grpGus.Controls.Add(lblGusDir);
+			grpGus.Controls.Add(comboGusDma);
+			grpGus.Controls.Add(cbGusDmaSet);
+			grpGus.Controls.Add(lblGusDma);
+			grpGus.Controls.Add(comboGusIrq);
+			grpGus.Controls.Add(cbGusIrqSet);
+			grpGus.Controls.Add(lblGusIrq);
+			grpGus.Controls.Add(comboGusBase);
+			grpGus.Controls.Add(cbGusBaseSet);
+			grpGus.Controls.Add(lblGusBase);
+			grpGus.Controls.Add(comboGusEnable);
+			grpGus.Controls.Add(cbGusEnableSet);
+			grpGus.Controls.Add(lblGusEnable);
+			grpGus.Location = new Point(616, 25);
+			grpGus.Name = "grpGus";
+			grpGus.Size = new Size(603, 222);
+			grpGus.TabIndex = 140;
+			grpGus.TabStop = false;
+			grpGus.Text = "Gravis Ultrasound";
+			// 
+			// comboGusSampleRate
+			// 
+			comboGusSampleRate.FormattingEnabled = true;
+			comboGusSampleRate.Items.AddRange(new object[] { "48000", "44100" });
+			comboGusSampleRate.Location = new Point(135, 190);
+			comboGusSampleRate.Name = "comboGusSampleRate";
+			comboGusSampleRate.Size = new Size(458, 23);
+			comboGusSampleRate.TabIndex = 201;
+			comboGusSampleRate.Tag = "cb=cbGusSampleRateSet|assoc=lblGusSampleRate|setting=gus.gusrate";
+			// 
+			// cbGusSampleRateSet
+			// 
+			cbGusSampleRateSet.AutoSize = true;
+			cbGusSampleRateSet.Location = new Point(7, 194);
+			cbGusSampleRateSet.Name = "cbGusSampleRateSet";
+			cbGusSampleRateSet.Size = new Size(15, 14);
+			cbGusSampleRateSet.TabIndex = 200;
+			cbGusSampleRateSet.Tag = "";
+			cbGusSampleRateSet.UseVisualStyleBackColor = true;
+			// 
+			// lblGusSampleRate
+			// 
+			lblGusSampleRate.AutoSize = true;
+			lblGusSampleRate.Location = new Point(32, 193);
+			lblGusSampleRate.Name = "lblGusSampleRate";
+			lblGusSampleRate.Size = new Size(97, 15);
+			lblGusSampleRate.TabIndex = 169;
+			lblGusSampleRate.Text = "Sample rate (Hz):";
+			// 
+			// comboGusType
+			// 
+			comboGusType.FormattingEnabled = true;
+			comboGusType.Items.AddRange(new object[] { "classic", "classic37", "max", "interwave" });
+			comboGusType.Location = new Point(135, 161);
+			comboGusType.Name = "comboGusType";
+			comboGusType.Size = new Size(458, 23);
+			comboGusType.TabIndex = 191;
+			comboGusType.Tag = "cb=cbGusTypeSet|assoc=lblGusType|setting=gus.gustype";
+			// 
+			// cbGusTypeSet
+			// 
+			cbGusTypeSet.AutoSize = true;
+			cbGusTypeSet.Location = new Point(7, 165);
+			cbGusTypeSet.Name = "cbGusTypeSet";
+			cbGusTypeSet.Size = new Size(15, 14);
+			cbGusTypeSet.TabIndex = 190;
+			cbGusTypeSet.Tag = "";
+			cbGusTypeSet.UseVisualStyleBackColor = true;
+			// 
+			// lblGusType
+			// 
+			lblGusType.AutoSize = true;
+			lblGusType.Location = new Point(32, 164);
+			lblGusType.Name = "lblGusType";
+			lblGusType.Size = new Size(58, 15);
+			lblGusType.TabIndex = 166;
+			lblGusType.Text = "GUS type:";
+			// 
+			// txtGusDir
+			// 
+			txtGusDir.Location = new Point(135, 132);
+			txtGusDir.Name = "txtGusDir";
+			txtGusDir.Size = new Size(458, 23);
+			txtGusDir.TabIndex = 181;
+			txtGusDir.Tag = "cb=cbGusDirSet|assoc=lblGusDir|setting=gus.ultradir";
+			// 
+			// cbGusDirSet
+			// 
+			cbGusDirSet.AutoSize = true;
+			cbGusDirSet.Location = new Point(7, 136);
+			cbGusDirSet.Name = "cbGusDirSet";
+			cbGusDirSet.Size = new Size(15, 14);
+			cbGusDirSet.TabIndex = 180;
+			cbGusDirSet.Tag = "";
+			cbGusDirSet.UseVisualStyleBackColor = true;
+			// 
+			// lblGusDir
+			// 
+			lblGusDir.AutoSize = true;
+			lblGusDir.Cursor = Cursors.Help;
+			lblGusDir.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point, 0);
+			lblGusDir.Location = new Point(32, 135);
+			lblGusDir.Name = "lblGusDir";
+			lblGusDir.Size = new Size(85, 15);
+			lblGusDir.TabIndex = 163;
+			lblGusDir.Text = "Ultrasound dir:";
+			lblGusDir.Click += lblGusDir_Click;
+			// 
+			// comboGusDma
+			// 
+			comboGusDma.FormattingEnabled = true;
+			comboGusDma.Items.AddRange(new object[] { "3", "0", "1", "5", "6", "7" });
+			comboGusDma.Location = new Point(135, 103);
+			comboGusDma.Name = "comboGusDma";
+			comboGusDma.Size = new Size(458, 23);
+			comboGusDma.TabIndex = 171;
+			comboGusDma.Tag = "cb=cbGusDmaSet|assoc=lblGusDma|setting=gus.gusdma";
+			// 
+			// cbGusDmaSet
+			// 
+			cbGusDmaSet.AutoSize = true;
+			cbGusDmaSet.Location = new Point(7, 107);
+			cbGusDmaSet.Name = "cbGusDmaSet";
+			cbGusDmaSet.Size = new Size(15, 14);
+			cbGusDmaSet.TabIndex = 170;
+			cbGusDmaSet.Tag = "";
+			cbGusDmaSet.UseVisualStyleBackColor = true;
+			// 
+			// lblGusDma
+			// 
+			lblGusDma.AutoSize = true;
+			lblGusDma.Location = new Point(32, 106);
+			lblGusDma.Name = "lblGusDma";
+			lblGusDma.Size = new Size(37, 15);
+			lblGusDma.TabIndex = 160;
+			lblGusDma.Text = "DMA:";
+			// 
+			// comboGusIrq
+			// 
+			comboGusIrq.FormattingEnabled = true;
+			comboGusIrq.Items.AddRange(new object[] { "5", "3", "7", "9", "10", "11", "12" });
+			comboGusIrq.Location = new Point(135, 74);
+			comboGusIrq.Name = "comboGusIrq";
+			comboGusIrq.Size = new Size(458, 23);
+			comboGusIrq.TabIndex = 161;
+			comboGusIrq.Tag = "cb=cbGusIrqSet|assoc=lblGusIrq|setting=gus.gusirq";
+			// 
+			// cbGusIrqSet
+			// 
+			cbGusIrqSet.AutoSize = true;
+			cbGusIrqSet.Location = new Point(7, 78);
+			cbGusIrqSet.Name = "cbGusIrqSet";
+			cbGusIrqSet.Size = new Size(15, 14);
+			cbGusIrqSet.TabIndex = 160;
+			cbGusIrqSet.Tag = "";
+			cbGusIrqSet.UseVisualStyleBackColor = true;
+			// 
+			// lblGusIrq
+			// 
+			lblGusIrq.AutoSize = true;
+			lblGusIrq.Location = new Point(32, 77);
+			lblGusIrq.Name = "lblGusIrq";
+			lblGusIrq.Size = new Size(29, 15);
+			lblGusIrq.TabIndex = 157;
+			lblGusIrq.Text = "IRQ:";
+			// 
+			// comboGusBase
+			// 
+			comboGusBase.FormattingEnabled = true;
+			comboGusBase.Items.AddRange(new object[] { "240", "220", "260", "280", "2a0", "2c0", "2e0", "300", "210", "230", "250" });
+			comboGusBase.Location = new Point(135, 45);
+			comboGusBase.Name = "comboGusBase";
+			comboGusBase.Size = new Size(458, 23);
+			comboGusBase.TabIndex = 151;
+			comboGusBase.Tag = "cb=cbGusBaseSet|assoc=lblGusBase|setting=gus.gusbase";
+			// 
+			// cbGusBaseSet
+			// 
+			cbGusBaseSet.AutoSize = true;
+			cbGusBaseSet.Location = new Point(7, 49);
+			cbGusBaseSet.Name = "cbGusBaseSet";
+			cbGusBaseSet.Size = new Size(15, 14);
+			cbGusBaseSet.TabIndex = 150;
+			cbGusBaseSet.Tag = "";
+			cbGusBaseSet.UseVisualStyleBackColor = true;
+			// 
+			// lblGusBase
+			// 
+			lblGusBase.AutoSize = true;
+			lblGusBase.Location = new Point(32, 48);
+			lblGusBase.Name = "lblGusBase";
+			lblGusBase.Size = new Size(34, 15);
+			lblGusBase.TabIndex = 154;
+			lblGusBase.Text = "Base:";
+			// 
+			// comboGusEnable
+			// 
+			comboGusEnable.FormattingEnabled = true;
+			comboGusEnable.Items.AddRange(new object[] { "true", "false" });
+			comboGusEnable.Location = new Point(135, 16);
+			comboGusEnable.Name = "comboGusEnable";
+			comboGusEnable.Size = new Size(458, 23);
+			comboGusEnable.TabIndex = 141;
+			comboGusEnable.Tag = "cb=cbGusEnableSet|assoc=lblGusEnable|setting=gus.gus";
+			// 
+			// cbGusEnableSet
+			// 
+			cbGusEnableSet.AutoSize = true;
+			cbGusEnableSet.Location = new Point(7, 20);
+			cbGusEnableSet.Name = "cbGusEnableSet";
+			cbGusEnableSet.Size = new Size(15, 14);
+			cbGusEnableSet.TabIndex = 140;
+			cbGusEnableSet.Tag = "";
+			cbGusEnableSet.UseVisualStyleBackColor = true;
+			// 
+			// lblGusEnable
+			// 
+			lblGusEnable.AutoSize = true;
+			lblGusEnable.Location = new Point(32, 19);
+			lblGusEnable.Name = "lblGusEnable";
+			lblGusEnable.Size = new Size(70, 15);
+			lblGusEnable.TabIndex = 151;
+			lblGusEnable.Text = "Enable GUS:";
 			// 
 			// comboTandySound
 			// 
@@ -917,29 +1272,29 @@
 			lblPcSpeaker.TabIndex = 73;
 			lblPcSpeaker.Text = "PC speaker on:";
 			// 
-			// groupBox1
+			// grpSb
 			// 
-			groupBox1.Controls.Add(comboSbHighDma);
-			groupBox1.Controls.Add(cbSbHighDmaSet);
-			groupBox1.Controls.Add(lblSbHighDma);
-			groupBox1.Controls.Add(comboSbDma);
-			groupBox1.Controls.Add(cbSbDmaSet);
-			groupBox1.Controls.Add(lblSbDma);
-			groupBox1.Controls.Add(comboSbIrq);
-			groupBox1.Controls.Add(cbSbIrqSet);
-			groupBox1.Controls.Add(lblSbIrq);
-			groupBox1.Controls.Add(comboSbBase);
-			groupBox1.Controls.Add(cbSbBaseSet);
-			groupBox1.Controls.Add(lblSbBase);
-			groupBox1.Controls.Add(comboSbType);
-			groupBox1.Controls.Add(cbSbTypeSet);
-			groupBox1.Controls.Add(lblSbType);
-			groupBox1.Location = new Point(4, 218);
-			groupBox1.Name = "groupBox1";
-			groupBox1.Size = new Size(603, 164);
-			groupBox1.TabIndex = 70;
-			groupBox1.TabStop = false;
-			groupBox1.Text = "Sound Blaster";
+			grpSb.Controls.Add(comboSbHighDma);
+			grpSb.Controls.Add(cbSbHighDmaSet);
+			grpSb.Controls.Add(lblSbHighDma);
+			grpSb.Controls.Add(comboSbDma);
+			grpSb.Controls.Add(cbSbDmaSet);
+			grpSb.Controls.Add(lblSbDma);
+			grpSb.Controls.Add(comboSbIrq);
+			grpSb.Controls.Add(cbSbIrqSet);
+			grpSb.Controls.Add(lblSbIrq);
+			grpSb.Controls.Add(comboSbBase);
+			grpSb.Controls.Add(cbSbBaseSet);
+			grpSb.Controls.Add(lblSbBase);
+			grpSb.Controls.Add(comboSbType);
+			grpSb.Controls.Add(cbSbTypeSet);
+			grpSb.Controls.Add(lblSbType);
+			grpSb.Location = new Point(4, 218);
+			grpSb.Name = "grpSb";
+			grpSb.Size = new Size(603, 164);
+			grpSb.TabIndex = 70;
+			grpSb.TabStop = false;
+			grpSb.Text = "Sound Blaster";
 			// 
 			// comboSbHighDma
 			// 
@@ -1141,11 +1496,14 @@
 			// lblMt32Model
 			// 
 			lblMt32Model.AutoSize = true;
+			lblMt32Model.Cursor = Cursors.Help;
+			lblMt32Model.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point, 0);
 			lblMt32Model.Location = new Point(32, 106);
 			lblMt32Model.Name = "lblMt32Model";
 			lblMt32Model.Size = new Size(81, 15);
 			lblMt32Model.TabIndex = 70;
 			lblMt32Model.Text = "MT-32 model:";
+			lblMt32Model.Click += lblMt32Model_Click;
 			// 
 			// txtMt32RomDir
 			// 
@@ -1235,7 +1593,7 @@
 			// comboSampleRate
 			// 
 			comboSampleRate.FormattingEnabled = true;
-			comboSampleRate.Items.AddRange(new object[] { "44100", "48000" });
+			comboSampleRate.Items.AddRange(new object[] { "48000", "44100" });
 			comboSampleRate.Location = new Point(139, 54);
 			comboSampleRate.Name = "comboSampleRate";
 			comboSampleRate.Size = new Size(458, 23);
@@ -1261,15 +1619,15 @@
 			lblSampleRate.TabIndex = 54;
 			lblSampleRate.Text = "Sample rate (Hz):";
 			// 
-			// lblAudioSet
+			// lblAudioSet1
 			// 
-			lblAudioSet.AutoSize = true;
-			lblAudioSet.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-			lblAudioSet.Location = new Point(5, 7);
-			lblAudioSet.Name = "lblAudioSet";
-			lblAudioSet.Size = new Size(26, 15);
-			lblAudioSet.TabIndex = 51;
-			lblAudioSet.Text = "Set";
+			lblAudioSet1.AutoSize = true;
+			lblAudioSet1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+			lblAudioSet1.Location = new Point(5, 7);
+			lblAudioSet1.Name = "lblAudioSet1";
+			lblAudioSet1.Size = new Size(26, 15);
+			lblAudioSet1.TabIndex = 51;
+			lblAudioSet1.Text = "Set";
 			// 
 			// comboSilenced
 			// 
@@ -1418,7 +1776,7 @@
 			// comboMouseSensitivity
 			// 
 			comboMouseSensitivity.FormattingEnabled = true;
-			comboMouseSensitivity.Items.AddRange(new object[] { "100", "50,100", "35,75", "100,-50" });
+			comboMouseSensitivity.Items.AddRange(new object[] { "100", "50", "25", "50,100", "25,75", "35,75", "100,-50" });
 			comboMouseSensitivity.Location = new Point(188, 112);
 			comboMouseSensitivity.Name = "comboMouseSensitivity";
 			comboMouseSensitivity.Size = new Size(409, 23);
@@ -1863,12 +2221,23 @@
 			// 
 			folderBrowserDialog.RootFolder = Environment.SpecialFolder.MyComputer;
 			// 
+			// btnTestLaunch
+			// 
+			btnTestLaunch.Location = new Point(1128, 31);
+			btnTestLaunch.Name = "btnTestLaunch";
+			btnTestLaunch.Size = new Size(115, 23);
+			btnTestLaunch.TabIndex = 11;
+			btnTestLaunch.Text = "Save && test launch";
+			btnTestLaunch.UseVisualStyleBackColor = true;
+			btnTestLaunch.Click += btnTestLaunch_Click;
+			// 
 			// MainForm
 			// 
 			AllowDrop = true;
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(1259, 625);
+			Controls.Add(btnTestLaunch);
 			Controls.Add(mainMenuStripContainer);
 			Controls.Add(tabsContainer);
 			Controls.Add(txtShortcutFilePath);
@@ -1895,8 +2264,10 @@
 			tabVideo.PerformLayout();
 			tabAudio.ResumeLayout(false);
 			tabAudio.PerformLayout();
-			groupBox1.ResumeLayout(false);
-			groupBox1.PerformLayout();
+			grpGus.ResumeLayout(false);
+			grpGus.PerformLayout();
+			grpSb.ResumeLayout(false);
+			grpSb.PerformLayout();
 			grpMidi.ResumeLayout(false);
 			grpMidi.PerformLayout();
 			tabPeripherals.ResumeLayout(false);
@@ -2027,7 +2398,7 @@
 		private ComboBox comboRefreshRate;
 		private CheckBox cbRefreshRateSet;
 		private Label lblRefreshRate;
-		private Label lblAudioSet;
+		private Label lblAudioSet1;
 		private ComboBox comboSilenced;
 		private CheckBox cbSilencedSet;
 		private Label lblSilenced;
@@ -2049,7 +2420,7 @@
 		private Label lblMt32Model;
 		private Button btnMt32RomDirBrowse;
 		private FolderBrowserDialog folderBrowserDialog;
-		private GroupBox groupBox1;
+		private GroupBox grpSb;
 		private ComboBox comboSbType;
 		private CheckBox cbSbTypeSet;
 		private Label lblSbType;
@@ -2083,5 +2454,36 @@
 		private ComboBox comboMouseAutolockFeedback;
 		private CheckBox cbMouseAutolockFeedbackSet;
 		private Label lblMouseAutolockFeedback;
+		private ComboBox comboCpuType;
+		private CheckBox cbCpuTypeSet;
+		private Label lblCpuType;
+		private GroupBox grpGus;
+		private Label lblAudioSet2;
+		private ComboBox comboGusEnable;
+		private CheckBox cbGusEnableSet;
+		private Label lblGusEnable;
+		private ComboBox comboGusIrq;
+		private CheckBox cbGusIrqSet;
+		private Label lblGusIrq;
+		private ComboBox comboGusBase;
+		private CheckBox cbGusBaseSet;
+		private Label lblGusBase;
+		private ComboBox comboGusDma;
+		private CheckBox cbGusDmaSet;
+		private Label lblGusDma;
+		private TextBox txtGusDir;
+		private CheckBox cbGusDirSet;
+		private Label lblGusDir;
+		private ComboBox comboGusType;
+		private CheckBox cbGusTypeSet;
+		private Label lblGusType;
+		private ComboBox comboGusSampleRate;
+		private CheckBox cbGusSampleRateSet;
+		private Label lblGusSampleRate;
+		private ComboBox comboOpenLoggingConsole;
+		private Label lblOpenLoggingConsole;
+		private GroupBox groupBox1;
+		private CheckBox cbOpenLoggingConsoleSet;
+		private Button btnTestLaunch;
 	}
 }

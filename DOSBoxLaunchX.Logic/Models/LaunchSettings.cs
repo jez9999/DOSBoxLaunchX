@@ -39,6 +39,11 @@ public class LaunchSettings {
 	/// </summary>
 	public string? Executable { get; set; }
 
+	/// <summary>
+	/// Whether or not to open the DOSBox logging console on launch.
+	/// </summary>
+	public bool? ConsoleOnLaunch { get; set; }
+
 	#endregion
 
 	#region Grouped settings (not serialized)
@@ -175,6 +180,9 @@ public class LaunchSettings {
 		[GroupedSetting("cpu", "cycledown")]
 		public string? CycleDown { get; set; }
 
+		[GroupedSetting("cpu", "cputype")]
+		public string? CpuType { get; set; }
+
 		[GroupedSetting("dosbox", "machine")]
 		public string? Machine { get; set; }
 
@@ -225,19 +233,40 @@ public class LaunchSettings {
 		public string? SbBase { get; set; }
 
 		[GroupedSetting("sblaster", "irq")]
-		public string? IRQ { get; set; }
+		public string? SbIRQ { get; set; }
 
 		[GroupedSetting("sblaster", "dma")]
-		public string? DMA { get; set; }
+		public string? SbDMA { get; set; }
 
 		[GroupedSetting("sblaster", "hdma")]
-		public string? HighDMA { get; set; }
+		public string? SbHighDMA { get; set; }
 
 		[GroupedSetting("speaker", "pcspeaker")]
 		public string? PcSpeaker { get; set; }
 
 		[GroupedSetting("speaker", "tandy")]
 		public string? TandySound { get; set; }
+
+		[GroupedSetting("gus", "gus")]
+		public string? EnableGus { get; set; }
+
+		[GroupedSetting("gus", "gusbase")]
+		public string? GusBase { get; set; }
+
+		[GroupedSetting("gus", "gusirq")]
+		public string? GusIRQ { get; set; }
+
+		[GroupedSetting("gus", "gusdma")]
+		public string? GusDMA { get; set; }
+
+		[GroupedSetting("gus", "ultradir")]
+		public string? GusDir { get; set; }
+
+		[GroupedSetting("gus", "gustype")]
+		public string? GusType { get; set; }
+
+		[GroupedSetting("gus", "gusrate")]
+		public string? GusRate { get; set; }
 	}
 
 	public class PeripheralsSettings {

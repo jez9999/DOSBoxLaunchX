@@ -4,6 +4,13 @@ using DOSBoxLaunchX.Models;
 namespace DOSBoxLaunchX.Services;
 
 public class ControlInfoTagParser {
+	/// <summary>
+	/// Parses a Tag string for a control.
+	/// See the ControlInfo class for documentation on the format of the Tag string.
+	/// </summary>
+	/// <param name="tagStr">The Tag string to parse.</param>
+	/// <param name="ctrl">The control from which the Tag string was read.</param>
+	/// <returns>A control info structure representing the parsed Tag string data.</returns>
 	public ControlInfo? ParseTag(string tagStr, Control ctrl) {
 		if (string.IsNullOrWhiteSpace(tagStr)) {
 			MessageBoxHelper.ShowErrorMessageOk(
