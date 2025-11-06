@@ -1010,6 +1010,12 @@ public partial class MainForm : Form {
 					return $@"The section/key ""{fullKey}"" already exists in custom settings.";
 				}
 
+				foreach (var formVal in (IEnumerable<string>)[formVals.LoggingType, formVals.Verbosity]) {
+					if (formVal.Contains('\r') || formVal.Contains('\n')) {
+						return $@"Control text contains invalid newline characters.";
+					}
+				}
+
 				return null; // Indicates no error
 			}
 		});
