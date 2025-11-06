@@ -1021,13 +1021,13 @@ public partial class MainForm : Form {
 	private void lblGusDir_Click(object sender, EventArgs ea) {
 		MessageBoxHelper.ShowInfoMessage(
 			"""
-			This directory should *not* be a path to a directory on your machine's actual file system; it should be the path to the Gravis Ultrasound directory within the DOSBox session. For instance, you may want to mount your ULTRASND dir to the G drive in autoexec:
+			This directory should *not* be a path to a directory on your machine's actual file system; it should be the path to the Gravis Ultrasound directory within the DOSBox session. For instance, you may want to mount your ULTRASND dir to the G drive in Autoexec:
 
 			MOUNT G C:\path\to\ULTRASND
 
 			You would then set this directory value to something like 'G:\USPPL161'.
 
-			Also note that some games (though not all) required the 'ULTRAMID' TSR to be loaded before the game could use GUS for its music/sound, so before running the game you'd run maybe 'G:\USPPL161\ULTRAMID.EXE' to first load ULTRAMID.
+			Also note that some games (though not all) required the 'ULTRAMID' TSR to be loaded before the game could use GUS for its music/sound, so before running the game you'd run maybe 'G:\USPPL161\ULTRAMID.EXE' to first load ULTRAMID (you'd also want to add this to your Autoexec section so it happened automatically on each launch).
 			""",
 			"Gravis Ultrasound Dir setting"
 		);
