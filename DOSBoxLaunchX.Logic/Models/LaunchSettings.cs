@@ -44,6 +44,12 @@ public class LaunchSettings {
 	/// </summary>
 	public bool? ConsoleOnLaunch { get; set; }
 
+	/// <summary>
+	/// If set, specifies the file to which DOSBox's log output will be written.
+	/// </summary>
+	[GroupedSetting("log", "logfile")]
+	public string? LogOutputFile { get; set; }
+
 	#endregion
 
 	#region Grouped settings (not serialized)

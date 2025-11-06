@@ -317,6 +317,24 @@ public partial class MainForm : Form {
 		return true;
 	}
 
+	private bool doBrowseLogOutputFile() {
+		// We purposely don't set the .InitialDirectory property.  When left unset,
+		// the dialog helpfully remembers the last directory the user was in, which
+		// is desired behaviour.
+		openFileDialog.Title = "Browse To Log Output File";
+		openFileDialog.FileName = "";
+		openFileDialog.Filter = "Logfiles (*.log;*.txt)|*.log;*.txt|All files (*.*)|*.*";
+		openFileDialog.FilterIndex = 1;
+
+		if (openFileDialog.ShowDialog() != DialogResult.OK) { return false; }
+
+		// Browsed successfully
+		cbLogOutputFileSet.Checked = true;
+		txtLogOutputFile.Text = openFileDialog.FileName;
+
+		return true;
+	}
+
 	private bool doBrowseMt32Romdir() {
 		if (folderBrowserDialog.ShowDialog() != DialogResult.OK) { return false; }
 		txtMt32RomDir.Text = folderBrowserDialog.SelectedPath;
@@ -1064,5 +1082,9 @@ public partial class MainForm : Form {
 
 	private void btnPrintDocDirBrowse_Click(object sender, EventArgs ea) {
 		doBrowsePrintDocDir();
+	}
+
+	private void btnLogOutputFileBrowse_Click(object sender, EventArgs ea) {
+		doBrowseLogOutputFile();
 	}
 }

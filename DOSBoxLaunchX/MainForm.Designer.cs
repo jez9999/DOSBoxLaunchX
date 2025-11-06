@@ -33,6 +33,10 @@
 			txtShortcutFilePath = new TextBox();
 			tabsContainer = new TabControl();
 			tabGeneral = new TabPage();
+			btnLogOutputFileBrowse = new Button();
+			cbLogOutputFileSet = new CheckBox();
+			txtLogOutputFile = new TextBox();
+			lblLogOutputFile = new Label();
 			cbOpenLoggingConsoleSet = new CheckBox();
 			groupBox1 = new GroupBox();
 			comboOpenLoggingConsole = new ComboBox();
@@ -296,6 +300,10 @@
 			// tabGeneral
 			// 
 			tabGeneral.BackColor = SystemColors.Control;
+			tabGeneral.Controls.Add(btnLogOutputFileBrowse);
+			tabGeneral.Controls.Add(cbLogOutputFileSet);
+			tabGeneral.Controls.Add(txtLogOutputFile);
+			tabGeneral.Controls.Add(lblLogOutputFile);
 			tabGeneral.Controls.Add(cbOpenLoggingConsoleSet);
 			tabGeneral.Controls.Add(groupBox1);
 			tabGeneral.Controls.Add(comboOpenLoggingConsole);
@@ -322,6 +330,43 @@
 			tabGeneral.Size = new Size(1227, 528);
 			tabGeneral.TabIndex = 6;
 			tabGeneral.Text = "General";
+			// 
+			// btnLogOutputFileBrowse
+			// 
+			btnLogOutputFileBrowse.Location = new Point(522, 306);
+			btnLogOutputFileBrowse.Name = "btnLogOutputFileBrowse";
+			btnLogOutputFileBrowse.Size = new Size(75, 23);
+			btnLogOutputFileBrowse.TabIndex = 72;
+			btnLogOutputFileBrowse.Text = "&Browse...";
+			btnLogOutputFileBrowse.UseVisualStyleBackColor = true;
+			btnLogOutputFileBrowse.Click += btnLogOutputFileBrowse_Click;
+			// 
+			// cbLogOutputFileSet
+			// 
+			cbLogOutputFileSet.AutoSize = true;
+			cbLogOutputFileSet.Location = new Point(11, 310);
+			cbLogOutputFileSet.Name = "cbLogOutputFileSet";
+			cbLogOutputFileSet.Size = new Size(15, 14);
+			cbLogOutputFileSet.TabIndex = 70;
+			cbLogOutputFileSet.Tag = "";
+			cbLogOutputFileSet.UseVisualStyleBackColor = true;
+			// 
+			// txtLogOutputFile
+			// 
+			txtLogOutputFile.Location = new Point(168, 306);
+			txtLogOutputFile.Name = "txtLogOutputFile";
+			txtLogOutputFile.Size = new Size(348, 23);
+			txtLogOutputFile.TabIndex = 71;
+			txtLogOutputFile.Tag = "cb=cbLogOutputFileSet|assoc=lblLogOutputFile,btnLogOutputFileBrowse|setting=log.logfile";
+			// 
+			// lblLogOutputFile
+			// 
+			lblLogOutputFile.AutoSize = true;
+			lblLogOutputFile.Location = new Point(36, 309);
+			lblLogOutputFile.Name = "lblLogOutputFile";
+			lblLogOutputFile.Size = new Size(126, 15);
+			lblLogOutputFile.TabIndex = 62;
+			lblLogOutputFile.Text = "Logging output to file:";
 			// 
 			// cbOpenLoggingConsoleSet
 			// 
@@ -2676,5 +2721,9 @@
 		private CheckBox cbPrintDocDirSet;
 		private Label lblPrintDocDir;
 		private Button btnPrintDocDirBrowse;
+		private Button btnLogOutputFileBrowse;
+		private CheckBox cbLogOutputFileSet;
+		private TextBox txtLogOutputFile;
+		private Label lblLogOutputFile;
 	}
 }
