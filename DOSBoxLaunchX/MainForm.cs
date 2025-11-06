@@ -324,6 +324,13 @@ public partial class MainForm : Form {
 		return true;
 	}
 
+	private bool doBrowsePrintDocDir() {
+		if (folderBrowserDialog.ShowDialog() != DialogResult.OK) { return false; }
+		txtPrintDocDir.Text = folderBrowserDialog.SelectedPath;
+
+		return true;
+	}
+
 	private bool doOpen() {
 		return doOpen(null);
 	}
@@ -1053,5 +1060,9 @@ public partial class MainForm : Form {
 				"Error with save & test launch"
 			);
 		}
+	}
+
+	private void btnPrintDocDirBrowse_Click(object sender, EventArgs ea) {
+		doBrowsePrintDocDir();
 	}
 }

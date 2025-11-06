@@ -287,6 +287,18 @@ public class LaunchSettings {
 
 		[GroupedSetting("sdl", "autolock_feedback")]
 		public string? MouseAutolockFeedback { get; set; }
+
+		[GroupedSetting("printer", "printer")]
+		public string? EnablePrinter { get; set; }
+
+		[GroupedSetting("printer", "printoutput")]
+		public string? PrintOutput { get; set; }
+
+		[GroupedSetting("printer", "device")]
+		public string? PrinterDevice { get; set; }
+
+		[GroupedSetting("printer", "docpath")]
+		public string? PrintDocDir { get; set; }
 	}
 
 	#endregion
