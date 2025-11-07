@@ -32,6 +32,10 @@
 			lblDateHeading = new Label();
 			txtDate = new TextBox();
 			btnOk = new Button();
+			lnkDosboxXHomepage = new LinkLabel();
+			lblDosboxXHeading = new Label();
+			lnkDosboxXGithub = new LinkLabel();
+			lnkDosboxXDevBuilds = new LinkLabel();
 			((System.ComponentModel.ISupportInitialize)pbLogo).BeginInit();
 			SuspendLayout();
 			// 
@@ -112,11 +116,63 @@
 			btnOk.UseVisualStyleBackColor = true;
 			btnOk.Click += btnOk_Click;
 			// 
+			// lnkDosboxXHomepage
+			// 
+			lnkDosboxXHomepage.AutoSize = true;
+			lnkDosboxXHomepage.LinkColor = Color.Blue;
+			lnkDosboxXHomepage.Location = new Point(125, 238);
+			lnkDosboxXHomepage.Name = "lnkDosboxXHomepage";
+			lnkDosboxXHomepage.Size = new Size(66, 15);
+			lnkDosboxXHomepage.TabIndex = 20;
+			lnkDosboxXHomepage.TabStop = true;
+			lnkDosboxXHomepage.Text = "Homepage";
+			lnkDosboxXHomepage.VisitedLinkColor = Color.Blue;
+			lnkDosboxXHomepage.LinkClicked += lnkDosboxXHomepage_LinkClicked;
+			// 
+			// lblDosboxXHeading
+			// 
+			lblDosboxXHeading.AutoSize = true;
+			lblDosboxXHeading.Location = new Point(48, 239);
+			lblDosboxXHeading.Name = "lblDosboxXHeading";
+			lblDosboxXHeading.Size = new Size(71, 15);
+			lblDosboxXHeading.TabIndex = 17;
+			lblDosboxXHeading.Text = "DOSBox-X...";
+			// 
+			// lnkDosboxXGithub
+			// 
+			lnkDosboxXGithub.AutoSize = true;
+			lnkDosboxXGithub.LinkColor = Color.Blue;
+			lnkDosboxXGithub.Location = new Point(198, 238);
+			lnkDosboxXGithub.Name = "lnkDosboxXGithub";
+			lnkDosboxXGithub.Size = new Size(43, 15);
+			lnkDosboxXGithub.TabIndex = 21;
+			lnkDosboxXGithub.TabStop = true;
+			lnkDosboxXGithub.Text = "Github";
+			lnkDosboxXGithub.VisitedLinkColor = Color.Blue;
+			lnkDosboxXGithub.LinkClicked += lnkDosboxXGithub_LinkClicked;
+			// 
+			// lnkDosboxXDevBuilds
+			// 
+			lnkDosboxXDevBuilds.AutoSize = true;
+			lnkDosboxXDevBuilds.LinkColor = Color.Blue;
+			lnkDosboxXDevBuilds.Location = new Point(248, 238);
+			lnkDosboxXDevBuilds.Name = "lnkDosboxXDevBuilds";
+			lnkDosboxXDevBuilds.Size = new Size(62, 15);
+			lnkDosboxXDevBuilds.TabIndex = 22;
+			lnkDosboxXDevBuilds.TabStop = true;
+			lnkDosboxXDevBuilds.Text = "Dev builds";
+			lnkDosboxXDevBuilds.VisitedLinkColor = Color.Blue;
+			lnkDosboxXDevBuilds.LinkClicked += lnkDosboxXDevBuilds_LinkClicked;
+			// 
 			// AboutForm
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(362, 235);
+			ClientSize = new Size(362, 270);
+			Controls.Add(lnkDosboxXDevBuilds);
+			Controls.Add(lnkDosboxXGithub);
+			Controls.Add(lblDosboxXHeading);
+			Controls.Add(lnkDosboxXHomepage);
 			Controls.Add(btnOk);
 			Controls.Add(lblDateHeading);
 			Controls.Add(txtDate);
@@ -148,5 +204,9 @@
 		private Label lblDateHeading;
 		private TextBox txtDate;
 		private Button btnOk;
+		private LinkLabel lnkDosboxXHomepage;
+		private Label lblDosboxXHeading;
+		private LinkLabel lnkDosboxXGithub;
+		private LinkLabel lnkDosboxXDevBuilds;
 	}
 }
