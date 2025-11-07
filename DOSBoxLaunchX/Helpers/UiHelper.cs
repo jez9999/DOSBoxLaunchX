@@ -1,4 +1,7 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Text;
+using System.Text.RegularExpressions;
+using DOSBoxLaunchX.Models;
+using DOSBoxLaunchX.Logic.Models;
 
 namespace DOSBoxLaunchX.Helpers;
 
@@ -59,5 +62,53 @@ internal static class UiHelper {
 			return null;
 		}
 		return int.Parse(match.Groups["Amount"].Value);
+	}
+
+	internal static void CheckRequiredFiles(GeneralSettings sett, AppOptionsWithData data, bool checkingOnStartup = false) {
+		StringBuilder sb = new();
+
+		if (string.IsNullOrWhiteSpace(sett.BaseDosboxDir)) {
+			sb.AppendLine("The base DOSBox directory is not set. It must be set in order for the launcher to work.");
+			if (checkingOnStartup) {
+				sb.AppendLine();
+				sb.AppendLine(@"Please go to ""Tools | Options"" and set the base DOSBox directory.");
+			}
+			MessageBoxHelper.ShowInfoMessage(
+				$"{sb}".Trim(),
+				"Base DOSBox Directory not set"
+			);
+			return;
+		}
+
+		if (!Directory.Exists(sett.BaseDosboxDir)) {
+			sb.AppendLine($"Warning: the {(checkingOnStartup ? "configured" : "specified")} DOSBox base directory was not found.");
+			sb.AppendLine();
+			sb.AppendLine(sett.BaseDosboxDir);
+			MessageBoxHelper.ShowInfoMessage(
+				$"{sb}".Trim(),
+				"Directory not found"
+			);
+			return;
+		}
+
+		bool notFound = false;
+		sb.AppendLine($"Warning: the following required files were not found in the {(checkingOnStartup ? "configured" : "specified")} DOSBox base directory:");
+		sb.AppendLine();
+
+		if (!File.Exists(Path.Combine(sett.BaseDosboxDir, data.DosboxExeBaseFilename))) {
+			notFound = true;
+			sb.AppendLine($"- {data.DosboxExeBaseFilename}");
+		}
+		if (!File.Exists(Path.Combine(sett.BaseDosboxDir, data.DosboxConfBaseFilename))) {
+			notFound = true;
+			sb.AppendLine($"- {data.DosboxConfBaseFilename}");
+		}
+
+		if (notFound) {
+			MessageBoxHelper.ShowInfoMessage(
+				$"{sb}".Trim(),
+				"Required files not found"
+			);
+		}
 	}
 }
