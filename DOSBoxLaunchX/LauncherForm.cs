@@ -196,6 +196,7 @@ public partial class LauncherForm : Form {
 			// put it a little bit in from the edge.
 			Location = new(5, 10);
 
+			Text += $" [{ThisAssembly.GitCommitId[..7]}]";
 			if (_data.IsDebugBuild) {
 				Text += " (DEBUG BUILD)";
 			}

@@ -833,6 +833,7 @@ public partial class MainForm : Form {
 			_localAppDataDir = LocalAppDataHelper.EnsureLocalAppDataDir(_data.ProgramName);
 			LocalAppDataHelper.LoadSettingsIfAvailable(_localAppDataDir, _genSettingsFileService, _settings);
 
+			Text += $" [{ThisAssembly.GitCommitId[..7]}]";
 			if (_data.IsDebugBuild) {
 				Text += " (DEBUG BUILD)";
 			}
