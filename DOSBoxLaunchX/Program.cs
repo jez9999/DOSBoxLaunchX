@@ -14,9 +14,6 @@ internal static class Program {
 
 	// TODO: If Linux support is ever needed, refactor this app's Form logic into an MVVM pattern for Uno.
 
-	// TODO: Have configurable option for: Launch immediately when opening shortcut...
-	//       if not checked, we'll display a 'Launch or Edit' window when opening it.
-
 	[STAThread]
 	private static void Main(string[] args) {
 		try {
@@ -40,9 +37,13 @@ internal static class Program {
 				// -shortcut "path": runs launcher to open shortcut (potentially with pre-launch dialog)
 				// "path": same as -shortcut "path"
 				// -launchnow "path": runs launcher to open shortcut (no pre-launch dialog)
+				var data = appHost.Services.GetRequiredService<AppOptionsWithData>();
+				var localAppDataDir = LocalAppDataHelper.EnsureLocalAppDataDir(data.ProgramName);
+				var genSettingsFileService = appHost.Services.GetRequiredService<GeneralSettingsFileService>();
+				var settings = appHost.Services.GetRequiredService<GeneralSettings>();
+				LocalAppDataHelper.LoadSettingsIfAvailable(localAppDataDir, genSettingsFileService, settings);
 				if (args.Length > 0 && args[0] != "-ui") {
-					if (args[0] == "-launchnow") {
-						// TODO: check config setting for whether to launch immediately; if so:
+					if (args[0] == "-launchnow" || settings.LaunchImmediately) {
 						Application.Run(launcherForm =
 							appHost
 								.Services

@@ -35,6 +35,7 @@ public partial class OptionsForm : Form {
 		_settings.BaseDosboxDir = txtBaseDosboxDir.Text;
 		_settings.CloseOnDosboxExit = cbCloseOnDosboxExit.Checked;
 		_settings.WriteConfToBaseDir = cbWriteConfToBaseDir.Checked;
+		_settings.LaunchImmediately = cbLaunchImmediately.Checked;
 
 		LocalAppDataHelper.SaveSettings(_localAppDataDir, _genSettingsFileService, _settings);
 
@@ -72,10 +73,12 @@ public partial class OptionsForm : Form {
 			txtBaseDosboxDir.Text = _settings.BaseDosboxDir;
 			cbCloseOnDosboxExit.Checked = _settings.CloseOnDosboxExit;
 			cbWriteConfToBaseDir.Checked = _settings.WriteConfToBaseDir;
+			cbLaunchImmediately.Checked = _settings.LaunchImmediately;
 
 			_originalValues[txtBaseDosboxDir] = getCtrlValue(txtBaseDosboxDir);
 			_originalValues[cbCloseOnDosboxExit] = getCtrlValue(cbCloseOnDosboxExit);
 			_originalValues[cbWriteConfToBaseDir] = getCtrlValue(cbWriteConfToBaseDir);
+			_originalValues[cbLaunchImmediately] = getCtrlValue(cbLaunchImmediately);
 
 			updateAssociationStatus();
 		}
@@ -121,6 +124,10 @@ public partial class OptionsForm : Form {
 	}
 
 	private void cbWriteConfToBaseDir_CheckedChanged(object sender, EventArgs ea) {
+		checkForChanges();
+	}
+
+	private void cbLaunchImmediately_CheckedChanged(object sender, EventArgs ea) {
 		checkForChanges();
 	}
 

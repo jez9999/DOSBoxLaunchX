@@ -28,7 +28,9 @@ internal static class LocalAppDataHelper {
 		return Path.Combine(localAppDataDir, "global.dlx");
 	}
 
-	internal static void LoadSettingsIfAvailable(string localAppDataDir, GeneralSettingsFileService genSettingsFileService, GeneralSettings settings) {
+	internal static void LoadSettingsIfAvailable(string localAppDataDir, GeneralSettingsFileService genSettingsFileService, GeneralSettings settings, bool reInit = false) {
+		if (settings.SettingsInitialized && !reInit) { return; }
+
 		var settingsPath = Path.Combine(localAppDataDir, "settings.json");
 		if (!File.Exists(settingsPath)) { return; }
 
@@ -36,6 +38,9 @@ internal static class LocalAppDataHelper {
 		settings.BaseDosboxDir = loadedSettings.BaseDosboxDir;
 		settings.CloseOnDosboxExit = loadedSettings.CloseOnDosboxExit;
 		settings.WriteConfToBaseDir = loadedSettings.WriteConfToBaseDir;
+		settings.LaunchImmediately = loadedSettings.LaunchImmediately;
+
+		settings.SettingsInitialized = true;
 	}
 
 	internal static void SaveSettings(string localAppDataDir, GeneralSettingsFileService genSettingsFileService, GeneralSettings settings) {

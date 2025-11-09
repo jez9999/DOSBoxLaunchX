@@ -38,6 +38,7 @@
 			btnRemoveAssociation = new Button();
 			btnSetAssociation = new Button();
 			lblAssociateStatus = new Label();
+			cbLaunchImmediately = new CheckBox();
 			grpAssociate.SuspendLayout();
 			SuspendLayout();
 			// 
@@ -74,7 +75,7 @@
 			// btnApply
 			// 
 			btnApply.Enabled = false;
-			btnApply.Location = new Point(522, 185);
+			btnApply.Location = new Point(522, 210);
 			btnApply.Name = "btnApply";
 			btnApply.Size = new Size(75, 23);
 			btnApply.TabIndex = 102;
@@ -84,7 +85,7 @@
 			// 
 			// btnCancel
 			// 
-			btnCancel.Location = new Point(441, 185);
+			btnCancel.Location = new Point(441, 210);
 			btnCancel.Name = "btnCancel";
 			btnCancel.Size = new Size(75, 23);
 			btnCancel.TabIndex = 101;
@@ -94,7 +95,7 @@
 			// 
 			// btnOk
 			// 
-			btnOk.Location = new Point(360, 185);
+			btnOk.Location = new Point(360, 210);
 			btnOk.Name = "btnOk";
 			btnOk.Size = new Size(75, 23);
 			btnOk.TabIndex = 100;
@@ -113,7 +114,7 @@
 			cbCloseOnDosboxExit.Name = "cbCloseOnDosboxExit";
 			cbCloseOnDosboxExit.Size = new Size(264, 19);
 			cbCloseOnDosboxExit.TabIndex = 20;
-			cbCloseOnDosboxExit.Text = "Close launcher automatically on &DOSBox exit";
+			cbCloseOnDosboxExit.Text = "Close launcher automatically on DOSBox exit";
 			cbCloseOnDosboxExit.UseVisualStyleBackColor = true;
 			cbCloseOnDosboxExit.CheckedChanged += cbCloseOnDosboxExit_CheckedChanged;
 			// 
@@ -124,7 +125,7 @@
 			cbWriteConfToBaseDir.Name = "cbWriteConfToBaseDir";
 			cbWriteConfToBaseDir.Size = new Size(286, 19);
 			cbWriteConfToBaseDir.TabIndex = 30;
-			cbWriteConfToBaseDir.Text = "&Write temp. config files to base DOSBox directory";
+			cbWriteConfToBaseDir.Text = "Write temp. config files to base DOSBox directory";
 			cbWriteConfToBaseDir.UseVisualStyleBackColor = true;
 			cbWriteConfToBaseDir.CheckedChanged += cbWriteConfToBaseDir_CheckedChanged;
 			// 
@@ -145,10 +146,10 @@
 			grpAssociate.Controls.Add(btnRemoveAssociation);
 			grpAssociate.Controls.Add(btnSetAssociation);
 			grpAssociate.Controls.Add(lblAssociateStatus);
-			grpAssociate.Location = new Point(12, 106);
+			grpAssociate.Location = new Point(12, 131);
 			grpAssociate.Name = "grpAssociate";
 			grpAssociate.Size = new Size(585, 70);
-			grpAssociate.TabIndex = 40;
+			grpAssociate.TabIndex = 50;
 			grpAssociate.TabStop = false;
 			grpAssociate.Text = "Associate with .DLX files";
 			// 
@@ -157,7 +158,7 @@
 			btnRemoveAssociation.Location = new Point(294, 39);
 			btnRemoveAssociation.Name = "btnRemoveAssociation";
 			btnRemoveAssociation.Size = new Size(285, 23);
-			btnRemoveAssociation.TabIndex = 2;
+			btnRemoveAssociation.TabIndex = 52;
 			btnRemoveAssociation.Text = "Remove file type association";
 			btnRemoveAssociation.UseVisualStyleBackColor = true;
 			btnRemoveAssociation.Click += btnRemoveAssociation_Click;
@@ -167,7 +168,7 @@
 			btnSetAssociation.Location = new Point(6, 39);
 			btnSetAssociation.Name = "btnSetAssociation";
 			btnSetAssociation.Size = new Size(285, 23);
-			btnSetAssociation.TabIndex = 1;
+			btnSetAssociation.TabIndex = 51;
 			btnSetAssociation.Text = "Set file type association";
 			btnSetAssociation.UseVisualStyleBackColor = true;
 			btnSetAssociation.Click += btnSetAssociation_Click;
@@ -181,11 +182,23 @@
 			lblAssociateStatus.TabIndex = 0;
 			lblAssociateStatus.Text = "[status]";
 			// 
+			// cbLaunchImmediately
+			// 
+			cbLaunchImmediately.AutoSize = true;
+			cbLaunchImmediately.Location = new Point(12, 106);
+			cbLaunchImmediately.Name = "cbLaunchImmediately";
+			cbLaunchImmediately.Size = new Size(265, 19);
+			cbLaunchImmediately.TabIndex = 40;
+			cbLaunchImmediately.Text = "Launch immediately when opening shortcuts";
+			cbLaunchImmediately.UseVisualStyleBackColor = true;
+			cbLaunchImmediately.CheckedChanged += cbLaunchImmediately_CheckedChanged;
+			// 
 			// OptionsForm
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(609, 219);
+			ClientSize = new Size(609, 244);
+			Controls.Add(cbLaunchImmediately);
 			Controls.Add(grpAssociate);
 			Controls.Add(lblWriteConfToBaseDirHelp);
 			Controls.Add(cbWriteConfToBaseDir);
@@ -226,5 +239,6 @@
 		private Label lblAssociateStatus;
 		private Button btnRemoveAssociation;
 		private Button btnSetAssociation;
+		private CheckBox cbLaunchImmediately;
 	}
 }
