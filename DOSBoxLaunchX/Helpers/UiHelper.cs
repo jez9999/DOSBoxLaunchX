@@ -111,4 +111,12 @@ internal static class UiHelper {
 			);
 		}
 	}
+
+	internal static string? GetShortcutFromArgs(string[] args) {
+		if ((args.Length < 2 && (args[0] == "-shortcut" || args[0] == "-launchnow")) || args.Length < 1) {
+			return null;
+		}
+
+		return (args[0] == "-shortcut" || args[0] == "-launchnow") ? args[1] : args[0];
+	}
 }

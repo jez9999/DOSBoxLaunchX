@@ -36,6 +36,10 @@ public partial class AboutForm : Form {
 		Close();
 	}
 
+	private void lnkGooey_LinkClicked(object sender, LinkLabelLinkClickedEventArgs ea) {
+		launchUrl("https://www.gooeysoftware.com/");
+	}
+
 	private void lnkDosboxXHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs ea) {
 		launchUrl("https://dosbox-x.com/");
 	}

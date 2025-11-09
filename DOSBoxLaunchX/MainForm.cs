@@ -25,6 +25,7 @@ public partial class MainForm : Form {
 	private readonly LaunchSettingsFileService _launchSettingsFileService;
 	private readonly Dictionary<Control, ControlInfo> _controlInfo = [];
 	private readonly HashSet<string> _reservedSectionKeys;
+	private readonly string? _providedShortcutPath;
 
 	private readonly Font _lblFontNa;
 	private string _localAppDataDir = null!;
@@ -35,7 +36,7 @@ public partial class MainForm : Form {
 
 	#region Constructors
 
-	public MainForm(AppOptionsWithData data, GeneralSettings settings, FormFactory formFact, FormsValidatorHelper formsValidator, ControlInfoTagParser ctrlTagParser, GeneralSettingsFileService genSettingsFileService, LaunchSettingsFileService launchSettingsFileService) {
+	public MainForm(AppOptionsWithData data, GeneralSettings settings, FormFactory formFact, FormsValidatorHelper formsValidator, ControlInfoTagParser ctrlTagParser, GeneralSettingsFileService genSettingsFileService, LaunchSettingsFileService launchSettingsFileService, MainFormDynamicParams dynamicParams) {
 		_data = data;
 		_settings = settings;
 		_formFact = formFact;
@@ -43,6 +44,7 @@ public partial class MainForm : Form {
 		_ctrlTagParser = ctrlTagParser;
 		_genSettingsFileService = genSettingsFileService;
 		_launchSettingsFileService = launchSettingsFileService;
+		_providedShortcutPath = dynamicParams.ShortcutFilePath;
 
 		InitializeComponent();
 
@@ -63,18 +65,6 @@ public partial class MainForm : Form {
 	private string? sectionKeyReserved(string section, string key) {
 		string sectionKey = string.IsNullOrEmpty(key) ? section : $"{section}.{key}";
 		return _reservedSectionKeys.Contains(sectionKey) ? sectionKey : null;
-	}
-
-	private void initNewShortcut() {
-		// Reset UI first...
-		_currentShortcutFilePath = null;
-		resetControlDefaults();
-		selectFirstControl();
-
-		// ... then underlying model.
-		_shortcutDirty = false;
-		updateUiShortcutFilePath();
-		updateUiDirtyState();
 	}
 
 	private int getDefaultFreeSpaceLimit() => 1024;
@@ -349,6 +339,18 @@ public partial class MainForm : Form {
 		return true;
 	}
 
+	private void initNewShortcut() {
+		// Reset UI first...
+		_currentShortcutFilePath = null;
+		resetControlDefaults();
+		selectFirstControl();
+
+		// ... then underlying model.
+		_shortcutDirty = false;
+		updateUiShortcutFilePath();
+		updateUiDirtyState();
+	}
+
 	private bool doOpen() {
 		return doOpen(null);
 	}
@@ -470,7 +472,7 @@ public partial class MainForm : Form {
 
 		var psi = new ProcessStartInfo {
 			FileName = exePath,
-			Arguments = $@"""{_currentShortcutFilePath}""",
+			Arguments = $@"-launchnow ""{_currentShortcutFilePath}""",
 			UseShellExecute = false
 		};
 
@@ -842,7 +844,12 @@ public partial class MainForm : Form {
 			SettingsUiBinder.ValidateUiControlsForGroupedSettings(new(), _controlInfo);
 			attachPrePostAutoexecHandlers();
 			refreshPrePostAutoexec();
-			initNewShortcut();
+			if (_providedShortcutPath != null) {
+				doOpen(_providedShortcutPath);
+			}
+			else {
+				initNewShortcut();
+			}
 			BeginInvoke(selectFirstControl);
 
 			timerRefreshNa.Start();

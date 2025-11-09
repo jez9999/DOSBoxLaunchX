@@ -51,8 +51,8 @@ public class FormFactory(IServiceProvider sp) {
 	//     return ActivatorUtilities.CreateInstance<ImageSelectForm>(_sp);
 	// }
 
-	public MainForm CreateMainForm() {
-		return ActivatorUtilities.CreateInstance<MainForm>(_sp);
+	public MainForm CreateMainForm(MainFormDynamicParams dynamicParams) {
+		return ActivatorUtilities.CreateInstance<MainForm>(_sp, dynamicParams);
 	}
 
 	public OptionsForm CreateOptionsForm() {
@@ -67,8 +67,12 @@ public class FormFactory(IServiceProvider sp) {
 		return ActivatorUtilities.CreateInstance<AboutForm>(_sp);
 	}
 
-	public LauncherForm CreateLauncherForm() {
-		return ActivatorUtilities.CreateInstance<LauncherForm>(_sp);
+	public PreLaunchForm CreatePreLaunchForm() {
+		return ActivatorUtilities.CreateInstance<PreLaunchForm>(_sp);
+	}
+
+	public LauncherForm CreateLauncherForm(LauncherFormDynamicParams dynamicParams) {
+		return ActivatorUtilities.CreateInstance<LauncherForm>(_sp, dynamicParams);
 	}
 
 	public LoggingSettingForm CreateLoggingSettingForm(LoggingSettingFormDynamicParams dynamicParams) {

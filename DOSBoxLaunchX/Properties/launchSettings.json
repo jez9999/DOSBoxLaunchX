@@ -2,7 +2,7 @@
   "profiles": {
     "DOSBoxLaunchX": {
       "commandName": "Project",
-      "commandLineArgs": "-ui -shortcut \"C:\\games\\ark2\\_Arkanoid 2_.dlx\""
+      "commandLineArgs": "-shortcut \"C:\\games\\ark2\\_Arkanoid 2_.dlx\""
     }
   }
 }

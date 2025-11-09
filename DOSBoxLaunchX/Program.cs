@@ -14,6 +14,9 @@ internal static class Program {
 
 	// TODO: If Linux support is ever needed, refactor this app's Form logic into an MVVM pattern for Uno.
 
+	// TODO: Have configurable option for: Launch immediately when opening shortcut...
+	//       if not checked, we'll display a 'Launch or Edit' window when opening it.
+
 	[STAThread]
 	private static void Main(string[] args) {
 		try {
@@ -29,27 +32,39 @@ internal static class Program {
 			};
 			Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
 
-			MainForm? mainForm = null;
-			LauncherForm? launcherForm = null;
+			Form? mainForm = null;
+			Form? launcherForm = null;
 			try {
 				// Args:
 				// -ui: forces interactive UI no matter what
-				// -shortcut "path": runs launcher to open shortcut
+				// -shortcut "path": runs launcher to open shortcut (potentially with pre-launch dialog)
 				// "path": same as -shortcut "path"
+				// -launchnow "path": runs launcher to open shortcut (no pre-launch dialog)
 				if (args.Length > 0 && args[0] != "-ui") {
-					Application.Run(launcherForm =
-						appHost
-							.Services
-							.GetRequiredService<FormFactory>()
-							.CreateLauncherForm()
-					);
+					if (args[0] == "-launchnow") {
+						// TODO: check config setting for whether to launch immediately; if so:
+						Application.Run(launcherForm =
+							appHost
+								.Services
+								.GetRequiredService<FormFactory>()
+								.CreateLauncherForm(new())
+						);
+					}
+					else {
+						Application.Run(launcherForm =
+							appHost
+								.Services
+								.GetRequiredService<FormFactory>()
+								.CreatePreLaunchForm()
+						);
+					}
 				}
 				else {
 					Application.Run(mainForm =
 						appHost
 							.Services
 							.GetRequiredService<FormFactory>()
-							.CreateMainForm()
+							.CreateMainForm(new())
 					);
 				}
 			}

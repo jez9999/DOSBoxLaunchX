@@ -15,6 +15,7 @@ public partial class LauncherForm : Form {
 	private readonly GeneralSettings _settings;
 	private readonly GeneralSettingsFileService _genSettingsFileService;
 	private readonly LaunchSettingsFileService _launchSettingsFileService;
+	private readonly string? _providedShortcutPath;
 
 	private string _localAppDataDir = null!;
 	private int _widthDiffOutput = 0;
@@ -25,11 +26,12 @@ public partial class LauncherForm : Form {
 
 	#region Constructors
 
-	public LauncherForm(AppOptionsWithData data, GeneralSettings settings, GeneralSettingsFileService genSettingsFileService, LaunchSettingsFileService launchSettingsFileService) {
+	public LauncherForm(AppOptionsWithData data, GeneralSettings settings, GeneralSettingsFileService genSettingsFileService, LaunchSettingsFileService launchSettingsFileService, LauncherFormDynamicParams dynamicParams) {
 		_data = data;
 		_settings = settings;
 		_genSettingsFileService = genSettingsFileService;
 		_launchSettingsFileService = launchSettingsFileService;
+		_providedShortcutPath = dynamicParams.ShortcutFilePath;
 
 		InitializeComponent();
 	}
@@ -54,10 +56,15 @@ public partial class LauncherForm : Form {
 	private async Task<bool> parseConfigAndLaunch() {
 		var baseDir = _settings.BaseDosboxDir;
 
-		if ((_data.Args.Length < 2 && _data.Args[0] == "-shortcut") || _data.Args.Length < 1) {
-			throw new Exception("No DLX shortcut specified!");
+		string dlxPath;
+		if (_providedShortcutPath != null) {
+			dlxPath = _providedShortcutPath;
 		}
-		var dlxPath = txtLaunchShortcut.Text = _data.Args[0] == "-shortcut" ? _data.Args[1] : _data.Args[0];
+		else {
+			dlxPath = UiHelper.GetShortcutFromArgs(_data.Args)
+				?? throw new Exception("No DLX shortcut specified!");
+		}
+		txtLaunchShortcut.Text = dlxPath;
 
 		addTxtboxMsg("Loading DLX shortcut...");
 		if (!File.Exists(dlxPath)) {
@@ -218,7 +225,7 @@ public partial class LauncherForm : Form {
 
 			txtOutput.Enabled = true;
 
-			if (success && cbCloseOnDosboxExit.Checked) { Close(); }
+			if (success && cbCloseOnDosboxExit.Checked) { Application.Exit(); }
 		}
 		catch (Exception ex) {
 			MessageBoxHelper.ShowErrorMessageOk($"FATAL ERROR: {ex.Message}", "Error");
