@@ -50,14 +50,16 @@ public static class DosboxConfigMergeHelper {
 			sett.BaseDir,
 			sett.LimitBaseDirFreeSpace,
 			sett.Executable,
+			sett.ExitAfterTerminate,
 			mergingGlobals
 		);
 		config.AddAutoexecCommands(preAutoexec, insertAtEnd: false);
 		config.AddAutoexecCommands(postAutoexec);
 	}
 
-	public static (List<string> PreAutoexec, List<string> PostAutoexec) GeneratePrePostAutoexec(string? baseDir, int? limitBaseDirFreeSpace, string? executable, bool? generateForGlobals = null) {
+	public static (List<string> PreAutoexec, List<string> PostAutoexec) GeneratePrePostAutoexec(string? baseDir, int? limitBaseDirFreeSpace, string? executable, bool? exitAfterTerminate, bool? generateForGlobals = null) {
 		generateForGlobals ??= false;
+		exitAfterTerminate ??= false;
 		List<string> preAutoexec = [];
 		List<string> postAutoexec = [];
 
@@ -85,6 +87,10 @@ public static class DosboxConfigMergeHelper {
 			}
 			else {
 				postAutoexec.Add("@REM [No Executable set]");
+			}
+
+			if (exitAfterTerminate.Value) {
+				postAutoexec.Add("EXIT");
 			}
 		}
 

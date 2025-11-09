@@ -33,6 +33,9 @@
 			txtShortcutFilePath = new TextBox();
 			tabsContainer = new TabControl();
 			tabGeneral = new TabPage();
+			comboExitAfterTerminate = new ComboBox();
+			cbExitAfterTerminateSet = new CheckBox();
+			lblExitAfterTerminate = new Label();
 			btnLogOutputFileBrowse = new Button();
 			cbLogOutputFileSet = new CheckBox();
 			txtLogOutputFile = new TextBox();
@@ -301,6 +304,9 @@
 			// tabGeneral
 			// 
 			tabGeneral.BackColor = SystemColors.Control;
+			tabGeneral.Controls.Add(comboExitAfterTerminate);
+			tabGeneral.Controls.Add(cbExitAfterTerminateSet);
+			tabGeneral.Controls.Add(lblExitAfterTerminate);
 			tabGeneral.Controls.Add(btnLogOutputFileBrowse);
 			tabGeneral.Controls.Add(cbLogOutputFileSet);
 			tabGeneral.Controls.Add(txtLogOutputFile);
@@ -332,12 +338,42 @@
 			tabGeneral.TabIndex = 6;
 			tabGeneral.Text = "General";
 			// 
+			// comboExitAfterTerminate
+			// 
+			comboExitAfterTerminate.DropDownStyle = ComboBoxStyle.DropDownList;
+			comboExitAfterTerminate.FormattingEnabled = true;
+			comboExitAfterTerminate.Items.AddRange(new object[] { "Yes", "No" });
+			comboExitAfterTerminate.Location = new Point(258, 232);
+			comboExitAfterTerminate.Name = "comboExitAfterTerminate";
+			comboExitAfterTerminate.Size = new Size(110, 23);
+			comboExitAfterTerminate.TabIndex = 61;
+			comboExitAfterTerminate.Tag = "cb=cbExitAfterTerminateSet|assoc=lblExitAfterTerminate";
+			// 
+			// cbExitAfterTerminateSet
+			// 
+			cbExitAfterTerminateSet.AutoSize = true;
+			cbExitAfterTerminateSet.Location = new Point(11, 236);
+			cbExitAfterTerminateSet.Name = "cbExitAfterTerminateSet";
+			cbExitAfterTerminateSet.Size = new Size(15, 14);
+			cbExitAfterTerminateSet.TabIndex = 60;
+			cbExitAfterTerminateSet.Tag = "";
+			cbExitAfterTerminateSet.UseVisualStyleBackColor = true;
+			// 
+			// lblExitAfterTerminate
+			// 
+			lblExitAfterTerminate.AutoSize = true;
+			lblExitAfterTerminate.Location = new Point(36, 235);
+			lblExitAfterTerminate.Name = "lblExitAfterTerminate";
+			lblExitAfterTerminate.Size = new Size(186, 15);
+			lblExitAfterTerminate.TabIndex = 73;
+			lblExitAfterTerminate.Text = "^ Exit after executable terminates:";
+			// 
 			// btnLogOutputFileBrowse
 			// 
-			btnLogOutputFileBrowse.Location = new Point(522, 306);
+			btnLogOutputFileBrowse.Location = new Point(522, 339);
 			btnLogOutputFileBrowse.Name = "btnLogOutputFileBrowse";
 			btnLogOutputFileBrowse.Size = new Size(75, 23);
-			btnLogOutputFileBrowse.TabIndex = 72;
+			btnLogOutputFileBrowse.TabIndex = 82;
 			btnLogOutputFileBrowse.Text = "&Browse...";
 			btnLogOutputFileBrowse.UseVisualStyleBackColor = true;
 			btnLogOutputFileBrowse.Click += btnLogOutputFileBrowse_Click;
@@ -345,19 +381,19 @@
 			// cbLogOutputFileSet
 			// 
 			cbLogOutputFileSet.AutoSize = true;
-			cbLogOutputFileSet.Location = new Point(11, 310);
+			cbLogOutputFileSet.Location = new Point(11, 343);
 			cbLogOutputFileSet.Name = "cbLogOutputFileSet";
 			cbLogOutputFileSet.Size = new Size(15, 14);
-			cbLogOutputFileSet.TabIndex = 70;
+			cbLogOutputFileSet.TabIndex = 80;
 			cbLogOutputFileSet.Tag = "";
 			cbLogOutputFileSet.UseVisualStyleBackColor = true;
 			// 
 			// txtLogOutputFile
 			// 
-			txtLogOutputFile.Location = new Point(168, 306);
+			txtLogOutputFile.Location = new Point(168, 339);
 			txtLogOutputFile.Name = "txtLogOutputFile";
 			txtLogOutputFile.Size = new Size(348, 23);
-			txtLogOutputFile.TabIndex = 71;
+			txtLogOutputFile.TabIndex = 81;
 			txtLogOutputFile.Tag = "cb=cbLogOutputFileSet|assoc=lblLogOutputFile,btnLogOutputFileBrowse|setting=log.logfile";
 			// 
 			// lblLogOutputFile
@@ -365,7 +401,7 @@
 			lblLogOutputFile.AutoSize = true;
 			lblLogOutputFile.Cursor = Cursors.Help;
 			lblLogOutputFile.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point, 0);
-			lblLogOutputFile.Location = new Point(36, 309);
+			lblLogOutputFile.Location = new Point(36, 342);
 			lblLogOutputFile.Name = "lblLogOutputFile";
 			lblLogOutputFile.Size = new Size(126, 15);
 			lblLogOutputFile.TabIndex = 62;
@@ -375,16 +411,16 @@
 			// cbOpenLoggingConsoleSet
 			// 
 			cbOpenLoggingConsoleSet.AutoSize = true;
-			cbOpenLoggingConsoleSet.Location = new Point(11, 281);
+			cbOpenLoggingConsoleSet.Location = new Point(11, 314);
 			cbOpenLoggingConsoleSet.Name = "cbOpenLoggingConsoleSet";
 			cbOpenLoggingConsoleSet.Size = new Size(15, 14);
-			cbOpenLoggingConsoleSet.TabIndex = 60;
+			cbOpenLoggingConsoleSet.TabIndex = 70;
 			cbOpenLoggingConsoleSet.Tag = "";
 			cbOpenLoggingConsoleSet.UseVisualStyleBackColor = true;
 			// 
 			// groupBox1
 			// 
-			groupBox1.Location = new Point(11, 242);
+			groupBox1.Location = new Point(11, 275);
 			groupBox1.Name = "groupBox1";
 			groupBox1.Size = new Size(586, 12);
 			groupBox1.TabIndex = 58;
@@ -395,16 +431,16 @@
 			comboOpenLoggingConsole.DropDownStyle = ComboBoxStyle.DropDownList;
 			comboOpenLoggingConsole.FormattingEnabled = true;
 			comboOpenLoggingConsole.Items.AddRange(new object[] { "No", "Yes" });
-			comboOpenLoggingConsole.Location = new Point(291, 277);
+			comboOpenLoggingConsole.Location = new Point(291, 310);
 			comboOpenLoggingConsole.Name = "comboOpenLoggingConsole";
 			comboOpenLoggingConsole.Size = new Size(77, 23);
-			comboOpenLoggingConsole.TabIndex = 61;
+			comboOpenLoggingConsole.TabIndex = 71;
 			comboOpenLoggingConsole.Tag = "cb=cbOpenLoggingConsoleSet|assoc=lblOpenLoggingConsole";
 			// 
 			// lblOpenLoggingConsole
 			// 
 			lblOpenLoggingConsole.AutoSize = true;
-			lblOpenLoggingConsole.Location = new Point(36, 280);
+			lblOpenLoggingConsole.Location = new Point(36, 313);
 			lblOpenLoggingConsole.Name = "lblOpenLoggingConsole";
 			lblOpenLoggingConsole.Size = new Size(249, 15);
 			lblOpenLoggingConsole.TabIndex = 55;
@@ -2741,5 +2777,8 @@
 		private TextBox txtLogOutputFile;
 		private Label lblLogOutputFile;
 		private Button btnAddCustomLoggingSetting;
+		private ComboBox comboExitAfterTerminate;
+		private CheckBox cbExitAfterTerminateSet;
+		private Label lblExitAfterTerminate;
 	}
 }

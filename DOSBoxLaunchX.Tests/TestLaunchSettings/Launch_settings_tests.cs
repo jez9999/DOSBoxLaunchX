@@ -65,6 +65,7 @@ public class Launch_settings_tests {
 			Description = "Some description",
 			BaseDir = @"C:\Games",
 			LimitBaseDirFreeSpace = 64,
+			ExitAfterTerminate = true,
 			Executable = "game.exe"
 		};
 		settings.CPU.Cycles = "3123";
@@ -78,6 +79,7 @@ public class Launch_settings_tests {
 		json.Should().Contain(@"""BaseDir"":""C:\\Games""");
 		json.Should().Contain(@"""LimitBaseDirFreeSpace"":64");
 		json.Should().Contain(@"""Executable"":""game.exe""");
+		json.Should().Contain(@"""ExitAfterTerminate"":true");
 		json.Should().Contain(@"""Settings"":{""cpu.cycles"":""3123""}");
 	}
 
@@ -144,6 +146,7 @@ public class Launch_settings_tests {
 				"BaseDir":"C:\\Games",
 				"LimitBaseDirFreeSpace":64,
 				"Executable":"game.exe",
+				"ExitAfterTerminate":false,
 				"Settings":{"cpu.cycles":"3123"}
 			}
 			""";
@@ -158,6 +161,7 @@ public class Launch_settings_tests {
 			BaseDir = @"C:\Games",
 			LimitBaseDirFreeSpace = 64,
 			Executable = "game.exe",
+			ExitAfterTerminate = false,
 			CPU = new LaunchSettings.CPUSettings { Cycles = "3123" }
 		});
 	}

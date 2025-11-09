@@ -75,6 +75,7 @@ public partial class MainForm : Form {
 			BaseDir = "",
 			LimitBaseDirFreeSpace = getDefaultFreeSpaceLimit(),
 			Executable = "",
+			ExitAfterTerminate = true,
 		});
 	}
 
@@ -224,6 +225,12 @@ public partial class MainForm : Form {
 			refreshPrePostAutoexec();
 		};
 		txtExecutable.TextChanged += (sender, ea) => {
+			refreshPrePostAutoexec();
+		};
+		cbExitAfterTerminateSet.CheckedChanged += (sender, ea) => {
+			refreshPrePostAutoexec();
+		};
+		comboExitAfterTerminate.SelectedIndexChanged += (sender, ea) => {
 			refreshPrePostAutoexec();
 		};
 	}
@@ -521,6 +528,7 @@ public partial class MainForm : Form {
 		if (cbBaseDirSet.Checked) { sett.BaseDir = UiHelper.GetTextValue(txtBaseDir); }
 		if (cbLimitBaseDirFreeSpaceSet.Checked) { sett.LimitBaseDirFreeSpace = UiHelper.GetLimitFreeSpaceValue(comboLimitBaseDirFreeSpace); }
 		if (cbExecutableSet.Checked) { sett.Executable = UiHelper.GetTextValue(txtExecutable); }
+		if (cbExitAfterTerminateSet.Checked) { sett.ExitAfterTerminate = UiHelper.GetComboValue<bool>(comboExitAfterTerminate); }
 		if (cbOpenLoggingConsoleSet.Checked) { sett.ConsoleOnLaunch = UiHelper.GetComboValue<bool>(comboOpenLoggingConsole); }
 
 		// Grouped settings
@@ -613,6 +621,9 @@ public partial class MainForm : Form {
 		UiHelper.SetTextFromValue(txtExecutable, sett.Executable);
 		UiHelper.SetCheckboxFromValue(cbExecutableSet, sett.Executable != null);
 
+		UiHelper.SetComboFromValue(comboExitAfterTerminate, sett.ExitAfterTerminate);
+		UiHelper.SetCheckboxFromValue(cbExitAfterTerminateSet, sett.ExitAfterTerminate != null);
+
 		UiHelper.SetComboFromValue(comboOpenLoggingConsole, sett.ConsoleOnLaunch);
 		UiHelper.SetCheckboxFromValue(cbOpenLoggingConsoleSet, sett.ConsoleOnLaunch != null);
 
@@ -652,6 +663,7 @@ public partial class MainForm : Form {
 		static void resetGlobalNaSettings(LaunchSettings sett) {
 			sett.Name = sett.Description = sett.BaseDir = sett.Executable = null;
 			sett.LimitBaseDirFreeSpace = null;
+			sett.ExitAfterTerminate = null;
 		}
 
 		void showGeneralNotApplicable(bool makeVisible) {
@@ -660,7 +672,7 @@ public partial class MainForm : Form {
 				lblNameDescriptionNote.Enabled =
 				lblName.Enabled = txtName.Enabled =
 				lblDescription.Enabled = txtDescription.Enabled =
-				cbBaseDirSet.Enabled = cbLimitBaseDirFreeSpaceSet.Enabled = cbExecutableSet.Enabled =
+				cbBaseDirSet.Enabled = cbLimitBaseDirFreeSpaceSet.Enabled = cbExecutableSet.Enabled = cbExitAfterTerminateSet.Enabled =
 				!makeVisible;
 			lblNotApplicable.Font = _lblFontNa;
 			lblNotApplicable.Size = new(352, 166);
@@ -699,11 +711,13 @@ public partial class MainForm : Form {
 		string? baseDir = cbBaseDirSet.Checked ? UiHelper.GetTextValue(txtBaseDir) : null;
 		int? limitBaseDirFreeSpace = cbLimitBaseDirFreeSpaceSet.Checked ? UiHelper.GetLimitFreeSpaceValue(comboLimitBaseDirFreeSpace) : null;
 		string? executable = cbExecutableSet.Checked ? UiHelper.GetTextValue(txtExecutable) : null;
+		bool? exitAfterTerminate = cbExitAfterTerminateSet.Checked ? UiHelper.GetComboValue<bool>(comboExitAfterTerminate) : null;
 
 		(var preAutoexec, var postAutoexec) = DosboxConfigMergeHelper.GeneratePrePostAutoexec(
 			baseDir,
 			limitBaseDirFreeSpace,
 			executable,
+			exitAfterTerminate,
 			LocalAppDataHelper.IsGlobalShortcut(_localAppDataDir, _currentShortcutFilePath)
 		);
 

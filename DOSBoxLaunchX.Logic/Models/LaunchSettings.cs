@@ -40,6 +40,12 @@ public class LaunchSettings {
 	public string? Executable { get; set; }
 
 	/// <summary>
+	/// Whether or not to exit DOSBox after the executable terminates.
+	/// When used for storing global settings, this field is ignored.
+	/// </summary>
+	public bool? ExitAfterTerminate { get; set; }
+
+	/// <summary>
 	/// Whether or not to open the DOSBox logging console on launch.
 	/// </summary>
 	public bool? ConsoleOnLaunch { get; set; }
