@@ -31,6 +31,11 @@ public partial class PreLaunchForm : Form {
 #pragma warning disable IDE1006 // Naming Styles
 	private void PreLaunchForm_Load(object sender, EventArgs ea) {
 		try {
+			Text += $" [{ThisAssembly.GitCommitId[..7]}]";
+			if (_data.IsDebugBuild) {
+				Text += " (DEBUG BUILD)";
+			}
+
 			_providedDlxPath = UiHelper.GetShortcutFromArgs(_data.Args)
 				?? throw new Exception("No DLX shortcut specified!");
 

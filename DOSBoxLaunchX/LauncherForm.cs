@@ -188,19 +188,19 @@ public partial class LauncherForm : Form {
 #pragma warning disable IDE1006 // Naming Styles
 	private async void LauncherForm_Load(object sender, EventArgs ea) {
 		try {
-			_localAppDataDir = LocalAppDataHelper.EnsureLocalAppDataDir(_data.ProgramName);
-			LocalAppDataHelper.LoadSettingsIfAvailable(_localAppDataDir, _genSettingsFileService, _settings);
+			Text += $" [{ThisAssembly.GitCommitId[..7]}]";
+			if (_data.IsDebugBuild) {
+				Text += " (DEBUG BUILD)";
+			}
+			Text += " - Launching DOSBox-X...";
 
 			// Windows 10+ pushes the window a bit away from the left of the screen (by design) when you
 			// set the location to 0,0.  As we can't get it flush with the screen edge, let's just purposely
 			// put it a little bit in from the edge.
 			Location = new(5, 10);
 
-			Text += $" [{ThisAssembly.GitCommitId[..7]}]";
-			if (_data.IsDebugBuild) {
-				Text += " (DEBUG BUILD)";
-			}
-			Text += " - Launching DOSBox-X...";
+			_localAppDataDir = LocalAppDataHelper.EnsureLocalAppDataDir(_data.ProgramName);
+			LocalAppDataHelper.LoadSettingsIfAvailable(_localAppDataDir, _genSettingsFileService, _settings);
 
 			// Record sizes on form that we'll need later
 			_widthDiffOutput = Width - txtOutput.Width;

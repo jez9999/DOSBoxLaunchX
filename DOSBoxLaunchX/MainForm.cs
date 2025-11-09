@@ -830,13 +830,13 @@ public partial class MainForm : Form {
 #pragma warning disable IDE1006 // Naming Styles
 	private void MainForm_Load(object sender, EventArgs ea) {
 		try {
-			_localAppDataDir = LocalAppDataHelper.EnsureLocalAppDataDir(_data.ProgramName);
-			LocalAppDataHelper.LoadSettingsIfAvailable(_localAppDataDir, _genSettingsFileService, _settings);
-
 			Text += $" [{ThisAssembly.GitCommitId[..7]}]";
 			if (_data.IsDebugBuild) {
 				Text += " (DEBUG BUILD)";
 			}
+
+			_localAppDataDir = LocalAppDataHelper.EnsureLocalAppDataDir(_data.ProgramName);
+			LocalAppDataHelper.LoadSettingsIfAvailable(_localAppDataDir, _genSettingsFileService, _settings);
 
 			UiHelper.CheckRequiredFiles(_settings, _data, true);
 
