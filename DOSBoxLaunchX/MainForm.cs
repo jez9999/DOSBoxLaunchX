@@ -1148,4 +1148,13 @@ public partial class MainForm : Form {
 			"Logging Output to File setting"
 		);
 	}
+
+	private void lblDosVersion_Click(object sender, EventArgs ea) {
+		MessageBoxHelper.ShowInfoMessage(
+			"""
+			DOS version 7.0 is 'Windows 95 DOS'.  DOS version 7.1 is 'Windows 98 DOS'.
+			""",
+			"DOS Version setting"
+		);
+	}
 }

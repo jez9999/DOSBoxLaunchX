@@ -62,6 +62,9 @@
 			txtName = new TextBox();
 			lblName = new Label();
 			tabCpu = new TabPage();
+			comboDosVersion = new ComboBox();
+			cbDosVersionSet = new CheckBox();
+			lblDosVersion = new Label();
 			comboCpuType = new ComboBox();
 			cbCpuTypeSet = new CheckBox();
 			lblCpuType = new Label();
@@ -617,6 +620,9 @@
 			// tabCpu
 			// 
 			tabCpu.BackColor = SystemColors.Control;
+			tabCpu.Controls.Add(comboDosVersion);
+			tabCpu.Controls.Add(cbDosVersionSet);
+			tabCpu.Controls.Add(lblDosVersion);
 			tabCpu.Controls.Add(comboCpuType);
 			tabCpu.Controls.Add(cbCpuTypeSet);
 			tabCpu.Controls.Add(lblCpuType);
@@ -645,6 +651,38 @@
 			tabCpu.Size = new Size(1227, 528);
 			tabCpu.TabIndex = 0;
 			tabCpu.Text = "CPU";
+			// 
+			// comboDosVersion
+			// 
+			comboDosVersion.FormattingEnabled = true;
+			comboDosVersion.Items.AddRange(new object[] { "auto", "3.3", "5.0", "6.22", "7.0", "7.1" });
+			comboDosVersion.Location = new Point(158, 228);
+			comboDosVersion.Name = "comboDosVersion";
+			comboDosVersion.Size = new Size(439, 23);
+			comboDosVersion.TabIndex = 81;
+			comboDosVersion.Tag = "cb=cbDosVersionSet|assoc=lblDosVersion|setting=dos.ver";
+			// 
+			// cbDosVersionSet
+			// 
+			cbDosVersionSet.AutoSize = true;
+			cbDosVersionSet.Location = new Point(11, 232);
+			cbDosVersionSet.Name = "cbDosVersionSet";
+			cbDosVersionSet.Size = new Size(15, 14);
+			cbDosVersionSet.TabIndex = 80;
+			cbDosVersionSet.Tag = "";
+			cbDosVersionSet.UseVisualStyleBackColor = true;
+			// 
+			// lblDosVersion
+			// 
+			lblDosVersion.AutoSize = true;
+			lblDosVersion.Cursor = Cursors.Help;
+			lblDosVersion.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point, 0);
+			lblDosVersion.Location = new Point(36, 231);
+			lblDosVersion.Name = "lblDosVersion";
+			lblDosVersion.Size = new Size(74, 15);
+			lblDosVersion.TabIndex = 72;
+			lblDosVersion.Text = "DOS version:";
+			lblDosVersion.Click += lblDosVersion_Click;
 			// 
 			// comboCpuType
 			// 
@@ -2780,5 +2818,8 @@
 		private ComboBox comboExitAfterTerminate;
 		private CheckBox cbExitAfterTerminateSet;
 		private Label lblExitAfterTerminate;
+		private ComboBox comboDosVersion;
+		private CheckBox cbDosVersionSet;
+		private Label lblDosVersion;
 	}
 }

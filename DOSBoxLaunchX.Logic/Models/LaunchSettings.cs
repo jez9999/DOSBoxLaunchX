@@ -200,6 +200,9 @@ public class LaunchSettings {
 
 		[GroupedSetting("dosbox", "memsize")]
 		public string? MemSize { get; set; }
+
+		[GroupedSetting("dos", "ver")]
+		public string? DosVersion { get; set; }
 	}
 
 	public class VideoSettings {
