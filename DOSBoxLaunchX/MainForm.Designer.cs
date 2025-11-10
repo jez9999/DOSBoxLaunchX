@@ -794,7 +794,7 @@
 			// comboCycles
 			// 
 			comboCycles.FormattingEnabled = true;
-			comboCycles.Items.AddRange(new object[] { "auto", "max", "30000", "60000", "100000", "150000", "180000", "200000" });
+			comboCycles.Items.AddRange(new object[] { "auto", "max", "1000", "5000", "10000", "30000", "60000", "100000", "150000", "180000", "200000" });
 			comboCycles.Location = new Point(158, 54);
 			comboCycles.Name = "comboCycles";
 			comboCycles.Size = new Size(439, 23);
