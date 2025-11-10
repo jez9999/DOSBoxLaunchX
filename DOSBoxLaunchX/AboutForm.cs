@@ -40,6 +40,10 @@ public partial class AboutForm : Form {
 		launchUrl("https://www.gooeysoftware.com/");
 	}
 
+	private void lnkDosboxLaunchXGithub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs ea) {
+		launchUrl("https://github.com/jez9999/DOSBoxLaunchX");
+	}
+
 	private void lnkDosboxXHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs ea) {
 		launchUrl("https://dosbox-x.com/");
 	}
