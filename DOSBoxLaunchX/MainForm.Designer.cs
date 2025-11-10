@@ -1517,7 +1517,7 @@
 			// comboSbType
 			// 
 			comboSbType.FormattingEnabled = true;
-			comboSbType.Items.AddRange(new object[] { "sb1", "sb1.5", "sb2", "sbpro1", "sbpro2", "sb16", "gb", "ess688", "ess1688", "reveal_sc400", "none" });
+			comboSbType.Items.AddRange(new object[] { "sb1", "sb1.5", "sb2", "sbpro1", "sbpro2", "sb16", "sb16vibra", "gb", "ess688", "ess1688", "reveal_sc400", "none" });
 			comboSbType.Location = new Point(135, 16);
 			comboSbType.Name = "comboSbType";
 			comboSbType.Size = new Size(458, 23);
