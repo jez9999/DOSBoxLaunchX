@@ -2,6 +2,13 @@
 
 **DOSBoxLaunchX** is a Windows utility that simplifies managing and launching DOSBox-X configurations for classic DOS games. It provides a modern UI for editing DOSBox-X settings, creating shortcuts, and customizing per-game configurations.
 
+## Screenshots
+
+<img width="1261" height="658" alt="image" src="https://github.com/user-attachments/assets/a4139e08-95e3-4422-960f-28f17d02bae6" />
+<img width="330" height="233" alt="image" src="https://github.com/user-attachments/assets/2447e2c2-dcf2-4c36-8c27-da143c8d4bf6" />
+<img width="1280" height="745" alt="image" src="https://github.com/user-attachments/assets/1e6f5d67-1fd3-44d2-8497-9abc526a4b29" />
+
+
 ## Features
 
 - **Visual Settings Editor:** Modify DOSBox-X configuration settings, (grouped and custom), as well as keyboard mappings directly in the UI.  
