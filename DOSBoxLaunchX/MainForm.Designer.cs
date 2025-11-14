@@ -2042,7 +2042,7 @@
 			// comboMouseSensitivity
 			// 
 			comboMouseSensitivity.FormattingEnabled = true;
-			comboMouseSensitivity.Items.AddRange(new object[] { "100", "50", "25", "50,100", "25,75", "35,75", "100,-50" });
+			comboMouseSensitivity.Items.AddRange(new object[] { "75", "50", "25", "100", "50,100", "25,75", "35,75", "100,-50" });
 			comboMouseSensitivity.Location = new Point(184, 74);
 			comboMouseSensitivity.Name = "comboMouseSensitivity";
 			comboMouseSensitivity.Size = new Size(409, 23);
