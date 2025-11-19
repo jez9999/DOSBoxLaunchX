@@ -231,6 +231,12 @@ public class LaunchSettings {
 
 		[GroupedSetting("video", "forcerate")]
 		public string? RefreshRate { get; set; }
+
+		[GroupedSetting("sdl", "fullresolution")]
+		public string? FullResolution { get; set; }
+
+		[GroupedSetting("sdl", "windowresolution")]
+		public string? WindowResolution { get; set; }
 	}
 
 	public class AudioSettings {

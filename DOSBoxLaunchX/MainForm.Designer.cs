@@ -34,6 +34,7 @@
 			tabsContainer = new TabControl();
 			tabGeneral = new TabPage();
 			pnlGeneralSettingsMain = new Panel();
+			lblNotApplicable = new DOSBoxLaunchX.Controls.TransparentLabel();
 			btnUseDosboxBaseDirBrowse = new Button();
 			cbUseDosboxBaseDirSet = new CheckBox();
 			txtUseDosboxBaseDir = new TextBox();
@@ -57,7 +58,6 @@
 			lblDescription = new Label();
 			txtName = new TextBox();
 			lblName = new Label();
-			lblNotApplicable = new DOSBoxLaunchX.Controls.TransparentLabel();
 			btnLogOutputFileBrowse = new Button();
 			cbLogOutputFileSet = new CheckBox();
 			txtLogOutputFile = new TextBox();
@@ -93,6 +93,9 @@
 			lblCpuSet = new Label();
 			lblCore = new Label();
 			tabVideo = new TabPage();
+			comboFullResolution = new ComboBox();
+			cbFullResolutionSet = new CheckBox();
+			lblFullResolution = new Label();
 			comboRefreshRate = new ComboBox();
 			cbRefreshRateSet = new CheckBox();
 			lblRefreshRate = new Label();
@@ -257,6 +260,9 @@
 			timerRefreshNa = new System.Windows.Forms.Timer(components);
 			folderBrowserDialog = new FolderBrowserDialog();
 			btnTestLaunch = new Button();
+			comboWindowResolution = new ComboBox();
+			cbWindowResolutionSet = new CheckBox();
+			lblWindowResolution = new Label();
 			tabsContainer.SuspendLayout();
 			tabGeneral.SuspendLayout();
 			pnlGeneralSettingsMain.SuspendLayout();
@@ -362,6 +368,18 @@
 			pnlGeneralSettingsMain.Name = "pnlGeneralSettingsMain";
 			pnlGeneralSettingsMain.Size = new Size(604, 291);
 			pnlGeneralSettingsMain.TabIndex = 10;
+			// 
+			// lblNotApplicable
+			// 
+			lblNotApplicable.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+			lblNotApplicable.ForeColor = SystemColors.GrayText;
+			lblNotApplicable.Location = new Point(59, 7);
+			lblNotApplicable.Name = "lblNotApplicable";
+			lblNotApplicable.Size = new Size(27, 19);
+			lblNotApplicable.TabIndex = 90;
+			lblNotApplicable.TabStop = false;
+			lblNotApplicable.Text = "N/A";
+			lblNotApplicable.TextAlign = ContentAlignment.TopLeft;
 			// 
 			// btnUseDosboxBaseDirBrowse
 			// 
@@ -585,18 +603,6 @@
 			lblName.Size = new Size(42, 15);
 			lblName.TabIndex = 74;
 			lblName.Text = "Name:";
-			// 
-			// lblNotApplicable
-			// 
-			lblNotApplicable.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-			lblNotApplicable.ForeColor = SystemColors.GrayText;
-			lblNotApplicable.Location = new Point(59, 7);
-			lblNotApplicable.Name = "lblNotApplicable";
-			lblNotApplicable.Size = new Size(27, 19);
-			lblNotApplicable.TabIndex = 90;
-			lblNotApplicable.TabStop = false;
-			lblNotApplicable.Text = "N/A";
-			lblNotApplicable.TextAlign = ContentAlignment.TopLeft;
 			// 
 			// btnLogOutputFileBrowse
 			// 
@@ -962,6 +968,12 @@
 			// tabVideo
 			// 
 			tabVideo.BackColor = SystemColors.Control;
+			tabVideo.Controls.Add(comboWindowResolution);
+			tabVideo.Controls.Add(cbWindowResolutionSet);
+			tabVideo.Controls.Add(lblWindowResolution);
+			tabVideo.Controls.Add(comboFullResolution);
+			tabVideo.Controls.Add(cbFullResolutionSet);
+			tabVideo.Controls.Add(lblFullResolution);
 			tabVideo.Controls.Add(comboRefreshRate);
 			tabVideo.Controls.Add(cbRefreshRateSet);
 			tabVideo.Controls.Add(lblRefreshRate);
@@ -984,6 +996,35 @@
 			tabVideo.Size = new Size(1227, 528);
 			tabVideo.TabIndex = 1;
 			tabVideo.Text = "Video";
+			// 
+			// comboFullResolution
+			// 
+			comboFullResolution.FormattingEnabled = true;
+			comboFullResolution.Items.AddRange(new object[] { "original", "desktop", "1024x768", "1280x1024", "1680x1050", "1920x1080" });
+			comboFullResolution.Location = new Point(168, 170);
+			comboFullResolution.Name = "comboFullResolution";
+			comboFullResolution.Size = new Size(429, 23);
+			comboFullResolution.TabIndex = 61;
+			comboFullResolution.Tag = "cb=cbFullResolutionSet|assoc=lblFullResolution|setting=sdl.fullresolution";
+			// 
+			// cbFullResolutionSet
+			// 
+			cbFullResolutionSet.AutoSize = true;
+			cbFullResolutionSet.Location = new Point(11, 174);
+			cbFullResolutionSet.Name = "cbFullResolutionSet";
+			cbFullResolutionSet.Size = new Size(15, 14);
+			cbFullResolutionSet.TabIndex = 60;
+			cbFullResolutionSet.Tag = "";
+			cbFullResolutionSet.UseVisualStyleBackColor = true;
+			// 
+			// lblFullResolution
+			// 
+			lblFullResolution.AutoSize = true;
+			lblFullResolution.Location = new Point(36, 173);
+			lblFullResolution.Name = "lblFullResolution";
+			lblFullResolution.Size = new Size(119, 15);
+			lblFullResolution.TabIndex = 62;
+			lblFullResolution.Text = "Fullscreen resolution:";
 			// 
 			// comboRefreshRate
 			// 
@@ -2640,6 +2681,35 @@
 			btnTestLaunch.UseVisualStyleBackColor = true;
 			btnTestLaunch.Click += btnTestLaunch_Click;
 			// 
+			// comboWindowResolution
+			// 
+			comboWindowResolution.FormattingEnabled = true;
+			comboWindowResolution.Items.AddRange(new object[] { "original", "desktop", "1024x768", "1280x1024", "1680x1050", "1920x1080" });
+			comboWindowResolution.Location = new Point(168, 199);
+			comboWindowResolution.Name = "comboWindowResolution";
+			comboWindowResolution.Size = new Size(429, 23);
+			comboWindowResolution.TabIndex = 71;
+			comboWindowResolution.Tag = "cb=cbWindowResolutionSet|assoc=lblWindowResolution|setting=sdl.windowresolution";
+			// 
+			// cbWindowResolutionSet
+			// 
+			cbWindowResolutionSet.AutoSize = true;
+			cbWindowResolutionSet.Location = new Point(11, 203);
+			cbWindowResolutionSet.Name = "cbWindowResolutionSet";
+			cbWindowResolutionSet.Size = new Size(15, 14);
+			cbWindowResolutionSet.TabIndex = 70;
+			cbWindowResolutionSet.Tag = "";
+			cbWindowResolutionSet.UseVisualStyleBackColor = true;
+			// 
+			// lblWindowResolution
+			// 
+			lblWindowResolution.AutoSize = true;
+			lblWindowResolution.Location = new Point(36, 202);
+			lblWindowResolution.Name = "lblWindowResolution";
+			lblWindowResolution.Size = new Size(110, 15);
+			lblWindowResolution.TabIndex = 65;
+			lblWindowResolution.Text = "Window resolution:";
+			// 
 			// MainForm
 			// 
 			AllowDrop = true;
@@ -2936,5 +3006,11 @@
 		private CheckBox cbUseDosboxBaseDirSet;
 		private TextBox txtUseDosboxBaseDir;
 		private Label lblUseDosboxBaseDir;
+		private ComboBox comboFullResolution;
+		private CheckBox cbFullResolutionSet;
+		private Label lblFullResolution;
+		private ComboBox comboWindowResolution;
+		private CheckBox cbWindowResolutionSet;
+		private Label lblWindowResolution;
 	}
 }
