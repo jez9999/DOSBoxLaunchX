@@ -678,6 +678,7 @@ public partial class MainForm : Form {
 				lblDescription.Enabled = txtDescription.Enabled =
 				cbBaseDirSet.Enabled = cbLimitBaseDirFreeSpaceSet.Enabled = cbExecutableSet.Enabled = cbExitAfterTerminateSet.Enabled =
 				!makeVisible;
+			pnlGeneralSettingsMain.BackColor = makeVisible ? SystemColors.ControlLight : SystemColors.Control;
 			lblNotApplicable.Font = _lblFontNa;
 			lblNotApplicable.Size = new(352, 166);
 			lblNotApplicable.Location = new(145, 23);

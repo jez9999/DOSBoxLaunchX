@@ -33,17 +33,10 @@
 			txtShortcutFilePath = new TextBox();
 			tabsContainer = new TabControl();
 			tabGeneral = new TabPage();
+			pnlGeneralSettingsMain = new Panel();
 			comboExitAfterTerminate = new ComboBox();
 			cbExitAfterTerminateSet = new CheckBox();
 			lblExitAfterTerminate = new Label();
-			btnLogOutputFileBrowse = new Button();
-			cbLogOutputFileSet = new CheckBox();
-			txtLogOutputFile = new TextBox();
-			lblLogOutputFile = new Label();
-			cbOpenLoggingConsoleSet = new CheckBox();
-			groupBox1 = new GroupBox();
-			comboOpenLoggingConsole = new ComboBox();
-			lblOpenLoggingConsole = new Label();
 			lblNotApplicable = new DOSBoxLaunchX.Controls.TransparentLabel();
 			txtDescription = new TextBox();
 			btnExecutableBrowse = new Button();
@@ -61,6 +54,14 @@
 			lblDescription = new Label();
 			txtName = new TextBox();
 			lblName = new Label();
+			btnLogOutputFileBrowse = new Button();
+			cbLogOutputFileSet = new CheckBox();
+			txtLogOutputFile = new TextBox();
+			lblLogOutputFile = new Label();
+			cbOpenLoggingConsoleSet = new CheckBox();
+			grpSeparator = new GroupBox();
+			comboOpenLoggingConsole = new ComboBox();
+			lblOpenLoggingConsole = new Label();
 			tabCpu = new TabPage();
 			comboDosVersion = new ComboBox();
 			cbDosVersionSet = new CheckBox();
@@ -254,6 +255,7 @@
 			btnTestLaunch = new Button();
 			tabsContainer.SuspendLayout();
 			tabGeneral.SuspendLayout();
+			pnlGeneralSettingsMain.SuspendLayout();
 			tabCpu.SuspendLayout();
 			tabVideo.SuspendLayout();
 			tabAudio.SuspendLayout();
@@ -311,39 +313,47 @@
 			// tabGeneral
 			// 
 			tabGeneral.BackColor = SystemColors.Control;
-			tabGeneral.Controls.Add(comboExitAfterTerminate);
-			tabGeneral.Controls.Add(cbExitAfterTerminateSet);
-			tabGeneral.Controls.Add(lblExitAfterTerminate);
+			tabGeneral.Controls.Add(pnlGeneralSettingsMain);
 			tabGeneral.Controls.Add(btnLogOutputFileBrowse);
 			tabGeneral.Controls.Add(cbLogOutputFileSet);
 			tabGeneral.Controls.Add(txtLogOutputFile);
 			tabGeneral.Controls.Add(lblLogOutputFile);
 			tabGeneral.Controls.Add(cbOpenLoggingConsoleSet);
-			tabGeneral.Controls.Add(groupBox1);
+			tabGeneral.Controls.Add(grpSeparator);
 			tabGeneral.Controls.Add(comboOpenLoggingConsole);
 			tabGeneral.Controls.Add(lblOpenLoggingConsole);
-			tabGeneral.Controls.Add(lblNotApplicable);
-			tabGeneral.Controls.Add(txtDescription);
-			tabGeneral.Controls.Add(btnExecutableBrowse);
-			tabGeneral.Controls.Add(lblNameDescriptionNote);
-			tabGeneral.Controls.Add(comboLimitBaseDirFreeSpace);
-			tabGeneral.Controls.Add(cbLimitBaseDirFreeSpaceSet);
-			tabGeneral.Controls.Add(lblLimitBaseDirFreeSpace);
-			tabGeneral.Controls.Add(cbExecutableSet);
-			tabGeneral.Controls.Add(txtExecutable);
-			tabGeneral.Controls.Add(lblExecutable);
-			tabGeneral.Controls.Add(cbBaseDirSet);
-			tabGeneral.Controls.Add(lblGeneralSet);
-			tabGeneral.Controls.Add(txtBaseDir);
-			tabGeneral.Controls.Add(lblBaseDir);
-			tabGeneral.Controls.Add(lblDescription);
-			tabGeneral.Controls.Add(txtName);
-			tabGeneral.Controls.Add(lblName);
 			tabGeneral.Location = new Point(4, 24);
 			tabGeneral.Name = "tabGeneral";
 			tabGeneral.Size = new Size(1227, 528);
 			tabGeneral.TabIndex = 6;
 			tabGeneral.Text = "General";
+			// 
+			// pnlGeneralSettingsMain
+			// 
+			pnlGeneralSettingsMain.Controls.Add(comboExitAfterTerminate);
+			pnlGeneralSettingsMain.Controls.Add(cbExitAfterTerminateSet);
+			pnlGeneralSettingsMain.Controls.Add(lblExitAfterTerminate);
+			pnlGeneralSettingsMain.Controls.Add(lblNotApplicable);
+			pnlGeneralSettingsMain.Controls.Add(txtDescription);
+			pnlGeneralSettingsMain.Controls.Add(btnExecutableBrowse);
+			pnlGeneralSettingsMain.Controls.Add(lblNameDescriptionNote);
+			pnlGeneralSettingsMain.Controls.Add(comboLimitBaseDirFreeSpace);
+			pnlGeneralSettingsMain.Controls.Add(cbLimitBaseDirFreeSpaceSet);
+			pnlGeneralSettingsMain.Controls.Add(lblLimitBaseDirFreeSpace);
+			pnlGeneralSettingsMain.Controls.Add(cbExecutableSet);
+			pnlGeneralSettingsMain.Controls.Add(txtExecutable);
+			pnlGeneralSettingsMain.Controls.Add(lblExecutable);
+			pnlGeneralSettingsMain.Controls.Add(cbBaseDirSet);
+			pnlGeneralSettingsMain.Controls.Add(lblGeneralSet);
+			pnlGeneralSettingsMain.Controls.Add(txtBaseDir);
+			pnlGeneralSettingsMain.Controls.Add(lblBaseDir);
+			pnlGeneralSettingsMain.Controls.Add(lblDescription);
+			pnlGeneralSettingsMain.Controls.Add(txtName);
+			pnlGeneralSettingsMain.Controls.Add(lblName);
+			pnlGeneralSettingsMain.Location = new Point(0, 0);
+			pnlGeneralSettingsMain.Name = "pnlGeneralSettingsMain";
+			pnlGeneralSettingsMain.Size = new Size(604, 262);
+			pnlGeneralSettingsMain.TabIndex = 10;
 			// 
 			// comboExitAfterTerminate
 			// 
@@ -372,8 +382,176 @@
 			lblExitAfterTerminate.Location = new Point(36, 235);
 			lblExitAfterTerminate.Name = "lblExitAfterTerminate";
 			lblExitAfterTerminate.Size = new Size(186, 15);
-			lblExitAfterTerminate.TabIndex = 73;
+			lblExitAfterTerminate.TabIndex = 93;
 			lblExitAfterTerminate.Text = "^ Exit after executable terminates:";
+			// 
+			// lblNotApplicable
+			// 
+			lblNotApplicable.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+			lblNotApplicable.ForeColor = SystemColors.GrayText;
+			lblNotApplicable.Location = new Point(59, 7);
+			lblNotApplicable.Name = "lblNotApplicable";
+			lblNotApplicable.Size = new Size(27, 19);
+			lblNotApplicable.TabIndex = 90;
+			lblNotApplicable.TabStop = false;
+			lblNotApplicable.Text = "N/A";
+			lblNotApplicable.TextAlign = ContentAlignment.TopLeft;
+			// 
+			// txtDescription
+			// 
+			txtDescription.Location = new Point(127, 54);
+			txtDescription.Multiline = true;
+			txtDescription.Name = "txtDescription";
+			txtDescription.ScrollBars = ScrollBars.Vertical;
+			txtDescription.Size = new Size(470, 85);
+			txtDescription.TabIndex = 21;
+			txtDescription.Tag = "nl=true";
+			// 
+			// btnExecutableBrowse
+			// 
+			btnExecutableBrowse.Location = new Point(522, 203);
+			btnExecutableBrowse.Name = "btnExecutableBrowse";
+			btnExecutableBrowse.Size = new Size(75, 23);
+			btnExecutableBrowse.TabIndex = 52;
+			btnExecutableBrowse.Text = "&Browse...";
+			btnExecutableBrowse.UseVisualStyleBackColor = true;
+			btnExecutableBrowse.Click += btnExecutableBrowse_Click;
+			// 
+			// lblNameDescriptionNote
+			// 
+			lblNameDescriptionNote.AutoSize = true;
+			lblNameDescriptionNote.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
+			lblNameDescriptionNote.Location = new Point(127, 7);
+			lblNameDescriptionNote.Name = "lblNameDescriptionNote";
+			lblNameDescriptionNote.Size = new Size(451, 15);
+			lblNameDescriptionNote.TabIndex = 81;
+			lblNameDescriptionNote.Text = "(Name/Description are purely descriptive and don't affect the DOSBox configuration)";
+			// 
+			// comboLimitBaseDirFreeSpace
+			// 
+			comboLimitBaseDirFreeSpace.DropDownStyle = ComboBoxStyle.DropDownList;
+			comboLimitBaseDirFreeSpace.FormattingEnabled = true;
+			comboLimitBaseDirFreeSpace.Items.AddRange(new object[] { "10MiB", "64MiB", "128MiB", "512MiB", "1GiB (1024MiB)" });
+			comboLimitBaseDirFreeSpace.Location = new Point(258, 174);
+			comboLimitBaseDirFreeSpace.Name = "comboLimitBaseDirFreeSpace";
+			comboLimitBaseDirFreeSpace.Size = new Size(110, 23);
+			comboLimitBaseDirFreeSpace.TabIndex = 41;
+			comboLimitBaseDirFreeSpace.Tag = "cb=cbLimitBaseDirFreeSpaceSet|assoc=lblLimitBaseDirFreeSpace";
+			// 
+			// cbLimitBaseDirFreeSpaceSet
+			// 
+			cbLimitBaseDirFreeSpaceSet.AutoSize = true;
+			cbLimitBaseDirFreeSpaceSet.Location = new Point(11, 178);
+			cbLimitBaseDirFreeSpaceSet.Name = "cbLimitBaseDirFreeSpaceSet";
+			cbLimitBaseDirFreeSpaceSet.Size = new Size(15, 14);
+			cbLimitBaseDirFreeSpaceSet.TabIndex = 40;
+			cbLimitBaseDirFreeSpaceSet.Tag = "";
+			cbLimitBaseDirFreeSpaceSet.UseVisualStyleBackColor = true;
+			// 
+			// lblLimitBaseDirFreeSpace
+			// 
+			lblLimitBaseDirFreeSpace.AutoSize = true;
+			lblLimitBaseDirFreeSpace.Location = new Point(36, 177);
+			lblLimitBaseDirFreeSpace.Name = "lblLimitBaseDirFreeSpace";
+			lblLimitBaseDirFreeSpace.Size = new Size(216, 15);
+			lblLimitBaseDirFreeSpace.TabIndex = 80;
+			lblLimitBaseDirFreeSpace.Text = "^ Limit reported free hard disk space at:";
+			// 
+			// cbExecutableSet
+			// 
+			cbExecutableSet.AutoSize = true;
+			cbExecutableSet.Location = new Point(11, 207);
+			cbExecutableSet.Name = "cbExecutableSet";
+			cbExecutableSet.Size = new Size(15, 14);
+			cbExecutableSet.TabIndex = 50;
+			cbExecutableSet.Tag = "";
+			cbExecutableSet.UseVisualStyleBackColor = true;
+			// 
+			// txtExecutable
+			// 
+			txtExecutable.Location = new Point(127, 203);
+			txtExecutable.Name = "txtExecutable";
+			txtExecutable.Size = new Size(389, 23);
+			txtExecutable.TabIndex = 51;
+			txtExecutable.Tag = "cb=cbExecutableSet|assoc=lblExecutable,btnExecutableBrowse";
+			// 
+			// lblExecutable
+			// 
+			lblExecutable.AutoSize = true;
+			lblExecutable.Cursor = Cursors.Help;
+			lblExecutable.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point, 0);
+			lblExecutable.Location = new Point(36, 206);
+			lblExecutable.Name = "lblExecutable";
+			lblExecutable.Size = new Size(67, 15);
+			lblExecutable.TabIndex = 78;
+			lblExecutable.Text = "Executable:";
+			lblExecutable.Click += lblExecutable_Click;
+			// 
+			// cbBaseDirSet
+			// 
+			cbBaseDirSet.AutoSize = true;
+			cbBaseDirSet.Location = new Point(11, 149);
+			cbBaseDirSet.Name = "cbBaseDirSet";
+			cbBaseDirSet.Size = new Size(15, 14);
+			cbBaseDirSet.TabIndex = 30;
+			cbBaseDirSet.Tag = "";
+			cbBaseDirSet.UseVisualStyleBackColor = true;
+			// 
+			// lblGeneralSet
+			// 
+			lblGeneralSet.AutoSize = true;
+			lblGeneralSet.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+			lblGeneralSet.Location = new Point(5, 7);
+			lblGeneralSet.Name = "lblGeneralSet";
+			lblGeneralSet.Size = new Size(26, 15);
+			lblGeneralSet.TabIndex = 77;
+			lblGeneralSet.Text = "Set";
+			// 
+			// txtBaseDir
+			// 
+			txtBaseDir.Location = new Point(127, 145);
+			txtBaseDir.Name = "txtBaseDir";
+			txtBaseDir.Size = new Size(470, 23);
+			txtBaseDir.TabIndex = 31;
+			txtBaseDir.Tag = "cb=cbBaseDirSet|assoc=lblBaseDir";
+			// 
+			// lblBaseDir
+			// 
+			lblBaseDir.AutoSize = true;
+			lblBaseDir.Cursor = Cursors.Help;
+			lblBaseDir.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point, 0);
+			lblBaseDir.Location = new Point(36, 148);
+			lblBaseDir.Name = "lblBaseDir";
+			lblBaseDir.Size = new Size(84, 15);
+			lblBaseDir.TabIndex = 76;
+			lblBaseDir.Text = "Base directory:";
+			lblBaseDir.Click += lblBaseDir_Click;
+			// 
+			// lblDescription
+			// 
+			lblDescription.AutoSize = true;
+			lblDescription.Location = new Point(36, 57);
+			lblDescription.Name = "lblDescription";
+			lblDescription.Size = new Size(70, 15);
+			lblDescription.TabIndex = 75;
+			lblDescription.Text = "Description:";
+			// 
+			// txtName
+			// 
+			txtName.Location = new Point(127, 25);
+			txtName.Name = "txtName";
+			txtName.Size = new Size(470, 23);
+			txtName.TabIndex = 11;
+			txtName.Tag = "nl=false";
+			// 
+			// lblName
+			// 
+			lblName.AutoSize = true;
+			lblName.Location = new Point(36, 28);
+			lblName.Name = "lblName";
+			lblName.Size = new Size(42, 15);
+			lblName.TabIndex = 74;
+			lblName.Text = "Name:";
 			// 
 			// btnLogOutputFileBrowse
 			// 
@@ -425,13 +603,13 @@
 			cbOpenLoggingConsoleSet.Tag = "";
 			cbOpenLoggingConsoleSet.UseVisualStyleBackColor = true;
 			// 
-			// groupBox1
+			// grpSeparator
 			// 
-			groupBox1.Location = new Point(11, 275);
-			groupBox1.Name = "groupBox1";
-			groupBox1.Size = new Size(586, 12);
-			groupBox1.TabIndex = 58;
-			groupBox1.TabStop = false;
+			grpSeparator.Location = new Point(11, 275);
+			grpSeparator.Name = "grpSeparator";
+			grpSeparator.Size = new Size(586, 12);
+			grpSeparator.TabIndex = 58;
+			grpSeparator.TabStop = false;
 			// 
 			// comboOpenLoggingConsole
 			// 
@@ -452,174 +630,6 @@
 			lblOpenLoggingConsole.Size = new Size(249, 15);
 			lblOpenLoggingConsole.TabIndex = 55;
 			lblOpenLoggingConsole.Text = "Open the DOSBox logging console on launch:";
-			// 
-			// lblNotApplicable
-			// 
-			lblNotApplicable.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-			lblNotApplicable.ForeColor = SystemColors.GrayText;
-			lblNotApplicable.Location = new Point(59, 7);
-			lblNotApplicable.Name = "lblNotApplicable";
-			lblNotApplicable.Size = new Size(27, 19);
-			lblNotApplicable.TabIndex = 54;
-			lblNotApplicable.TabStop = false;
-			lblNotApplicable.Text = "N/A";
-			lblNotApplicable.TextAlign = ContentAlignment.TopLeft;
-			// 
-			// txtDescription
-			// 
-			txtDescription.Location = new Point(127, 54);
-			txtDescription.Multiline = true;
-			txtDescription.Name = "txtDescription";
-			txtDescription.ScrollBars = ScrollBars.Vertical;
-			txtDescription.Size = new Size(470, 85);
-			txtDescription.TabIndex = 21;
-			txtDescription.Tag = "nl=true";
-			// 
-			// btnExecutableBrowse
-			// 
-			btnExecutableBrowse.Location = new Point(522, 203);
-			btnExecutableBrowse.Name = "btnExecutableBrowse";
-			btnExecutableBrowse.Size = new Size(75, 23);
-			btnExecutableBrowse.TabIndex = 52;
-			btnExecutableBrowse.Text = "&Browse...";
-			btnExecutableBrowse.UseVisualStyleBackColor = true;
-			btnExecutableBrowse.Click += btnExecutableBrowse_Click;
-			// 
-			// lblNameDescriptionNote
-			// 
-			lblNameDescriptionNote.AutoSize = true;
-			lblNameDescriptionNote.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-			lblNameDescriptionNote.Location = new Point(127, 7);
-			lblNameDescriptionNote.Name = "lblNameDescriptionNote";
-			lblNameDescriptionNote.Size = new Size(451, 15);
-			lblNameDescriptionNote.TabIndex = 19;
-			lblNameDescriptionNote.Text = "(Name/Description are purely descriptive and don't affect the DOSBox configuration)";
-			// 
-			// comboLimitBaseDirFreeSpace
-			// 
-			comboLimitBaseDirFreeSpace.DropDownStyle = ComboBoxStyle.DropDownList;
-			comboLimitBaseDirFreeSpace.FormattingEnabled = true;
-			comboLimitBaseDirFreeSpace.Items.AddRange(new object[] { "10MiB", "64MiB", "128MiB", "512MiB", "1GiB (1024MiB)" });
-			comboLimitBaseDirFreeSpace.Location = new Point(258, 174);
-			comboLimitBaseDirFreeSpace.Name = "comboLimitBaseDirFreeSpace";
-			comboLimitBaseDirFreeSpace.Size = new Size(110, 23);
-			comboLimitBaseDirFreeSpace.TabIndex = 41;
-			comboLimitBaseDirFreeSpace.Tag = "cb=cbLimitBaseDirFreeSpaceSet|assoc=lblLimitBaseDirFreeSpace";
-			// 
-			// cbLimitBaseDirFreeSpaceSet
-			// 
-			cbLimitBaseDirFreeSpaceSet.AutoSize = true;
-			cbLimitBaseDirFreeSpaceSet.Location = new Point(11, 178);
-			cbLimitBaseDirFreeSpaceSet.Name = "cbLimitBaseDirFreeSpaceSet";
-			cbLimitBaseDirFreeSpaceSet.Size = new Size(15, 14);
-			cbLimitBaseDirFreeSpaceSet.TabIndex = 40;
-			cbLimitBaseDirFreeSpaceSet.Tag = "";
-			cbLimitBaseDirFreeSpaceSet.UseVisualStyleBackColor = true;
-			// 
-			// lblLimitBaseDirFreeSpace
-			// 
-			lblLimitBaseDirFreeSpace.AutoSize = true;
-			lblLimitBaseDirFreeSpace.Location = new Point(36, 177);
-			lblLimitBaseDirFreeSpace.Name = "lblLimitBaseDirFreeSpace";
-			lblLimitBaseDirFreeSpace.Size = new Size(216, 15);
-			lblLimitBaseDirFreeSpace.TabIndex = 15;
-			lblLimitBaseDirFreeSpace.Text = "^ Limit reported free hard disk space at:";
-			// 
-			// cbExecutableSet
-			// 
-			cbExecutableSet.AutoSize = true;
-			cbExecutableSet.Location = new Point(11, 207);
-			cbExecutableSet.Name = "cbExecutableSet";
-			cbExecutableSet.Size = new Size(15, 14);
-			cbExecutableSet.TabIndex = 50;
-			cbExecutableSet.Tag = "";
-			cbExecutableSet.UseVisualStyleBackColor = true;
-			// 
-			// txtExecutable
-			// 
-			txtExecutable.Location = new Point(127, 203);
-			txtExecutable.Name = "txtExecutable";
-			txtExecutable.Size = new Size(389, 23);
-			txtExecutable.TabIndex = 51;
-			txtExecutable.Tag = "cb=cbExecutableSet|assoc=lblExecutable,btnExecutableBrowse";
-			// 
-			// lblExecutable
-			// 
-			lblExecutable.AutoSize = true;
-			lblExecutable.Cursor = Cursors.Help;
-			lblExecutable.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point, 0);
-			lblExecutable.Location = new Point(36, 206);
-			lblExecutable.Name = "lblExecutable";
-			lblExecutable.Size = new Size(67, 15);
-			lblExecutable.TabIndex = 11;
-			lblExecutable.Text = "Executable:";
-			lblExecutable.Click += lblExecutable_Click;
-			// 
-			// cbBaseDirSet
-			// 
-			cbBaseDirSet.AutoSize = true;
-			cbBaseDirSet.Location = new Point(11, 149);
-			cbBaseDirSet.Name = "cbBaseDirSet";
-			cbBaseDirSet.Size = new Size(15, 14);
-			cbBaseDirSet.TabIndex = 30;
-			cbBaseDirSet.Tag = "";
-			cbBaseDirSet.UseVisualStyleBackColor = true;
-			// 
-			// lblGeneralSet
-			// 
-			lblGeneralSet.AutoSize = true;
-			lblGeneralSet.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-			lblGeneralSet.Location = new Point(5, 7);
-			lblGeneralSet.Name = "lblGeneralSet";
-			lblGeneralSet.Size = new Size(26, 15);
-			lblGeneralSet.TabIndex = 6;
-			lblGeneralSet.Text = "Set";
-			// 
-			// txtBaseDir
-			// 
-			txtBaseDir.Location = new Point(127, 145);
-			txtBaseDir.Name = "txtBaseDir";
-			txtBaseDir.Size = new Size(470, 23);
-			txtBaseDir.TabIndex = 31;
-			txtBaseDir.Tag = "cb=cbBaseDirSet|assoc=lblBaseDir";
-			// 
-			// lblBaseDir
-			// 
-			lblBaseDir.AutoSize = true;
-			lblBaseDir.Cursor = Cursors.Help;
-			lblBaseDir.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point, 0);
-			lblBaseDir.Location = new Point(36, 148);
-			lblBaseDir.Name = "lblBaseDir";
-			lblBaseDir.Size = new Size(85, 15);
-			lblBaseDir.TabIndex = 4;
-			lblBaseDir.Text = "Base Directory:";
-			lblBaseDir.Click += lblBaseDir_Click;
-			// 
-			// lblDescription
-			// 
-			lblDescription.AutoSize = true;
-			lblDescription.Location = new Point(36, 57);
-			lblDescription.Name = "lblDescription";
-			lblDescription.Size = new Size(70, 15);
-			lblDescription.TabIndex = 2;
-			lblDescription.Text = "Description:";
-			// 
-			// txtName
-			// 
-			txtName.Location = new Point(127, 25);
-			txtName.Name = "txtName";
-			txtName.Size = new Size(470, 23);
-			txtName.TabIndex = 11;
-			txtName.Tag = "nl=false";
-			// 
-			// lblName
-			// 
-			lblName.AutoSize = true;
-			lblName.Location = new Point(36, 28);
-			lblName.Name = "lblName";
-			lblName.Size = new Size(42, 15);
-			lblName.TabIndex = 0;
-			lblName.Text = "Name:";
 			// 
 			// tabCpu
 			// 
@@ -2612,6 +2622,8 @@
 			tabsContainer.ResumeLayout(false);
 			tabGeneral.ResumeLayout(false);
 			tabGeneral.PerformLayout();
+			pnlGeneralSettingsMain.ResumeLayout(false);
+			pnlGeneralSettingsMain.PerformLayout();
 			tabCpu.ResumeLayout(false);
 			tabCpu.PerformLayout();
 			tabVideo.ResumeLayout(false);
@@ -2679,27 +2691,11 @@
 		private ToolStripContainer mainMenuStripContainer;
 		private PictureBox pbBgMainMenuStrip;
 		private ToolStripMenuItem mnuEditGlobals;
-		private TextBox txtName;
-		private Label lblName;
-		private TextBox txtDescription;
-		private Label lblDescription;
-		private CheckBox cbBaseDirSet;
-		private Label lblGeneralSet;
-		private TextBox txtBaseDir;
-		private Label lblBaseDir;
-		private CheckBox cbExecutableSet;
-		private TextBox txtExecutable;
-		private Label lblExecutable;
-		private ComboBox comboLimitBaseDirFreeSpace;
-		private CheckBox cbLimitBaseDirFreeSpaceSet;
-		private Label lblLimitBaseDirFreeSpace;
-		private Label lblNameDescriptionNote;
 		private CheckBox cbCoreSet;
 		private Label lblCpuSet;
 		private Label lblCore;
 		private OpenFileDialog openFileDialog;
 		private SaveFileDialog saveFileDialog;
-		private Button btnExecutableBrowse;
 		private TabPage tabAutoexec;
 		private TextBox txtPreAutoexec;
 		private TextBox txtPostAutoexec;
@@ -2711,7 +2707,6 @@
 		private Label lblHeadingValue;
 		private Label lblHeadingKey;
 		private Label lblHeadingSection;
-		private Controls.TransparentLabel lblNotApplicable;
 		private ToolStripSeparator toolStripSeparator11;
 		private System.Windows.Forms.Timer timerRefreshNa;
 		private GroupBox grpMapperNotFound;
@@ -2823,7 +2818,7 @@
 		private Label lblGusSampleRate;
 		private ComboBox comboOpenLoggingConsole;
 		private Label lblOpenLoggingConsole;
-		private GroupBox groupBox1;
+		private GroupBox grpSeparator;
 		private CheckBox cbOpenLoggingConsoleSet;
 		private Button btnTestLaunch;
 		private GroupBox grpMouse;
@@ -2864,9 +2859,6 @@
 		private TextBox txtLogOutputFile;
 		private Label lblLogOutputFile;
 		private Button btnAddCustomLoggingSetting;
-		private ComboBox comboExitAfterTerminate;
-		private CheckBox cbExitAfterTerminateSet;
-		private Label lblExitAfterTerminate;
 		private ComboBox comboDosVersion;
 		private CheckBox cbDosVersionSet;
 		private Label lblDosVersion;
@@ -2874,5 +2866,26 @@
 		private CheckBox cbDontApplyKbMappingsSet;
 		private ComboBox comboDontApplyKbMappings;
 		private Label lblDontApplyKbMappings;
+		private Panel pnlGeneralSettingsMain;
+		private ComboBox comboExitAfterTerminate;
+		private CheckBox cbExitAfterTerminateSet;
+		private Label lblExitAfterTerminate;
+		private Controls.TransparentLabel lblNotApplicable;
+		private TextBox txtDescription;
+		private Button btnExecutableBrowse;
+		private Label lblNameDescriptionNote;
+		private ComboBox comboLimitBaseDirFreeSpace;
+		private CheckBox cbLimitBaseDirFreeSpaceSet;
+		private Label lblLimitBaseDirFreeSpace;
+		private CheckBox cbExecutableSet;
+		private TextBox txtExecutable;
+		private Label lblExecutable;
+		private CheckBox cbBaseDirSet;
+		private Label lblGeneralSet;
+		private TextBox txtBaseDir;
+		private Label lblBaseDir;
+		private Label lblDescription;
+		private TextBox txtName;
+		private Label lblName;
 	}
 }
