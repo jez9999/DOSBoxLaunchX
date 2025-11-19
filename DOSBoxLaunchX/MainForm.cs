@@ -693,7 +693,7 @@ public partial class MainForm : Form {
 			pnlGeneralSettingsMain.BackColor = makeVisible ? SystemColors.ControlLight : SystemColors.Control;
 			lblNotApplicable.Font = _lblFontNa;
 			lblNotApplicable.Size = new(352, 166);
-			lblNotApplicable.Location = new(145, 23);
+			lblNotApplicable.Location = new(129, 23);
 			lblNotApplicable.Visible = makeVisible;
 			lblNotApplicable.Refresh();
 		}

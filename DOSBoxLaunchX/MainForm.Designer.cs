@@ -41,7 +41,6 @@
 			comboExitAfterTerminate = new ComboBox();
 			cbExitAfterTerminateSet = new CheckBox();
 			lblExitAfterTerminate = new Label();
-			lblNotApplicable = new DOSBoxLaunchX.Controls.TransparentLabel();
 			txtDescription = new TextBox();
 			btnExecutableBrowse = new Button();
 			lblNameDescriptionNote = new Label();
@@ -58,6 +57,7 @@
 			lblDescription = new Label();
 			txtName = new TextBox();
 			lblName = new Label();
+			lblNotApplicable = new DOSBoxLaunchX.Controls.TransparentLabel();
 			btnLogOutputFileBrowse = new Button();
 			cbLogOutputFileSet = new CheckBox();
 			txtLogOutputFile = new TextBox();
@@ -334,6 +334,7 @@
 			// 
 			// pnlGeneralSettingsMain
 			// 
+			pnlGeneralSettingsMain.Controls.Add(lblNotApplicable);
 			pnlGeneralSettingsMain.Controls.Add(btnUseDosboxBaseDirBrowse);
 			pnlGeneralSettingsMain.Controls.Add(cbUseDosboxBaseDirSet);
 			pnlGeneralSettingsMain.Controls.Add(txtUseDosboxBaseDir);
@@ -341,7 +342,6 @@
 			pnlGeneralSettingsMain.Controls.Add(comboExitAfterTerminate);
 			pnlGeneralSettingsMain.Controls.Add(cbExitAfterTerminateSet);
 			pnlGeneralSettingsMain.Controls.Add(lblExitAfterTerminate);
-			pnlGeneralSettingsMain.Controls.Add(lblNotApplicable);
 			pnlGeneralSettingsMain.Controls.Add(txtDescription);
 			pnlGeneralSettingsMain.Controls.Add(btnExecutableBrowse);
 			pnlGeneralSettingsMain.Controls.Add(lblNameDescriptionNote);
@@ -429,18 +429,6 @@
 			lblExitAfterTerminate.Size = new Size(186, 15);
 			lblExitAfterTerminate.TabIndex = 93;
 			lblExitAfterTerminate.Text = "^ Exit after executable terminates:";
-			// 
-			// lblNotApplicable
-			// 
-			lblNotApplicable.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-			lblNotApplicable.ForeColor = SystemColors.GrayText;
-			lblNotApplicable.Location = new Point(59, 7);
-			lblNotApplicable.Name = "lblNotApplicable";
-			lblNotApplicable.Size = new Size(27, 19);
-			lblNotApplicable.TabIndex = 90;
-			lblNotApplicable.TabStop = false;
-			lblNotApplicable.Text = "N/A";
-			lblNotApplicable.TextAlign = ContentAlignment.TopLeft;
 			// 
 			// txtDescription
 			// 
@@ -597,6 +585,18 @@
 			lblName.Size = new Size(42, 15);
 			lblName.TabIndex = 74;
 			lblName.Text = "Name:";
+			// 
+			// lblNotApplicable
+			// 
+			lblNotApplicable.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+			lblNotApplicable.ForeColor = SystemColors.GrayText;
+			lblNotApplicable.Location = new Point(59, 7);
+			lblNotApplicable.Name = "lblNotApplicable";
+			lblNotApplicable.Size = new Size(27, 19);
+			lblNotApplicable.TabIndex = 90;
+			lblNotApplicable.TabStop = false;
+			lblNotApplicable.Text = "N/A";
+			lblNotApplicable.TextAlign = ContentAlignment.TopLeft;
 			// 
 			// btnLogOutputFileBrowse
 			// 
