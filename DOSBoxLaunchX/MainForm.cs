@@ -314,6 +314,13 @@ public partial class MainForm : Form {
 		return true;
 	}
 
+	private bool doBrowseDosboxBaseDir() {
+		if (folderBrowserDialog.ShowDialog() != DialogResult.OK) { return false; }
+		txtUseDosboxBaseDir.Text = folderBrowserDialog.SelectedPath;
+
+		return true;
+	}
+
 	private bool doBrowseLogOutputFile() {
 		// We purposely don't set the .InitialDirectory property.  When left unset,
 		// the dialog helpfully remembers the last directory the user was in, which
@@ -529,6 +536,7 @@ public partial class MainForm : Form {
 		if (cbLimitBaseDirFreeSpaceSet.Checked) { sett.LimitBaseDirFreeSpace = UiHelper.GetLimitFreeSpaceValue(comboLimitBaseDirFreeSpace); }
 		if (cbExecutableSet.Checked) { sett.Executable = UiHelper.GetTextValue(txtExecutable); }
 		if (cbExitAfterTerminateSet.Checked) { sett.ExitAfterTerminate = UiHelper.GetComboValue<bool>(comboExitAfterTerminate); }
+		if (cbUseDosboxBaseDirSet.Checked) { sett.UseDosboxBaseDir = UiHelper.GetTextValue(txtUseDosboxBaseDir); }
 		if (cbOpenLoggingConsoleSet.Checked) { sett.ConsoleOnLaunch = UiHelper.GetComboValue<bool>(comboOpenLoggingConsole); }
 		if (cbDontApplyKbMappingsSet.Checked) { sett.DontApplyKbMappings = UiHelper.GetComboValue<bool>(comboDontApplyKbMappings); }
 
@@ -625,6 +633,9 @@ public partial class MainForm : Form {
 		UiHelper.SetComboFromValue(comboExitAfterTerminate, sett.ExitAfterTerminate);
 		UiHelper.SetCheckboxFromValue(cbExitAfterTerminateSet, sett.ExitAfterTerminate != null);
 
+		UiHelper.SetTextFromValue(txtUseDosboxBaseDir, sett.UseDosboxBaseDir);
+		UiHelper.SetCheckboxFromValue(cbUseDosboxBaseDirSet, sett.UseDosboxBaseDir != null);
+
 		UiHelper.SetComboFromValue(comboOpenLoggingConsole, sett.ConsoleOnLaunch);
 		UiHelper.SetCheckboxFromValue(cbOpenLoggingConsoleSet, sett.ConsoleOnLaunch != null);
 
@@ -665,7 +676,7 @@ public partial class MainForm : Form {
 		}
 
 		static void resetGlobalNaSettings(LaunchSettings sett) {
-			sett.Name = sett.Description = sett.BaseDir = sett.Executable = null;
+			sett.Name = sett.Description = sett.BaseDir = sett.Executable = sett.UseDosboxBaseDir = null;
 			sett.LimitBaseDirFreeSpace = null;
 			sett.ExitAfterTerminate = null;
 		}
@@ -676,7 +687,8 @@ public partial class MainForm : Form {
 				lblNameDescriptionNote.Enabled =
 				lblName.Enabled = txtName.Enabled =
 				lblDescription.Enabled = txtDescription.Enabled =
-				cbBaseDirSet.Enabled = cbLimitBaseDirFreeSpaceSet.Enabled = cbExecutableSet.Enabled = cbExitAfterTerminateSet.Enabled =
+				cbBaseDirSet.Enabled = cbLimitBaseDirFreeSpaceSet.Enabled = cbExecutableSet.Enabled =
+				cbExitAfterTerminateSet.Enabled = cbUseDosboxBaseDirSet.Enabled =
 				!makeVisible;
 			pnlGeneralSettingsMain.BackColor = makeVisible ? SystemColors.ControlLight : SystemColors.Control;
 			lblNotApplicable.Font = _lblFontNa;
@@ -987,6 +999,10 @@ public partial class MainForm : Form {
 
 	private void btnExecutableBrowse_Click(object sender, EventArgs ea) {
 		doBrowseExecutable();
+	}
+
+	private void btnUseDosboxBaseDirBrowse_Click(object sender, EventArgs ea) {
+		doBrowseDosboxBaseDir();
 	}
 
 	private void lblAutoexecScript_Click(object sender, EventArgs ea) {

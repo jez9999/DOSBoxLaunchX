@@ -20,4 +20,8 @@ public class AppOptionsWithData {
 	public string DosboxConfTemplateFilename => "dosbox-x.[shortcutName].conf";
 	public string DosboxMapperBaseFilename => "mapper-dosbox-x.map";
 	public string DosboxMapperTemplateFilename => "mapper-dosbox-x.[shortcutName].map";
+
+	public string DosboxAltExeBaseFilename => "dosbox.exe";
+	public string DosboxAltConfBaseFilename => "dosbox.conf";
+	public string DosboxAltConfTemplateFilename => "dosbox.[shortcutName].conf";
 }

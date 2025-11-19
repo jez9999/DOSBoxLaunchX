@@ -46,6 +46,12 @@ public class LaunchSettings {
 	public bool? ExitAfterTerminate { get; set; }
 
 	/// <summary>
+	/// Optional specific DOSBox base dir to use when launching.
+	/// When used for storing global settings, this field is ignored.
+	/// </summary>
+	public string? UseDosboxBaseDir { get; set; }
+
+	/// <summary>
 	/// Whether or not to open the DOSBox logging console on launch.
 	/// </summary>
 	public bool? ConsoleOnLaunch { get; set; }

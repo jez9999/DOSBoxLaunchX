@@ -78,6 +78,7 @@ public partial class LauncherForm : Form {
 			addTxtboxMsg(heading);
 			addTxtboxMsg("\\" + new string('=', heading.Length - 2) + "/");
 		}
+		baseDir = shortcutSettings.UseDosboxBaseDir ?? baseDir;
 
 		addTxtboxMsg("Loading globals...");
 		var globalsPath = LocalAppDataHelper.GetGlobalShortcut(_localAppDataDir);
@@ -90,16 +91,22 @@ public partial class LauncherForm : Form {
 
 		addTxtboxMsg("Loading base DOSBox config...");
 		string baseConfigPath = Path.Combine(baseDir, _data.DosboxConfBaseFilename);
+		string baseConfigTemplate = _data.DosboxConfTemplateFilename;
 		if (!File.Exists(baseConfigPath)) {
-			addTxtboxMsg($"ERROR: Base DOSBox config not found: {baseConfigPath}");
-			return false;
+			addTxtboxMsg($"Couldn't find {_data.DosboxConfBaseFilename}; trying {_data.DosboxAltConfBaseFilename}...");
+			baseConfigPath = Path.Combine(baseDir, _data.DosboxAltConfBaseFilename);
+			baseConfigTemplate = _data.DosboxAltConfTemplateFilename;
+			if (!File.Exists(baseConfigPath)) {
+				addTxtboxMsg($"ERROR: Base DOSBox config not found: {baseConfigPath}");
+				return false;
+			}
 		}
 		DosboxConfFile config = DosboxConfFile.FromText(await File.ReadAllTextAsync(baseConfigPath));
 
 		var applyKbMappings = !(shortcutSettings.DontApplyKbMappings ?? globalSettings.DontApplyKbMappings ?? false);
 		if (applyKbMappings && (globalSettings.KeyboardMappings.Count > 0 || shortcutSettings.KeyboardMappings.Count > 0)) {
 			addTxtboxMsg("Loading keyboard mappings...");
-			var baseMapperPath = Path.Combine(_settings.BaseDosboxDir, _data.DosboxMapperBaseFilename);
+			var baseMapperPath = Path.Combine(baseDir, _data.DosboxMapperBaseFilename);
 			DosboxMapperFile mapFile = null!;
 			try {
 				mapFile = DosboxMapperFile.FromText(File.ReadAllText(
@@ -145,8 +152,8 @@ public partial class LauncherForm : Form {
 
 		addTxtboxMsg("Writing temp. DOSBox config...");
 		string tempConfigPath = Path.Combine(
-			_settings.WriteConfToBaseDir ? _settings.BaseDosboxDir : _localAppDataDir,
-			_data.DosboxConfTemplateFilename.Replace("[shortcutName]", Path.GetFileNameWithoutExtension(dlxPath))
+			_settings.WriteConfToBaseDir ? baseDir : _localAppDataDir,
+			baseConfigTemplate.Replace("[shortcutName]", Path.GetFileNameWithoutExtension(dlxPath))
 		);
 		await File.WriteAllTextAsync(
 			tempConfigPath,
@@ -155,8 +162,17 @@ public partial class LauncherForm : Form {
 		addTxtboxMsg($"Temporary config written to: {tempConfigPath}");
 
 		addTxtboxMsg("Launching DOSBox...");
+		var exePath = Path.Combine(baseDir, _data.DosboxExeBaseFilename);
+		if (!File.Exists(exePath)) {
+			addTxtboxMsg($"Couldn't find {_data.DosboxExeBaseFilename}; trying {_data.DosboxAltExeBaseFilename}...");
+			exePath = Path.Combine(baseDir, _data.DosboxAltExeBaseFilename);
+			if (!File.Exists(exePath)) {
+				addTxtboxMsg($"ERROR: DOSBox executable not found: {exePath}");
+				return false;
+			}
+		}
 		await launchDosboxX(
-			Path.Combine(baseDir, _data.DosboxExeBaseFilename),
+			exePath,
 			tempConfigPath,
 			baseDir,
 			shortcutSettings.ConsoleOnLaunch ?? globalSettings.ConsoleOnLaunch ?? false
@@ -178,7 +194,7 @@ public partial class LauncherForm : Form {
 		};
 
 		using var process = Process.Start(psi)
-			?? throw new InvalidOperationException("Failed to start DOSBox-X process!");
+			?? throw new InvalidOperationException("Failed to start DOSBox process!");
 		await process.WaitForExitAsync();
 
 		addTxtboxMsg($"Exited.");
@@ -193,7 +209,7 @@ public partial class LauncherForm : Form {
 			if (_data.IsDebugBuild) {
 				Text += " (DEBUG BUILD)";
 			}
-			Text += " - Launching DOSBox-X...";
+			Text += " - Launching DOSBox...";
 
 			// Windows 10+ pushes the window a bit away from the left of the screen (by design) when you
 			// set the location to 0,0.  As we can't get it flush with the screen edge, let's just purposely
