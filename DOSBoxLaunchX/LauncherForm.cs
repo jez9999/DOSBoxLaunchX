@@ -96,7 +96,8 @@ public partial class LauncherForm : Form {
 		}
 		DosboxConfFile config = DosboxConfFile.FromText(await File.ReadAllTextAsync(baseConfigPath));
 
-		if (globalSettings.KeyboardMappings.Count > 0 || shortcutSettings.KeyboardMappings.Count > 0) {
+		var applyKbMappings = !(shortcutSettings.DontApplyKbMappings ?? globalSettings.DontApplyKbMappings ?? false);
+		if (applyKbMappings && (globalSettings.KeyboardMappings.Count > 0 || shortcutSettings.KeyboardMappings.Count > 0)) {
 			addTxtboxMsg("Loading keyboard mappings...");
 			var baseMapperPath = Path.Combine(_settings.BaseDosboxDir, _data.DosboxMapperBaseFilename);
 			DosboxMapperFile mapFile = null!;

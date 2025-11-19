@@ -530,6 +530,7 @@ public partial class MainForm : Form {
 		if (cbExecutableSet.Checked) { sett.Executable = UiHelper.GetTextValue(txtExecutable); }
 		if (cbExitAfterTerminateSet.Checked) { sett.ExitAfterTerminate = UiHelper.GetComboValue<bool>(comboExitAfterTerminate); }
 		if (cbOpenLoggingConsoleSet.Checked) { sett.ConsoleOnLaunch = UiHelper.GetComboValue<bool>(comboOpenLoggingConsole); }
+		if (cbDontApplyKbMappingsSet.Checked) { sett.DontApplyKbMappings = UiHelper.GetComboValue<bool>(comboDontApplyKbMappings); }
 
 		// Grouped settings
 		SettingsUiBinder.SetGroupedSettingsFromUi(sett, _controlInfo);
@@ -626,6 +627,9 @@ public partial class MainForm : Form {
 
 		UiHelper.SetComboFromValue(comboOpenLoggingConsole, sett.ConsoleOnLaunch);
 		UiHelper.SetCheckboxFromValue(cbOpenLoggingConsoleSet, sett.ConsoleOnLaunch != null);
+
+		UiHelper.SetComboFromValue(comboDontApplyKbMappings, sett.DontApplyKbMappings);
+		UiHelper.SetCheckboxFromValue(cbDontApplyKbMappingsSet, sett.DontApplyKbMappings != null);
 
 		// Grouped settings
 		SettingsUiBinder.SetUiFromGroupedSettings(sett, _controlInfo);

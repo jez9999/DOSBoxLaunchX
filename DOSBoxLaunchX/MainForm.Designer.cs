@@ -220,6 +220,10 @@
 			flowPnlCustom = new FlowLayoutPanel();
 			btnAddCustomSetting = new Button();
 			tabKbMappings = new TabPage();
+			comboDontApplyKbMappings = new ComboBox();
+			lblDontApplyKbMappings = new Label();
+			cbDontApplyKbMappingsSet = new CheckBox();
+			lblKbMappingsSet = new Label();
 			grpMapperNotFound = new GroupBox();
 			lblMapperNotFound = new Label();
 			btnMapperRescan = new Button();
@@ -2317,6 +2321,10 @@
 			// tabKbMappings
 			// 
 			tabKbMappings.BackColor = SystemColors.Control;
+			tabKbMappings.Controls.Add(comboDontApplyKbMappings);
+			tabKbMappings.Controls.Add(lblDontApplyKbMappings);
+			tabKbMappings.Controls.Add(cbDontApplyKbMappingsSet);
+			tabKbMappings.Controls.Add(lblKbMappingsSet);
 			tabKbMappings.Controls.Add(grpMapperNotFound);
 			tabKbMappings.Controls.Add(dataGridMappings);
 			tabKbMappings.Location = new Point(4, 24);
@@ -2324,6 +2332,46 @@
 			tabKbMappings.Size = new Size(1227, 528);
 			tabKbMappings.TabIndex = 5;
 			tabKbMappings.Text = "Keyboard mappings";
+			// 
+			// comboDontApplyKbMappings
+			// 
+			comboDontApplyKbMappings.DropDownStyle = ComboBoxStyle.DropDownList;
+			comboDontApplyKbMappings.FormattingEnabled = true;
+			comboDontApplyKbMappings.Items.AddRange(new object[] { "Yes", "No" });
+			comboDontApplyKbMappings.Location = new Point(242, 501);
+			comboDontApplyKbMappings.Name = "comboDontApplyKbMappings";
+			comboDontApplyKbMappings.Size = new Size(77, 23);
+			comboDontApplyKbMappings.TabIndex = 301;
+			comboDontApplyKbMappings.Tag = "cb=cbDontApplyKbMappingsSet|assoc=lblDontApplyKbMappings";
+			// 
+			// lblDontApplyKbMappings
+			// 
+			lblDontApplyKbMappings.AutoSize = true;
+			lblDontApplyKbMappings.Location = new Point(57, 505);
+			lblDontApplyKbMappings.Name = "lblDontApplyKbMappings";
+			lblDontApplyKbMappings.Size = new Size(179, 15);
+			lblDontApplyKbMappings.TabIndex = 203;
+			lblDontApplyKbMappings.Text = "Don't apply keyboard mappings:";
+			// 
+			// cbDontApplyKbMappingsSet
+			// 
+			cbDontApplyKbMappingsSet.AutoSize = true;
+			cbDontApplyKbMappingsSet.Location = new Point(32, 506);
+			cbDontApplyKbMappingsSet.Name = "cbDontApplyKbMappingsSet";
+			cbDontApplyKbMappingsSet.Size = new Size(15, 14);
+			cbDontApplyKbMappingsSet.TabIndex = 300;
+			cbDontApplyKbMappingsSet.Tag = "";
+			cbDontApplyKbMappingsSet.UseVisualStyleBackColor = true;
+			// 
+			// lblKbMappingsSet
+			// 
+			lblKbMappingsSet.AutoSize = true;
+			lblKbMappingsSet.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+			lblKbMappingsSet.Location = new Point(4, 505);
+			lblKbMappingsSet.Name = "lblKbMappingsSet";
+			lblKbMappingsSet.Size = new Size(26, 15);
+			lblKbMappingsSet.TabIndex = 201;
+			lblKbMappingsSet.Text = "Set";
 			// 
 			// grpMapperNotFound
 			// 
@@ -2361,8 +2409,8 @@
 			dataGridMappings.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			dataGridMappings.Location = new Point(0, 0);
 			dataGridMappings.Name = "dataGridMappings";
-			dataGridMappings.Size = new Size(1227, 528);
-			dataGridMappings.TabIndex = 111;
+			dataGridMappings.Size = new Size(1227, 497);
+			dataGridMappings.TabIndex = 50;
 			// 
 			// mainMenuStrip
 			// 
@@ -2587,6 +2635,7 @@
 			tabCustom.ResumeLayout(false);
 			tabCustom.PerformLayout();
 			tabKbMappings.ResumeLayout(false);
+			tabKbMappings.PerformLayout();
 			grpMapperNotFound.ResumeLayout(false);
 			grpMapperNotFound.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)dataGridMappings).EndInit();
@@ -2821,5 +2870,9 @@
 		private ComboBox comboDosVersion;
 		private CheckBox cbDosVersionSet;
 		private Label lblDosVersion;
+		private Label lblKbMappingsSet;
+		private CheckBox cbDontApplyKbMappingsSet;
+		private ComboBox comboDontApplyKbMappings;
+		private Label lblDontApplyKbMappings;
 	}
 }

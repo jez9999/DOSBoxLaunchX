@@ -77,6 +77,11 @@ public class LaunchSettings {
 	#region Keyboard mappings
 
 	/// <summary>
+	/// Whether or not to disable the application of keyboard mappings.
+	/// </summary>
+	public bool? DontApplyKbMappings { get; set; }
+
+	/// <summary>
 	/// Optional keyboard mapping overrides.
 	/// These entries represent replacement mappings to be merged into the base mapper file at launch.
 	/// </summary>
