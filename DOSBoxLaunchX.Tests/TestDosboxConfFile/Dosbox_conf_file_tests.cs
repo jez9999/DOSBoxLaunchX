@@ -142,10 +142,48 @@ public class Dosbox_conf_file_tests {
 
 		// Assert
 		var firstHeader = lines[0];
-		firstHeader.Should().BeOfType<SectionHeaderLine>().Which.SectionName.Should().Be("sblaster");
-
 		var firstSetting = lines[1];
+
+		firstHeader.Should().BeOfType<SectionHeaderLine>().Which.SectionName.Should().Be("sblaster");
 		firstSetting.Should().BeOfType<SettingLine>().Which.Should().BeEquivalentTo(new {
+			Key = "irq",
+			Value = "7"
+		});
+	}
+
+	[Test]
+	public void Set_setting_adds_two_sections_if_dont_exist_at_beginning_with_existing_sections() {
+		// Arrange
+		string text =
+			"""
+			[cpu]
+			cycles=auto
+			[autoexec]
+			mount c c:\games
+			[misc]
+			volume=75
+			""";
+		var file = DosboxConfFile.FromText(text);
+
+		// Act
+		file.SetSetting("sblaster", "irq", "7");
+		file.SetSetting("gus", "base", "240");
+		var lines = file.Lines;
+
+		// Assert
+		var header1 = lines[0];
+		var setting1 = lines[1];
+		var header2 = lines[2];
+		var setting2 = lines[3];
+
+		header1.Should().BeOfType<SectionHeaderLine>().Which.SectionName.Should().Be("gus");
+		setting1.Should().BeOfType<SettingLine>().Which.Should().BeEquivalentTo(new {
+			Key = "base",
+			Value = "240"
+		});
+
+		header2.Should().BeOfType<SectionHeaderLine>().Which.SectionName.Should().Be("sblaster");
+		setting2.Should().BeOfType<SettingLine>().Which.Should().BeEquivalentTo(new {
 			Key = "irq",
 			Value = "7"
 		});
