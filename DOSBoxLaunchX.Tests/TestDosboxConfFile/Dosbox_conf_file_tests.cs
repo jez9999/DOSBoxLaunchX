@@ -104,15 +104,15 @@ public class Dosbox_conf_file_tests {
 	}
 
 	[Test]
-	public void Set_setting_adds_section_if_doesnt_exist_at_end() {
+	public void Set_setting_adds_section_if_doesnt_exist_at_beginning() {
 		// Arrange
 		var file = DosboxConfFile.FromEmpty();
 
 		// Act
 		file.SetSetting("sblaster", "irq", "7");
 		var lines = file.Lines;
-		var header = lines[lines.Count - 2];
-		var lastSetting = lines[lines.Count - 1];
+		var header = lines[lines.Count - 3];
+		var lastSetting = lines[lines.Count - 2];
 
 		// Assert
 		header.Should().BeOfType<SectionHeaderLine>().Which.SectionName.Should().Be("sblaster");
@@ -123,7 +123,7 @@ public class Dosbox_conf_file_tests {
 	}
 
 	[Test]
-	public void Set_setting_adds_section_if_doesnt_exist_at_end_with_existing_sections() {
+	public void Set_setting_adds_section_if_doesnt_exist_at_beginning_with_existing_sections() {
 		// Arrange
 		string text =
 			"""
@@ -141,11 +141,11 @@ public class Dosbox_conf_file_tests {
 		var lines = file.Lines;
 
 		// Assert
-		var lastHeader = lines[^2];
-		lastHeader.Should().BeOfType<SectionHeaderLine>().Which.SectionName.Should().Be("sblaster");
+		var firstHeader = lines[0];
+		firstHeader.Should().BeOfType<SectionHeaderLine>().Which.SectionName.Should().Be("sblaster");
 
-		var lastSetting = lines[^1];
-		lastSetting.Should().BeOfType<SettingLine>().Which.Should().BeEquivalentTo(new {
+		var firstSetting = lines[1];
+		firstSetting.Should().BeOfType<SettingLine>().Which.Should().BeEquivalentTo(new {
 			Key = "irq",
 			Value = "7"
 		});

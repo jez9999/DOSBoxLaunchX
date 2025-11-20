@@ -100,7 +100,7 @@ public class Round_trip_tests {
 		file.SetSetting("dosbox", "machine", "tandy");
 		file.SetSetting("dosbox", "saveslot", "5");
 		file.SetSetting("dosbox", "somesetting", "somevalue"); // Missing key; add to end
-		file.SetSetting("misc", "volume", "57"); // Missing section; add to end
+		file.SetSetting("misc", "volume", "57"); // Missing section; add to beginning
 		file.SetSetting("gus", "gus master volume", "1.23");
 		file.SetSetting("gus", "global register read alias", "false");
 		file.SetSetting("gus", "gus", "true");

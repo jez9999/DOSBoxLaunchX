@@ -120,7 +120,7 @@ public class DosboxMapperFile {
 				_lines.Insert(insertIndex + 1, newLine);
 			}
 			else {
-				// No section exists, insert a new section header first
+				// No section exists, insert a new section header first (at end of file)
 				var header = new MapperSectionHeaderLine($"[{section}]", section);
 				_lines.Add(header);
 				_lines.Add(newLine);

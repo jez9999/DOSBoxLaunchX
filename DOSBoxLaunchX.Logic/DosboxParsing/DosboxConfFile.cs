@@ -106,10 +106,10 @@ public class DosboxConfFile {
 				_lines.Insert(insertIndex + 1, newLine);
 			}
 			else {
-				// No section exists, insert a new section header first
+				// No section exists, insert a new section header first (at start of file)
 				var header = new SectionHeaderLine($"[{section}]", section);
-				_lines.Add(header);
-				_lines.Add(newLine);
+				_lines.Insert(0, header);
+				_lines.Insert(1, newLine);
 			}
 
 			// Add to index
@@ -132,6 +132,7 @@ public class DosboxConfFile {
 			.FirstOrDefault(h => h.SectionName == "autoexec");
 
 		if (autoexecHeader == null) {
+			// No section exists, insert a new section header first (at end of file)
 			autoexecHeader = new SectionHeaderLine("[autoexec]", "autoexec");
 			_lines.Add(autoexecHeader);
 		}
