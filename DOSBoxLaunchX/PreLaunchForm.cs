@@ -2,6 +2,8 @@
 using DOSBoxLaunchX.Helpers;
 using DOSBoxLaunchX.Models;
 using DOSBoxLaunchX.Logic.Services;
+using DOSBoxLaunchX.Logic.Models;
+using DOSBoxLaunchX.Logic.Helpers;
 
 namespace DOSBoxLaunchX;
 
@@ -28,6 +30,29 @@ public partial class PreLaunchForm : Form {
 
 	#endregion
 
+	#region Non-event helper methods
+
+	private void setupFormAndTitle(LaunchSettings sett) {
+		lblShortcutTitle.Text = string.IsNullOrWhiteSpace(sett.Name) ? _providedDlxPath : sett.Name;
+
+		// When showing description pre-launch, make the txtbox the size of the launch button and push
+		// everything else down as well as expand the form by that amount
+		if (sett.ShowDescriptionPreLaunch ?? false) {
+			var width = btnLaunchNow.Width;
+			var height = btnLaunchNow.Height;
+			var shiftDownAmount = btnEditShortcut.Top - btnLaunchNow.Top;
+			txtDescription.Text = StringParseHelper.TrimAfterSeparator(sett.Description ?? "", "-----");
+			txtDescription.Width = width;
+			txtDescription.Height = height;
+			Height += shiftDownAmount;
+			btnEditShortcut.Top += shiftDownAmount;
+			btnLaunchNow.Top += shiftDownAmount;
+			txtDescription.Visible = true;
+		}
+	}
+
+	#endregion
+
 #pragma warning disable IDE1006 // Naming Styles
 	private void PreLaunchForm_Load(object sender, EventArgs ea) {
 		try {
@@ -44,7 +69,7 @@ public partial class PreLaunchForm : Form {
 			}
 			else {
 				var sett = _launchSettingsFileService.LoadFromFile(_providedDlxPath);
-				lblShortcutTitle.Text = string.IsNullOrWhiteSpace(sett.Name) ? _providedDlxPath : sett.Name;
+				setupFormAndTitle(sett);
 			}
 		}
 		catch (Exception ex) {

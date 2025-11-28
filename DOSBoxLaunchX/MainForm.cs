@@ -72,6 +72,7 @@ public partial class MainForm : Form {
 	private void resetControlDefaults() {
 		// Reset UI with defaults; default settings for new shortcuts are hardcoded here
 		generateUiFromShortcutLaunchSettings(new LaunchSettings {
+			ShowDescriptionPreLaunch = false,
 			BaseDir = "",
 			LimitBaseDirFreeSpace = getDefaultFreeSpaceLimit(),
 			Executable = "",
@@ -179,7 +180,7 @@ public partial class MainForm : Form {
 		foreach (var assoc in info.AssociatedControls) {
 			switch (assoc) {
 				case Label lbl:
-					lbl.ForeColor = enabled ? SystemColors.ControlText : ControlPaint.LightLight(SystemColors.ControlText);
+					enableLabel(lbl, !enabled);
 					break;
 
 				default:
@@ -188,6 +189,11 @@ public partial class MainForm : Form {
 			}
 		}
 	}
+
+	private void enableLabel(Label lbl, bool doDisable = false) {
+		lbl.ForeColor = !doDisable ? SystemColors.ControlText : ControlPaint.LightLight(SystemColors.ControlText);
+	}
+	private void disableLabel(Label lbl) => enableLabel(lbl, true);
 
 	private void controlValueChangedEvent(object? sender, EventArgs ea) {
 		controlValueChanged();
@@ -530,6 +536,7 @@ public partial class MainForm : Form {
 		var sett = new LaunchSettings {
 			Name = name == "" ? null : name,
 			Description = description == "" ? null : description,
+			ShowDescriptionPreLaunch = UiHelper.GetComboValue<bool>(comboShowDescriptionPreLaunch) ? true : null,
 		};
 
 		if (cbBaseDirSet.Checked) { sett.BaseDir = UiHelper.GetTextValue(txtBaseDir); }
@@ -620,6 +627,7 @@ public partial class MainForm : Form {
 		// General settings
 		UiHelper.SetTextFromValue(txtName, sett.Name);
 		UiHelper.SetTextFromValue(txtDescription, sett.Description);
+		UiHelper.SetComboFromValue(comboShowDescriptionPreLaunch, sett.ShowDescriptionPreLaunch);
 
 		UiHelper.SetTextFromValue(txtBaseDir, sett.BaseDir);
 		UiHelper.SetCheckboxFromValue(cbBaseDirSet, sett.BaseDir != null);
@@ -678,22 +686,24 @@ public partial class MainForm : Form {
 		static void resetGlobalNaSettings(LaunchSettings sett) {
 			sett.Name = sett.Description = sett.BaseDir = sett.Executable = sett.UseDosboxBaseDir = null;
 			sett.LimitBaseDirFreeSpace = null;
-			sett.ExitAfterTerminate = null;
+			sett.ShowDescriptionPreLaunch = sett.ExitAfterTerminate = null;
 		}
 
 		void showGeneralNotApplicable(bool makeVisible) {
 			// When showing N/A, general controls must be disabled; otherwise, enabled.
-			lblGeneralSet.Enabled =
-				lblNameDescriptionNote.Enabled =
-				lblName.Enabled = txtName.Enabled =
-				lblDescription.Enabled = txtDescription.Enabled =
+			enableLabel(lblGeneralSet, makeVisible);
+			enableLabel(lblNameDescriptionNote, makeVisible);
+			enableLabel(lblName, makeVisible);
+			enableLabel(lblDescription, makeVisible);
+			enableLabel(lblShowDescriptionPreLaunch, makeVisible);
+			txtName.Enabled = txtDescription.Enabled = comboShowDescriptionPreLaunch.Enabled =
 				cbBaseDirSet.Enabled = cbLimitBaseDirFreeSpaceSet.Enabled = cbExecutableSet.Enabled =
 				cbExitAfterTerminateSet.Enabled = cbUseDosboxBaseDirSet.Enabled =
 				!makeVisible;
 			pnlGeneralSettingsMain.BackColor = makeVisible ? SystemColors.ControlLight : SystemColors.Control;
 			lblNotApplicable.Font = _lblFontNa;
 			lblNotApplicable.Size = new(352, 166);
-			lblNotApplicable.Location = new(129, 23);
+			lblNotApplicable.Location = new(129, 0);
 			lblNotApplicable.Visible = makeVisible;
 			lblNotApplicable.Refresh();
 		}
@@ -975,14 +985,22 @@ public partial class MainForm : Form {
 		aboutForm.ShowDialog();
 	}
 
-	private void lblExecutable_Click(object sender, EventArgs ea) {
+	private void lblDescription_Click(object sender, EventArgs ea) {
 		MessageBoxHelper.ShowInfoMessage(
 			"""
-			When a shortcut is being used to run a DOS game/app rather than just start a DOS shell with a particular configuration, the name of the executable to run can be entered here.
+			When "Show description on pre-launch" is enabled, this description will be shown along with the Name on the pre-launch form.  If you have a line beginning "-----", it will act as a separator that stops any further text being displayed.  This allows you to store both a description to display on pre-launch as well as additional notes not to display.  So if your Description were set to:
 
-			If there are already existing commands in the autoexec section, this command will be added after them.
+			This game is cool...
+			But it uses a low resolution!
+			-----
+			The resolution is 320x240.
+
+			... then the description shown on pre-launch would be:
+
+			This game is cool...
+			But it uses a low resolution!
 			""",
-			"Executable setting"
+			"Description setting"
 		);
 	}
 
@@ -994,6 +1012,17 @@ public partial class MainForm : Form {
 			If there are already existing commands in the autoexec section, this mount command will be added before them (as well as a command to switch to the C: drive).
 			""",
 			"Base Directory setting"
+		);
+	}
+
+	private void lblExecutable_Click(object sender, EventArgs ea) {
+		MessageBoxHelper.ShowInfoMessage(
+			"""
+			When a shortcut is being used to run a DOS game/app rather than just start a DOS shell with a particular configuration, the name of the executable to run can be entered here.
+
+			If there are already existing commands in the autoexec section, this command will be added after them.
+			""",
+			"Executable setting"
 		);
 	}
 

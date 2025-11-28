@@ -35,6 +35,8 @@
 			tabGeneral = new TabPage();
 			pnlGeneralSettingsMain = new Panel();
 			lblNotApplicable = new DOSBoxLaunchX.Controls.TransparentLabel();
+			comboShowDescriptionPreLaunch = new ComboBox();
+			lblShowDescriptionPreLaunch = new Label();
 			btnUseDosboxBaseDirBrowse = new Button();
 			cbUseDosboxBaseDirSet = new CheckBox();
 			txtUseDosboxBaseDir = new TextBox();
@@ -93,6 +95,9 @@
 			lblCpuSet = new Label();
 			lblCore = new Label();
 			tabVideo = new TabPage();
+			comboWindowResolution = new ComboBox();
+			cbWindowResolutionSet = new CheckBox();
+			lblWindowResolution = new Label();
 			comboFullResolution = new ComboBox();
 			cbFullResolutionSet = new CheckBox();
 			lblFullResolution = new Label();
@@ -260,9 +265,6 @@
 			timerRefreshNa = new System.Windows.Forms.Timer(components);
 			folderBrowserDialog = new FolderBrowserDialog();
 			btnTestLaunch = new Button();
-			comboWindowResolution = new ComboBox();
-			cbWindowResolutionSet = new CheckBox();
-			lblWindowResolution = new Label();
 			tabsContainer.SuspendLayout();
 			tabGeneral.SuspendLayout();
 			pnlGeneralSettingsMain.SuspendLayout();
@@ -341,6 +343,8 @@
 			// pnlGeneralSettingsMain
 			// 
 			pnlGeneralSettingsMain.Controls.Add(lblNotApplicable);
+			pnlGeneralSettingsMain.Controls.Add(comboShowDescriptionPreLaunch);
+			pnlGeneralSettingsMain.Controls.Add(lblShowDescriptionPreLaunch);
 			pnlGeneralSettingsMain.Controls.Add(btnUseDosboxBaseDirBrowse);
 			pnlGeneralSettingsMain.Controls.Add(cbUseDosboxBaseDirSet);
 			pnlGeneralSettingsMain.Controls.Add(txtUseDosboxBaseDir);
@@ -366,7 +370,7 @@
 			pnlGeneralSettingsMain.Controls.Add(lblName);
 			pnlGeneralSettingsMain.Location = new Point(0, 0);
 			pnlGeneralSettingsMain.Name = "pnlGeneralSettingsMain";
-			pnlGeneralSettingsMain.Size = new Size(604, 291);
+			pnlGeneralSettingsMain.Size = new Size(604, 320);
 			pnlGeneralSettingsMain.TabIndex = 10;
 			// 
 			// lblNotApplicable
@@ -381,12 +385,32 @@
 			lblNotApplicable.Text = "N/A";
 			lblNotApplicable.TextAlign = ContentAlignment.TopLeft;
 			// 
+			// comboShowDescriptionPreLaunch
+			// 
+			comboShowDescriptionPreLaunch.DropDownStyle = ComboBoxStyle.DropDownList;
+			comboShowDescriptionPreLaunch.FormattingEnabled = true;
+			comboShowDescriptionPreLaunch.Items.AddRange(new object[] { "No", "Yes" });
+			comboShowDescriptionPreLaunch.Location = new Point(258, 145);
+			comboShowDescriptionPreLaunch.Name = "comboShowDescriptionPreLaunch";
+			comboShowDescriptionPreLaunch.Size = new Size(110, 23);
+			comboShowDescriptionPreLaunch.TabIndex = 31;
+			comboShowDescriptionPreLaunch.Tag = "nl=false";
+			// 
+			// lblShowDescriptionPreLaunch
+			// 
+			lblShowDescriptionPreLaunch.AutoSize = true;
+			lblShowDescriptionPreLaunch.Location = new Point(36, 148);
+			lblShowDescriptionPreLaunch.Name = "lblShowDescriptionPreLaunch";
+			lblShowDescriptionPreLaunch.Size = new Size(190, 15);
+			lblShowDescriptionPreLaunch.TabIndex = 100;
+			lblShowDescriptionPreLaunch.Text = "^ Show description on pre-launch:";
+			// 
 			// btnUseDosboxBaseDirBrowse
 			// 
-			btnUseDosboxBaseDirBrowse.Location = new Point(522, 261);
+			btnUseDosboxBaseDirBrowse.Location = new Point(522, 290);
 			btnUseDosboxBaseDirBrowse.Name = "btnUseDosboxBaseDirBrowse";
 			btnUseDosboxBaseDirBrowse.Size = new Size(75, 23);
-			btnUseDosboxBaseDirBrowse.TabIndex = 72;
+			btnUseDosboxBaseDirBrowse.TabIndex = 82;
 			btnUseDosboxBaseDirBrowse.Text = "Browse...";
 			btnUseDosboxBaseDirBrowse.UseVisualStyleBackColor = true;
 			btnUseDosboxBaseDirBrowse.Click += btnUseDosboxBaseDirBrowse_Click;
@@ -394,25 +418,25 @@
 			// cbUseDosboxBaseDirSet
 			// 
 			cbUseDosboxBaseDirSet.AutoSize = true;
-			cbUseDosboxBaseDirSet.Location = new Point(11, 265);
+			cbUseDosboxBaseDirSet.Location = new Point(11, 294);
 			cbUseDosboxBaseDirSet.Name = "cbUseDosboxBaseDirSet";
 			cbUseDosboxBaseDirSet.Size = new Size(15, 14);
-			cbUseDosboxBaseDirSet.TabIndex = 70;
+			cbUseDosboxBaseDirSet.TabIndex = 80;
 			cbUseDosboxBaseDirSet.Tag = "";
 			cbUseDosboxBaseDirSet.UseVisualStyleBackColor = true;
 			// 
 			// txtUseDosboxBaseDir
 			// 
-			txtUseDosboxBaseDir.Location = new Point(204, 261);
+			txtUseDosboxBaseDir.Location = new Point(204, 290);
 			txtUseDosboxBaseDir.Name = "txtUseDosboxBaseDir";
 			txtUseDosboxBaseDir.Size = new Size(312, 23);
-			txtUseDosboxBaseDir.TabIndex = 71;
+			txtUseDosboxBaseDir.TabIndex = 81;
 			txtUseDosboxBaseDir.Tag = "cb=cbUseDosboxBaseDirSet|assoc=lblUseDosboxBaseDir,btnUseDosboxBaseDirBrowse";
 			// 
 			// lblUseDosboxBaseDir
 			// 
 			lblUseDosboxBaseDir.AutoSize = true;
-			lblUseDosboxBaseDir.Location = new Point(36, 264);
+			lblUseDosboxBaseDir.Location = new Point(36, 293);
 			lblUseDosboxBaseDir.Name = "lblUseDosboxBaseDir";
 			lblUseDosboxBaseDir.Size = new Size(162, 15);
 			lblUseDosboxBaseDir.TabIndex = 97;
@@ -423,26 +447,26 @@
 			comboExitAfterTerminate.DropDownStyle = ComboBoxStyle.DropDownList;
 			comboExitAfterTerminate.FormattingEnabled = true;
 			comboExitAfterTerminate.Items.AddRange(new object[] { "Yes", "No" });
-			comboExitAfterTerminate.Location = new Point(258, 232);
+			comboExitAfterTerminate.Location = new Point(258, 261);
 			comboExitAfterTerminate.Name = "comboExitAfterTerminate";
 			comboExitAfterTerminate.Size = new Size(110, 23);
-			comboExitAfterTerminate.TabIndex = 61;
+			comboExitAfterTerminate.TabIndex = 71;
 			comboExitAfterTerminate.Tag = "cb=cbExitAfterTerminateSet|assoc=lblExitAfterTerminate";
 			// 
 			// cbExitAfterTerminateSet
 			// 
 			cbExitAfterTerminateSet.AutoSize = true;
-			cbExitAfterTerminateSet.Location = new Point(11, 236);
+			cbExitAfterTerminateSet.Location = new Point(11, 265);
 			cbExitAfterTerminateSet.Name = "cbExitAfterTerminateSet";
 			cbExitAfterTerminateSet.Size = new Size(15, 14);
-			cbExitAfterTerminateSet.TabIndex = 60;
+			cbExitAfterTerminateSet.TabIndex = 70;
 			cbExitAfterTerminateSet.Tag = "";
 			cbExitAfterTerminateSet.UseVisualStyleBackColor = true;
 			// 
 			// lblExitAfterTerminate
 			// 
 			lblExitAfterTerminate.AutoSize = true;
-			lblExitAfterTerminate.Location = new Point(36, 235);
+			lblExitAfterTerminate.Location = new Point(36, 264);
 			lblExitAfterTerminate.Name = "lblExitAfterTerminate";
 			lblExitAfterTerminate.Size = new Size(186, 15);
 			lblExitAfterTerminate.TabIndex = 93;
@@ -460,10 +484,10 @@
 			// 
 			// btnExecutableBrowse
 			// 
-			btnExecutableBrowse.Location = new Point(522, 203);
+			btnExecutableBrowse.Location = new Point(522, 232);
 			btnExecutableBrowse.Name = "btnExecutableBrowse";
 			btnExecutableBrowse.Size = new Size(75, 23);
-			btnExecutableBrowse.TabIndex = 52;
+			btnExecutableBrowse.TabIndex = 62;
 			btnExecutableBrowse.Text = "Browse...";
 			btnExecutableBrowse.UseVisualStyleBackColor = true;
 			btnExecutableBrowse.Click += btnExecutableBrowse_Click;
@@ -483,26 +507,26 @@
 			comboLimitBaseDirFreeSpace.DropDownStyle = ComboBoxStyle.DropDownList;
 			comboLimitBaseDirFreeSpace.FormattingEnabled = true;
 			comboLimitBaseDirFreeSpace.Items.AddRange(new object[] { "10MiB", "64MiB", "128MiB", "512MiB", "1GiB (1024MiB)" });
-			comboLimitBaseDirFreeSpace.Location = new Point(258, 174);
+			comboLimitBaseDirFreeSpace.Location = new Point(258, 203);
 			comboLimitBaseDirFreeSpace.Name = "comboLimitBaseDirFreeSpace";
 			comboLimitBaseDirFreeSpace.Size = new Size(110, 23);
-			comboLimitBaseDirFreeSpace.TabIndex = 41;
+			comboLimitBaseDirFreeSpace.TabIndex = 51;
 			comboLimitBaseDirFreeSpace.Tag = "cb=cbLimitBaseDirFreeSpaceSet|assoc=lblLimitBaseDirFreeSpace";
 			// 
 			// cbLimitBaseDirFreeSpaceSet
 			// 
 			cbLimitBaseDirFreeSpaceSet.AutoSize = true;
-			cbLimitBaseDirFreeSpaceSet.Location = new Point(11, 178);
+			cbLimitBaseDirFreeSpaceSet.Location = new Point(11, 207);
 			cbLimitBaseDirFreeSpaceSet.Name = "cbLimitBaseDirFreeSpaceSet";
 			cbLimitBaseDirFreeSpaceSet.Size = new Size(15, 14);
-			cbLimitBaseDirFreeSpaceSet.TabIndex = 40;
+			cbLimitBaseDirFreeSpaceSet.TabIndex = 50;
 			cbLimitBaseDirFreeSpaceSet.Tag = "";
 			cbLimitBaseDirFreeSpaceSet.UseVisualStyleBackColor = true;
 			// 
 			// lblLimitBaseDirFreeSpace
 			// 
 			lblLimitBaseDirFreeSpace.AutoSize = true;
-			lblLimitBaseDirFreeSpace.Location = new Point(36, 177);
+			lblLimitBaseDirFreeSpace.Location = new Point(36, 206);
 			lblLimitBaseDirFreeSpace.Name = "lblLimitBaseDirFreeSpace";
 			lblLimitBaseDirFreeSpace.Size = new Size(216, 15);
 			lblLimitBaseDirFreeSpace.TabIndex = 80;
@@ -511,19 +535,19 @@
 			// cbExecutableSet
 			// 
 			cbExecutableSet.AutoSize = true;
-			cbExecutableSet.Location = new Point(11, 207);
+			cbExecutableSet.Location = new Point(11, 236);
 			cbExecutableSet.Name = "cbExecutableSet";
 			cbExecutableSet.Size = new Size(15, 14);
-			cbExecutableSet.TabIndex = 50;
+			cbExecutableSet.TabIndex = 60;
 			cbExecutableSet.Tag = "";
 			cbExecutableSet.UseVisualStyleBackColor = true;
 			// 
 			// txtExecutable
 			// 
-			txtExecutable.Location = new Point(127, 203);
+			txtExecutable.Location = new Point(127, 232);
 			txtExecutable.Name = "txtExecutable";
 			txtExecutable.Size = new Size(389, 23);
-			txtExecutable.TabIndex = 51;
+			txtExecutable.TabIndex = 61;
 			txtExecutable.Tag = "cb=cbExecutableSet|assoc=lblExecutable,btnExecutableBrowse";
 			// 
 			// lblExecutable
@@ -531,7 +555,7 @@
 			lblExecutable.AutoSize = true;
 			lblExecutable.Cursor = Cursors.Help;
 			lblExecutable.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point, 0);
-			lblExecutable.Location = new Point(36, 206);
+			lblExecutable.Location = new Point(36, 235);
 			lblExecutable.Name = "lblExecutable";
 			lblExecutable.Size = new Size(67, 15);
 			lblExecutable.TabIndex = 78;
@@ -541,10 +565,10 @@
 			// cbBaseDirSet
 			// 
 			cbBaseDirSet.AutoSize = true;
-			cbBaseDirSet.Location = new Point(11, 149);
+			cbBaseDirSet.Location = new Point(11, 178);
 			cbBaseDirSet.Name = "cbBaseDirSet";
 			cbBaseDirSet.Size = new Size(15, 14);
-			cbBaseDirSet.TabIndex = 30;
+			cbBaseDirSet.TabIndex = 40;
 			cbBaseDirSet.Tag = "";
 			cbBaseDirSet.UseVisualStyleBackColor = true;
 			// 
@@ -560,10 +584,10 @@
 			// 
 			// txtBaseDir
 			// 
-			txtBaseDir.Location = new Point(127, 145);
+			txtBaseDir.Location = new Point(127, 174);
 			txtBaseDir.Name = "txtBaseDir";
 			txtBaseDir.Size = new Size(470, 23);
-			txtBaseDir.TabIndex = 31;
+			txtBaseDir.TabIndex = 41;
 			txtBaseDir.Tag = "cb=cbBaseDirSet|assoc=lblBaseDir";
 			// 
 			// lblBaseDir
@@ -571,7 +595,7 @@
 			lblBaseDir.AutoSize = true;
 			lblBaseDir.Cursor = Cursors.Help;
 			lblBaseDir.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point, 0);
-			lblBaseDir.Location = new Point(36, 148);
+			lblBaseDir.Location = new Point(36, 177);
 			lblBaseDir.Name = "lblBaseDir";
 			lblBaseDir.Size = new Size(84, 15);
 			lblBaseDir.TabIndex = 76;
@@ -581,11 +605,14 @@
 			// lblDescription
 			// 
 			lblDescription.AutoSize = true;
+			lblDescription.Cursor = Cursors.Help;
+			lblDescription.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point, 0);
 			lblDescription.Location = new Point(36, 57);
 			lblDescription.Name = "lblDescription";
 			lblDescription.Size = new Size(70, 15);
 			lblDescription.TabIndex = 75;
 			lblDescription.Text = "Description:";
+			lblDescription.Click += lblDescription_Click;
 			// 
 			// txtName
 			// 
@@ -606,7 +633,7 @@
 			// 
 			// btnLogOutputFileBrowse
 			// 
-			btnLogOutputFileBrowse.Location = new Point(522, 362);
+			btnLogOutputFileBrowse.Location = new Point(522, 391);
 			btnLogOutputFileBrowse.Name = "btnLogOutputFileBrowse";
 			btnLogOutputFileBrowse.Size = new Size(75, 23);
 			btnLogOutputFileBrowse.TabIndex = 92;
@@ -617,7 +644,7 @@
 			// cbLogOutputFileSet
 			// 
 			cbLogOutputFileSet.AutoSize = true;
-			cbLogOutputFileSet.Location = new Point(11, 366);
+			cbLogOutputFileSet.Location = new Point(11, 395);
 			cbLogOutputFileSet.Name = "cbLogOutputFileSet";
 			cbLogOutputFileSet.Size = new Size(15, 14);
 			cbLogOutputFileSet.TabIndex = 90;
@@ -626,7 +653,7 @@
 			// 
 			// txtLogOutputFile
 			// 
-			txtLogOutputFile.Location = new Point(168, 362);
+			txtLogOutputFile.Location = new Point(168, 391);
 			txtLogOutputFile.Name = "txtLogOutputFile";
 			txtLogOutputFile.Size = new Size(348, 23);
 			txtLogOutputFile.TabIndex = 91;
@@ -637,7 +664,7 @@
 			lblLogOutputFile.AutoSize = true;
 			lblLogOutputFile.Cursor = Cursors.Help;
 			lblLogOutputFile.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point, 0);
-			lblLogOutputFile.Location = new Point(36, 365);
+			lblLogOutputFile.Location = new Point(36, 394);
 			lblLogOutputFile.Name = "lblLogOutputFile";
 			lblLogOutputFile.Size = new Size(126, 15);
 			lblLogOutputFile.TabIndex = 62;
@@ -647,7 +674,7 @@
 			// cbOpenLoggingConsoleSet
 			// 
 			cbOpenLoggingConsoleSet.AutoSize = true;
-			cbOpenLoggingConsoleSet.Location = new Point(11, 337);
+			cbOpenLoggingConsoleSet.Location = new Point(11, 366);
 			cbOpenLoggingConsoleSet.Name = "cbOpenLoggingConsoleSet";
 			cbOpenLoggingConsoleSet.Size = new Size(15, 14);
 			cbOpenLoggingConsoleSet.TabIndex = 80;
@@ -656,7 +683,7 @@
 			// 
 			// grpSeparator
 			// 
-			grpSeparator.Location = new Point(11, 298);
+			grpSeparator.Location = new Point(11, 327);
 			grpSeparator.Name = "grpSeparator";
 			grpSeparator.Size = new Size(586, 12);
 			grpSeparator.TabIndex = 58;
@@ -667,7 +694,7 @@
 			comboOpenLoggingConsole.DropDownStyle = ComboBoxStyle.DropDownList;
 			comboOpenLoggingConsole.FormattingEnabled = true;
 			comboOpenLoggingConsole.Items.AddRange(new object[] { "No", "Yes" });
-			comboOpenLoggingConsole.Location = new Point(291, 333);
+			comboOpenLoggingConsole.Location = new Point(291, 362);
 			comboOpenLoggingConsole.Name = "comboOpenLoggingConsole";
 			comboOpenLoggingConsole.Size = new Size(77, 23);
 			comboOpenLoggingConsole.TabIndex = 81;
@@ -676,7 +703,7 @@
 			// lblOpenLoggingConsole
 			// 
 			lblOpenLoggingConsole.AutoSize = true;
-			lblOpenLoggingConsole.Location = new Point(36, 336);
+			lblOpenLoggingConsole.Location = new Point(36, 365);
 			lblOpenLoggingConsole.Name = "lblOpenLoggingConsole";
 			lblOpenLoggingConsole.Size = new Size(249, 15);
 			lblOpenLoggingConsole.TabIndex = 55;
@@ -996,6 +1023,35 @@
 			tabVideo.Size = new Size(1227, 528);
 			tabVideo.TabIndex = 1;
 			tabVideo.Text = "Video";
+			// 
+			// comboWindowResolution
+			// 
+			comboWindowResolution.FormattingEnabled = true;
+			comboWindowResolution.Items.AddRange(new object[] { "original", "desktop", "1024x768", "1280x1024", "1680x1050", "1920x1080" });
+			comboWindowResolution.Location = new Point(168, 199);
+			comboWindowResolution.Name = "comboWindowResolution";
+			comboWindowResolution.Size = new Size(429, 23);
+			comboWindowResolution.TabIndex = 71;
+			comboWindowResolution.Tag = "cb=cbWindowResolutionSet|assoc=lblWindowResolution|setting=sdl.windowresolution";
+			// 
+			// cbWindowResolutionSet
+			// 
+			cbWindowResolutionSet.AutoSize = true;
+			cbWindowResolutionSet.Location = new Point(11, 203);
+			cbWindowResolutionSet.Name = "cbWindowResolutionSet";
+			cbWindowResolutionSet.Size = new Size(15, 14);
+			cbWindowResolutionSet.TabIndex = 70;
+			cbWindowResolutionSet.Tag = "";
+			cbWindowResolutionSet.UseVisualStyleBackColor = true;
+			// 
+			// lblWindowResolution
+			// 
+			lblWindowResolution.AutoSize = true;
+			lblWindowResolution.Location = new Point(36, 202);
+			lblWindowResolution.Name = "lblWindowResolution";
+			lblWindowResolution.Size = new Size(110, 15);
+			lblWindowResolution.TabIndex = 65;
+			lblWindowResolution.Text = "Window resolution:";
 			// 
 			// comboFullResolution
 			// 
@@ -2681,35 +2737,6 @@
 			btnTestLaunch.UseVisualStyleBackColor = true;
 			btnTestLaunch.Click += btnTestLaunch_Click;
 			// 
-			// comboWindowResolution
-			// 
-			comboWindowResolution.FormattingEnabled = true;
-			comboWindowResolution.Items.AddRange(new object[] { "original", "desktop", "1024x768", "1280x1024", "1680x1050", "1920x1080" });
-			comboWindowResolution.Location = new Point(168, 199);
-			comboWindowResolution.Name = "comboWindowResolution";
-			comboWindowResolution.Size = new Size(429, 23);
-			comboWindowResolution.TabIndex = 71;
-			comboWindowResolution.Tag = "cb=cbWindowResolutionSet|assoc=lblWindowResolution|setting=sdl.windowresolution";
-			// 
-			// cbWindowResolutionSet
-			// 
-			cbWindowResolutionSet.AutoSize = true;
-			cbWindowResolutionSet.Location = new Point(11, 203);
-			cbWindowResolutionSet.Name = "cbWindowResolutionSet";
-			cbWindowResolutionSet.Size = new Size(15, 14);
-			cbWindowResolutionSet.TabIndex = 70;
-			cbWindowResolutionSet.Tag = "";
-			cbWindowResolutionSet.UseVisualStyleBackColor = true;
-			// 
-			// lblWindowResolution
-			// 
-			lblWindowResolution.AutoSize = true;
-			lblWindowResolution.Location = new Point(36, 202);
-			lblWindowResolution.Name = "lblWindowResolution";
-			lblWindowResolution.Size = new Size(110, 15);
-			lblWindowResolution.TabIndex = 65;
-			lblWindowResolution.Text = "Window resolution:";
-			// 
 			// MainForm
 			// 
 			AllowDrop = true;
@@ -3012,5 +3039,8 @@
 		private ComboBox comboWindowResolution;
 		private CheckBox cbWindowResolutionSet;
 		private Label lblWindowResolution;
+		private ComboBox comboShowDescriptionPreLaunch;
+		private CheckBox checkBox1;
+		private Label lblShowDescriptionPreLaunch;
 	}
 }

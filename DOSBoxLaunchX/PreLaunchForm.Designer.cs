@@ -27,6 +27,7 @@
 			btnLaunchNow = new Button();
 			lblShortcutTitle = new Label();
 			btnEditShortcut = new Button();
+			txtDescription = new TextBox();
 			SuspendLayout();
 			// 
 			// btnLaunchNow
@@ -60,11 +61,24 @@
 			btnEditShortcut.UseVisualStyleBackColor = true;
 			btnEditShortcut.Click += btnEditShortcut_Click;
 			// 
+			// txtDescription
+			// 
+			txtDescription.BackColor = SystemColors.Info;
+			txtDescription.Location = new Point(12, 72);
+			txtDescription.Multiline = true;
+			txtDescription.Name = "txtDescription";
+			txtDescription.ReadOnly = true;
+			txtDescription.ScrollBars = ScrollBars.Vertical;
+			txtDescription.Size = new Size(100, 23);
+			txtDescription.TabIndex = 30;
+			txtDescription.Visible = false;
+			// 
 			// PreLaunchForm
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(328, 201);
+			Controls.Add(txtDescription);
 			Controls.Add(btnEditShortcut);
 			Controls.Add(lblShortcutTitle);
 			Controls.Add(btnLaunchNow);
@@ -77,6 +91,7 @@
 			Text = "DOSBoxLaunchX";
 			Load += PreLaunchForm_Load;
 			ResumeLayout(false);
+			PerformLayout();
 		}
 
 		#endregion
@@ -84,5 +99,6 @@
 		private Button btnLaunchNow;
 		private Label lblShortcutTitle;
 		private Button btnEditShortcut;
+		private TextBox txtDescription;
 	}
 }

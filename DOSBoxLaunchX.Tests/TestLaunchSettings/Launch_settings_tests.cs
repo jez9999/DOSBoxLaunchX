@@ -63,6 +63,7 @@ public class Launch_settings_tests {
 		var settings = new LaunchSettings {
 			Name = "Shortcut Name",
 			Description = "Some description",
+			ShowDescriptionPreLaunch = true,
 			BaseDir = @"C:\Games",
 			LimitBaseDirFreeSpace = 64,
 			ExitAfterTerminate = true,
@@ -76,6 +77,7 @@ public class Launch_settings_tests {
 		// Assert
 		json.Should().Contain(@"""Name"":""Shortcut Name""");
 		json.Should().Contain(@"""Description"":""Some description""");
+		json.Should().Contain(@"""ShowDescriptionPreLaunch"":true");
 		json.Should().Contain(@"""BaseDir"":""C:\\Games""");
 		json.Should().Contain(@"""LimitBaseDirFreeSpace"":64");
 		json.Should().Contain(@"""Executable"":""game.exe""");

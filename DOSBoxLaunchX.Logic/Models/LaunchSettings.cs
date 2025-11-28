@@ -21,6 +21,12 @@ public class LaunchSettings {
 	public string? Description { get; set; }
 
 	/// <summary>
+	/// Whether to show the description on pre-launch.
+	/// When used for storing global settings, this field is ignored.
+	/// </summary>
+	public bool? ShowDescriptionPreLaunch { get; set; }
+
+	/// <summary>
 	/// Optional base directory to mount as C: at the start of autoexec.
 	/// When used for storing global settings, this field is ignored.
 	/// </summary>
