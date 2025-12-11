@@ -138,6 +138,12 @@ public partial class MainForm : Form {
 	private void attachControlHandlers(Control ctrl, ControlInfo info) {
 		// Attach handlers for the value control itself
 		ctrl.TextChanged += controlValueChangedEvent;
+		if (ctrl.Name == "comboSameAsShortcutDir") {
+			// Special case; here, we need to care about enabling/disabling the 'base dir' textbox
+			ctrl.TextChanged += (sender, ea) => {
+				txtBaseDir.Enabled = cbBaseDirSet.Checked && !UiHelper.GetComboValue<bool>(comboSameAsShortcutDir);
+			};
+		}
 
 		ctrl.Validating += (sender, ea) => {
 			if (!validateTextCtrlContent(ctrl.Text, info)) { ea.Cancel = true; }
@@ -174,7 +180,13 @@ public partial class MainForm : Form {
 		bool enabled = info.CheckboxControl?.Checked ?? true;
 
 		// Update the value control itself
-		ctrl.Enabled = enabled;
+		if (ctrl.Name == "txtBaseDir") {
+			// Special case; here, we need to care about the 'same as shortcut dir' dropdown too
+			ctrl.Enabled = enabled && !UiHelper.GetComboValue<bool>(comboSameAsShortcutDir);
+		}
+		else {
+			ctrl.Enabled = enabled;
+		}
 
 		// Update associated controls (labels, etc.)
 		foreach (var assoc in info.AssociatedControls) {
