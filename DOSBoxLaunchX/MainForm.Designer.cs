@@ -34,6 +34,8 @@
 			tabsContainer = new TabControl();
 			tabGeneral = new TabPage();
 			pnlGeneralSettingsMain = new Panel();
+			comboSameAsShortcutDir = new ComboBox();
+			lblSameAsShortcutDir = new Label();
 			lblNotApplicable = new DOSBoxLaunchX.Controls.TransparentLabel();
 			comboShowDescriptionPreLaunch = new ComboBox();
 			lblShowDescriptionPreLaunch = new Label();
@@ -342,6 +344,8 @@
 			// 
 			// pnlGeneralSettingsMain
 			// 
+			pnlGeneralSettingsMain.Controls.Add(comboSameAsShortcutDir);
+			pnlGeneralSettingsMain.Controls.Add(lblSameAsShortcutDir);
 			pnlGeneralSettingsMain.Controls.Add(lblNotApplicable);
 			pnlGeneralSettingsMain.Controls.Add(comboShowDescriptionPreLaunch);
 			pnlGeneralSettingsMain.Controls.Add(lblShowDescriptionPreLaunch);
@@ -372,6 +376,26 @@
 			pnlGeneralSettingsMain.Name = "pnlGeneralSettingsMain";
 			pnlGeneralSettingsMain.Size = new Size(604, 320);
 			pnlGeneralSettingsMain.TabIndex = 10;
+			// 
+			// comboSameAsShortcutDir
+			// 
+			comboSameAsShortcutDir.DropDownStyle = ComboBoxStyle.DropDownList;
+			comboSameAsShortcutDir.FormattingEnabled = true;
+			comboSameAsShortcutDir.Items.AddRange(new object[] { "No", "Yes" });
+			comboSameAsShortcutDir.Location = new Point(552, 174);
+			comboSameAsShortcutDir.Name = "comboSameAsShortcutDir";
+			comboSameAsShortcutDir.Size = new Size(45, 23);
+			comboSameAsShortcutDir.TabIndex = 42;
+			comboSameAsShortcutDir.Tag = "nl=false";
+			// 
+			// lblSameAsShortcutDir
+			// 
+			lblSameAsShortcutDir.AutoSize = true;
+			lblSameAsShortcutDir.Location = new Point(434, 177);
+			lblSameAsShortcutDir.Name = "lblSameAsShortcutDir";
+			lblSameAsShortcutDir.Size = new Size(117, 15);
+			lblSameAsShortcutDir.TabIndex = 101;
+			lblSameAsShortcutDir.Text = "Same as shortcut dir:";
 			// 
 			// lblNotApplicable
 			// 
@@ -586,9 +610,9 @@
 			// 
 			txtBaseDir.Location = new Point(127, 174);
 			txtBaseDir.Name = "txtBaseDir";
-			txtBaseDir.Size = new Size(470, 23);
+			txtBaseDir.Size = new Size(301, 23);
 			txtBaseDir.TabIndex = 41;
-			txtBaseDir.Tag = "cb=cbBaseDirSet|assoc=lblBaseDir";
+			txtBaseDir.Tag = "cb=cbBaseDirSet|assoc=lblBaseDir,lblSameAsShortcutDir,comboSameAsShortcutDir";
 			// 
 			// lblBaseDir
 			// 
@@ -3042,5 +3066,7 @@
 		private ComboBox comboShowDescriptionPreLaunch;
 		private CheckBox checkBox1;
 		private Label lblShowDescriptionPreLaunch;
+		private ComboBox comboSameAsShortcutDir;
+		private Label lblSameAsShortcutDir;
 	}
 }

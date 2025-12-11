@@ -221,6 +221,9 @@ public partial class MainForm : Form {
 		txtBaseDir.TextChanged += (sender, ea) => {
 			refreshPrePostAutoexec();
 		};
+		comboSameAsShortcutDir.SelectedIndexChanged += (sender, ea) => {
+			refreshPrePostAutoexec();
+		};
 		cbLimitBaseDirFreeSpaceSet.CheckedChanged += (sender, ea) => {
 			refreshPrePostAutoexec();
 		};
@@ -250,6 +253,7 @@ public partial class MainForm : Form {
 			txtShortcutFilePath.Text = _currentShortcutFilePath ?? "[New shortcut]";
 			btnTestLaunch.Enabled = _currentShortcutFilePath != null;
 		}
+		refreshPrePostAutoexec();
 	}
 
 	private void updateUiDirtyState() {
@@ -312,10 +316,13 @@ public partial class MainForm : Form {
 
 		// Browsed successfully
 		var path = openFileDialog.FileName;
+		var sameAsShortcutDir = UiHelper.GetComboValue<bool>(comboSameAsShortcutDir);
 		cbExecutableSet.Checked = true;
 		txtExecutable.Text = Path.GetFileName(path) ?? "";
 		cbBaseDirSet.Checked = true;
-		txtBaseDir.Text = Path.GetDirectoryName(path) ?? "";
+		if (!sameAsShortcutDir) {
+			txtBaseDir.Text = Path.GetDirectoryName(path) ?? "";
+		}
 
 		return true;
 	}
@@ -539,7 +546,7 @@ public partial class MainForm : Form {
 			ShowDescriptionPreLaunch = UiHelper.GetComboValue<bool>(comboShowDescriptionPreLaunch) ? true : null,
 		};
 
-		if (cbBaseDirSet.Checked) { sett.BaseDir = UiHelper.GetTextValue(txtBaseDir); }
+		if (cbBaseDirSet.Checked) { sett.BaseDir = UiHelper.GetComboValue<bool>(comboSameAsShortcutDir) ? ShortcutSentinelHelper.ShortcutDirSentinel : UiHelper.GetTextValue(txtBaseDir); }
 		if (cbLimitBaseDirFreeSpaceSet.Checked) { sett.LimitBaseDirFreeSpace = UiHelper.GetLimitFreeSpaceValue(comboLimitBaseDirFreeSpace); }
 		if (cbExecutableSet.Checked) { sett.Executable = UiHelper.GetTextValue(txtExecutable); }
 		if (cbExitAfterTerminateSet.Checked) { sett.ExitAfterTerminate = UiHelper.GetComboValue<bool>(comboExitAfterTerminate); }
@@ -629,8 +636,9 @@ public partial class MainForm : Form {
 		UiHelper.SetTextFromValue(txtDescription, sett.Description);
 		UiHelper.SetComboFromValue(comboShowDescriptionPreLaunch, sett.ShowDescriptionPreLaunch);
 
-		UiHelper.SetTextFromValue(txtBaseDir, sett.BaseDir);
+		UiHelper.SetTextFromValue(txtBaseDir, sett.BaseDir == ShortcutSentinelHelper.ShortcutDirSentinel ? "" : sett.BaseDir);
 		UiHelper.SetCheckboxFromValue(cbBaseDirSet, sett.BaseDir != null);
+		UiHelper.SetComboFromValue(comboSameAsShortcutDir, sett.BaseDir == ShortcutSentinelHelper.ShortcutDirSentinel);
 
 		UiHelper.SetLimitFreeSpaceFromValue(comboLimitBaseDirFreeSpace, sett.LimitBaseDirFreeSpace, getDefaultFreeSpaceLimit());
 		UiHelper.SetCheckboxFromValue(cbLimitBaseDirFreeSpaceSet, sett.LimitBaseDirFreeSpace != null);
@@ -735,7 +743,11 @@ public partial class MainForm : Form {
 	private void refreshPrePostAutoexec() {
 		StringBuilder sb = new();
 
-		string? baseDir = cbBaseDirSet.Checked ? UiHelper.GetTextValue(txtBaseDir) : null;
+		string? baseDir = ShortcutSentinelHelper.ParseDirForShortcutSentinel(
+			cbBaseDirSet.Checked ? UiHelper.GetTextValue(txtBaseDir) : null,
+			_currentShortcutFilePath,
+			UiHelper.GetComboValue<bool>(comboSameAsShortcutDir)
+		);
 		int? limitBaseDirFreeSpace = cbLimitBaseDirFreeSpaceSet.Checked ? UiHelper.GetLimitFreeSpaceValue(comboLimitBaseDirFreeSpace) : null;
 		string? executable = cbExecutableSet.Checked ? UiHelper.GetTextValue(txtExecutable) : null;
 		bool? exitAfterTerminate = cbExitAfterTerminateSet.Checked ? UiHelper.GetComboValue<bool>(comboExitAfterTerminate) : null;

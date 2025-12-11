@@ -72,6 +72,10 @@ public partial class LauncherForm : Form {
 			return false;
 		}
 		var shortcutSettings = _launchSettingsFileService.LoadFromFile(dlxPath);
+		shortcutSettings.BaseDir = ShortcutSentinelHelper.ParseDirForShortcutSentinel(
+			shortcutSettings.BaseDir,
+			dlxPath
+		);
 		if (!string.IsNullOrWhiteSpace(shortcutSettings.Name)) {
 			var heading = $"| {shortcutSettings.Name} |";
 			addTxtboxMsg("/" + new string('=', heading.Length - 2) + "\\");
