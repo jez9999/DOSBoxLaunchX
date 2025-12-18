@@ -187,6 +187,13 @@
 			cbSilencedSet = new CheckBox();
 			lblSilenced = new Label();
 			tabPeripherals = new TabPage();
+			grpKeyboard = new GroupBox();
+			comboKbStopTurbo = new ComboBox();
+			cbKbStopTurboSet = new CheckBox();
+			lblKbStopTurbo = new Label();
+			comboKbLayout = new ComboBox();
+			cbKbLayoutSet = new CheckBox();
+			lblKbLayout = new Label();
 			grpPrinter = new GroupBox();
 			btnPrintDocDirBrowse = new Button();
 			txtPrintDocDir = new TextBox();
@@ -217,9 +224,6 @@
 			comboMouseMiddleUnlock = new ComboBox();
 			cbMouseMiddleUnlockSet = new CheckBox();
 			lblMouseMiddleUnlock = new Label();
-			comboKbLayout = new ComboBox();
-			cbKbLayoutSet = new CheckBox();
-			lblKbLayout = new Label();
 			lblPeripheralsSet = new Label();
 			tabAutoexec = new TabPage();
 			txtAutoexec = new TextBox();
@@ -277,6 +281,7 @@
 			grpSb.SuspendLayout();
 			grpMidi.SuspendLayout();
 			tabPeripherals.SuspendLayout();
+			grpKeyboard.SuspendLayout();
 			grpPrinter.SuspendLayout();
 			grpMouse.SuspendLayout();
 			tabAutoexec.SuspendLayout();
@@ -1981,17 +1986,91 @@
 			// tabPeripherals
 			// 
 			tabPeripherals.BackColor = SystemColors.Control;
+			tabPeripherals.Controls.Add(grpKeyboard);
 			tabPeripherals.Controls.Add(grpPrinter);
 			tabPeripherals.Controls.Add(grpMouse);
-			tabPeripherals.Controls.Add(comboKbLayout);
-			tabPeripherals.Controls.Add(cbKbLayoutSet);
-			tabPeripherals.Controls.Add(lblKbLayout);
 			tabPeripherals.Controls.Add(lblPeripheralsSet);
 			tabPeripherals.Location = new Point(4, 24);
 			tabPeripherals.Name = "tabPeripherals";
 			tabPeripherals.Size = new Size(1227, 528);
 			tabPeripherals.TabIndex = 3;
 			tabPeripherals.Text = "Peripherals";
+			// 
+			// grpKeyboard
+			// 
+			grpKeyboard.Controls.Add(comboKbStopTurbo);
+			grpKeyboard.Controls.Add(cbKbStopTurboSet);
+			grpKeyboard.Controls.Add(lblKbStopTurbo);
+			grpKeyboard.Controls.Add(comboKbLayout);
+			grpKeyboard.Controls.Add(cbKbLayoutSet);
+			grpKeyboard.Controls.Add(lblKbLayout);
+			grpKeyboard.Location = new Point(4, 25);
+			grpKeyboard.Name = "grpKeyboard";
+			grpKeyboard.Size = new Size(603, 77);
+			grpKeyboard.TabIndex = 10;
+			grpKeyboard.TabStop = false;
+			grpKeyboard.Text = "Keyboard";
+			// 
+			// comboKbStopTurbo
+			// 
+			comboKbStopTurbo.FormattingEnabled = true;
+			comboKbStopTurbo.Items.AddRange(new object[] { "true", "false" });
+			comboKbStopTurbo.Location = new Point(184, 45);
+			comboKbStopTurbo.Name = "comboKbStopTurbo";
+			comboKbStopTurbo.Size = new Size(409, 23);
+			comboKbStopTurbo.TabIndex = 21;
+			comboKbStopTurbo.Tag = "cb=cbKbStopTurboSet|assoc=lblKbStopTurbo|setting=cpu.stop turbo on key";
+			// 
+			// cbKbStopTurboSet
+			// 
+			cbKbStopTurboSet.AutoSize = true;
+			cbKbStopTurboSet.Location = new Point(7, 49);
+			cbKbStopTurboSet.Name = "cbKbStopTurboSet";
+			cbKbStopTurboSet.Size = new Size(15, 14);
+			cbKbStopTurboSet.TabIndex = 20;
+			cbKbStopTurboSet.Tag = "";
+			cbKbStopTurboSet.UseVisualStyleBackColor = true;
+			// 
+			// lblKbStopTurbo
+			// 
+			lblKbStopTurbo.AutoSize = true;
+			lblKbStopTurbo.Cursor = Cursors.Help;
+			lblKbStopTurbo.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point, 0);
+			lblKbStopTurbo.Location = new Point(32, 48);
+			lblKbStopTurbo.Name = "lblKbStopTurbo";
+			lblKbStopTurbo.Size = new Size(131, 15);
+			lblKbStopTurbo.TabIndex = 74;
+			lblKbStopTurbo.Text = "Stop turbo on keypress:";
+			lblKbStopTurbo.Click += lblKbStopTurbo_Click;
+			// 
+			// comboKbLayout
+			// 
+			comboKbLayout.FormattingEnabled = true;
+			comboKbLayout.Items.AddRange(new object[] { "auto", "us", "cf", "uk", "fr", "gr", "sv", "no", "ru", "sp", "dk", "it", "nl", "pl", "su", "po", "br", "be", "hu", "sf", "sg", "dv103" });
+			comboKbLayout.Location = new Point(184, 16);
+			comboKbLayout.Name = "comboKbLayout";
+			comboKbLayout.Size = new Size(409, 23);
+			comboKbLayout.TabIndex = 11;
+			comboKbLayout.Tag = "cb=cbKbLayoutSet|assoc=lblKbLayout|setting=dos.keyboardlayout";
+			// 
+			// cbKbLayoutSet
+			// 
+			cbKbLayoutSet.AutoSize = true;
+			cbKbLayoutSet.Location = new Point(7, 20);
+			cbKbLayoutSet.Name = "cbKbLayoutSet";
+			cbKbLayoutSet.Size = new Size(15, 14);
+			cbKbLayoutSet.TabIndex = 10;
+			cbKbLayoutSet.Tag = "";
+			cbKbLayoutSet.UseVisualStyleBackColor = true;
+			// 
+			// lblKbLayout
+			// 
+			lblKbLayout.AutoSize = true;
+			lblKbLayout.Location = new Point(32, 19);
+			lblKbLayout.Name = "lblKbLayout";
+			lblKbLayout.Size = new Size(96, 15);
+			lblKbLayout.TabIndex = 71;
+			lblKbLayout.Text = "Keyboard layout:";
 			// 
 			// grpPrinter
 			// 
@@ -2008,10 +2087,10 @@
 			grpPrinter.Controls.Add(comboEnablePrinter);
 			grpPrinter.Controls.Add(cbEnablePrinterSet);
 			grpPrinter.Controls.Add(lblEnablePrinter);
-			grpPrinter.Location = new Point(4, 224);
+			grpPrinter.Location = new Point(4, 278);
 			grpPrinter.Name = "grpPrinter";
 			grpPrinter.Size = new Size(603, 135);
-			grpPrinter.TabIndex = 70;
+			grpPrinter.TabIndex = 80;
 			grpPrinter.TabStop = false;
 			grpPrinter.Text = "Printer";
 			// 
@@ -2020,7 +2099,7 @@
 			btnPrintDocDirBrowse.Location = new Point(518, 103);
 			btnPrintDocDirBrowse.Name = "btnPrintDocDirBrowse";
 			btnPrintDocDirBrowse.Size = new Size(75, 23);
-			btnPrintDocDirBrowse.TabIndex = 102;
+			btnPrintDocDirBrowse.TabIndex = 112;
 			btnPrintDocDirBrowse.Text = "&Browse...";
 			btnPrintDocDirBrowse.UseVisualStyleBackColor = true;
 			btnPrintDocDirBrowse.Click += btnPrintDocDirBrowse_Click;
@@ -2030,7 +2109,7 @@
 			txtPrintDocDir.Location = new Point(184, 103);
 			txtPrintDocDir.Name = "txtPrintDocDir";
 			txtPrintDocDir.Size = new Size(328, 23);
-			txtPrintDocDir.TabIndex = 101;
+			txtPrintDocDir.TabIndex = 111;
 			txtPrintDocDir.Tag = "cb=cbPrintDocDirSet|assoc=lblPrintDocDir,btnPrintDocDirBrowse|setting=printer.docpath";
 			// 
 			// cbPrintDocDirSet
@@ -2039,7 +2118,7 @@
 			cbPrintDocDirSet.Location = new Point(7, 107);
 			cbPrintDocDirSet.Name = "cbPrintDocDirSet";
 			cbPrintDocDirSet.Size = new Size(15, 14);
-			cbPrintDocDirSet.TabIndex = 100;
+			cbPrintDocDirSet.TabIndex = 110;
 			cbPrintDocDirSet.Tag = "";
 			cbPrintDocDirSet.UseVisualStyleBackColor = true;
 			// 
@@ -2057,7 +2136,7 @@
 			txtPrinterDevice.Location = new Point(184, 74);
 			txtPrinterDevice.Name = "txtPrinterDevice";
 			txtPrinterDevice.Size = new Size(409, 23);
-			txtPrinterDevice.TabIndex = 91;
+			txtPrinterDevice.TabIndex = 101;
 			txtPrinterDevice.Tag = "cb=cbPrinterDeviceSet|assoc=lblPrinterDevice|setting=printer.device";
 			// 
 			// cbPrinterDeviceSet
@@ -2066,7 +2145,7 @@
 			cbPrinterDeviceSet.Location = new Point(7, 78);
 			cbPrinterDeviceSet.Name = "cbPrinterDeviceSet";
 			cbPrinterDeviceSet.Size = new Size(15, 14);
-			cbPrinterDeviceSet.TabIndex = 90;
+			cbPrinterDeviceSet.TabIndex = 100;
 			cbPrinterDeviceSet.Tag = "";
 			cbPrinterDeviceSet.UseVisualStyleBackColor = true;
 			// 
@@ -2086,7 +2165,7 @@
 			comboPrintOutput.Location = new Point(184, 45);
 			comboPrintOutput.Name = "comboPrintOutput";
 			comboPrintOutput.Size = new Size(409, 23);
-			comboPrintOutput.TabIndex = 81;
+			comboPrintOutput.TabIndex = 91;
 			comboPrintOutput.Tag = "cb=cbPrintOutputSet|assoc=lblPrintOutput|setting=printer.printoutput";
 			// 
 			// cbPrintOutputSet
@@ -2095,7 +2174,7 @@
 			cbPrintOutputSet.Location = new Point(7, 49);
 			cbPrintOutputSet.Name = "cbPrintOutputSet";
 			cbPrintOutputSet.Size = new Size(15, 14);
-			cbPrintOutputSet.TabIndex = 80;
+			cbPrintOutputSet.TabIndex = 90;
 			cbPrintOutputSet.Tag = "";
 			cbPrintOutputSet.UseVisualStyleBackColor = true;
 			// 
@@ -2115,7 +2194,7 @@
 			comboEnablePrinter.Location = new Point(184, 16);
 			comboEnablePrinter.Name = "comboEnablePrinter";
 			comboEnablePrinter.Size = new Size(409, 23);
-			comboEnablePrinter.TabIndex = 71;
+			comboEnablePrinter.TabIndex = 81;
 			comboEnablePrinter.Tag = "cb=cbEnablePrinterSet|assoc=lblEnablePrinter|setting=printer.printer";
 			// 
 			// cbEnablePrinterSet
@@ -2124,7 +2203,7 @@
 			cbEnablePrinterSet.Location = new Point(7, 20);
 			cbEnablePrinterSet.Name = "cbEnablePrinterSet";
 			cbEnablePrinterSet.Size = new Size(15, 14);
-			cbEnablePrinterSet.TabIndex = 70;
+			cbEnablePrinterSet.TabIndex = 80;
 			cbEnablePrinterSet.Tag = "";
 			cbEnablePrinterSet.UseVisualStyleBackColor = true;
 			// 
@@ -2154,10 +2233,10 @@
 			grpMouse.Controls.Add(comboMouseMiddleUnlock);
 			grpMouse.Controls.Add(cbMouseMiddleUnlockSet);
 			grpMouse.Controls.Add(lblMouseMiddleUnlock);
-			grpMouse.Location = new Point(4, 54);
+			grpMouse.Location = new Point(4, 108);
 			grpMouse.Name = "grpMouse";
 			grpMouse.Size = new Size(603, 164);
-			grpMouse.TabIndex = 20;
+			grpMouse.TabIndex = 30;
 			grpMouse.TabStop = false;
 			grpMouse.Text = "Mouse";
 			// 
@@ -2168,7 +2247,7 @@
 			comboMouseAutolockFeedback.Location = new Point(184, 132);
 			comboMouseAutolockFeedback.Name = "comboMouseAutolockFeedback";
 			comboMouseAutolockFeedback.Size = new Size(409, 23);
-			comboMouseAutolockFeedback.TabIndex = 61;
+			comboMouseAutolockFeedback.TabIndex = 71;
 			comboMouseAutolockFeedback.Tag = "cb=cbMouseAutolockFeedbackSet|assoc=lblMouseAutolockFeedback|setting=sdl.autolock_feedback";
 			// 
 			// cbMouseAutolockFeedbackSet
@@ -2177,7 +2256,7 @@
 			cbMouseAutolockFeedbackSet.Location = new Point(7, 136);
 			cbMouseAutolockFeedbackSet.Name = "cbMouseAutolockFeedbackSet";
 			cbMouseAutolockFeedbackSet.Size = new Size(15, 14);
-			cbMouseAutolockFeedbackSet.TabIndex = 60;
+			cbMouseAutolockFeedbackSet.TabIndex = 70;
 			cbMouseAutolockFeedbackSet.Tag = "";
 			cbMouseAutolockFeedbackSet.UseVisualStyleBackColor = true;
 			// 
@@ -2197,7 +2276,7 @@
 			comboMouseAutolock.Location = new Point(184, 103);
 			comboMouseAutolock.Name = "comboMouseAutolock";
 			comboMouseAutolock.Size = new Size(409, 23);
-			comboMouseAutolock.TabIndex = 51;
+			comboMouseAutolock.TabIndex = 61;
 			comboMouseAutolock.Tag = "cb=cbMouseAutolockSet|assoc=lblMouseAutolock|setting=sdl.autolock";
 			// 
 			// cbMouseAutolockSet
@@ -2206,7 +2285,7 @@
 			cbMouseAutolockSet.Location = new Point(7, 107);
 			cbMouseAutolockSet.Name = "cbMouseAutolockSet";
 			cbMouseAutolockSet.Size = new Size(15, 14);
-			cbMouseAutolockSet.TabIndex = 50;
+			cbMouseAutolockSet.TabIndex = 60;
 			cbMouseAutolockSet.Tag = "";
 			cbMouseAutolockSet.UseVisualStyleBackColor = true;
 			// 
@@ -2226,7 +2305,7 @@
 			comboMouseSensitivity.Location = new Point(184, 74);
 			comboMouseSensitivity.Name = "comboMouseSensitivity";
 			comboMouseSensitivity.Size = new Size(409, 23);
-			comboMouseSensitivity.TabIndex = 41;
+			comboMouseSensitivity.TabIndex = 51;
 			comboMouseSensitivity.Tag = "cb=cbMouseSensitivitySet|assoc=lblMouseSensitivity|setting=sdl.sensitivity";
 			// 
 			// cbMouseSensitivitySet
@@ -2235,7 +2314,7 @@
 			cbMouseSensitivitySet.Location = new Point(7, 78);
 			cbMouseSensitivitySet.Name = "cbMouseSensitivitySet";
 			cbMouseSensitivitySet.Size = new Size(15, 14);
-			cbMouseSensitivitySet.TabIndex = 40;
+			cbMouseSensitivitySet.TabIndex = 50;
 			cbMouseSensitivitySet.Tag = "";
 			cbMouseSensitivitySet.UseVisualStyleBackColor = true;
 			// 
@@ -2255,7 +2334,7 @@
 			comboMouseEmulation.Location = new Point(184, 16);
 			comboMouseEmulation.Name = "comboMouseEmulation";
 			comboMouseEmulation.Size = new Size(409, 23);
-			comboMouseEmulation.TabIndex = 21;
+			comboMouseEmulation.TabIndex = 31;
 			comboMouseEmulation.Tag = "cb=cbMouseEmulationSet|assoc=lblMouseEmulation|setting=sdl.mouse_emulation";
 			// 
 			// cbMouseEmulationSet
@@ -2264,7 +2343,7 @@
 			cbMouseEmulationSet.Location = new Point(7, 20);
 			cbMouseEmulationSet.Name = "cbMouseEmulationSet";
 			cbMouseEmulationSet.Size = new Size(15, 14);
-			cbMouseEmulationSet.TabIndex = 20;
+			cbMouseEmulationSet.TabIndex = 30;
 			cbMouseEmulationSet.Tag = "";
 			cbMouseEmulationSet.UseVisualStyleBackColor = true;
 			// 
@@ -2284,7 +2363,7 @@
 			comboMouseMiddleUnlock.Location = new Point(184, 45);
 			comboMouseMiddleUnlock.Name = "comboMouseMiddleUnlock";
 			comboMouseMiddleUnlock.Size = new Size(409, 23);
-			comboMouseMiddleUnlock.TabIndex = 31;
+			comboMouseMiddleUnlock.TabIndex = 41;
 			comboMouseMiddleUnlock.Tag = "cb=cbMouseMiddleUnlockSet|assoc=lblMouseMiddleUnlock|setting=sdl.middle_unlock";
 			// 
 			// cbMouseMiddleUnlockSet
@@ -2293,7 +2372,7 @@
 			cbMouseMiddleUnlockSet.Location = new Point(7, 49);
 			cbMouseMiddleUnlockSet.Name = "cbMouseMiddleUnlockSet";
 			cbMouseMiddleUnlockSet.Size = new Size(15, 14);
-			cbMouseMiddleUnlockSet.TabIndex = 30;
+			cbMouseMiddleUnlockSet.TabIndex = 40;
 			cbMouseMiddleUnlockSet.Tag = "";
 			cbMouseMiddleUnlockSet.UseVisualStyleBackColor = true;
 			// 
@@ -2308,35 +2387,6 @@
 			lblMouseMiddleUnlock.TabIndex = 83;
 			lblMouseMiddleUnlock.Text = "Middle mouse btn unlock:";
 			lblMouseMiddleUnlock.Click += lblMouseMiddleUnlock_Click;
-			// 
-			// comboKbLayout
-			// 
-			comboKbLayout.FormattingEnabled = true;
-			comboKbLayout.Items.AddRange(new object[] { "auto", "us", "cf", "uk", "fr", "gr", "sv", "no", "ru", "sp", "dk", "it", "nl", "pl", "su", "po", "br", "be", "hu", "sf", "sg", "dv103" });
-			comboKbLayout.Location = new Point(188, 25);
-			comboKbLayout.Name = "comboKbLayout";
-			comboKbLayout.Size = new Size(409, 23);
-			comboKbLayout.TabIndex = 11;
-			comboKbLayout.Tag = "cb=cbKbLayoutSet|assoc=lblKbLayout|setting=dos.keyboardlayout";
-			// 
-			// cbKbLayoutSet
-			// 
-			cbKbLayoutSet.AutoSize = true;
-			cbKbLayoutSet.Location = new Point(11, 29);
-			cbKbLayoutSet.Name = "cbKbLayoutSet";
-			cbKbLayoutSet.Size = new Size(15, 14);
-			cbKbLayoutSet.TabIndex = 10;
-			cbKbLayoutSet.Tag = "";
-			cbKbLayoutSet.UseVisualStyleBackColor = true;
-			// 
-			// lblKbLayout
-			// 
-			lblKbLayout.AutoSize = true;
-			lblKbLayout.Location = new Point(36, 28);
-			lblKbLayout.Name = "lblKbLayout";
-			lblKbLayout.Size = new Size(96, 15);
-			lblKbLayout.TabIndex = 68;
-			lblKbLayout.Text = "Keyboard layout:";
 			// 
 			// lblPeripheralsSet
 			// 
@@ -2804,6 +2854,8 @@
 			grpMidi.PerformLayout();
 			tabPeripherals.ResumeLayout(false);
 			tabPeripherals.PerformLayout();
+			grpKeyboard.ResumeLayout(false);
+			grpKeyboard.PerformLayout();
 			grpPrinter.ResumeLayout(false);
 			grpPrinter.PerformLayout();
 			grpMouse.ResumeLayout(false);
@@ -3003,9 +3055,6 @@
 		private ComboBox comboMouseMiddleUnlock;
 		private CheckBox cbMouseMiddleUnlockSet;
 		private Label lblMouseMiddleUnlock;
-		private ComboBox comboKbLayout;
-		private CheckBox cbKbLayoutSet;
-		private Label lblKbLayout;
 		private GroupBox grpPrinter;
 		private ComboBox comboEnablePrinter;
 		private CheckBox cbEnablePrinterSet;
@@ -3064,9 +3113,15 @@
 		private CheckBox cbWindowResolutionSet;
 		private Label lblWindowResolution;
 		private ComboBox comboShowDescriptionPreLaunch;
-		private CheckBox checkBox1;
+		private CheckBox cbKbStopTurboSet;
 		private Label lblShowDescriptionPreLaunch;
 		private ComboBox comboSameAsShortcutDir;
 		private Label lblSameAsShortcutDir;
+		private GroupBox grpKeyboard;
+		private ComboBox comboKbLayout;
+		private CheckBox cbKbLayoutSet;
+		private Label lblKbLayout;
+		private ComboBox comboKbStopTurbo;
+		private Label lblKbStopTurbo;
 	}
 }

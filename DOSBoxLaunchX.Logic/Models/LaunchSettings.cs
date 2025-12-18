@@ -311,6 +311,9 @@ public class LaunchSettings {
 		[GroupedSetting("dos", "keyboardlayout")]
 		public string? KbLayout { get; set; }
 
+		[GroupedSetting("cpu", "stop turbo on key")]
+		public string? KbStopTurbo { get; set; }
+
 		[GroupedSetting("sdl", "mouse_emulation")]
 		public string? MouseEmulation { get; set; }
 

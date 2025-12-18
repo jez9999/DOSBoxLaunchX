@@ -1147,6 +1147,19 @@ public partial class MainForm : Form {
 		doBrowseMt32Romdir();
 	}
 
+	private void lblKbStopTurbo_Click(object sender, EventArgs ea) {
+		MessageBoxHelper.ShowInfoMessage(
+			"""
+			When you're using "burst turbo" mode - where you hold down a key like grave (`) to enable turbo - you'll generally want to set this to false.
+
+			Otherwise when you hold the key, the automatic keyboard repeat when a key is held down will cause the burst turbo mode to be turned off shortly after the key was initially held down.
+
+			With this disabled, however, "burst turbo" mode will simply stay enabled as long as you hold the turbo key, and turn off when you release it.
+			""",
+			"Stop Turbo On Keypress setting"
+		);
+	}
+
 	private void lblMouseMiddleUnlock_Click(object sender, EventArgs ea) {
 		MessageBoxHelper.ShowInfoMessage(
 			"""
