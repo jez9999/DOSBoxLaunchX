@@ -21,7 +21,7 @@ internal static class Program {
 			// see https://aka.ms/applicationconfiguration.
 			ApplicationConfiguration.Initialize();
 
-			var appHost = createHost(Directory.GetCurrentDirectory(), Application.ExecutablePath, args);
+			IHost appHost = createHost(Directory.GetCurrentDirectory(), Application.ExecutablePath, args);
 
 			Application.ThreadException += (sender, ea) => handleExceptionAndExit(ea.Exception);
 			AppDomain.CurrentDomain.UnhandledException += (sender, ea) => {
